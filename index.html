@@ -129,9 +129,9 @@
 <body>
 
   <header>
-    <img src="logo.png" alt="Logo" />
+    <img src="logo.jpg" alt="Logo" />
     <h1>Magazin Candele</h1>
-    <div class="company-name">Numele Firmei</div>
+    <div class="company-name">Magazin candele</div>
     <select class="lang-select" onchange="changeLanguage(event)">
       <option value="ro">Română</option>
       <option value="en">English</option>
@@ -139,7 +139,7 @@
   </header>
 
   <div class="container">
-    <form action="https://formsubmit.co/EMAILUL_TAU@exemplu.com" method="POST" onsubmit="return completeOrder()">
+    <form action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST" onsubmit="return completeOrder()">
       
       <!-- Produse -->
       <div class="product">
@@ -158,7 +158,7 @@
 
       <!-- Date client -->
       <div class="form-section">
-        <h2 id="client-title">Date client</h2>
+        <h2 id="client-title">Date facturare</h2>
         <input type="text" name="Nume" id="name-input" placeholder="Numele tău" required />
         <input type="tel" name="Telefon" id="phone-input" placeholder="Număr de telefon" required />
       </div>
@@ -168,7 +168,7 @@
       <input type="hidden" name="_captcha" value="false" />
       
       <!-- Redirecționare după trimiterea formularului -->
-      <input type="hidden" name="_next" value="https://numele-tau.github.io/magazin-candele/" />
+      <input type="hidden" name="_next" value="https://jmecheria.github.io/magazin-candele/" />
       
       <button type="submit">Trimite comanda</button>
     </form>
@@ -186,7 +186,7 @@
         return false;
       }
 
-      alert("Comanda a fost trimisă! Vei primi confirmarea prin email. Plata se face în numerar.");
+      alert("Comanda a fost trimisă! Plata se face în numerar.");
       return true; // permite trimiterea formularului
     }
 
@@ -200,13 +200,13 @@
         document.getElementById("product2-quantity-label").textContent = "Quantity:";
         
         // Date client
-        document.getElementById("client-title").textContent = "Customer Information";
+        document.getElementById("client-title").textContent = "Billing Data";
         document.getElementById("name-input").placeholder = "Your name";
         document.getElementById("phone-input").placeholder = "Phone number";
 
         // Header
         document.querySelector("h1").textContent = "Candle Store";
-        document.querySelector(".company-name").textContent = "Company Name";
+        document.querySelector(".company-name").textContent = "Candle Shop";
         document.querySelector("button").textContent = "Submit Order";
         document.querySelector("input[name='_subject']").value = "New order from the website!";
       } else {
@@ -223,7 +223,7 @@
 
         // Header
         document.querySelector("h1").textContent = "Magazin Candele";
-        document.querySelector(".company-name").textContent = "Numele Firmei";
+        document.querySelector(".company-name").textContent = "Magazin candele";
         document.querySelector("button").textContent = "Trimite comanda";
         document.querySelector("input[name='_subject']").value = "Nouă comandă de pe site!";
       }
