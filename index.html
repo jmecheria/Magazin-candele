@@ -1,33 +1,114 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Magazin Candele</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fffaf5;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    header {
+      background: #d23c3c;
+      color: white;
+      padding: 20px;
+    }
+
+    header img {
+      height: 60px;
+    }
+
+    h1 {
+      margin: 10px 0;
+    }
+
+    .product {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      margin: 20px auto;
+      max-width: 300px;
+      background: white;
+      padding: 20px;
+    }
+
+    .product img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    .product h2 {
+      margin-top: 10px;
+    }
+
+    .product input {
+      width: 50px;
+      text-align: center;
+    }
+
+    .order-btn {
+      margin-top: 20px;
+      background: #d23c3c;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .confirmation {
+      margin-top: 20px;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
 </head>
 <body>
+
   <header>
-    <img src="images/logo.png" alt="Logo magazin" class="logo">
-    <h1>Magazin de Candele</h1>
+    <img src="logo.png" alt="Logo" />
+    <h1>Magazin Candele</h1>
   </header>
 
-  <main>
-    <section class="product">
-      <img src="images/candela-mica.jpg" alt="Candela Mică">
-      <h2>Candelă Mică</h2>
-      <p>Preț: 10 lei</p>
-    </section>
+  <div class="product">
+    <img src="candela-mica.jpg" alt="Candela mica" />
+    <h2>Candelă mică - 10 lei</h2>
+    <label for="smallQty">Cantitate:</label>
+    <input type="number" id="smallQty" min="0" value="0" />
+  </div>
 
-    <section class="product">
-      <img src="images/candela-mare.jpg" alt="Candela Mare">
-      <h2>Candelă Mare</h2>
-      <p>Preț: 12 lei</p>
-    </section>
-  </main>
+  <div class="product">
+    <img src="candela-mare.jpg" alt="Candela mare" />
+    <h2>Candelă mare - 12 lei</h2>
+    <label for="largeQty">Cantitate:</label>
+    <input type="number" id="largeQty" min="0" value="0" />
+  </div>
 
-  <footer>
-    <p>&copy; 2025 Magazin Candele. Toate drepturile rezervate.</p>
-  </footer>
+  <button class="order-btn" onclick="placeOrder()">Plasează comanda</button>
+
+  <div class="confirmation" id="confirmationMessage"></div>
+
+  <script>
+    function placeOrder() {
+      const smallQty = parseInt(document.getElementById('smallQty').value) || 0;
+      const largeQty = parseInt(document.getElementById('largeQty').value) || 0;
+
+      if (smallQty === 0 && largeQty === 0) {
+        document.getElementById('confirmationMessage').innerText = 'Te rugăm să alegi cel puțin un produs.';
+        return;
+      }
+
+      const total = (smallQty * 10) + (largeQty * 12);
+      document.getElementById('confirmationMessage').innerText =
+        `Comanda a fost plasată! Total: ${total} lei. Se plătește în numerar la livrare.`;
+    }
+  </script>
+
 </body>
 </html>
