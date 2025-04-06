@@ -5,40 +5,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Magazin Candele</title>
   <style>
+    /* Stilizare generală */
     body {
-      font-family: Arial, sans-serif;
-      background: #fffaf5;
-      color: #333;
+      font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
+      background-color: #f7f7f7;
+      color: #333;
       text-align: center;
     }
 
+    h1, h2 {
+      font-family: 'Georgia', serif;
+      color: #d23c3c;
+    }
+
     header {
-      background: #d23c3c;
+      background-color: #d23c3c;
       color: white;
-      padding: 20px;
+      padding: 15px 0;
     }
 
     header img {
-      height: 60px;
+      width: 100px;
+      height: auto;
     }
 
-    h1 {
-      margin: 10px 0;
+    .lang-select {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 5px 10px;
+      cursor: pointer;
     }
 
-    .product, .form-section {
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .product {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px;
       border: 1px solid #ddd;
       border-radius: 10px;
-      margin: 20px auto;
-      max-width: 350px;
-      background: white;
-      padding: 20px;
+      padding: 15px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
+
+    .product:hover {
+      transform: scale(1.05);
     }
 
     .product img {
-      max-width: 100%;
+      width: 100%;
+      max-width: 250px;
       border-radius: 10px;
     }
 
@@ -47,21 +78,27 @@
     }
 
     input[type="number"], input[type="text"], input[type="tel"] {
+      padding: 10px;
       width: 80%;
-      padding: 8px;
-      margin-top: 5px;
-      margin-bottom: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
     }
 
-    .order-btn {
-      margin-top: 20px;
-      background: #d23c3c;
+    button {
+      padding: 10px 20px;
+      background-color: #d23c3c;
       color: white;
       border: none;
-      padding: 10px 20px;
-      font-size: 16px;
+      font-size: 18px;
       border-radius: 5px;
       cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #a12a2a;
     }
 
     .confirmation {
@@ -69,44 +106,68 @@
       font-weight: bold;
       color: green;
     }
+
+    /* Responsivitate */
+    @media (max-width: 768px) {
+      .product {
+        flex-direction: row;
+      }
+
+      .product img {
+        max-width: 150px;
+      }
+    }
+
   </style>
 </head>
 <body>
 
   <header>
-    <img src="logo.jpg" alt="Logo" />
+    <img src="logo.png" alt="Logo" />
     <h1>Magazin Candele</h1>
+    <select class="lang-select" onchange="changeLanguage(event)">
+      <option value="ro">Română</option>
+      <option value="en">English</option>
+    </select>
   </header>
 
-  <form action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST" onsubmit="return completeOrder()">
-    
-    <div class="product">
-      <img src="candela-mica.jpg" alt="Candela mica" />
-      <h2>Candelă mică - 10 lei</h2>
-      <label for="smallQty">Cantitate:</label>
-      <input type="number" id="smallQty" name="Candele mici" min="0" value="0" />
-    </div>
+  <div class="container">
+    <form action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST" onsubmit="return completeOrder()">
+      
+      <!-- Produse -->
+      <div class="product">
+        <img src="candela-mica.jpg" alt="Candela mica" />
+        <h2>Candelă mică - 10 lei</h2>
+        <label for="smallQty">Cantitate:</label>
+        <input type="number" id="smallQty" name="Candele mici" min="0" value="0" />
+      </div>
 
-    <div class="product">
-      <img src="candela-mare.jpg" alt="Candela mare" />
-      <h2>Candelă mare - 12 lei</h2>
-      <label for="largeQty">Cantitate:</label>
-      <input type="number" id="largeQty" name="Candele mari" min="0" value="0" />
-    </div>
+      <div class="product">
+        <img src="candela-mare.jpg" alt="Candela mare" />
+        <h2>Candelă mare - 12 lei</h2>
+        <label for="largeQty">Cantitate:</label>
+        <input type="number" id="largeQty" name="Candele mari" min="0" value="0" />
+      </div>
 
-    <div class="form-section">
-      <h2>Date client</h2>
-      <input type="text" name="Nume" placeholder="Numele tău" required />
-      <input type="tel" name="Telefon" placeholder="Număr de telefon" required />
-    </div>
+      <!-- Date client -->
+      <div class="form-section">
+        <h2>Date client</h2>
+        <input type="text" name="Nume" placeholder="Numele tău" required />
+        <input type="tel" name="Telefon" placeholder="Număr de telefon" required />
+      </div>
 
-    <input type="hidden" name="_subject" value="Nouă comandă de pe site!">
-    <input type="hidden" name="_captcha" value="false" />
-    
-    <button type="submit" class="order-btn">Trimite comanda</button>
-    
+      <!-- Trimite comanda -->
+      <input type="hidden" name="_subject" value="Nouă comandă de pe site!">
+      <input type="hidden" name="_captcha" value="false" />
+      
+      <!-- Redirecționare după trimiterea formularului -->
+      <input type="hidden" name="_next" value="https://numele-tau.github.io/magazin-candele/" />
+      
+      <button type="submit">Trimite comanda</button>
+    </form>
+
     <div class="confirmation" id="confirmationMessage"></div>
-  </form>
+  </div>
 
   <script>
     function completeOrder() {
@@ -118,8 +179,31 @@
         return false;
       }
 
-      alert("Comanda a fost trimisă! Vei primi confirmarea prin email. Plata se face în numerar.");
+      alert("Comanda a fost trimisă! Plata se face în numerar.");
       return true; // permite trimiterea formularului
+    }
+
+    function changeLanguage(event) {
+      const lang = event.target.value;
+      if (lang === "en") {
+        document.querySelector("h1").textContent = "Candle Store";
+        document.querySelector("h2").textContent = "Small Candle - 10 RON";
+        document.querySelector("button").textContent = "Submit Order";
+        document.querySelector("label[for='smallQty']").textContent = "Quantity:";
+        document.querySelector("label[for='largeQty']").textContent = "Quantity:";
+        document.querySelector("input[name='Nume']").placeholder = "Your name";
+        document.querySelector("input[name='Telefon']").placeholder = "Phone number";
+        document.querySelector("input[name='_subject']").value = "New order from the website!";
+      } else {
+        document.querySelector("h1").textContent = "Magazin Candele";
+        document.querySelector("h2").textContent = "Candelă mică - 10 lei";
+        document.querySelector("button").textContent = "Trimite comanda";
+        document.querySelector("label[for='smallQty']").textContent = "Cantitate:";
+        document.querySelector("label[for='largeQty']").textContent = "Cantitate:";
+        document.querySelector("input[name='Nume']").placeholder = "Numele tău";
+        document.querySelector("input[name='Telefon']").placeholder = "Număr de telefon";
+        document.querySelector("input[name='_subject']").value = "Nouă comandă de pe site!";
+      }
     }
   </script>
 
