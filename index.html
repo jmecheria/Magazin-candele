@@ -28,11 +28,11 @@
       margin: 10px 0;
     }
 
-    .product {
+    .product, .form-section {
       border: 1px solid #ddd;
       border-radius: 10px;
       margin: 20px auto;
-      max-width: 300px;
+      max-width: 350px;
       background: white;
       padding: 20px;
     }
@@ -46,9 +46,11 @@
       margin-top: 10px;
     }
 
-    .product input {
-      width: 50px;
-      text-align: center;
+    input[type="number"], input[type="text"], input[type="tel"] {
+      width: 80%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 10px;
     }
 
     .order-btn {
@@ -76,37 +78,48 @@
     <h1>Magazin Candele</h1>
   </header>
 
-  <div class="product">
-    <img src="candela-mica.jpg" alt="Candela mica" />
-    <h2>Candelă mică - 10 lei</h2>
-    <label for="smallQty">Cantitate:</label>
-    <input type="number" id="smallQty" min="0" value="0" />
-  </div>
+  <form action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST" onsubmit="return completeOrder()">
+    
+    <div class="product">
+      <img src="candela-mica.jpg" alt="Candela mica" />
+      <h2>Candelă mică - 10 lei</h2>
+      <label for="smallQty">Cantitate:</label>
+      <input type="number" id="smallQty" name="Candele mici" min="0" value="0" />
+    </div>
 
-  <div class="product">
-    <img src="candela-mare.jpg" alt="Candela mare" />
-    <h2>Candelă mare - 12 lei</h2>
-    <label for="largeQty">Cantitate:</label>
-    <input type="number" id="largeQty" min="0" value="0" />
-  </div>
+    <div class="product">
+      <img src="candela-mare.jpg" alt="Candela mare" />
+      <h2>Candelă mare - 12 lei</h2>
+      <label for="largeQty">Cantitate:</label>
+      <input type="number" id="largeQty" name="Candele mari" min="0" value="0" />
+    </div>
 
-  <button class="order-btn" onclick="placeOrder()">Plasează comanda</button>
+    <div class="form-section">
+      <h2>Date client</h2>
+      <input type="text" name="Nume" placeholder="Numele tău" required />
+      <input type="tel" name="Telefon" placeholder="Număr de telefon" required />
+    </div>
 
-  <div class="confirmation" id="confirmationMessage"></div>
+    <input type="hidden" name="_subject" value="Nouă comandă de pe site!">
+    <input type="hidden" name="_captcha" value="false" />
+    
+    <button type="submit" class="order-btn">Trimite comanda</button>
+    
+    <div class="confirmation" id="confirmationMessage"></div>
+  </form>
 
   <script>
-    function placeOrder() {
+    function completeOrder() {
       const smallQty = parseInt(document.getElementById('smallQty').value) || 0;
       const largeQty = parseInt(document.getElementById('largeQty').value) || 0;
 
       if (smallQty === 0 && largeQty === 0) {
-        document.getElementById('confirmationMessage').innerText = 'Te rugăm să alegi cel puțin un produs.';
-        return;
+        alert("Te rugăm să alegi cel puțin un produs.");
+        return false;
       }
 
-      const total = (smallQty * 10) + (largeQty * 12);
-      document.getElementById('confirmationMessage').innerText =
-        `Comanda a fost plasată! Total: ${total} lei. Se plătește în numerar la livrare.`;
+      alert("Comanda a fost trimisă! Vei primi confirmarea prin email. Plata se face în numerar.");
+      return true; // permite trimiterea formularului
     }
   </script>
 
