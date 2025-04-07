@@ -58,11 +58,37 @@
       cursor: pointer;
       background-color: #f7f7f7;
     }
+    #home {
+      position: relative;
+      overflow: hidden;
+      height: 400px;
+    }
+    #home::before {
+      content: "";
+      background: url('https://via.placeholder.com/1000x400?text=Produsele+noastre') center/cover no-repeat;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0.3;
+      z-index: 0;
+    }
+    #home-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding-top: 150px;
+    }
+    #home-content h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1><img src="https://cdn-icons-png.flaticon.com/512/2603/2603792.png" alt="Logo" style="height:40px; vertical-align:middle; margin-right:10px;"> Magazin Candele</h1>
+    <h1><img src="logo.jpg" alt="Logo" style="height:40px; vertical-align:middle; margin-right:10px;"> Magazin Candele</h1>
     <nav>
       <a href="#" onclick="showPage('home')">Acasă</a>
       <a href="#" onclick="showPage('produse')">Produse</a>
@@ -76,8 +102,11 @@
 
   <div class="container mt-4">
     <div id="home" class="page active">
-      <h2>Bine ați venit!</h2>
-      <p>Magazinul nostru oferă produse bisericești tradiționale, cu suflet și pentru suflet.</p>
+      <div id="home-content">
+        <h2>Bine ați venit!</h2>
+        <p>Descoperiți produsele noastre bisericești autentice.</p>
+        <a href="#" class="btn btn-danger" onclick="showPage('produse')">Hai să începem</a>
+      </div>
     </div>
 
     <div id="produse" class="page">
@@ -109,6 +138,9 @@
     <div id="despre" class="page">
       <h2>Despre noi</h2>
       <p>„Magazin Candele” este un mic atelier dedicat promovării obiectelor de cult, lucrate cu grijă și respect pentru tradiție. Susținem credința prin lucruri simple și autentice.</p>
+      <p>Fiecare produs este selectat cu atenție pentru a aduce liniște, lumină și binecuvântare în casele credincioșilor.</p>
+      <p>Respectăm toate normele în vigoare privind comerțul electronic și colaborăm cu platforme sigure pentru procesarea comenzilor.</p>
+      <p>Conform cerințelor ANPC (Autoritatea Națională pentru Protecția Consumatorilor), vă oferim transparență totală în procesul de vânzare și informații clare despre produsele noastre. Puteți accesa site-ul oficial <a href="https://anpc.ro" target="_blank">anpc.ro</a> pentru mai multe detalii.</p>
     </div>
   </div>
 
@@ -127,16 +159,16 @@
 
   <script>
     const produse = [
-      {nume: 'Candelă mică', pret: 10, img: 'https://via.placeholder.com/300x200.png?text=Candelă+mică'},
-      {nume: 'Candelă mare', pret: 20, img: 'https://via.placeholder.com/300x200.png?text=Candelă+mare'},
-      {nume: 'Lumanare albă', pret: 5, img: 'https://via.placeholder.com/300x200.png?text=Lumanare+albă'},
-      {nume: 'Lumanare roșie', pret: 5, img: 'https://via.placeholder.com/300x200.png?text=Lumanare+roșie'},
-      {nume: 'Set pomelnice', pret: 15, img: 'https://via.placeholder.com/300x200.png?text=Set+pomelnice'},
-      {nume: 'Tămâie naturală', pret: 12, img: 'https://via.placeholder.com/300x200.png?text=Tămâie+naturală'},
-      {nume: 'Tămâie trandafir', pret: 14, img: 'https://via.placeholder.com/300x200.png?text=Tămâie+trandafir'},
-      {nume: 'Icoană mică', pret: 25, img: 'https://via.placeholder.com/300x200.png?text=Icoană+mică'},
-      {nume: 'Icoană mare', pret: 60, img: 'https://via.placeholder.com/300x200.png?text=Icoană+mare'},
-      {nume: 'Ulei sfințit', pret: 8, img: 'https://via.placeholder.com/300x200.png?text=Ulei+sfințit'}
+      {nume: 'Candelă tip I', pret: 10, img: 'candela-mica.jpg'},
+      {nume: 'Candelă tip II', pret: 12, img: 'candela-mare.jpg'},
+      {nume: 'Lumanare înviere tip I', pret: 50, img: 'lumânare.jpg'},
+      {nume: 'Tămâie naturală', pret: 100, img: 'tămâie.jpg'},
+      {nume: 'Pomelnice anuale', pret: 100, img: 'pomelnice.jpg'},
+      {nume: 'Psaltire', pret: 50, img: 'psaltire.jpg'},
+      {nume: 'Ceaslov', pret: 50, img: 'ceaslov.jpg'},
+      {nume: 'Icoană mică', pret: 25, img: 'icoană1.jpg'},
+      {nume: 'Icoană mare', pret: 60, img: 'icoană2.jpg'},
+      {nume: 'Mir', pret: 10, img: 'mir.jpg'}
     ];
 
     let cart = [];
