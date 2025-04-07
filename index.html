@@ -106,24 +106,17 @@
       font-size: 2.5rem;
       margin-bottom: 1rem;
     }
-    #cart-summary {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-  z-index: 1000;
-}
-#cart-summary img {
-  height: 30px;
-}
-#cart-count-badge {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  font-size: 0.8rem;
-  padding: 5px 7px;
-  border-radius: 50%;
-}
+    #cart-summary img {
+      height: 30px;
+    }
+    #cart-count-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      font-size: 0.8rem;
+      padding: 5px 7px;
+      border-radius: 50%;
+    }
   </style>
 </head>
 <body>
@@ -137,10 +130,10 @@
     </nav>
   </header>
 
-  <div id="cart-summary" onclick="navigate('cart-page')">
-  <img src="cos.jpg" alt="Coș" style="height: 30px;">
-  <span class="badge bg-danger" id="cart-count-badge">0</span>
-</div>
+  <div id="cart-summary" onclick="showPage('cart-page')">
+    <img src="cos.jpg" alt="Coș" style="height: 30px;">
+    <span class="badge bg-danger" id="cart-count-badge">0</span>
+  </div>
 
   <div class="container mt-4">
     <div id="home" class="page active">
@@ -172,55 +165,16 @@
             <label class="form-label">Nume complet</label>
             <input type="text" class="form-control" name="nume" required>
           </div>
-         <div class="mb-3">
-  <label class="form-label">Număr de telefon</label>
-  <input type="tel" class="form-control" name="telefon" required pattern="[0-9+ ]{10,15}" placeholder="Ex: +40723456789">
-</div>
+          <div class="mb-3">
+            <label class="form-label">Număr de telefon</label>
+            <input type="tel" class="form-control" name="telefon" required pattern="[0-9+ ]{10,15}" placeholder="Ex: +40723456789">
+          </div>
           <button type="submit" class="btn btn-danger">Trimite comanda</button>
         </form>
       </div>
     </div>
-<div id="despre" class="page">
-  <h2 class="mb-4">Despre noi</h2>
 
-  <p class="lead">Magazin Candele este un spațiu online dedicat tuturor celor care doresc să aducă în casele lor un strop de lumină, evlavie și tradiție ortodoxă.</p>
-  
-  <p>Comercializăm o gamă variată de produse bisericești autentice, atent selecționate de la furnizori de încredere din România. Ne asigurăm că fiecare articol îndeplinește standardele de calitate și respectă rânduiala ortodoxă.</p>
-
-  <div class="bg-light p-4 rounded shadow-sm my-4">
-    <h5 class="text-danger">📌 Ce ne definește:</h5>
-    <ul class="mb-0">
-      <li>Respect față de valorile și tradițiile ortodoxe</li>
-      <li>Produse atent alese, de la icoane și candele până la cărți de cult și tămâie</li>
-      <li>Livrare rapidă și comunicare clară cu clienții</li>
-    </ul>
-  </div>
-
-  <p>Fie că doriți o icoană pentru casa dumneavoastră sau o candelă pentru un dar de suflet, suntem aici să vă ajutăm cu produse de încredere și prețuri corecte.</p>
-
-  <figure class="mt-5">
-    <blockquote class="blockquote">
-      <p class="fst-italic">„Lumina unei candele aprinse e o rugăciune tăcută care se înalță spre cer.”</p>
-    </blockquote>
-    <figcaption class="blockquote-footer mt-2">
-      Tradiție populară
-    </figcaption>
-  </figure>
-</div>
-
-    <div id="termeni" class="page">
-  <h2 class="mb-4">Termeni și condiții</h2>
-  <p class="lead">Vă rugăm să citiți cu atenție condițiile de funcționare ale magazinului nostru.</p>
-
-  <div class="bg-light p-3 rounded shadow-sm mb-4">
-    <h5 class="text-danger">📦 Livrare și procesare comenzi</h5>
-    <ul>
-      <li>Comenzile sunt procesate în 1–2 zile lucrătoare.</li>
-      <li>Livrarea se face prin curier rapid, cu plata ramburs.</li>
-      <li>Veți fi contactat telefonic pentru confirmarea comenzii.</li>
-    </ul>
-  </div>
- <div id="despre" class="page">
+    <div id="despre" class="page">
       <h2 class="mb-4">Despre noi</h2>
       <p class="lead">Magazin Candele este un spațiu online dedicat tuturor celor care doresc să aducă în casele lor un strop de lumină, evlavie și tradiție ortodoxă.</p>
       <p>Comercializăm o gamă variată de produse bisericești autentice, atent selecționate de la furnizori de încredere din România. Ne asigurăm că fiecare articol îndeplinește standardele de calitate și respectă rânduiala ortodoxă.</p>
@@ -242,6 +196,7 @@
         </figcaption>
       </figure>
     </div>
+
     <div id="termeni" class="page">
       <h2 class="mb-4">Termeni și condiții</h2>
       <p class="lead">Vă rugăm să citiți cu atenție condițiile de funcționare ale magazinului nostru.</p>
@@ -268,6 +223,7 @@
       <p class="text-muted mt-3">Prin plasarea unei comenzi, sunteți de acord cu acești termeni și condiții.</p>
     </div>
   </div>
+
   <footer>
     <p>&copy; 2025 Magazin Candele | 
       <a href="tel:+40723456789">0723 456 789</a> | 
@@ -301,7 +257,7 @@
     }
 
     function updateCart() {
-  document.getElementById('cart-count-badge').textContent = cart.length;
+      document.getElementById('cart-count-badge').textContent = cart.length;
       let total = cart.reduce((s, p) => s + p.pret, 0);
       document.getElementById('cart-total').textContent = `${total} RON`;
 
@@ -334,37 +290,36 @@
       updateCart();
     }
 
-    function renderProducts(lista = produse) {
+    function filtreazaProduse() {
+      const query = document.getElementById('filtru-produse').value.toLowerCase();
+      const filteredProducts = produse.filter(p => p.nume.toLowerCase().includes(query));
+      displayProducts(filteredProducts);
+    }
+
+    function displayProducts(products) {
       const list = document.getElementById('product-list');
-      list.innerHTML = lista.map((p, i) => `
-        <div class='col d-flex'>
-          <div class='product-card flex-fill'>
-            <img src='${p.img}' alt='${p.nume}' class='img-fluid rounded mb-2' loading="lazy">
+      list.innerHTML = products.map((p, i) => `
+        <div class="col">
+          <div class="product-card">
+            <img src="${p.img}" alt="${p.nume}">
             <h5>${p.nume}</h5>
-            <p>Produs bisericesc autentic.</p>
-            <p><strong>${p.pret} RON</strong></p>
-            <button class='btn btn-danger' onclick="addToCart(${i})">Adaugă în coș</button>
+            <p>${p.pret} RON</p>
+            <button class="btn btn-danger" onclick="addToCart(${i})">Adaugă în coș</button>
           </div>
         </div>
       `).join('');
     }
 
-    function filtreazaProduse() {
-      const termen = document.getElementById('filtru-produse').value.toLowerCase();
-      const filtrate = produse.filter(p => p.nume.toLowerCase().includes(termen));
-      renderProducts(filtrate);
+    function showPage(pageId) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(page => page.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
     }
 
-    function showPage(id) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-      document.querySelector(`nav a[onclick*="${id}"]`)?.classList.add('active');
-      window.scrollTo(0, 0);
-    }
-
-    renderProducts();
+    // Inițializare
     updateCart();
+    displayProducts(produse);
   </script>
 </body>
 </html>
+
