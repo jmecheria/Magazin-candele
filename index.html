@@ -26,11 +26,13 @@
       padding: 1rem;
       background-color: #fff;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      transition: transform 0.2s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       height: 100%;
+      transform-style: preserve-3d;
     }
     .product-card:hover {
-      transform: scale(1.03);
+      transform: perspective(600px) translateZ(20px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
     footer {
       background-color: #8b0000;
@@ -70,7 +72,7 @@
     }
     #home::before {
       content: "";
-      background: url('candela-mica.jpg') center/cover no-repeat;
+      background: url('https://via.placeholder.com/1000x400?text=Produsele+noastre') center/cover no-repeat;
       position: absolute;
       top: 0;
       left: 0;
@@ -93,7 +95,7 @@
 </head>
 <body>
   <header>
-    <h1><img src="logo.jpg" alt="Logo" style="height:40px; vertical-align:middle; margin-right:10px;"> Magazin Candele</h1>
+    <h1><img src="https://cdn-icons-png.flaticon.com/512/2603/2603792.png" alt="Logo" style="height:40px; vertical-align:middle; margin-right:10px;"> Magazin Candele</h1>
     <nav>
       <a href="#" onclick="showPage('home')">Acasă</a>
       <a href="#" onclick="showPage('produse')">Produse</a>
@@ -133,6 +135,7 @@
         <form id="order-form" action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST">
           <input type="hidden" name="_subject" value="Comandă nouă de pe Magazin Candele">
           <input type="hidden" name="produse" id="produse-input">
+          <input type="hidden" name="_next" value="https://magazincandele.ro/"> <!-- Redirect către pagina principală -->
           <div class="mb-3">
             <label class="form-label">Nume complet</label>
             <input type="text" class="form-control" name="nume" required>
@@ -153,12 +156,12 @@
 
     <div id="termeni" class="page">
       <h2>Termeni și condiții</h2>
-      <p>Toate comenzile sunt procesate în conformitate cu legislația românească privind comerțul electronic. Aveți dreptul de a returna produsele în termen de 14 zile de la primire, în stare intactă. Pentru orice întrebare, ne puteți contacta.</p>
+      <p>Toate comenzile sunt procesate în conformitate cu legislația românească privind comerțul electronic. Aveți dreptul de a returna produsele în termen de 14 zile de la primire, în stare intactă. Pentru orice întrebare, ne puteți contacta la telefon sau email.</p>
     </div>
   </div>
 
   <footer>
-    <p>&copy; 2025 Magazin Candele | Contact: 0723 456 789 | Email: contact@magazincandele.ro</p>
+    <p>&copy; 2025 Magazin Candele | Contact: <a href="tel:+40723456789" style="color:white; text-decoration: underline;">0723 456 789</a> | Email: <a href="mailto:contact@magazincandele.ro" style="color:white; text-decoration: underline;">contact@magazincandele.ro</a> | <a href="#" onclick="showPage('termeni')" style="color:white; text-decoration: underline;">Termeni și condiții</a></p>
   </footer>
 
   <div id="google_translate_element" style="position: fixed; bottom: 10px; right: 10px;"></div>
@@ -170,14 +173,14 @@
   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
   <script>
-    const produse = [...];
+    const produse = [...]; // Listează produsele aici
     let cart = [];
 
     function renderProducts(lista = produse) {
       const list = document.getElementById('product-list');
       list.innerHTML = lista.map((p, i) => `
-        <div class='col'>
-          <div class='product-card h-100'>
+        <div class='col d-flex'>
+          <div class='product-card flex-fill'>
             <img src='${p.img}' alt='${p.nume}' class='img-fluid rounded mb-2'>
             <h5>${p.nume}</h5>
             <p>Produs bisericesc autentic.</p>
@@ -194,10 +197,14 @@
       renderProducts(filtrate);
     }
 
-    // restul funcțiilor rămân la fel
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo(0, 0); // opțional, revine sus pe pagină
+    }
+
     renderProducts();
     updateCart();
   </script>
 </body>
 </html>
-
