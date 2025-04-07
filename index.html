@@ -14,6 +14,7 @@
     body {
       background-color: #fdf6f0;
       font-family: 'Inter', sans-serif;
+      overflow-y: auto; /* Asigură-te că corpul paginii este derulabil */
     }
     header {
       background-color: #8b0000;
@@ -99,110 +100,100 @@
       text-align: center;
       padding-top: 150px;
     }
- .page {
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.page.active {
-  opacity: 1;
-}
+    .page {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .page.active {
+      opacity: 1;
+    }
     #cart-summary {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-  z-index: 1000;
-}
-#cart-summary img {
-  height: 30px;
-}
-#cart-count-badge {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  font-size: 0.8rem;
-  padding: 5px 7px;
-  border-radius: 50%;
-}
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+    #cart-summary img {
+      height: 30px;
+    }
+    #cart-count-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      font-size: 0.8rem;
+      padding: 5px 7px;
+      border-radius: 50%;
+    }
     #loader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #fff8f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 3000;
-  transition: opacity 0.8s ease;
-}
-
-#loader img {
-  width: 120px;
-  height: auto;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-#loader.fade-out {
-  opacity: 0;
-  pointer-events: none;
-}
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #fff8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+      transition: opacity 0.8s ease;
+    }
+    #loader img {
+      width: 120px;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    #loader.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
     #menu-toggle {
-  font-size: 1.2rem;
-}
-
-#main-nav a {
-  padding: 0.5rem;
-}
-
-@media (max-width: 768px) {
-  #main-nav.d-none {
-    display: none !important;
-  }
-
-  #main-nav.d-flex {
-    display: flex !important;
-    flex-direction: column;
-    align-items: center;
-  }
-}
+      font-size: 1.2rem;
+    }
+    #main-nav a {
+      padding: 0.5rem;
+    }
+    @media (max-width: 768px) {
+      #main-nav.d-none {
+        display: none !important;
+      }
+      #main-nav.d-flex {
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+      }
+    }
     #cart-summary.shake {
-  animation: shake 0.4s ease;
-}
-
-@keyframes shake {
-  0% { transform: translateX(0); }
-  20% { transform: translateX(-4px); }
-  40% { transform: translateX(4px); }
-  60% { transform: translateX(-4px); }
-  80% { transform: translateX(4px); }
-  100% { transform: translateX(0); }
-}
-
+      animation: shake 0.4s ease;
+    }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      20% { transform: translateX(-4px); }
+      40% { transform: translateX(4px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+      100% { transform: translateX(0); }
+    }
   </style>
 </head>
 <body>
   <header>
     <h1><img src="logo.jpg" alt="Logo Magazin Candele" style="height:40px; vertical-align:middle; margin-right:10px;"> Magazin Candele</h1>
-  <button id="menu-toggle" class="d-md-none btn btn-outline-light mb-2">
-  ☰ Meniu
-</button>
-
-<nav id="main-nav" class="d-none d-md-flex flex-column flex-md-row justify-content-center">
-  <a href="#" onclick="navigate('home')">Acasă</a>
-  <a href="#" onclick="navigate('produse')">Produse</a>
-  <a href="#" onclick="navigate('despre')">Despre noi</a>
-  <a href="#" onclick="navigate('termeni')">Termeni</a>
-</nav>
+    <button id="menu-toggle" class="d-md-none btn btn-outline-light mb-2">
+      ☰ Meniu
+    </button>
+    <nav id="main-nav" class="d-none d-md-flex flex-column flex-md-row justify-content-center">
+      <a href="#" onclick="navigate('home')">Acasă</a>
+      <a href="#" onclick="navigate('produse')">Produse</a>
+      <a href="#" onclick="navigate('despre')">Despre noi</a>
+      <a href="#" onclick="navigate('termeni')">Termeni</a>
+    </nav>
   </header>
-
-<div id="cart-summary" onclick="navigate('cart-page')">
-  <img src="cos.jpg" alt="Coș" style="height: 30px;">
-  <span class="badge bg-danger" id="cart-count-badge">0</span>
-</div>
-
+  <div id="cart-summary" onclick="navigate('cart-page')">
+    <img src="cos.jpg" alt="Coș" style="height: 30px;">
+    <span class="badge bg-danger" id="cart-count-badge">0</span>
+  </div>
   <div class="container mt-4">
     <div id="home" class="page active">
       <div id="home-content">
@@ -211,14 +202,12 @@
         <a href="#" class="btn btn-danger" onclick="navigate('produse')">Hai să începem</a>
       </div>
     </div>
-
     <div id="produse" class="page">
       <div class="mb-3">
         <input type="text" id="filtru-produse" class="form-control" placeholder="Caută produs..." onkeyup="filtreazaProduse()">
       </div>
       <div class="row row-cols-1 row-cols-md-3 g-4" id="product-list"></div>
     </div>
-
     <div id="cart-page" class="page">
       <h2>Coș de cumpărături</h2>
       <ul id="cart-items" class="list-group mb-3"></ul>
@@ -242,82 +231,70 @@
         </form>
       </div>
     </div>
-
     <div id="success" class="page">
       <h2>Mulțumim pentru comandă!</h2>
       <p>Veți fi contactat în curând pentru confirmare.</p>
       <a class="btn btn-success" onclick="navigate('produse')">Înapoi la produse</a>
     </div>
-
-  </div>
-<div id="despre" class="page">
-  <h2 class="mb-4">Despre noi</h2>
-
-  <p class="lead">Magazin Candele este un spațiu online dedicat tuturor celor care doresc să aducă în casele lor un strop de lumină, evlavie și tradiție ortodoxă.</p>
-  
-  <p>Comercializăm o gamă variată de produse bisericești autentice, atent selecționate de la furnizori de încredere din România. Ne asigurăm că fiecare articol îndeplinește standardele de calitate și respectă rânduiala ortodoxă.</p>
-
-  <div class="bg-light p-4 rounded shadow-sm my-4">
-    <h5 class="text-danger">📌 Ce ne definește:</h5>
-    <ul class="mb-0">
-      <li>Respect față de valorile și tradițiile ortodoxe</li>
-      <li>Produse atent alese, de la icoane și candele până la cărți de cult și tămâie</li>
-      <li>Livrare rapidă și comunicare clară cu clienții</li>
-    </ul>
-  </div>
-
-  <p>Fie că doriți o icoană pentru casa dumneavoastră sau o candelă pentru un dar de suflet, suntem aici să vă ajutăm cu produse de încredere și prețuri corecte.</p>
-
-  <figure class="mt-5">
-    <blockquote class="blockquote">
-      <p class="fst-italic">„Lumina unei candele aprinse e o rugăciune tăcută care se înalță spre cer.”</p>
-    </blockquote>
-    <figcaption class="blockquote-footer mt-2">
-      Tradiție populară
-    </figcaption>
-  </figure>
-</div>
-
+    <div id="despre" class="page">
+      <h2 class="mb-4">Despre noi</h2>
+      <p class="lead">Magazin Candele este un spațiu online dedicat tuturor celor care doresc să aducă în casele lor un strop de lumină, evlavie și tradiție ortodoxă.</p>
+      <p>Comercializăm o gamă variată de produse bisericești autentice, atent selecționate de la furnizori de încredere din România. Ne asigurăm că fiecare articol îndeplinește standardele de calitate și respectă rânduiala ortodoxă.</p>
+      <div class="bg-light p-4 rounded shadow-sm my-4">
+        <h5 class="text-danger">📌 Ce ne definește:</h5>
+        <ul class="mb-0">
+          <li>Respect față de valorile și tradițiile ortodoxe</li>
+          <li>Produse atent alese, de la icoane și candele până la cărți de cult și tămâie</li>
+          <li>Livrare rapidă și comunicare clară cu clienții</li>
+        </ul>
+      </div>
+      <p>Fie că doriți o icoană pentru casa dumneavoastră sau o candelă pentru un dar de suflet, suntem aici să vă ajutăm cu produse de încredere și prețuri corecte.</p>
+      <figure class="mt-5">
+        <blockquote class="blockquote">
+          <p class="fst-italic">„Lumina unei candele aprinse e o rugăciune tăcută care se înalță spre cer.”</p>
+        </blockquote>
+        <figcaption class="blockquote-footer mt-2">
+          Tradiție populară
+        </figcaption>
+      </figure>
+    </div>
     <div id="termeni" class="page">
-  <h2 class="mb-4">Termeni și condiții</h2>
-  <p class="lead">Vă rugăm să citiți cu atenție condițiile de funcționare ale magazinului nostru.</p>
-
-  <div class="bg-light p-3 rounded shadow-sm mb-4">
-    <h5 class="text-danger">📦 Livrare și procesare comenzi</h5>
-    <ul>
-      <li>Comenzile sunt procesate în 1–2 zile lucrătoare.</li>
-      <li>Livrarea se face prin curier rapid, cu plata ramburs.</li>
-      <li>Veți fi contactat telefonic pentru confirmarea comenzii.</li>
-    </ul>
+      <h2 class="mb-4">Termeni și condiții</h2>
+      <p class="lead">Vă rugăm să citiți cu atenție condițiile de funcționare ale magazinului nostru.</p>
+      <div class="bg-light p-3 rounded shadow-sm mb-4">
+        <h5 class="text-danger">📦 Livrare și procesare comenzi</h5>
+        <ul>
+          <li>Comenzile sunt procesate în 1–2 zile lucrătoare.</li>
+          <li>Livrarea se face prin curier rapid, cu plata ramburs.</li>
+          <li>Veți fi contactat telefonic pentru confirmarea comenzii.</li>
+        </ul>
+      </div>
+      <div class="bg-light p-3 rounded shadow-sm mb-4">
+        <h5 class="text-danger">🔁 Politica de retur</h5>
+        <ul>
+          <li>Produsele pot fi returnate în termen de 14 zile calendaristice.</li>
+          <li>Produsele trebuie să fie în stare originală, nefolosite.</li>
+          <li>Costul returului este suportat de client, cu excepția cazurilor în care produsul a fost livrat greșit sau este defect.</li>
+        </ul>
+      </div>
+      <div class="bg-light p-3 rounded shadow-sm mb-4">
+        <h5 class="text-danger">🔒 Protecția datelor</h5>
+        <p>Folosim datele dumneavoastră doar pentru procesarea comenzilor și nu le partajăm cu terți.</p>
+      </div>
+      <p class="text-muted mt-3">Prin plasarea unei comenzi, sunteți de acord cu acești termeni și condiții.</p>
+    </div>
   </div>
-
-  <div class="bg-light p-3 rounded shadow-sm mb-4">
-    <h5 class="text-danger">🔁 Politica de retur</h5>
-    <ul>
-      <li>Produsele pot fi returnate în termen de 14 zile calendaristice.</li>
-      <li>Produsele trebuie să fie în stare originală, nefolosite.</li>
-      <li>Costul returului este suportat de client, cu excepția cazurilor în care produsul a fost livrat greșit sau este defect.</li>
-    </ul>
-  </div>
-
-  <div class="bg-light p-3 rounded shadow-sm mb-4">
-    <h5 class="text-danger">🔒 Protecția datelor</h5>
-    <p>Folosim datele dumneavoastră doar pentru procesarea comenzilor și nu le partajăm cu terți.</p>
-  </div>
-
-  <p class="text-muted mt-3">Prin plasarea unei comenzi, sunteți de acord cu acești termeni și condiții.</p>
-</div>
-<footer>
-  <p>&copy; 2025 Magazin Candele | 
-    <a href="tel:+40723456789">0723 456 789</a> | 
-    <a href="mailto:contact@magazincandele.ro">contact@magazincandele.ro</a>
-  </p>
-  <div class="mt-3">
-    <a href="https://anpc.ro" target="_blank" rel="noopener">
-      <img src="anpc.jpg" alt="ANPC" style="height:40px;">
-    </a>
-  </div>
-</footer>
+  <footer>
+    <p>&copy; 2025 Magazin Candele | 
+      <a href="tel:+40723456789">0723 456 789</a> | 
+      <a href="mailto:contact@magazincandele.ro">contact@magazincandele.ro</a>
+    </p>
+    <div class="mt-3">
+      <a href="https://anpc.ro" target="_blank" rel="noopener">
+        <img src="anpc.jpg" alt="ANPC" style="height:40px;">
+      </a>
+    </div>
+  </footer>
   <script>
     const produse = [
       { nume: 'Candelă mică', pret: 10, img: 'candela-mica.jpg' },
@@ -331,13 +308,10 @@
       { nume: 'Icoană mare', pret: 100, img: 'icoană2.jpg' },
       { nume: 'Mir', pret: 20, img: 'mir.jpg' }
     ];
-
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
     function saveCart() {
       localStorage.setItem('cart', JSON.stringify(cart));
     }
-
     function updateCart() {
       document.getElementById('cart-count-badge').textContent = cart.length;
       let total = cart.reduce((s, p) => s + p.pret, 0);
@@ -351,85 +325,28 @@
       `).join('');
       document.getElementById('produse-input').value = cart.map(p => p.nume).join(', ');
     }
-
-  function addToCart(index) {
-  cart.push(produse[index]);
-  saveCart();
-  updateCart();
-
-  const cartSummary = document.getElementById('cart-summary');
-  const sound = document.getElementById('cart-sound');
-  sound.currentTime = 0;
-  sound.play();
-
-  cartSummary.classList.add('shake');
-  setTimeout(() => cartSummary.classList.remove('shake'), 500);
-}
-
+    function addToCart(index) {
+      cart.push(produse[index]);
+      saveCart();
+      updateCart();
+      const cartSummary = document.getElementById('cart-summary');
+      const sound = document.getElementById('cart-sound');
+      sound.currentTime = 0;
+      sound.play();
+      cartSummary.classList.add('shake');
+      setTimeout(() => cartSummary.classList.remove('shake'), 500);
+    }
     function removeFromCart(index) {
       cart.splice(index, 1);
       saveCart();
       updateCart();
     }
-
     function clearCart() {
       cart = [];
       saveCart();
       updateCart();
     }
-
     function filtreazaProduse() {
       const termen = document.getElementById('filtru-produse').value.toLowerCase();
       const filtrate = produse.filter(p => p.nume.toLowerCase().includes(termen));
-      renderProducts(filtrate);
-    }
-
-    function renderProducts(lista = produse) {
-      const list = document.getElementById('product-list');
-      list.innerHTML = lista.map((p, i) => `
-        <div class='col d-flex'>
-          <div class='product-card flex-fill'>
-            <img src='${p.img}' alt='${p.nume}' loading="lazy">
-            <h5>${p.nume}</h5>
-            <p><strong>${p.pret} RON</strong></p>
-            <button class='btn btn-danger' onclick="addToCart(${i})">Adaugă în coș</button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-function navigate(id) {
-  document.querySelectorAll('.page').forEach(p => {
-    p.classList.remove('active');
-  });
-
-  const nextPage = document.getElementById(id);
-  nextPage.classList.add('active');
-
-  localStorage.setItem('lastPage', id);
-  window.scrollTo(0, 0);
-}
-}
-    function handleFormSubmit() {
-      clearCart();
-      alert("Comandă trimisă cu succes!");
-      return true;
-    }
-
-window.addEventListener('load', () => {
-  const lastPage = localStorage.getItem('lastPage') || 'home';
-  navigate(lastPage);
-  renderProducts();
-  updateCart();
-});
-    window.addEventListener('load', () => {
-  setTimeout(() => {
-});
-    document.getElementById('menu-toggle').addEventListener('click', () => {
-  const nav = document.getElementById('main-nav');
-  nav.classList.toggle('d-none');
-});
-  </script>
-  <audio id="cart-sound" src="cos.mp3" preload="auto"></audio>
-</body>
-</html>
+      renderProducts(f
