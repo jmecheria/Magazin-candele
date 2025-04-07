@@ -346,7 +346,16 @@
       saveCart();
       updateCart();
     }
-    function filtreazaProduse() {
-      const termen = document.getElementById('filtru-produse').value.toLowerCase();
-      const filtrate = produse.filter(p => p.nume.toLowerCase().includes(termen));
-      renderProducts(f
+     function renderProducts(lista = produse) {
+      const list = document.getElementById('product-list');
+      list.innerHTML = lista.map((p, i) => `
+        <div class='col d-flex'>
+          <div class='product-card flex-fill'>
+            <img src='${p.img}' alt='${p.nume}' loading="lazy">
+            <h5>${p.nume}</h5>
+            <p><strong>${p.pret} RON</strong></p>
+            <button class='btn btn-danger' onclick="addToCart(${i})">Adaugă în coș</button>
+          </div>
+        </div>
+      `).join('');
+    }
