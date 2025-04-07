@@ -3,11 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Magazin de candele, icoane, tămâie și alte produse bisericești autentice. Comandă online cu livrare rapidă!">
   <title>Magazin Candele</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
   <style>
     body {
       background-color: #fdf6f0;
+      font-family: 'Inter', sans-serif;
     }
     header {
       background-color: #8b0000;
@@ -20,6 +23,10 @@
       margin: 0 1rem;
       text-decoration: none;
     }
+    nav a.active {
+      text-decoration: underline;
+      font-weight: bold;
+    }
     .product-card {
       border: 1px solid #ddd;
       border-radius: 10px;
@@ -28,10 +35,9 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       height: 100%;
-      transform-style: preserve-3d;
     }
     .product-card:hover {
-      transform: perspective(600px) translateZ(20px);
+      transform: scale(1.03);
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
     footer {
@@ -57,9 +63,6 @@
       border-radius: 10px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       z-index: 1000;
-    }
-    #cart-page {
-      margin-top: 2rem;
     }
     #cart-summary:hover {
       cursor: pointer;
@@ -96,7 +99,7 @@
 <body>
   <header>
     <h1><img src="logo.jpg" alt="Logo" style="height:40px; vertical-align:middle; margin-right:10px;"> Magazin Candele</h1>
-    <nav>
+    <nav class="d-flex flex-wrap justify-content-center">
       <a href="#" onclick="showPage('home')">Acasă</a>
       <a href="#" onclick="showPage('produse')">Produse</a>
       <a href="#" onclick="showPage('despre')">Despre noi</a>
@@ -130,12 +133,10 @@
       <button class="btn btn-warning mb-3" onclick="clearCart()">Golește coșul</button>
       <div id="cart-order-form" class="mb-5">
         <h3>Finalizează comanda</h3>
-        <p>Plata se face ramburs, la primirea coletului. Nu percepem taxe suplimentare pentru procesarea plății.</p>
-        <p>Livrarea durează între 1-3 zile lucrătoare. Veți fi contactat telefonic înainte de expediere pentru confirmare.</p>
         <form id="order-form" action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST">
           <input type="hidden" name="_subject" value="Comandă nouă de pe Magazin Candele">
           <input type="hidden" name="produse" id="produse-input">
-          <input type="hidden" name="_next" value="https://jmecheria.github.io/Magazin-candele/#"> <!-- Redirect către pagina principală -->
+          <input type="hidden" name="_next" value="https://jmecheria.github.io/Magazin-candele/#">
           <div class="mb-3">
             <label class="form-label">Nume complet</label>
             <input type="text" class="form-control" name="nume" required>
@@ -156,7 +157,7 @@
 
     <div id="termeni" class="page">
       <h2>Termeni și condiții</h2>
-      <p>Toate comenzile sunt procesate în conformitate cu legislația românească privind comerțul electronic. Aveți dreptul de a returna produsele în termen de 14 zile de la primire, în stare intactă. Pentru orice întrebare, ne puteți contacta la telefon sau email.</p>
+      <p>Toate comenzile sunt procesate în conformitate cu legislația românească privind comerțul electronic...</p>
     </div>
   </div>
 
@@ -164,16 +165,8 @@
     <p>&copy; 2025 Magazin Candele | Contact: <a href="tel:+40723456789" style="color:white; text-decoration: underline;">0723 456 789</a> | Email: <a href="mailto:contact@magazincandele.ro" style="color:white; text-decoration: underline;">contact@magazincandele.ro</a> | <a href="#" onclick="showPage('termeni')" style="color:white; text-decoration: underline;">Termeni și condiții</a></p>
   </footer>
 
-  <div id="google_translate_element" style="position: fixed; bottom: 10px; right: 10px;"></div>
-  <script type="text/javascript">
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({pageLanguage: 'ro'}, 'google_translate_element');
-    }
-  </script>
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
   <script>
-    const produse =  [
+    const produse = [
       {nume: 'Candelă mică', pret: 10, img: 'https://via.placeholder.com/300x200.png?text=Candelă+mică'},
       {nume: 'Candelă mare', pret: 20, img: 'https://via.placeholder.com/300x200.png?text=Candelă+mare'},
       {nume: 'Lumanare albă', pret: 5, img: 'https://via.placeholder.com/300x200.png?text=Lumanare+albă'},
@@ -186,14 +179,53 @@
       {nume: 'Ulei sfințit', pret: 8, img: 'https://via.placeholder.com/300x200.png?text=Ulei+sfințit'}
     ];
 
-    let cart = [];
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function saveCart() {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function updateCart() {
+      document.getElementById('cart-count').textContent = cart.length;
+      let total = cart.reduce((s, p) => s + p.pret, 0);
+      document.getElementById('cart-total').textContent = `${total} RON`;
+
+      const lista = document.getElementById('cart-items');
+      lista.innerHTML = cart.map((p, i) => `
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          ${p.nume} - ${p.pret} RON
+          <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${i})">Șterge</button>
+        </li>
+      `).join('');
+
+      document.getElementById('produse-input').value = cart.map(p => p.nume).join(', ');
+    }
+
+    function addToCart(index) {
+      cart.push(produse[index]);
+      saveCart();
+      updateCart();
+      alert(`"${produse[index].nume}" a fost adăugat în coș!`);
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      saveCart();
+      updateCart();
+    }
+
+    function clearCart() {
+      cart = [];
+      saveCart();
+      updateCart();
+    }
 
     function renderProducts(lista = produse) {
       const list = document.getElementById('product-list');
       list.innerHTML = lista.map((p, i) => `
         <div class='col d-flex'>
           <div class='product-card flex-fill'>
-            <img src='${p.img}' alt='${p.nume}' class='img-fluid rounded mb-2'>
+            <img src='${p.img}' alt='${p.nume}' class='img-fluid rounded mb-2' loading="lazy">
             <h5>${p.nume}</h5>
             <p>Produs bisericesc autentic.</p>
             <p><strong>${p.pret} RON</strong></p>
@@ -212,7 +244,9 @@
     function showPage(id) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById(id).classList.add('active');
-      window.scrollTo(0, 0); // opțional, revine sus pe pagină
+      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+      document.querySelector(`nav a[onclick*="${id}"]`)?.classList.add('active');
+      window.scrollTo(0, 0);
     }
 
     renderProducts();
@@ -220,3 +254,4 @@
   </script>
 </body>
 </html>
+
