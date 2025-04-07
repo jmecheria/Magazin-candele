@@ -72,7 +72,7 @@
     }
     #home::before {
       content: "";
-      background: url('https://via.placeholder.com/1000x400?text=Produsele+noastre') center/cover no-repeat;
+      background: url('candela-mare') center/cover no-repeat;
       position: absolute;
       top: 0;
       left: 0;
@@ -95,7 +95,7 @@
 </head>
 <body>
   <header>
-    <h1><img src="https://cdn-icons-png.flaticon.com/512/2603/2603792.png" alt="Logo" style="height:40px; vertical-align:middle; margin-right:10px;"> Magazin Candele</h1>
+    <h1><img src="logo.jpg" alt="Logo" style="height:40px; vertical-align:middle; margin-right:10px;"> Magazin Candele</h1>
     <nav>
       <a href="#" onclick="showPage('home')">Acasă</a>
       <a href="#" onclick="showPage('produse')">Produse</a>
@@ -135,7 +135,7 @@
         <form id="order-form" action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST">
           <input type="hidden" name="_subject" value="Comandă nouă de pe Magazin Candele">
           <input type="hidden" name="produse" id="produse-input">
-          <input type="hidden" name="_next" value="https://magazincandele.ro/"> <!-- Redirect către pagina principală -->
+          <input type="hidden" name="_next" value="https://jmecheria.github.io/Magazin-candele/#"> <!-- Redirect către pagina principală -->
           <div class="mb-3">
             <label class="form-label">Nume complet</label>
             <input type="text" class="form-control" name="nume" required>
@@ -173,7 +173,18 @@
   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
   <script>
-    const produse = [...]; // Listează produsele aici
+    const produse = [
+            {nume: 'Candelă mică', pret: 10, img: 'https://via.placeholder.com/300x200.png?text=Candelă+mică'},
+      {nume: 'Candelă mare', pret: 20, img: 'https://via.placeholder.com/300x200.png?text=Candelă+mare'},
+      {nume: 'Lumanare albă', pret: 5, img: 'https://via.placeholder.com/300x200.png?text=Lumanare+albă'},
+      {nume: 'Lumanare roșie', pret: 5, img: 'https://via.placeholder.com/300x200.png?text=Lumanare+roșie'},
+      {nume: 'Set pomelnice', pret: 15, img: 'https://via.placeholder.com/300x200.png?text=Set+pomelnice'},
+      {nume: 'Tămâie naturală', pret: 12, img: 'https://via.placeholder.com/300x200.png?text=Tămâie+naturală'},
+      {nume: 'Tămâie trandafir', pret: 14, img: 'https://via.placeholder.com/300x200.png?text=Tămâie+trandafir'},
+      {nume: 'Icoană mică', pret: 25, img: 'https://via.placeholder.com/300x200.png?text=Icoană+mică'},
+      {nume: 'Icoană mare', pret: 60, img: 'https://via.placeholder.com/300x200.png?text=Icoană+mare'},
+      {nume: 'Ulei sfințit', pret: 8, img: 'https://via.placeholder.com/300x200.png?text=Ulei+sfințit'}
+    ];
     let cart = [];
 
     function renderProducts(lista = produse) {
