@@ -185,9 +185,6 @@
   </style>
 </head>
 <body>
-  <div id="loader">
-  <img src="icoana3.jpg" alt="Sfântul Nicolae">
-</div>
   <header>
     <h1><img src="logo.jpg" alt="Logo Magazin Candele" style="height:40px; vertical-align:middle; margin-right:10px;"> Magazin Candele</h1>
   <button id="menu-toggle" class="d-md-none btn btn-outline-light mb-2">
@@ -430,8 +427,6 @@
     updateCart();
     window.addEventListener('load', () => {
   setTimeout(() => {
-    document.getElementById('loader').classList.add('fade-out');
-  }, 1500); // poți pune 2000 pentru 2 secunde
 });
     document.getElementById('menu-toggle').addEventListener('click', () => {
   const nav = document.getElementById('main-nav');
