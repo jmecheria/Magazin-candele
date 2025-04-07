@@ -138,10 +138,11 @@
       <button class="btn btn-warning mb-3" onclick="clearCart()">Golește coșul</button>
       <div id="cart-order-form" class="mb-5">
         <h3>Finalizează comanda</h3>
-        <form id="order-form" action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST" onsubmit="return handleFormSubmit()">
+        <form id="order-form" autocomplete="off" action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST" onsubmit="return handleFormSubmit()">
           <input type="hidden" name="_subject" value="Comandă nouă de pe Magazin Candele">
           <input type="hidden" name="produse" id="produse-input">
           <input type="hidden" name="_next" value="https://jmecheria.github.io/Magazin-candele/#success">
+          <input type="text" name="_honey" style="display:none">
           <div class="mb-3">
             <label class="form-label">Nume complet</label>
             <input type="text" class="form-control" name="nume" required>
