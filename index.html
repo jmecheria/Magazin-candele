@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Magazin de candele, icoane, tămâie și alte produse bisericești autentice. Comandă online cu livrare rapidă!">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Magazin Candele - Produse Bisericești Autentice">
+  <meta property="og:description" content="Cumpără candele, icoane, tămâie și alte obiecte ortodoxe autentice. Livrare rapidă în toată țara.">
+  <meta property="og:image" content="https://exemplu.ro/preview.jpg">
+  <meta property="og:url" content="https://magazincandele.ro">
   <title>Magazin Candele</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
@@ -12,20 +17,16 @@
       background-color: #fdf6f0;
       font-family: 'Inter', sans-serif;
     }
-    header {
+    header, footer {
       background-color: #8b0000;
       color: white;
-      padding: 1rem;
       text-align: center;
+      padding: 1rem;
     }
     nav a {
       color: white;
       margin: 0 1rem;
       text-decoration: none;
-    }
-    nav a.active {
-      text-decoration: underline;
-      font-weight: bold;
     }
     .product-card {
       border: 1px solid #ddd;
@@ -33,7 +34,6 @@
       padding: 1rem;
       background-color: #fff;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
       height: 100%;
     }
     .product-card:hover {
@@ -44,27 +44,9 @@
       width: 100%;
       height: 200px;
       object-fit: cover;
-      object-position: center;
     }
-    .product-card h5 {
-      min-height: 3em;
-    }
-    .product-card p {
-      min-height: 4em;
-    }
-    footer {
-      background-color: #8b0000;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-    }
-    .page {
-      display: none;
-    }
-    .page.active {
-      display: block;
-    }
+    .page { display: none; }
+    .page.active { display: block; }
     #cart-summary {
       position: fixed;
       top: 10px;
@@ -75,40 +57,9 @@
       border-radius: 10px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       z-index: 1000;
-    }
-    #cart-summary:hover {
       cursor: pointer;
-      background-color: #f7f7f7;
     }
-    #home {
-      position: relative;
-      overflow: hidden;
-      height: 400px;
-    }
-    #home::before {
-      content: "";
-      background: url('candela-mare') center/cover no-repeat;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      opacity: 0.3;
-      z-index: 0;
-    }
-    #home-content {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding-top: 150px;
-    }
-    #home-content h2 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-    #cart-summary img {
-      height: 30px;
-    }
+    #cart-summary img { height: 30px; }
     #cart-count-badge {
       position: absolute;
       top: -5px;
@@ -125,53 +76,48 @@
     <nav class="d-flex flex-wrap justify-content-center">
       <a href="#" onclick="showPage('home')">Acasă</a>
       <a href="#" onclick="showPage('produse')">Produse</a>
-      <a href="#" onclick="showPage('despre')">Despre noi</a>
+      <a href="#" onclick="showPage('despre')">Despre</a>
       <a href="#" onclick="showPage('termeni')">Termeni</a>
     </nav>
   </header>
 
   <div id="cart-summary" onclick="showPage('cart-page')">
-    <img src="cos.jpg" alt="Coș" style="height: 30px;">
+    <img src="cos.jpg" alt="Coș">
     <span class="badge bg-danger" id="cart-count-badge">0</span>
   </div>
 
   <div class="container mt-4">
-    <div id="home" class="page active">
-      <div id="home-content">
-        <h2>Bine ați venit!</h2>
-        <p>Descoperiți produsele noastre bisericești autentice.</p>
-        <a href="#" class="btn btn-danger" onclick="showPage('produse')">Hai să începem</a>
-      </div>
+    <div id="home" class="page active text-center">
+      <h2>Bine ați venit!</h2>
+      <p>Descoperiți produsele noastre bisericești autentice.</p>
+      <button class="btn btn-danger" onclick="showPage('produse')">Hai să încėpem</button>
     </div>
 
     <div id="produse" class="page">
-      <div class="mb-3">
-        <input type="text" id="filtru-produse" class="form-control" placeholder="Caută produs..." onkeyup="filtreazaProduse()">
-      </div>
+      <input type="text" id="filtru-produse" class="form-control mb-3" placeholder="Caută produs..." onkeyup="filtreazaProduse()">
       <div class="row row-cols-1 row-cols-md-3 g-4" id="product-list"></div>
     </div>
 
     <div id="cart-page" class="page">
       <h2>Coș de cumpărături</h2>
       <ul id="cart-items" class="list-group mb-3"></ul>
+      <div class="alert alert-info" id="cart-total-box">Total: <strong><span id="cart-total">0 RON</span></strong></div>
       <button class="btn btn-warning mb-3" onclick="clearCart()">Golește coșul</button>
-      <div id="cart-order-form" class="mb-5">
-        <h3>Finalizează comanda</h3>
-        <form id="order-form" action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST">
-          <input type="hidden" name="_subject" value="Comandă nouă de pe Magazin Candele">
-          <input type="hidden" name="produse" id="produse-input">
-          <input type="hidden" name="_next" value="https://jmecheria.github.io/Magazin-candele/#">
-          <div class="mb-3">
-            <label class="form-label">Nume complet</label>
-            <input type="text" class="form-control" name="nume" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Număr de telefon</label>
-            <input type="tel" class="form-control" name="telefon" required pattern="[0-9+ ]{10,15}" placeholder="Ex: +40723456789">
-          </div>
-          <button type="submit" class="btn btn-danger">Trimite comanda</button>
-        </form>
-      </div>
+      <form id="order-form" action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Comandă nouă de pe Magazin Candele">
+        <input type="hidden" name="_next" value="https://jmecheria.github.io/Magazin-candele/#">
+        <input type="hidden" name="produse" id="produse-input">
+        <input type="hidden" name="total" id="total-input">
+        <div class="mb-3">
+          <label class="form-label">Nume complet</label>
+          <input type="text" class="form-control" name="nume" required autocomplete="name">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Număr de telefon</label>
+          <input type="tel" class="form-control" name="telefon" required autocomplete="tel" pattern="[0-9+ ]{10,15}" placeholder="Ex: +40723456789">
+        </div>
+        <button type="submit" class="btn btn-danger">Trimite comanda</button>
+      </form>
     </div>
 
     <div id="despre" class="page">
@@ -208,46 +154,18 @@
           <li>Veți fi contactat telefonic pentru confirmarea comenzii.</li>
         </ul>
       </div>
-      <div class="bg-light p-3 rounded shadow-sm mb-4">
-        <h5 class="text-danger">🔁 Politica de retur</h5>
-        <ul>
-          <li>Produsele pot fi returnate în termen de 14 zile calendaristice.</li>
-          <li>Produsele trebuie să fie în stare originală, nefolosite.</li>
-          <li>Costul returului este suportat de client, cu excepția cazurilor în care produsul a fost livrat greșit sau este defect.</li>
-        </ul>
-      </div>
-      <div class="bg-light p-3 rounded shadow-sm mb-4">
-        <h5 class="text-danger">🔒 Protecția datelor</h5>
-        <p>Folosim datele dumneavoastră doar pentru procesarea comenzilor și nu le partajăm cu terți.</p>
-      </div>
-      <p class="text-muted mt-3">Prin plasarea unei comenzi, sunteți de acord cu acești termeni și condiții.</p>
-    </div>
-  </div>
-
   <footer>
-    <p>&copy; 2025 Magazin Candele | 
-      <a href="tel:+40723456789">0723 456 789</a> | 
-      <a href="mailto:contact@magazincandele.ro">contact@magazincandele.ro</a>
-    </p>
-    <div class="mt-3">
-      <a href="https://anpc.ro" target="_blank" rel="noopener">
-        <img src="anpc.jpg" alt="ANPC" style="height:40px;">
-      </a>
-    </div>
+    <p>&copy; 2025 Magazin Candele | <a href="tel:+40723456789">0723 456 789</a> | <a href="mailto:contact@magazincandele.ro">contact@magazincandele.ro</a></p>
   </footer>
 
   <script>
     const produse = [
       {nume: 'Candelă mică', pret: 10, img: 'candela-mica.jpg'},
       {nume: 'Candelă mare', pret: 20, img: 'candela-mare.jpg'},
-      {nume: 'Lumanare înviere', pret: 50, img: 'lumânare.jpg'},
+      {nume: 'Lumânare înviere', pret: 50, img: 'lumânare.jpg'},
       {nume: 'Psaltire', pret: 40, img: 'psaltire.jpg'},
-      {nume: 'Ceaslov', pret: 70, img: 'Ceaslov.jpg'},
-      {nume: 'Pomelnic anual', pret: 100, img: 'pomelnic.jpg'},
-      {nume: 'Tămâie naturală', pret: 10, img: 'tămâie.jpg'},
-      {nume: 'Icoană mică', pret: 40, img: 'icoană1.jpg'},
-      {nume: 'Icoană mare', pret: 100, img: 'icoană2.jpg'},
-      {nume: 'Mir', pret: 20, img: 'mir.jpg'}
+      {nume: 'Ceaslov', pret: 70, img: 'ceaslov.jpg'},
+      {nume: 'Pomelnic anual', pret: 100, img: 'pomelnic.jpg'}
     ];
 
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -258,24 +176,27 @@
 
     function updateCart() {
       document.getElementById('cart-count-badge').textContent = cart.length;
-      let total = cart.reduce((s, p) => s + p.pret, 0);
-      document.getElementById('cart-total').textContent = `${total} RON`;
 
       const lista = document.getElementById('cart-items');
-      lista.innerHTML = cart.map((p, i) => `
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          ${p.nume} - ${p.pret} RON
-          <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${i})">Șterge</button>
-        </li>
-      `).join('');
+      let total = 0;
+      lista.innerHTML = cart.map((p, i) => {
+        total += p.pret;
+        return `<li class="list-group-item d-flex justify-content-between align-items-center">
+                  ${p.nume} - ${p.pret} RON
+                  <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${i})">Șterge</button>
+                </li>`;
+      }).join('');
 
-      document.getElementById('produse-input').value = cart.map(p => p.nume).join(', ');
+      document.getElementById('cart-total').textContent = `${total} RON`;
+      document.getElementById('produse-input').value = cart.map(p => `${p.nume} (${p.pret} RON)`).join(', ');
+      document.getElementById('total-input').value = `${total} RON`;
     }
 
     function addToCart(index) {
       cart.push(produse[index]);
       saveCart();
       updateCart();
+      alert(`${produse[index].nume} a fost adăugat în coș.`);
     }
 
     function removeFromCart(index) {
@@ -300,26 +221,27 @@
       const list = document.getElementById('product-list');
       list.innerHTML = products.map((p, i) => `
         <div class="col">
-          <div class="product-card">
-            <img src="${p.img}" alt="${p.nume}">
-            <h5>${p.nume}</h5>
+          <div class="product-card d-flex flex-column justify-content-between">
+            <img src="${p.img}" alt="${p.nume}" loading="lazy">
+            <h5 class="mt-2">${p.nume}</h5>
             <p>${p.pret} RON</p>
-            <button class="btn btn-danger" onclick="addToCart(${i})">Adaugă în coș</button>
+            <button class="btn btn-danger w-100 mt-auto" onclick="addToCart(${i})">🛒 Adaugă în coș</button>
           </div>
         </div>
       `).join('');
     }
 
-    function showPage(pageId) {
-      const pages = document.querySelectorAll('.page');
-      pages.forEach(page => page.classList.remove('active'));
-      document.getElementById(pageId).classList.add('active');
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      if(id === 'cart-page') updateCart();
     }
 
     // Inițializare
-    updateCart();
     displayProducts(produse);
+    updateCart();
   </script>
 </body>
 </html>
+
 
