@@ -153,25 +153,38 @@
             <label class="form-label">Nume complet</label>
             <input type="text" class="form-control" name="nume" required>
           </div>
-          <div class="mb-3">
-            <label class="form-label">Adresă de livrare</label>
-            <textarea class="form-control" name="adresa" rows="3" required></textarea>
-          </div>
+         <div class="mb-3">
+  <label class="form-label">Număr de telefon</label>
+  <input type="tel" class="form-control" name="telefon" required pattern="[0-9+ ]{10,15}" placeholder="Ex: +40723456789">
+</div>
           <button type="submit" class="btn btn-danger">Trimite comanda</button>
         </form>
       </div>
     </div>
 
-    <div id="despre" class="page">
-      <h2>Despre noi</h2>
-      <p>„Magazin Candele” este un mic atelier dedicat promovării obiectelor de cult, lucrate cu grijă și respect pentru tradiție...</p>
-    </div>
+   <div id="despre" class="page">
+  <h2 class="mb-4">Despre magazinul nostru</h2>
+  <p class="lead">Magazin Candele este un spațiu dedicat sufletului, unde credința întâlnește tradiția și grija pentru detalii.</p>
 
-    <div id="termeni" class="page">
-      <h2>Termeni și condiții</h2>
-      <p>Toate comenzile sunt procesate în conformitate cu legislația românească privind comerțul electronic...</p>
-    </div>
+  <p>Nu producem obiectele de cult, dar colaborăm cu furnizori de încredere din România, mănăstiri, ateliere bisericești și producători locali, care respectă canoanele și spiritul ortodox autentic.</p>
+
+  <div class="my-3 p-3 bg-light rounded shadow-sm">
+    <h5 class="text-danger">Ce găsiți la noi:</h5>
+    <ul class="mb-0">
+      <li>Candele de diverse dimensiuni și modele</li>
+      <li>Icoane pictate sau tipărite, mici și mari</li>
+      <li>Tămâie naturală, mir, cărți de cult (Psaltire, Ceaslov, etc.)</li>
+      <li>Pomelnice pentru pomenirea celor dragi</li>
+    </ul>
   </div>
+
+  <p>Ne dorim ca fiecare produs să ajungă la dumneavoastră în siguranță și să aducă pace, lumină și binecuvântare în casele celor care le folosesc.</p>
+
+  <blockquote class="blockquote mt-4">
+    <p class="mb-0">„Lumina candelei este o rugăciune aprinsă către Dumnezeu.”</p>
+    <footer class="blockquote-footer">Tradiție ortodoxă</footer>
+  </blockquote>
+</div>
 
   <footer>
     <p>&copy; 2025 Magazin Candele | Contact: <a href="tel:+40723456789" style="color:white; text-decoration: underline;">0723 456 789</a> | Email: <a href="mailto:contact@magazincandele.ro" style="color:white; text-decoration: underline;">contact@magazincandele.ro</a> | <a href="#" onclick="showPage('termeni')" style="color:white; text-decoration: underline;">Termeni și condiții</a></p>
