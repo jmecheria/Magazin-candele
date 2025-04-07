@@ -99,22 +99,113 @@
       text-align: center;
       padding-top: 150px;
     }
+    .page {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.page.active {
+  display: block;
+  opacity: 1;
+}
+    #cart-summary {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  z-index: 1000;
+}
+#cart-summary img {
+  height: 30px;
+}
+#cart-count-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  font-size: 0.8rem;
+  padding: 5px 7px;
+  border-radius: 50%;
+}
+    #loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fff8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  transition: opacity 0.8s ease;
+}
+
+#loader img {
+  width: 120px;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+#loader.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+    #menu-toggle {
+  font-size: 1.2rem;
+}
+
+#main-nav a {
+  padding: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  #main-nav.d-none {
+    display: none !important;
+  }
+
+  #main-nav.d-flex {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+    #cart-summary.shake {
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
   </style>
 </head>
 <body>
+  <div id="loader">
+  <img src="icoana3.jpg" alt="Sfântul Nicolae">
+</div>
   <header>
     <h1><img src="logo.jpg" alt="Logo Magazin Candele" style="height:40px; vertical-align:middle; margin-right:10px;"> Magazin Candele</h1>
-    <nav class="d-flex flex-wrap justify-content-center">
-      <a href="#" onclick="navigate('home')">Acasă</a>
-      <a href="#" onclick="navigate('produse')">Produse</a>
-      <a href="#" onclick="navigate('despre')">Despre noi</a>
-      <a href="#" onclick="navigate('termeni')">Termeni</a>
-    </nav>
+  <button id="menu-toggle" class="d-md-none btn btn-outline-light mb-2">
+  ☰ Meniu
+</button>
+
+<nav id="main-nav" class="d-none d-md-flex flex-column flex-md-row justify-content-center">
+  <a href="#" onclick="navigate('home')">Acasă</a>
+  <a href="#" onclick="navigate('produse')">Produse</a>
+  <a href="#" onclick="navigate('despre')">Despre noi</a>
+  <a href="#" onclick="navigate('termeni')">Termeni</a>
+</nav>
   </header>
 
-  <div id="cart-summary" onclick="navigate('cart-page')">
-    <strong>Coș:</strong> <span id="cart-count">0</span> produse | Total: <span id="cart-total">0 RON</span>
-  </div>
+<div id="cart-summary" onclick="navigate('cart-page')">
+  <img src="cart-icon.svg" alt="Coș" style="height: 30px;">
+  <span class="badge bg-danger" id="cart-count-badge">0</span>
+</div>
 
   <div class="container mt-4">
     <div id="home" class="page active">
@@ -252,7 +343,7 @@
     }
 
     function updateCart() {
-      document.getElementById('cart-count').textContent = cart.length;
+      document.getElementById('cart-count-badge').textContent = cart.length;
       let total = cart.reduce((s, p) => s + p.pret, 0);
       document.getElementById('cart-total').textContent = `${total} RON`;
       const lista = document.getElementById('cart-items');
@@ -265,12 +356,19 @@
       document.getElementById('produse-input').value = cart.map(p => p.nume).join(', ');
     }
 
-    function addToCart(index) {
-      cart.push(produse[index]);
-      saveCart();
-      updateCart();
-      alert("Produs adăugat în coș!");
-    }
+  function addToCart(index) {
+  cart.push(produse[index]);
+  saveCart();
+  updateCart();
+
+  const cartSummary = document.getElementById('cart-summary');
+  const sound = document.getElementById('cart-sound');
+  sound.currentTime = 0;
+  sound.play();
+
+  cartSummary.classList.add('shake');
+  setTimeout(() => cartSummary.classList.remove('shake'), 500);
+}
 
     function removeFromCart(index) {
       cart.splice(index, 1);
@@ -304,13 +402,22 @@
       `).join('');
     }
 
-    function navigate(id) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      localStorage.setItem('lastPage', id);
-      window.scrollTo(0, 0);
-    }
+  function navigate(id) {
+  document.querySelectorAll('.page').forEach(p => {
+    p.classList.remove('active');
+    setTimeout(() => p.style.display = 'none', 400);
+  });
 
+  const nextPage = document.getElementById(id);
+  nextPage.style.display = 'block';
+
+  setTimeout(() => {
+    nextPage.classList.add('active');
+  }, 10);
+
+  localStorage.setItem('lastPage', id);
+  window.scrollTo(0, 0);
+}
     function handleFormSubmit() {
       clearCart();
       alert("Comandă trimisă cu succes!");
@@ -321,6 +428,16 @@
     navigate(lastPage);
     renderProducts();
     updateCart();
+    window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('fade-out');
+  }, 1500); // poți pune 2000 pentru 2 secunde
+});
+    document.getElementById('menu-toggle').addEventListener('click', () => {
+  const nav = document.getElementById('main-nav');
+  nav.classList.toggle('d-none');
+});
   </script>
+  <audio id="cart-sound" src="cos.mp3" preload="auto"></audio>
 </body>
 </html>
