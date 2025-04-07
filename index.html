@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Magazin de candele, icoane, tămâie și alte produse bisericești autentice. Comandă online cu livrare rapidă!">
+  <meta name="keywords" content="candele, icoane, tămâie, produse bisericești, ortodox, lumânări, mir, psaltire">
+  <meta property="og:title" content="Magazin Candele">
+  <meta property="og:image" content="logo.jpg">
   <title>Magazin Candele</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
@@ -46,12 +49,6 @@
       object-fit: cover;
       object-position: center;
     }
-    .product-card h5 {
-      min-height: 3em;
-    }
-    .product-card p {
-      min-height: 4em;
-    }
     footer {
       background-color: #8b0000;
       color: white;
@@ -87,7 +84,7 @@
     }
     #home::before {
       content: "";
-      background: url('candela-mare') center/cover no-repeat;
+      background: url('candela-mare.jpg') center/cover no-repeat;
       position: absolute;
       top: 0;
       left: 0;
@@ -102,24 +99,20 @@
       text-align: center;
       padding-top: 150px;
     }
-    #home-content h2 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
   </style>
 </head>
 <body>
   <header>
-    <h1><img src="logo.jpg" alt="Logo" style="height:40px; vertical-align:middle; margin-right:10px;"> Magazin Candele</h1>
+    <h1><img src="logo.jpg" alt="Logo Magazin Candele" style="height:40px; vertical-align:middle; margin-right:10px;"> Magazin Candele</h1>
     <nav class="d-flex flex-wrap justify-content-center">
-      <a href="#" onclick="showPage('home')">Acasă</a>
-      <a href="#" onclick="showPage('produse')">Produse</a>
-      <a href="#" onclick="showPage('despre')">Despre noi</a>
-      <a href="#" onclick="showPage('termeni')">Termeni</a>
+      <a href="#" onclick="navigate('home')">Acasă</a>
+      <a href="#" onclick="navigate('produse')">Produse</a>
+      <a href="#" onclick="navigate('despre')">Despre noi</a>
+      <a href="#" onclick="navigate('termeni')">Termeni</a>
     </nav>
   </header>
 
-  <div id="cart-summary" onclick="showPage('cart-page')">
+  <div id="cart-summary" onclick="navigate('cart-page')">
     <strong>Coș:</strong> <span id="cart-count">0</span> produse | Total: <span id="cart-total">0 RON</span>
   </div>
 
@@ -128,7 +121,7 @@
       <div id="home-content">
         <h2>Bine ați venit!</h2>
         <p>Descoperiți produsele noastre bisericești autentice.</p>
-        <a href="#" class="btn btn-danger" onclick="showPage('produse')">Hai să începem</a>
+        <a href="#" class="btn btn-danger" onclick="navigate('produse')">Hai să începem</a>
       </div>
     </div>
 
@@ -145,101 +138,47 @@
       <button class="btn btn-warning mb-3" onclick="clearCart()">Golește coșul</button>
       <div id="cart-order-form" class="mb-5">
         <h3>Finalizează comanda</h3>
-        <form id="order-form" action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST">
+        <form id="order-form" action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST" onsubmit="return handleFormSubmit()">
           <input type="hidden" name="_subject" value="Comandă nouă de pe Magazin Candele">
           <input type="hidden" name="produse" id="produse-input">
-          <input type="hidden" name="_next" value="https://jmecheria.github.io/Magazin-candele/#">
+          <input type="hidden" name="_next" value="https://jmecheria.github.io/Magazin-candele/#success">
           <div class="mb-3">
             <label class="form-label">Nume complet</label>
             <input type="text" class="form-control" name="nume" required>
           </div>
-         <div class="mb-3">
-  <label class="form-label">Număr de telefon</label>
-  <input type="tel" class="form-control" name="telefon" required pattern="[0-9+ ]{10,15}" placeholder="Ex: +40723456789">
-</div>
+          <div class="mb-3">
+            <label class="form-label">Număr de telefon</label>
+            <input type="tel" class="form-control" name="telefon" required pattern="[0-9+ ]{10,15}" placeholder="Ex: +40723456789">
+          </div>
           <button type="submit" class="btn btn-danger">Trimite comanda</button>
         </form>
       </div>
     </div>
-<div id="despre" class="page">
-  <h2 class="mb-4">Despre noi</h2>
 
-  <p class="lead">Magazin Candele este un spațiu online dedicat tuturor celor care doresc să aducă în casele lor un strop de lumină, evlavie și tradiție ortodoxă.</p>
-  
-  <p>Comercializăm o gamă variată de produse bisericești autentice, atent selecționate de la furnizori de încredere din România. Ne asigurăm că fiecare articol îndeplinește standardele de calitate și respectă rânduiala ortodoxă.</p>
+    <div id="success" class="page">
+      <h2>Mulțumim pentru comandă!</h2>
+      <p>Veți fi contactat în curând pentru confirmare.</p>
+      <a class="btn btn-success" onclick="navigate('produse')">Înapoi la produse</a>
+    </div>
 
-  <div class="bg-light p-4 rounded shadow-sm my-4">
-    <h5 class="text-danger">📌 Ce ne definește:</h5>
-    <ul class="mb-0">
-      <li>Respect față de valorile și tradițiile ortodoxe</li>
-      <li>Produse atent alese, de la icoane și candele până la cărți de cult și tămâie</li>
-      <li>Livrare rapidă și comunicare clară cu clienții</li>
-    </ul>
   </div>
-
-  <p>Fie că doriți o icoană pentru casa dumneavoastră sau o candelă pentru un dar de suflet, suntem aici să vă ajutăm cu produse de încredere și prețuri corecte.</p>
-
-  <figure class="mt-5">
-    <blockquote class="blockquote">
-      <p class="fst-italic">„Lumina unei candele aprinse e o rugăciune tăcută care se înalță spre cer.”</p>
-    </blockquote>
-    <figcaption class="blockquote-footer mt-2">
-      Tradiție populară
-    </figcaption>
-  </figure>
-</div>
-
-    <div id="termeni" class="page">
-  <h2 class="mb-4">Termeni și condiții</h2>
-  <p class="lead">Vă rugăm să citiți cu atenție condițiile de funcționare ale magazinului nostru.</p>
-
-  <div class="bg-light p-3 rounded shadow-sm mb-4">
-    <h5 class="text-danger">📦 Livrare și procesare comenzi</h5>
-    <ul>
-      <li>Comenzile sunt procesate în 1–2 zile lucrătoare.</li>
-      <li>Livrarea se face prin curier rapid, cu plata ramburs.</li>
-      <li>Veți fi contactat telefonic pentru confirmarea comenzii.</li>
-    </ul>
-  </div>
-
-  <div class="bg-light p-3 rounded shadow-sm mb-4">
-    <h5 class="text-danger">🔁 Politica de retur</h5>
-    <ul>
-      <li>Produsele pot fi returnate în termen de 14 zile calendaristice.</li>
-      <li>Produsele trebuie să fie în stare originală, nefolosite.</li>
-      <li>Costul returului este suportat de client, cu excepția cazurilor în care produsul a fost livrat greșit sau este defect.</li>
-    </ul>
-  </div>
-
-  <div class="bg-light p-3 rounded shadow-sm mb-4">
-    <h5 class="text-danger">🔒 Protecția datelor</h5>
-    <p>Folosim datele dumneavoastră doar pentru procesarea comenzilor și nu le partajăm cu terți.</p>
-  </div>
-
-  <p class="text-muted mt-3">Prin plasarea unei comenzi, sunteți de acord cu acești termeni și condiții.</p>
-</div>
 
   <footer>
-    <p>&copy; 2025 Magazin Candele | Contact: <a href="tel:+40723456789" style="color:white; text-decoration: underline;">0723 456 789</a> | Email: <a href="mailto:contact@magazincandele.ro" style="color:white; text-decoration: underline;">contact@magazincandele.ro</a> | <a href="#" onclick="showPage('termeni')" style="color:white; text-decoration: underline;">Termeni și condiții</a></p>
-    <div class="mt-3">
-      <a href="https://anpc.ro/" target="_blank" rel="noopener noreferrer">
-        <img src="anpc.jpg" alt="Logo ANPC" style="max-height: 50px;">
-      </a>
-    </div>
+    <p>&copy; 2025 Magazin Candele | <a href="tel:+40723456789">0723 456 789</a> | <a href="mailto:contact@magazincandele.ro">contact@magazincandele.ro</a></p>
   </footer>
 
   <script>
     const produse = [
-      {nume: 'Candelă mică', pret: 10, img: 'candela-mica.jpg'},
-      {nume: 'Candelă mare', pret: 20, img: 'candela-mare.jpg'},
-      {nume: 'Lumanare înviere', pret: 50, img: 'lumânare.jpg'},
-      {nume: 'Psaltire', pret: 40, img: 'psaltire.jpg'},
-      {nume: 'Ceaslov', pret: 70, img: 'Ceaslov.jpg'},
-      {nume: 'Pomelnic anual', pret: 100, img: 'pomelnic.jpg'},
-      {nume: 'Tămâie naturală', pret: 10, img: 'tămâie.jpg'},
-      {nume: 'Icoană mică', pret: 40, img: 'icoană1.jpg'},
-      {nume: 'Icoană mare', pret: 100, img: 'icoană2.jpg'},
-      {nume: 'Mir', pret: 20, img: 'mir.jpg'}
+      { nume: 'Candelă mică', pret: 10, img: 'candela-mica.jpg' },
+      { nume: 'Candelă mare', pret: 20, img: 'candela-mare.jpg' },
+      { nume: 'Lumanare înviere', pret: 50, img: 'lumânare.jpg' },
+      { nume: 'Psaltire', pret: 40, img: 'psaltire.jpg' },
+      { nume: 'Ceaslov', pret: 70, img: 'Ceaslov.jpg' },
+      { nume: 'Pomelnic anual', pret: 100, img: 'pomelnic.jpg' },
+      { nume: 'Tămâie naturală', pret: 10, img: 'tămâie.jpg' },
+      { nume: 'Icoană mică', pret: 40, img: 'icoană1.jpg' },
+      { nume: 'Icoană mare', pret: 100, img: 'icoană2.jpg' },
+      { nume: 'Mir', pret: 20, img: 'mir.jpg' }
     ];
 
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -252,7 +191,6 @@
       document.getElementById('cart-count').textContent = cart.length;
       let total = cart.reduce((s, p) => s + p.pret, 0);
       document.getElementById('cart-total').textContent = `${total} RON`;
-
       const lista = document.getElementById('cart-items');
       lista.innerHTML = cart.map((p, i) => `
         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -260,7 +198,6 @@
           <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${i})">Șterge</button>
         </li>
       `).join('');
-
       document.getElementById('produse-input').value = cart.map(p => p.nume).join(', ');
     }
 
@@ -268,6 +205,7 @@
       cart.push(produse[index]);
       saveCart();
       updateCart();
+      alert("Produs adăugat în coș!");
     }
 
     function removeFromCart(index) {
@@ -282,14 +220,19 @@
       updateCart();
     }
 
+    function filtreazaProduse() {
+      const termen = document.getElementById('filtru-produse').value.toLowerCase();
+      const filtrate = produse.filter(p => p.nume.toLowerCase().includes(termen));
+      renderProducts(filtrate);
+    }
+
     function renderProducts(lista = produse) {
       const list = document.getElementById('product-list');
       list.innerHTML = lista.map((p, i) => `
         <div class='col d-flex'>
           <div class='product-card flex-fill'>
-            <img src='${p.img}' alt='${p.nume}' class='img-fluid rounded mb-2' loading="lazy">
+            <img src='${p.img}' alt='${p.nume}' loading="lazy">
             <h5>${p.nume}</h5>
-            <p>Produs bisericesc autentic.</p>
             <p><strong>${p.pret} RON</strong></p>
             <button class='btn btn-danger' onclick="addToCart(${i})">Adaugă în coș</button>
           </div>
@@ -297,24 +240,23 @@
       `).join('');
     }
 
-    function filtreazaProduse() {
-      const termen = document.getElementById('filtru-produse').value.toLowerCase();
-      const filtrate = produse.filter(p => p.nume.toLowerCase().includes(termen));
-      renderProducts(filtrate);
-    }
-
-    function showPage(id) {
+    function navigate(id) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById(id).classList.add('active');
-      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-      document.querySelector(`nav a[onclick*="${id}"]`)?.classList.add('active');
+      localStorage.setItem('lastPage', id);
       window.scrollTo(0, 0);
     }
 
+    function handleFormSubmit() {
+      clearCart();
+      alert("Comandă trimisă cu succes!");
+      return true;
+    }
+
+    const lastPage = localStorage.getItem('lastPage') || 'home';
+    navigate(lastPage);
     renderProducts();
     updateCart();
   </script>
 </body>
 </html>
-
-
