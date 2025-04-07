@@ -1,234 +1,214 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Magazin Candele</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <style>
-    /* Stilizare generală */
     body {
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f7f7f7;
-      color: #333;
+      background-color: #fdf6f0;
+    }
+    header {
+      background-color: #8b0000;
+      color: white;
+      padding: 1rem;
       text-align: center;
     }
-
-    h1, h2 {
-      font-family: 'Georgia', serif;
-      color: #d23c3c;
-    }
-
-    header {
-      background-color: #d23c3c;
+    nav a {
       color: white;
-      padding: 15px 0;
+      margin: 0 1rem;
+      text-decoration: none;
     }
-
-    header img {
-      width: 100px;
-      height: auto;
-    }
-
-    .company-name {
-      font-size: 24px;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-
-    .lang-select {
-      position: absolute;
-      top: 20px;
-      right: 20px;
+    .product-card {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 1rem;
       background-color: #fff;
-      border: 1px solid #ddd;
-      padding: 5px 10px;
-      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-
-    .container {
-      max-width: 1200px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .product {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 20px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 15px;
-      background-color: #fff;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s;
-    }
-
-    .product:hover {
-      transform: scale(1.05);
-    }
-
-    .product img {
-      width: 100%;
-      max-width: 250px;
-      border-radius: 10px;
-    }
-
-    .product h2 {
-      margin-top: 10px;
-    }
-
-    input[type="number"],input[type="text"],input[type="tel"] {
-      padding: 10px;
-      width: 80%;
-      margin: 10px 0;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: 16px;
-    }
-
-    button {
-      padding: 10px 20px;
-      background-color: #d23c3c;
+    footer {
+      background-color: #8b0000;
       color: white;
-      border: none;
-      font-size: 18px;
-      border-radius: 5px;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+    .page {
+      display: none;
+    }
+    .page.active {
+      display: block;
+    }
+    #cart-summary {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      z-index: 1000;
+    }
+    #cart-page {
+      margin-top: 2rem;
+    }
+    #cart-summary:hover {
       cursor: pointer;
-      transition: background-color 0.3s;
+      background-color: #f7f7f7;
     }
-
-    button:hover {
-      background-color: #a12a2a;
-    }
-
-    .confirmation {
-      margin-top: 20px;
-      font-weight: bold;
-      color: green;
-    }
-
-    /* Responsivitate */
-    @media (max-width: 768px) {
-      .product {
-        flex-direction: row;
-      }
-
-      .product img {
-        max-width: 150px;
-      }
-    }
-
   </style>
 </head>
 <body>
-
   <header>
-    <img src="logo.jpg" alt="Logo" />
-    <h1>Magazin Candele</h1>
-    <div class="company-name">Magazin candele</div>
-    <select class="lang-select" onchange="changeLanguage(event)">
-      <option value="ro">Română</option>
-      <option value="en">English</option>
-    </select>
+    <h1><img src="https://cdn-icons-png.flaticon.com/512/2603/2603792.png" alt="Logo" style="height:40px; vertical-align:middle; margin-right:10px;"> Magazin Candele</h1>
+    <nav>
+      <a href="#" onclick="showPage('home')">Acasă</a>
+      <a href="#" onclick="showPage('produse')">Produse</a>
+      <a href="#" onclick="showPage('despre')">Despre noi</a>
+    </nav>
   </header>
 
-  <div class="container">
-    <form action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST" onsubmit="return completeOrder()">
-      
-      <!-- Produse -->
-      <div class="product">
-        <img src="candela-mica.jpg" alt="Candela mica" />
-        <h2 id="product1-title">Candelă mică - 10 lei</h2>
-        <label for="smallQty" id="product1-quantity-label">Cantitate:</label>
-        <input type="number" id="smallQty" name="Candele mici" min="0" value="0" />
-      </div>
-
-      <div class="product">
-        <img src="candela-mare.jpg" alt="Candela mare" />
-        <h2 id="product2-title">Candelă mare - 12 lei</h2>
-        <label for="largeQty" id="product2-quantity-label">Cantitate:</label>
-        <input type="number" id="largeQty" name="Candele mari" min="0" value="0" />
-      </div>
-
-      <!-- Date client -->
-      <div class="form-section">
-        <h2 id="client-title">Date facturare</h2>
-        <input type="text" name="Nume" id="name-input" placeholder="Numele tău" required />
-        <input type="tel" name="Telefon" id="phone-input" placeholder="Număr de telefon" required />
-      </div>
-
-      <!-- Trimite comanda -->
-      <input type="hidden" name="_subject" value="Nouă comandă de pe site!">
-      <input type="hidden" name="_captcha" value="false" />
-      
-      <!-- Redirecționare după trimiterea formularului -->
-      <input type="hidden" name="_next" value="https://jmecheria.github.io/Magazin-candele/" />
-      
-      <button type="submit">Trimite comanda</button>
-    </form>
-
-    <div class="confirmation" id="confirmationMessage"></div>
+  <div id="cart-summary" onclick="showPage('cart-page')">
+    <strong>Coș:</strong> <span id="cart-count">0</span> produse | Total: <span id="cart-total">0 RON</span>
   </div>
 
-  <script>
-    function completeOrder() {
-      const smallQty = parseInt(document.getElementById('smallQty').value) || 0;
-      const largeQty = parseInt(document.getElementById('largeQty').value) || 0;
+  <div class="container mt-4">
+    <div id="home" class="page active">
+      <h2>Bine ați venit!</h2>
+      <p>Magazinul nostru oferă produse bisericești tradiționale, cu suflet și pentru suflet.</p>
+    </div>
 
-      if (smallQty === 0 && largeQty === 0) {
-        alert("Te rugăm să alegi cel puțin un produs.");
-        return false;
-      }
+    <div id="produse" class="page">
+      <div class="row" id="product-list"></div>
+    </div>
 
-      alert("Confirmați plasarea comenzii apăsând butonul „OK”");
-      return true; // permite trimiterea formularului
-    }
+    <div id="cart-page" class="page">
+      <h2>Coș de cumpărături</h2>
+      <ul id="cart-items" class="list-group mb-3"></ul>
+      <button class="btn btn-warning mb-3" onclick="clearCart()">Golește coșul</button>
+      <div id="cart-order-form" class="mb-5">
+        <h3>Finalizează comanda</h3>
+        <form id="order-form" action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="Comandă nouă de pe Magazin Candele">
+          <input type="hidden" name="produse" id="produse-input">
+          <div class="mb-3">
+            <label class="form-label">Nume complet</label>
+            <input type="text" class="form-control" name="nume" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Adresă de livrare</label>
+            <textarea class="form-control" name="adresa" rows="3" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-danger">Trimite comanda</button>
+        </form>
+      </div>
+    </div>
 
-    function changeLanguage(event) {
-      const lang = event.target.value;
-      if (lang === "en") {
-        // Produse
-        document.getElementById("product1-title").textContent = "Small Candle - 10 RON";
-        document.getElementById("product2-title").textContent = "Large Candle - 12 RON";
-        document.getElementById("product1-quantity-label").textContent = "Quantity:";
-        document.getElementById("product2-quantity-label").textContent = "Quantity:";
-        
-        // Date client
-        document.getElementById("client-title").textContent = "Client Data";
-        document.getElementById("name-input").placeholder = "Your name";
-        document.getElementById("phone-input").placeholder = "Phone number";
+    <div id="despre" class="page">
+      <h2>Despre noi</h2>
+      <p>„Magazin Candele” este un mic atelier dedicat promovării obiectelor de cult, lucrate cu grijă și respect pentru tradiție. Susținem credința prin lucruri simple și autentice.</p>
+    </div>
+  </div>
 
-        // Header
-        document.querySelector("h1").textContent = "Candle Store";
-        document.querySelector(".company-name").textContent = "Candle Shop";
-        document.querySelector("button").textContent = "Submit Order";
-        document.querySelector("input[name='_subject']").value = "New order from the website!";
-      } else {
-        // Produse
-        document.getElementById("product1-title").textContent = "Candelă mică - 10 lei";
-        document.getElementById("product2-title").textContent = "Candelă mare - 12 lei";
-        document.getElementById("product1-quantity-label").textContent = "Cantitate:";
-        document.getElementById("product2-quantity-label").textContent = "Cantitate:";
-        
-        // Date client
-        document.getElementById("client-title").textContent = "Date client";
-        document.getElementById("name-input").placeholder = "Numele tău";
-        document.getElementById("phone-input").placeholder = "Număr de telefon";
+  <footer>
+    <p>&copy; 2025 Magazin Candele</p>
+  </footer>
 
-        // Header
-        document.querySelector("h1").textContent = "Magazin Candele";
-        document.querySelector(".company-name").textContent = "Magazin Candele";
-        document.querySelector("button").textContent = "Trimite comanda";
-        document.querySelector("input[name='_subject']").value = "Nouă comandă de pe site!";
-      }
+  <!-- Google Translate -->
+  <div id="google_translate_element" style="position: fixed; bottom: 10px; right: 10px;"></div>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'ro'}, 'google_translate_element');
     }
   </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
+  <script>
+    const produse = [
+      {nume: 'Candelă mică', pret: 10, img: 'https://via.placeholder.com/300x200.png?text=Candelă+mică'},
+      {nume: 'Candelă mare', pret: 20, img: 'https://via.placeholder.com/300x200.png?text=Candelă+mare'},
+      {nume: 'Lumanare albă', pret: 5, img: 'https://via.placeholder.com/300x200.png?text=Lumanare+albă'},
+      {nume: 'Lumanare roșie', pret: 5, img: 'https://via.placeholder.com/300x200.png?text=Lumanare+roșie'},
+      {nume: 'Set pomelnice', pret: 15, img: 'https://via.placeholder.com/300x200.png?text=Set+pomelnice'},
+      {nume: 'Tămâie naturală', pret: 12, img: 'https://via.placeholder.com/300x200.png?text=Tămâie+naturală'},
+      {nume: 'Tămâie trandafir', pret: 14, img: 'https://via.placeholder.com/300x200.png?text=Tămâie+trandafir'},
+      {nume: 'Icoană mică', pret: 25, img: 'https://via.placeholder.com/300x200.png?text=Icoană+mică'},
+      {nume: 'Icoană mare', pret: 60, img: 'https://via.placeholder.com/300x200.png?text=Icoană+mare'},
+      {nume: 'Ulei sfințit', pret: 8, img: 'https://via.placeholder.com/300x200.png?text=Ulei+sfințit'}
+    ];
+
+    let cart = [];
+
+    function renderProducts() {
+      const list = document.getElementById('product-list');
+      list.innerHTML = produse.map((p, i) => `
+        <div class='col-md-4 mb-4'>
+          <div class='product-card'>
+            <img src='${p.img}' alt='${p.nume}' class='img-fluid rounded mb-2'>
+            <h5>${p.nume}</h5>
+            <p>Produs bisericesc autentic.</p>
+            <p><strong>${p.pret} RON</strong></p>
+            <button class='btn btn-danger' onclick="addToCart(${i})">Adaugă în coș</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function updateCart() {
+      const total = cart.reduce((sum, p) => sum + (p.pret * p.cantitate), 0);
+      const count = cart.reduce((sum, p) => sum + p.cantitate, 0);
+      document.getElementById('cart-count').innerText = count;
+      document.getElementById('cart-total').innerText = `${total} RON`;
+
+      const listaProduse = cart.map(p => `${p.nume} x${p.cantitate} - ${p.pret * p.cantitate} RON`).join("\n");
+      document.getElementById('produse-input').value = listaProduse;
+
+      const cartList = document.getElementById('cart-items');
+      cartList.innerHTML = cart.map((item, index) => `
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          ${item.nume} - ${item.pret} RON
+          <div>
+            <input type="number" value="${item.cantitate}" min="1" style="width:60px" onchange="updateQuantity(${index}, this.value)">
+            <button class="btn btn-sm btn-outline-danger ms-2" onclick="removeFromCart(${index})">Șterge</button>
+          </div>
+        </li>
+      `).join('');
+    }
+
+    function addToCart(index) {
+      const existing = cart.find(item => item.nume === produse[index].nume);
+      if (existing) {
+        existing.cantitate++;
+      } else {
+        cart.push({...produse[index], cantitate: 1});
+      }
+      updateCart();
+    }
+
+    function updateQuantity(index, value) {
+      cart[index].cantitate = parseInt(value);
+      updateCart();
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    function clearCart() {
+      cart = [];
+      updateCart();
+    }
+
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    renderProducts();
+    updateCart();
+  </script>
 </body>
 </html>
