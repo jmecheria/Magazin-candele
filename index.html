@@ -99,13 +99,12 @@
       text-align: center;
       padding-top: 150px;
     }
-    .page {
-  display: none;
+ .page {
   opacity: 0;
   transition: opacity 0.4s ease;
 }
+
 .page.active {
-  display: block;
   opacity: 1;
 }
     #cart-summary {
@@ -399,21 +398,17 @@
       `).join('');
     }
 
-  function navigate(id) {
+function navigate(id) {
   document.querySelectorAll('.page').forEach(p => {
     p.classList.remove('active');
-    setTimeout(() => p.style.display = 'none', 400);
   });
 
   const nextPage = document.getElementById(id);
-  nextPage.style.display = 'block';
-
-  setTimeout(() => {
-    nextPage.classList.add('active');
-  }, 10);
+  nextPage.classList.add('active');
 
   localStorage.setItem('lastPage', id);
   window.scrollTo(0, 0);
+}
 }
     function handleFormSubmit() {
       clearCart();
@@ -421,10 +416,12 @@
       return true;
     }
 
-    const lastPage = localStorage.getItem('lastPage') || 'home';
-    navigate(lastPage);
-    renderProducts();
-    updateCart();
+window.addEventListener('load', () => {
+  const lastPage = localStorage.getItem('lastPage') || 'home';
+  navigate(lastPage);
+  renderProducts();
+  updateCart();
+});
     window.addEventListener('load', () => {
   setTimeout(() => {
 });
