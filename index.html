@@ -171,9 +171,9 @@
 
     <div id="produse" class="page">
       <input type="text" id="filtru-produse" class="form-control mb-3" placeholder="Caută produs..." onkeyup="filtreazaProduse()">
+      <select class="form-select mb-3" id="sortare-produse" onchange="sorteazaProduse()">
       <div class="row row-cols-1 row-cols-md-3 g-4" id="product-list"></div>
     </div>
-    <select class="form-select mb-3" id="sortare-produse" onchange="sorteazaProduse()">
   <option value="">Sortează după</option>
   <option value="pret-asc">Preț crescător</option>
   <option value="pret-desc">Preț descrescător</option>
@@ -332,8 +332,6 @@ if (discountCode === 'candela10' && cart.some(p => p.nume.toLowerCase().includes
   document.getElementById('produse-input').value = cart.map(p => `${p.nume} x${p.cantitate} (${p.pret} RON/buc)`).join(', ');
   document.getElementById('total-input').value = `${total.toFixed(2)} RON`;
     document.getElementById('cart-count-badge').textContent = cart.reduce((acc, p) => acc + p.cantitate, 0);
-    document.getElementById('cart-count-badge').textContent = cart.reduce((acc, p) => acc + p.cantitate, 0);
-
 }
 function addToCart(index) {
   const qty = parseInt(document.getElementById(`qty-${index}`).value) || 1;
@@ -371,21 +369,25 @@ setTimeout(() => {
       const filteredProducts = produse.filter(p => p.nume.toLowerCase().includes(query));
       displayProducts(filteredProducts);
     }
-
-    function displayProducts(products) {
+    
+function displayProducts(products) {
   const list = document.getElementById('product-list');
-  list.innerHTML = products.map((p, i) => `
-    <div class="col">
-      <div class="product-card d-flex flex-column justify-content-between">
-        <img src="${p.img}" alt="${p.nume}" loading="lazy">
-        <h5 class="mt-2">${p.nume}</h5>
-        <p>${p.pret} RON</p>
-        <input type="number" id="qty-${i}" class="form-control mb-2" value="1" min="1" max="99">
-        <button class="btn btn-danger w-100 mt-auto" onclick="addToCart(${i})">🛒 Adaugă în coș</button>
+  list.innerHTML = products.map(p => {
+    const produsIndex = produse.findIndex(item => item.nume === p.nume); // găsim indexul din lista originală
+    return `
+      <div class="col">
+        <div class="product-card d-flex flex-column justify-content-between">
+          <img src="${p.img}" alt="${p.nume}" loading="lazy">
+          <h5 class="mt-2">${p.nume}</h5>
+          <p>${p.pret} RON</p>
+          <input type="number" id="qty-${produsIndex}" class="form-control mb-2" value="1" min="1" max="99">
+          <button class="btn btn-danger w-100 mt-auto" onclick="addToCart(${produsIndex})">🛒 Adaugă în coș</button>
+        </div>
       </div>
-    </div>
-  `).join('');
-    }
+    `;
+  }).join('');
+}
+
     function sorteazaProduse() {
   const sort = document.getElementById('sortare-produse').value;
   let products = produse.slice(); // facem o copie
@@ -428,9 +430,13 @@ function showPage(id) {
   if (discountInput) {
     discountInput.addEventListener('input', updateCart);
   }
+    function clearFormData() {
+  document.getElementById('order-form').reset();
+}
+
 </script>
-  <div id="toast-msg" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050; display: none;">
-  <div class="toast align-items-center text-bg-success border-0 show">
+ <div id="toast-msg" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050; display: none;">
+  <div class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="d-flex">
       <div class="toast-body">
         Produs adăugat în coș!
@@ -439,33 +445,5 @@ function showPage(id) {
     </div>
   </div>
 </div>
-  const formFields = ['nume', 'telefon', 'discount-code'];
-
-formFields.forEach(id => {
-  const input = document.querySelector(`[name="${id}"], #${id}`);
-  if (input) {
-    // Dacă există o valoare salvată în localStorage, o punem în câmp
-    const saved = localStorage.getItem('form_' + id);
-    if (saved) {
-      input.value = saved;
-    }
-
-    // Când utilizatorul scrie ceva, salvăm în localStorage
-    input.addEventListener('input', () => {
-      localStorage.setItem('form_' + id, input.value);
-    });
-  }
-});
-  function clearFormData() {
-  ['nume', 'telefon', 'discount-code'].forEach(id => {
-    localStorage.removeItem('form_' + id);
-    const input = document.querySelector(`[name="${id}"], #${id}`);
-    if (input) input.value = '';
-  });
-}
-  function clearFormData() {
-  document.getElementById("order-form").reset();
-  updateCart(); 
-}
 </body>
 </html>
