@@ -173,6 +173,11 @@
       <input type="text" id="filtru-produse" class="form-control mb-3" placeholder="Caută produs..." onkeyup="filtreazaProduse()">
       <div class="row row-cols-1 row-cols-md-3 g-4" id="product-list"></div>
     </div>
+    <select class="form-select mb-3" id="sortare-produse" onchange="sorteazaProduse()">
+  <option value="">Sortează după</option>
+  <option value="pret-asc">Preț crescător</option>
+  <option value="pret-desc">Preț descrescător</option>
+</select>
 
     <div id="cart-page" class="page">
       <h2>Coș de cumpărături</h2>
@@ -342,6 +347,10 @@ function addToCart(index) {
 
   saveCart();
   updateCart();
+  document.getElementById('toast-msg').style.display = 'block';
+setTimeout(() => {
+  document.getElementById('toast-msg').style.display = 'none';
+}, 3000);
 }
 
     function removeFromCart(index) {
@@ -376,6 +385,18 @@ function addToCart(index) {
     </div>
   `).join('');
     }
+    function sorteazaProduse() {
+  const sort = document.getElementById('sortare-produse').value;
+  let products = produse.slice(); // facem o copie
+
+  if (sort === 'pret-asc') {
+    products.sort((a, b) => a.pret - b.pret);
+  } else if (sort === 'pret-desc') {
+    products.sort((a, b) => b.pret - a.pret);
+  }
+
+  displayProducts(products);
+}
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -407,5 +428,15 @@ function showPage(id) {
     discountInput.addEventListener('input', updateCart);
   }
 </script>
+  <div id="toast-msg" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050; display: none;">
+  <div class="toast align-items-center text-bg-success border-0 show">
+    <div class="d-flex">
+      <div class="toast-body">
+        Produs adăugat în coș!
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" onclick="document.getElementById('toast-msg').style.display='none';"></button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
