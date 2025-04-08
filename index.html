@@ -325,6 +325,9 @@ if (discountCode === 'candela10' && cart.some(p => p.nume.toLowerCase().includes
   document.getElementById('cart-total').textContent = `${total.toFixed(2)} RON`;
   document.getElementById('produse-input').value = cart.map(p => `${p.nume} x${p.cantitate} (${p.pret} RON/buc)`).join(', ');
   document.getElementById('total-input').value = `${total.toFixed(2)} RON`;
+    document.getElementById('cart-count-badge').textContent = cart.reduce((acc, p) => acc + p.cantitate, 0);
+    document.getElementById('cart-count-badge').textContent = cart.reduce((acc, p) => acc + p.cantitate, 0);
+
 }
 function addToCart(index) {
   const qty = parseInt(document.getElementById(`qty-${index}`).value) || 1;
@@ -373,11 +376,13 @@ function addToCart(index) {
     </div>
   `).join('');
     }
-    
-    function showPage(id) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      if(id === 'cart-page') updateCart();
+
+      function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(id === 'cart-page') updateCart();
+  if(id === 'produse') updateCart(); 
+}
     }
     
     // Inițializare
