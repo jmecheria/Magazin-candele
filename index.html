@@ -297,10 +297,12 @@
     }
 
     function addToCart(index) {
-      cart.push(produse[index]);
-      saveCart();
-      updateCart();
-      alert(`${produse[index].nume} a fost adăugat în coș.`);
+  const qty = parseInt(document.getElementById(`qty-${index}`).value) || 1;
+  for (let i = 0; i < qty; i++) {
+    cart.push(produse[index]);
+  }
+  saveCart();
+  updateCart();
     }
 
     function removeFromCart(index) {
@@ -322,17 +324,18 @@
     }
 
     function displayProducts(products) {
-      const list = document.getElementById('product-list');
-      list.innerHTML = products.map((p, i) => `
-        <div class="col">
-          <div class="product-card d-flex flex-column justify-content-between">
-            <img src="${p.img}" alt="${p.nume}" loading="lazy">
-            <h5 class="mt-2">${p.nume}</h5>
-            <p>${p.pret} RON</p>
-            <button class="btn btn-danger w-100 mt-auto" onclick="addToCart(${i})">🛒 Adaugă în coș</button>
-          </div>
-        </div>
-      `).join('');
+  const list = document.getElementById('product-list');
+  list.innerHTML = products.map((p, i) => `
+    <div class="col">
+      <div class="product-card d-flex flex-column justify-content-between">
+        <img src="${p.img}" alt="${p.nume}" loading="lazy">
+        <h5 class="mt-2">${p.nume}</h5>
+        <p>${p.pret} RON</p>
+        <input type="number" id="qty-${i}" class="form-control mb-2" value="1" min="1" max="99">
+        <button class="btn btn-danger w-100 mt-auto" onclick="addToCart(${i})">🛒 Adaugă în coș</button>
+      </div>
+    </div>
+  `).join('');
     }
 
     function showPage(id) {
