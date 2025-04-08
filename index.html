@@ -279,31 +279,46 @@
     }
 
     function updateCart() {
-      document.getElementById('cart-count-badge').textContent = cart.length;
+  document.getElementById('cart-count-badge').textContent = cart.reduce((sum, p) => sum + p.cantitate, 0);
 
-      const lista = document.getElementById('cart-items');
-      let total = 0;
-      lista.innerHTML = cart.map((p, i) => {
-        total += p.pret;
-        return `<li class="list-group-item d-flex justify-content-between align-items-center">
-                  ${p.nume} - ${p.pret} RON
-                  <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${i})">Șterge</button>
-                </li>`;
-      }).join('');
+  const lista = document.getElementById('cart-items');
+  let total = 0;
 
-      document.getElementById('cart-total').textContent = `${total} RON`;
-      document.getElementById('produse-input').value = cart.map(p => `${p.nume} (${p.pret} RON)`).join(', ');
-      document.getElementById('total-input').value = `${total} RON`;
-    }
+  lista.innerHTML = cart.map((p, i) => {
+    const subtotal = p.pret * p.cantitate;
+    total += subtotal;
+    return `
+      <li class="list-group-item">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <strong>${p.nume}</strong><br>
+            <small>${p.pret} RON x </small>
+            <input type="number" min="1" class="form-control d-inline-block" style="width: 60px;" value="${p.cantitate}" onchange="changeQty(${i}, this.value)">
+            <small> = ${subtotal} RON</small>
+          </div>
+          <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${i})">Șterge</button>
+        </div>
+      </li>`;
+  }).join('');
 
-    function addToCart(index) {
+  document.getElementById('cart-total').textContent = `${total} RON`;
+  document.getElementById('produse-input').value = cart.map(p => `${p.nume} x${p.cantitate} (${p.pret} RON/buc)`).join(', ');
+  document.getElementById('total-input').value = `${total} RON`;
+}
+function addToCart(index) {
   const qty = parseInt(document.getElementById(`qty-${index}`).value) || 1;
-  for (let i = 0; i < qty; i++) {
-    cart.push(produse[index]);
+  const produs = produse[index];
+
+  const existingIndex = cart.findIndex(p => p.nume === produs.nume);
+  if (existingIndex !== -1) {
+    cart[existingIndex].cantitate += qty;
+  } else {
+    cart.push({ ...produs, cantitate: qty });
   }
+
   saveCart();
   updateCart();
-    }
+}
 
     function removeFromCart(index) {
       cart.splice(index, 1);
