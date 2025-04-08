@@ -463,5 +463,9 @@ formFields.forEach(id => {
     if (input) input.value = '';
   });
 }
+  function clearFormData() {
+  document.getElementById("order-form").reset();
+  updateCart(); 
+}
 </body>
 </html>
