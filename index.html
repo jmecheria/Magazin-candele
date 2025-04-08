@@ -453,6 +453,17 @@ formFields.forEach(id => {
   });
 }
 </script>
+  <script>
+  function showPage(id) {
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(p => p.classList.remove('active'));
+    const target = document.getElementById(id);
+    if (target) {
+      target.classList.add('active');
+      window.scrollTo(0, 0); // opțional, să ducă sus
+    }
+  }
+</script>
   <div id="toast-msg" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050; display: none;">
   <div class="toast align-items-center text-bg-success border-0 show">
     <div class="d-flex">
