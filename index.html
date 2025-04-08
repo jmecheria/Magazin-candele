@@ -374,10 +374,10 @@ setTimeout(() => {
       displayProducts(filteredProducts);
     }
 
-    function displayProducts(products) {
+   function displayProducts(products) {
   const list = document.getElementById('product-list');
   list.innerHTML = products.map((p, i) => 
-    <div class="col">
+    `<div class="col">
       <div class="product-card d-flex flex-column justify-content-between">
         <img src="${p.img}" alt="${p.nume}" loading="lazy">
         <h5 class="mt-2">${p.nume}</h5>
@@ -385,9 +385,9 @@ setTimeout(() => {
         <input type="number" id="qty-${i}" class="form-control mb-2" value="1" min="1" max="99">
         <button class="btn btn-danger w-100 mt-auto" onclick="addToCart(${i})">🛒 Adaugă în coș</button>
       </div>
-    </div>
+    </div>`
   ).join('');
-    }
+}
     function sorteazaProduse() {
   const sort = document.getElementById('sortare-produse').value;
   let products = produse.slice(); // facem o copie
@@ -460,7 +460,7 @@ formFields.forEach(id => {
     const target = document.getElementById(id);
     if (target) {
       target.classList.add('active');
-      window.scrollTo(0, 0); // opțional, să ducă sus
+      window.scrollTo(0, 0);
     }
   }
 </script>
