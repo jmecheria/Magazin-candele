@@ -201,6 +201,7 @@
   <label class="form-label">Cod de reducere</label>
   <input type="text" class="form-control" id="discount-code" placeholder="Ex: CANDELA10">
 </div>
+        <button onclick="clearFormData()">Resetează</button>
         <button type="submit" class="btn btn-danger">Trimite comanda</button>
       </form>
     </div>
@@ -438,5 +439,29 @@ function showPage(id) {
     </div>
   </div>
 </div>
+  const formFields = ['nume', 'telefon', 'discount-code'];
+
+formFields.forEach(id => {
+  const input = document.querySelector(`[name="${id}"], #${id}`);
+  if (input) {
+    // Dacă există o valoare salvată în localStorage, o punem în câmp
+    const saved = localStorage.getItem('form_' + id);
+    if (saved) {
+      input.value = saved;
+    }
+
+    // Când utilizatorul scrie ceva, salvăm în localStorage
+    input.addEventListener('input', () => {
+      localStorage.setItem('form_' + id, input.value);
+    });
+  }
+});
+  function clearFormData() {
+  ['nume', 'telefon', 'discount-code'].forEach(id => {
+    localStorage.removeItem('form_' + id);
+    const input = document.querySelector(`[name="${id}"], #${id}`);
+    if (input) input.value = '';
+  });
+}
 </body>
 </html>
