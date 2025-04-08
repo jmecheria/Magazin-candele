@@ -348,6 +348,12 @@
     displayProducts(produse);
     updateCart();
   </script>
+  <script>
+  document.getElementById('order-form').addEventListener('submit', function() {
+    clearCart();
+  });
+</script>
+
 </body>
 </html>
 ```
