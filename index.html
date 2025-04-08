@@ -88,8 +88,48 @@
       font-style: italic;
     }
   </style>
+<style>
+  .goog-te-banner-frame.skiptranslate,
+  .goog-logo-link,
+  .goog-te-gadget {
+    display: none !important;
+  }
+  body {
+    top: 0px !important;
+  }
+</style>
+
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'ro',
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script>
+  window.addEventListener('load', function () {
+    const userLang = navigator.language || navigator.userLanguage;
+    const langCode = userLang.split('-')[0];
+    const availableLangs = ['en', 'fr', 'de', 'es', 'it', 'hu', 'bg']; // adaugă aici alte limbi dacă vrei
+
+    if (langCode !== 'ro' && availableLangs.includes(langCode)) {
+      const interval = setInterval(() => {
+        const select = document.querySelector('select.goog-te-combo');
+        if (select) {
+          select.value = langCode;
+          select.dispatchEvent(new Event('change'));
+          clearInterval(interval);
+        }
+      }, 500);
+    }
+  });
+</script>
 </head>
 <body>
+  <div id="google_translate_element" style="display: none;"></div>
   <header>
     <h1><img src="logo.jpg" alt="Logo" style="height:40px; vertical-align:middle; margin-right:10px;"> Magazin Candele</h1>
     <nav class="d-flex flex-wrap justify-content-center">
