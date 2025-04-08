@@ -367,6 +367,13 @@ function addToCart(index) {
   document.getElementById('order-form').addEventListener('submit', function() {
     clearCart();
   });
+    function changeQty(index, newQty) {
+  const q = parseInt(newQty);
+  if (q < 1) return;
+  cart[index].cantitate = q;
+  saveCart();
+  updateCart();
+}
 </script>
 
 </body>
