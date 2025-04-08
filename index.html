@@ -376,14 +376,12 @@ function addToCart(index) {
     </div>
   `).join('');
     }
-
-      function showPage(id) {
+function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   if(id === 'cart-page') updateCart();
   if(id === 'produse') updateCart(); 
 }
-    }
     
     // Inițializare
     displayProducts(produse);
