@@ -192,9 +192,16 @@
           <label class="form-label">Număr de telefon</label>
           <input type="tel" class="form-control" name="telefon" required autocomplete="tel" pattern="[0-9+ ]{10,15}" placeholder="Ex: +40723456789">
         </div>
+        <div class="mb-3">
+  <label class="form-label">Cod de reducere</label>
+  <input type="text" class="form-control" id="discount-code" placeholder="Ex: CANDELA10">
+</div>
         <button type="submit" class="btn btn-danger">Trimite comanda</button>
       </form>
     </div>
+    <div id="discount-message" class="alert alert-success mt-3 d-none">
+  Reducerea de 10% a fost aplicată produselor eligibile!
+</div>
 
     <div id="despre" class="page">
       <h2 class="mb-4">Despre noi</h2>
@@ -278,32 +285,46 @@
       localStorage.setItem('cart', JSON.stringify(cart));
     }
 
-    function updateCart() {
-  document.getElementById('cart-count-badge').textContent = cart.reduce((sum, p) => sum + p.cantitate, 0);
-
+  function updateCart() {
+  const discountCode = document.getElementById('discount-code')?.value.trim().toLowerCase();
   const lista = document.getElementById('cart-items');
   let total = 0;
 
   lista.innerHTML = cart.map((p, i) => {
-    const subtotal = p.pret * p.cantitate;
+    let pretFinal = p.pret;
+    let reducere = false;
+
+    if (discountCode === 'candela10' && p.nume.toLowerCase().includes('candelă')) {
+      pretFinal = (p.pret * 0.9).toFixed(2); // 10% reducere
+      reducere = true;
+    }
+
+    const subtotal = pretFinal * p.cantitate;
     total += subtotal;
+    const discountMessage = document.getElementById('discount-message');
+if (discountCode === 'candela10' && cart.some(p => p.nume.toLowerCase().includes('candelă'))) {
+  discountMessage?.classList.remove('d-none');
+} else {
+  discountMessage?.classList.add('d-none');
+}
+
     return `
       <li class="list-group-item">
         <div class="d-flex justify-content-between align-items-center">
           <div>
             <strong>${p.nume}</strong><br>
-            <small>${p.pret} RON x </small>
+            <small>${reducere ? `<s>${p.pret} RON</s> ${pretFinal} RON` : `${p.pret} RON`} x </small>
             <input type="number" min="1" class="form-control d-inline-block" style="width: 60px;" value="${p.cantitate}" onchange="changeQty(${i}, this.value)">
-            <small> = ${subtotal} RON</small>
+            <small> = ${(subtotal).toFixed(2)} RON</small>
           </div>
           <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${i})">Șterge</button>
         </div>
       </li>`;
   }).join('');
 
-  document.getElementById('cart-total').textContent = `${total} RON`;
+  document.getElementById('cart-total').textContent = `${total.toFixed(2)} RON`;
   document.getElementById('produse-input').value = cart.map(p => `${p.nume} x${p.cantitate} (${p.pret} RON/buc)`).join(', ');
-  document.getElementById('total-input').value = `${total} RON`;
+  document.getElementById('total-input').value = `${total.toFixed(2)} RON`;
 }
 function addToCart(index) {
   const qty = parseInt(document.getElementById(`qty-${index}`).value) || 1;
@@ -352,13 +373,13 @@ function addToCart(index) {
     </div>
   `).join('');
     }
-
+    
     function showPage(id) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById(id).classList.add('active');
       if(id === 'cart-page') updateCart();
     }
-
+    
     // Inițializare
     displayProducts(produse);
     updateCart();
@@ -367,6 +388,7 @@ function addToCart(index) {
   document.getElementById('order-form').addEventListener('submit', function() {
     clearCart();
   });
+    
     function changeQty(index, newQty) {
   const q = parseInt(newQty);
   if (q < 1) return;
@@ -374,10 +396,13 @@ function addToCart(index) {
   saveCart();
   updateCart();
 }
+    
 </script>
-
+  <script>
+  const discountInput = document.getElementById('discount-code');
+  if (discountInput) {
+    discountInput.addEventListener('input', updateCart);
+  }
+</script>
 </body>
 </html>
-```
-
-
