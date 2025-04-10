@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Magazinul de Candele & Tradiții</title>
+  <!-- Biblioteca jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <!-- EmailJS a fost eliminat -->
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
@@ -20,6 +20,7 @@
       --error-color: #b71c1c;
       --light-bg: #fdf8f6;
     }
+    
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     body {
@@ -31,26 +32,19 @@
       padding-bottom: 60px;
     }
     
-    /* Dezactivează meniul context (click dreapta) – măsură simplă de securitate */
-    body { 
-      -webkit-touch-callout: none; 
-      -webkit-user-select: none; 
-      -khtml-user-select: none; 
-      -moz-user-select: none; 
-      -ms-user-select: none; 
-      user-select: none; 
-    }
-    body.oncontextmenu { pointer-events: none; }
+    /* Securitate: dezactivează meniul context (click dreapta) */
+    body { user-select: none; }
     window.oncontextmenu = function() { return false; };
     
-    /* Header */
+    /* HEADER */
     header {
       background: var(--primary-gradient);
       color: #fff;
       padding: 10px 20px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       position: fixed;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       z-index: 1100;
     }
@@ -64,7 +58,6 @@
     }
     .logo { width: 60px; }
     .header-title { font-size: 28px; margin-left: 10px; }
-    nav { position: relative; }
     nav ul {
       list-style: none;
       display: flex;
@@ -86,17 +79,9 @@
       border-radius: 50%;
       padding: 2px 6px;
       font-size: 12px;
-      vertical-align: top;
       margin-left: 2px;
     }
-    .hamburger {
-      display: none;
-      font-size: 28px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      color: #fff;
-    }
+    .hamburger { display: none; font-size: 28px; cursor: pointer; background: none; border: none; color: #fff; }
     
     /* Timer */
     #countdown-timer {
@@ -114,7 +99,7 @@
       border-bottom: 2px solid var(--primary-color);
     }
     
-    /* Buton fix pentru coș pe mobil */
+    /* Buton fix de coș */
     .fixed-cart {
       position: fixed;
       bottom: 20px;
@@ -137,191 +122,52 @@
     
     /* Paginile */
     #pages { padding-top: 140px; }
-    #pages section {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 0 20px;
-      display: none;
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
-    }
+    #pages section { max-width: 1200px; margin: 40px auto; padding: 0 20px; display: none; opacity: 0; transition: opacity 0.5s ease-in-out; }
     #pages section.active { display: block; opacity: 1; }
     
     /* Slider */
-    .slider {
-      position: relative;
-      width: 100%;
-      height: 450px;
-      overflow: hidden;
-      margin-bottom: 20px;
-    }
-    .slides img {
-      width: 100%;
-      height: 450px;
-      object-fit: cover;
-      position: absolute;
-      top: 0;
-      left: 0;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
+    .slider { position: relative; width: 100%; height: 450px; overflow: hidden; margin-bottom: 20px; }
+    .slides img { width: 100%; height: 450px; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 1s ease-in-out; }
     .slides img.active { opacity: 1; }
-    .slider .overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 450px;
-      background: rgba(0,0,0,0.4);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .btn-shop {
-      padding: 12px 24px;
-      background: var(--button-bg);
-      border: none;
-      color: #fff;
-      font-size: 20px;
-      cursor: pointer;
-      border-radius: 6px;
-      transition: background 0.3s;
-    }
+    .slider .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 450px; background: rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; }
+    .btn-shop { padding: 12px 24px; background: var(--button-bg); border: none; color: #fff; font-size: 20px; cursor: pointer; border-radius: 6px; transition: background 0.3s; }
     .btn-shop:hover { background: var(--button-hover); }
-    .slider-indicators {
-      position: absolute;
-      bottom: 15px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 10px;
-      z-index: 100;
-    }
-    .slider-indicators button {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      border: none;
-      background-color: rgba(255,255,255,0.5);
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    .slider-indicators button.active {
-      background-color: rgba(255,255,255,0.9);
-    }
-    #search-container {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    #search-container input {
-      padding: 10px 15px;
-      width: 80%;
-      max-width: 400px;
-      border: 2px solid #ccc;
-      border-radius: 30px;
-      font-size: 16px;
-      outline: none;
-      transition: all 0.3s;
-      background: #fff;
-      background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23ccc" viewBox="0 0 16 16"><path d="M11.742 10.344l3.85 3.85-1.397 1.397-3.85-3.85a6.5 6.5 0 1 1 1.397-1.397zm-5.242 1.656a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg>');
-      background-repeat: no-repeat;
-      background-size: 20px;
-      background-position: 10px 50%;
-      padding-left: 40px;
-    }
-    #search-container input:focus {
-      border-color: var(--button-bg);
-      box-shadow: 0 0 8px rgba(41,128,185,0.5);
-    }
-    #filter-toggle, #sort-toggle {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-      color: var(--button-bg);
-      margin: 10px auto;
-    }
-    #filter-bar, #sort-bar {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    #filter-bar button, #sort-bar button {
-      padding: 8px 14px;
-      margin: 5px;
-      border: none;
-      border-radius: 4px;
-      background: var(--button-bg);
-      color: #fff;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
+    .slider-indicators { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 100; }
+    .slider-indicators button { width: 12px; height: 12px; border-radius: 50%; border: none; background-color: rgba(255,255,255,0.5); cursor: pointer; transition: background-color 0.3s; }
+    .slider-indicators button.active { background-color: rgba(255,255,255,0.9); }
+    
+    /* Input de căutare */
+    #search-container { text-align: center; margin-bottom: 20px; }
+    #search-container input { padding: 10px 15px; width: 80%; max-width: 400px; border: 2px solid #ccc; border-radius: 30px; font-size: 16px; outline: none; transition: all 0.3s; background: #fff; background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23ccc" viewBox="0 0 16 16"><path d="M11.742 10.344l3.85 3.85-1.397 1.397-3.85-3.85a6.5 6.5 0 1 1 1.397-1.397zm-5.242 1.656a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg>'); background-repeat: no-repeat; background-size: 20px; background-position: 10px 50%; padding-left: 40px; }
+    #search-container input:focus { border-color: var(--button-bg); box-shadow: 0 0 8px rgba(41,128,185,0.5); }
+    #filter-toggle, #sort-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--button-bg); margin: 10px auto; }
+    #filter-bar, #sort-bar { text-align: center; margin-bottom: 20px; }
+    #filter-bar button, #sort-bar button { padding: 8px 14px; margin: 5px; border: none; border-radius: 4px; background: var(--button-bg); color: #fff; cursor: pointer; transition: background 0.3s; }
     #filter-bar button:hover, #sort-bar button:hover { background: var(--button-hover); }
     
     /* Grilă Produse */
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
     .product-card {
-      border: 1px solid #ddd;
-      padding: 15px;
-      text-align: center;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
+      border: 1px solid #ddd; padding: 15px; text-align: center; background: #fff; border-radius: 8px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;
     }
-    .product-card:hover {
-      transform: scale(1.03);
-      box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
-    }
-    .product-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 4px;
-      margin-bottom: 10px;
-    }
+    .product-card:hover { transform: scale(1.03); box-shadow: 2px 2px 12px rgba(0,0,0,0.2); }
+    .product-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 4px; margin-bottom: 10px; }
     .product-card h3 { font-size: 22px; margin-bottom: 5px; }
     .product-card p { font-size: 18px; margin-bottom: 10px; }
     .product-card input[type="number"] {
-      width: 70px;
-      padding: 8px;
-      margin-bottom: 10px;
-      border: 2px solid #ccc;
-      border-radius: 4px;
-      font-size: 16px;
-      text-align: center;
-      transition: border-color 0.3s;
+      width: 70px; padding: 8px; margin-bottom: 10px; border: 2px solid #ccc; border-radius: 4px;
+      font-size: 16px; text-align: center; transition: border-color 0.3s;
     }
-    /* Prevenim deschiderea modalului pe elementele interactive */
-    .product-card input[type="number"],
+    .product-card input[type="number"] { cursor: auto; }
     .product-card button {
-      cursor: auto;
-    }
-    .product-card input[type="number"]:click, .product-card button:click {
-      event.stopPropagation();
-    }
-    .product-card button {
-      padding: 10px 16px;
-      background: #e67e22;
-      border: none;
-      color: #fff;
-      cursor: pointer;
-      border-radius: 6px;
-      transition: background 0.3s;
+      padding: 10px 16px; background: #e67e22; border: none; color: #fff; cursor: auto;
+      border-radius: 6px; transition: background 0.3s;
     }
     .product-card button:hover { background: #d35400; }
-    .no-products {
-      text-align: center;
-      font-size: 20px;
-      color: var(--error-color);
-      margin: 20px;
-    }
+    .no-products { text-align: center; font-size: 20px; color: var(--error-color); margin: 20px; }
     
-    /* Secțiuni de informare uniform (Despre Noi, Termeni & Condiții, Evenimente) */
+    /* Secțiuni de Informare: Despre Noi, Termeni & Condiții, Evenimente */
     .info-section {
       background: url('evenimente-bg.jpg') no-repeat center center/cover;
       padding: 40px 20px;
@@ -344,6 +190,32 @@
       letter-spacing: 1px;
     }
     
+    /* Calendar din Evenimente – design pentru luna aprilie */
+    .calendar {
+      margin-top: 20px;
+      overflow-x: auto;
+    }
+    .calendar table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 400px;
+    }
+    .calendar th, .calendar td {
+      padding: 8px;
+      border: 1px solid var(--primary-color);
+      text-align: left;
+      font-size: 14px;
+    }
+    .calendar th {
+      background: var(--primary-color);
+      color: #fff;
+    }
+    .calendar td.important {
+      background: var(--button-bg);
+      color: #fff;
+      font-weight: bold;
+    }
+    
     /* Footer */
     footer {
       background: #fff0f0;
@@ -354,11 +226,7 @@
       color: #555;
     }
     .footer-container { max-width: 1200px; margin: auto; }
-    .footer-logos img {
-      width: 50px;
-      vertical-align: middle;
-      margin: 0 5px;
-    }
+    .footer-logos img { width: 50px; vertical-align: middle; margin: 0 5px; }
     footer a { text-decoration: none; color: var(--primary-color); }
     .back-to-top {
       position: fixed;
@@ -392,6 +260,7 @@
       .fixed-cart { display: flex; }
       #countdown-timer { font-size: 16px; }
     }
+    
     .fade-in { animation: fadeIn 1s ease-in-out; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     
@@ -499,12 +368,8 @@
       padding: 10px 0;
       border-bottom: 1px solid #ccc;
     }
-    .cart-item:last-child {
-      border-bottom: none;
-    }
-    .cart-item span {
-      font-size: 16px;
-    }
+    .cart-item:last-child { border-bottom: none; }
+    .cart-item span { font-size: 16px; }
     .cart-item input[type="number"] {
       width: 60px;
       padding: 5px;
@@ -522,13 +387,82 @@
       cursor: pointer;
       transition: background 0.3s;
     }
-    .cart-item button:hover {
-      background: #a93226;
+    .cart-item button:hover { background: #a93226; }
+    
+    /* Admin Panel */
+    .admin-form {
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      background: #f9f9f9;
+      border-radius: 8px;
     }
+    .admin-form h2 { text-align: center; margin-bottom: 15px; }
+    .admin-form input[type="text"],
+    .admin-form input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .admin-form button {
+      width: 100%;
+      padding: 10px;
+      background: var(--button-bg);
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+    .admin-form button:hover { background: var(--button-hover); }
+    .admin-panel-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .admin-panel-tabs button {
+      padding: 10px 20px;
+      background: var(--button-bg);
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+    .admin-panel-tabs button.active {
+      background: var(--secondary-color);
+    }
+    .admin-section { display: none; }
+    .admin-section.active { display: block; }
+    .admin-stock-item {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .admin-stock-item input[type="number"] {
+      width: 80px;
+      margin-left: 10px;
+    }
+    .admin-order {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      background: #fff;
+    }
+    
   </style>
 </head>
 <body>
-  <!-- Header -->
+  <!-- HEADER -->
   <header>
     <div class="header-container">
       <img src="logo.jpg" alt="Logo" class="logo">
@@ -555,7 +489,7 @@
   
   <div id="countdown-timer"><span id="timer"></span></div>
   
-  <!-- Conținutul paginilor -->
+  <!-- CONȚINUT PAGINI -->
   <div id="pages">
     <!-- Pagina Acasă -->
     <section id="home" class="active fade-in">
@@ -576,7 +510,7 @@
       </div>
       <h2>Bine ai venit la Magazinul de Candele & Tradiții</h2>
       <p class="content-text">
-        Descoperă colecția noastră de lumânări, accesorii și produse tradiționale care aduc lumină și inspirație. Explorează pagina pentru a afla mai multe detalii despre valorile și istoria noastră.
+        Descoperă colecția noastră de lumânări, accesorii și produse tradiționale care aduc lumină și inspirație. Explorează paginile pentru a afla mai multe despre valorile, istoria și tradițiile care ne definesc.
       </p>
     </section>
     
@@ -607,74 +541,78 @@
       <div id="no-products" class="no-products" style="display:none;">Nu s-au găsit produse.</div>
     </section>
     
-    <!-- Secțiuni de Informare (Design uniform pentru Despre Noi, Termeni & Condiții și Evenimente) -->
+    <!-- Pagina Despre Noi (design extins cu informații) -->
     <section id="despre-noi" class="fade-in info-section">
       <h2>Despre Noi</h2>
       <div class="content-text">
-        <p><strong>Magazinul de Candele & Tradiții</strong> este o afacere cu tradiție, dedicată promovării valorilor culturale și spirituale. Ne mândrim cu produsele realizate manual, ce îmbină meșteșugul tradițional cu designul modern. Fiecare produs are o poveste, iar selecția noastră este o adevărată punte între trecut și prezent.</p>
+        <p><strong>Magazinul de Candele & Tradiții</strong> este o afacere cu tradiție, dedicată promovării valorilor culturale și spirituale. Ne mândrim cu produsele realizate manual, care îmbină meșteșugul tradițional cu designul modern.</p>
         <p>Detalii importante:</p>
         <ul>
-          <li>Produsele noastre sunt fabricate de artizani locali, pasionați de tradiție.</li>
-          <li>Fiecare articol este ales pentru a aduce valoare estetică și spirituală.</li>
-          <li>Ne străduim să oferim o experiență unică, prin autenticitate și calitate.</li>
+          <li>Fiecare produs este creat de artizani locali pasionați de tradiție și rafinament.</li>
+          <li>Selecția noastră este atent curată pentru a oferi valoare estetică și semnificație spirituală.</li>
+          <li>Investim constant în tehnici moderne de fabricație fără a compromite autenticitatea tradițională.</li>
+          <li>Fiecare obiect spune o poveste, iar experiența de cumpărare este gândită să te conecteze cu cultura și credința.</li>
         </ul>
-        <p>Citiți cu atenție și descoperiți bogăția tradițiilor care ne definesc.</p>
+        <p>Vă invităm să parcurgeți istoria și valorile care au stat la baza acestei afaceri, pentru că fiecare detaliu contează.</p>
       </div>
     </section>
     
+    <!-- Pagina Termeni & Condiții (informativă și extinsă) -->
     <section id="termeni-si-conditii" class="fade-in info-section">
       <h2>Termeni & Condiții</h2>
       <div class="content-text">
         <ul>
-          <li>Produsele sunt disponibile în limita stocului.</li>
-          <li>Imaginile sunt orientative; pot exista diferențe minore față de produsul livrat.</li>
-          <li>Comenzile sunt procesate în 1-2 zile lucrătoare după confirmare.</li>
-          <li>Livrarea se face prin curier rapid, conform termenelor stabilite.</li>
-          <li>Returul este acceptat în termen de 14 zile, în conformitate cu legislația în vigoare.</li>
-          <li>Protecția datelor personale respectă normele GDPR.</li>
+          <li>Produsele sunt disponibile în limita stocului și pot fi supuse variațiilor minore.</li>
+          <li>Imaginile sunt orientative; produsul livrat poate prezenta mici diferențe.</li>
+          <li>Comenzile sunt procesate în termen de 1-2 zile lucrătoare, după verificarea stocului.</li>
+          <li>Livrarea se efectuează prin curier rapid, conform termenelor specificate.</li>
+          <li>Returul este acceptat în termen de 14 zile, conform legislației.</li>
+          <li>Protecția datelor personale este asigurată conform normelor GDPR.</li>
         </ul>
-        <p>Utilizarea site-ului implică acceptarea acestor termeni.</p>
+        <p>Prin utilizarea site-ului, confirmați că ați citit și acceptat toți termenii și condițiile.</p>
       </div>
     </section>
     
+    <!-- Pagina Evenimente – Calendar pentru luna aprilie -->
     <section id="evenimente" class="fade-in info-section">
-      <h2>Evenimente și Calendar Ortodox</h2>
+      <h2>Calendar Ortodox - Aprilie</h2>
       <div class="content-text">
-        <p>Aici puteți descoperi principalele sărbători din calendarul ortodox, alături de informații despre sfinții zilei. Mai jos este prezentat un calendar pentru luna aprilie, cu câteva exemple de sfinți și detalii relevante.</p>
-        <!-- Calendarul ortodox pentru luna aprilie – exemplu static -->
-        <table style="width:100%; border-collapse: collapse; margin-top: 20px;">
-          <thead>
-            <tr style="background: var(--primary-color); color: #fff;">
-              <th style="padding: 5px; border: 1px solid #fff;">Ziua</th>
-              <th style="padding: 5px; border: 1px solid #fff;">Sfântul/Ziua</th>
-              <th style="padding: 5px; border: 1px solid #fff;">Detalii</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="padding: 5px; border: 1px solid #ccc;">1 April</td>
-              <td style="padding: 5px; border: 1px solid #ccc;">Sfântul Ioan</td>
-              <td style="padding: 5px; border: 1px solid #ccc;">Zi de sărbătoare cu rugăciuni și tradiții.</td>
-            </tr>
-            <tr>
-              <td style="padding: 5px; border: 1px solid #ccc;">7 April</td>
-              <td style="padding: 5px; border: 1px solid #ccc;">Sfânta Maria</td>
-              <td style="padding: 5px; border: 1px solid #ccc;">O zi dedicată închinării și meditației.</td>
-            </tr>
-            <tr>
-              <td style="padding: 5px; border: 1px solid #ccc;">15 April</td>
-              <td style="padding: 5px; border: 1px solid #ccc;">Sfântul Dimitrie</td>
-              <td style="padding: 5px; border: 1px solid #ccc;">Un moment de comemorare și reflecție.</td>
-            </tr>
-            <tr>
-              <td style="padding: 5px; border: 1px solid #ccc;">25 April</td>
-              <td style="padding: 5px; border: 1px solid #ccc;">Sfânta Ecaterina</td>
-              <td style="padding: 5px; border: 1px solid #ccc;">Zi specială dedicată protectoarei.</td>
-            </tr>
-            <!-- Poți adăuga mai multe rânduri cu date reale pentru luna aprilie -->
-          </tbody>
-        </table>
-        <p style="margin-top: 10px;"><em>Informații despre sfinți: În fiecare zi a lunii, diverse icoane și legende transmit mesajele spirituale ale zilei. Află mai multe despre viața și faptele sfinților din această perioadă!</em></p>
+        <p>Această secțiune prezintă un calendar orientativ pentru luna aprilie, cu sfinții și sărbătorile importante ale acestei luni. De asemenea, zilele cu sărbători majore sunt evidențiate pentru a facilita orientarea.</p>
+        <div class="calendar">
+          <table>
+            <thead>
+              <tr>
+                <th>Ziua</th>
+                <th>Sfânt/Sărbătoare</th>
+                <th>Detalii</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1 April</td>
+                <td class="important">Sfântul Ioan</td>
+                <td>Zi de sărbătoare, cu slujbe speciale.</td>
+              </tr>
+              <tr>
+                <td>7 April</td>
+                <td>Sfânta Maria</td>
+                <td>Zi dedicată închinării și rugăciunii.</td>
+              </tr>
+              <tr>
+                <td>15 April</td>
+                <td class="important">Sfântul Dimitrie</td>
+                <td>Sărbătoare majoră, cu procesiuni și evenimente religioase.</td>
+              </tr>
+              <tr>
+                <td>25 April</td>
+                <td>Sfânta Ecaterina</td>
+                <td>Zi onorată, marcând ocazia protectoarei și patroniței.</td>
+              </tr>
+              <!-- Extinde rândurile cu informații reale după preferință -->
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:10px;"><em>Note: Calendarul reflectă sărbătorile conform tradiției ortodoxe. Pentru informații suplimentare despre sfinți, consultați surse specializate.</em></p>
       </div>
     </section>
     
@@ -720,7 +658,7 @@
     <!-- Pagina Admin Panel -->
     <section id="admin-panel" class="fade-in">
       <div style="text-align: right; margin-bottom:10px;">
-        <button onclick="adminLogout()" style="padding:5px 10px; background:#c0392b; border: none; color:#fff; border-radius:4px; cursor:pointer;">Logout</button>
+        <button onclick="adminLogout()" style="padding:5px 10px; background:#c0392b; border:none; color:#fff; border-radius:4px; cursor:pointer;">Logout</button>
       </div>
       <div class="admin-panel-tabs">
         <button id="tab-stock" class="active" onclick="showAdminTab('stock')">Actualizare Stoc</button>
@@ -745,6 +683,7 @@
         </div>
       </div>
     </section>
+    
   </div>
   
   <!-- Footer -->
@@ -760,13 +699,13 @@
   <!-- Buton "Back to Top" -->
   <button class="back-to-top" onclick="scrollToTop()">&#8679;</button>
   
-  <!-- Buton fix de coș pentru mobil -->
+  <!-- Buton fix de coș -->
   <div class="fixed-cart" onclick="showPage('cos')">
     <img src="cos.jpg" alt="Coș" style="width:30px;">
     <span class="cart-count" id="fixed-cart-count">0</span>
   </div>
   
-  <!-- Modal pentru detalii produs -->
+  <!-- Modal produs -->
   <div id="product-modal" class="modal" onclick="closeModal(event)">
     <div class="modal-content">
       <span class="modal-close" onclick="closeModal(event)">&times;</span>
@@ -775,7 +714,7 @@
   </div>
   
   <script>
-    // Date inițiale pentru produse (salvate în localStorage)
+    // Date inițiale pentru produse (stocate în localStorage)
     let products = [
       { id: "candela_mare", name: "Candelă Mare", price: 20, stock: 10, category:"candele", description:"Candelă mare din ceară naturală", image:"candela-mare.jpg" },
       { id: "candela_mica", name: "Candelă Mică", price: 10, stock: 15, category:"candele", description:"Candelă mică cu design tradițional", image:"candela-mica.jpg" },
@@ -1004,7 +943,7 @@
       updateCartUI();
     }
     
-    // Generare Factură PDF cu design de factură reală
+    // Generare Factură PDF cu design îmbunătățit
     function generatePDFInvoice() {
       if(cart.length===0){
         alert("Coșul este gol!");
@@ -1021,7 +960,7 @@
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF('p', 'mm', 'a4');
       
-      // Antet cu coloane: Furnizor / Client
+      // Antet: 2 coloane Furnizor / Client
       doc.setFont("helvetica", "bold");
       doc.setFontSize(16);
       doc.text("Furnizor", 10, 20);
@@ -1029,13 +968,13 @@
       
       doc.setFont("helvetica", "normal");
       doc.setFontSize(12);
-      // Detalii Furnizor (stânga)
+      // Detalii Furnizor
       doc.text("Candele & Tradiții SRL", 10, 28);
       doc.text("Str. Exemplu nr.1, București", 10, 36);
       doc.text("CUI: RO123456", 10, 44);
       doc.text("Telefon: 0123456789", 10, 52);
       
-      // Detalii Client (dreapta)
+      // Detalii Client
       doc.text(`Nume: ${customerName}`, 110, 28);
       doc.text(`Email: ${customerEmail}`, 110, 36);
       doc.text(`Telefon: ${customerPhone}`, 110, 44);
@@ -1044,7 +983,7 @@
       // Linie separatoare
       doc.line(10, 60, 200, 60);
       
-      // Titlul facturii
+      // Titlu factură
       doc.setFont("helvetica", "bold");
       doc.setFontSize(18);
       const invoiceNumber = Math.floor(Math.random()*1000000);
@@ -1054,7 +993,7 @@
       doc.text(`Factura Nr: ${invoiceNumber}`, 105, 78, { align: "center" });
       doc.text(`Data emiterii: ${invoiceDate}`, 105, 86, { align: "center" });
       
-      // Tabelul produselor
+      // Tabel produse
       let startY = 96;
       doc.setFont("helvetica", "bold");
       doc.text("Produs", 10, startY);
@@ -1089,7 +1028,7 @@
       doc.save(`Factura_${invoiceNumber}.pdf`);
     }
     
-    // Modal pentru detalii produs
+    // Modal produs
     function openModal(card) {
       const modal = document.getElementById("product-modal");
       const modalBody = document.getElementById("modal-body");
@@ -1115,7 +1054,7 @@
       document.querySelector(".back-to-top").style.display = window.pageYOffset > 300 ? "block" : "none";
     });
     
-    // Salvare comandă – coșul se golește, comenzile nu se șterg
+    // Salvare comandă
     function saveOrder() {
       const order = {
         customerName: document.getElementById("customer-name").value,
@@ -1136,7 +1075,7 @@
       return false;
     }
     
-    // Funcții pentru zona Admin
+    // Funcții Admin
     function adminLogin() {
       const user = document.getElementById("admin-user").value;
       const pass = document.getElementById("admin-pass").value;
