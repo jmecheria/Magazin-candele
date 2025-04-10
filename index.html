@@ -21,6 +21,7 @@
       --light-bg: #fdf8f6;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    
     body {
       font-family: 'Merriweather', serif;
       line-height: 1.6;
@@ -29,6 +30,19 @@
       scroll-behavior: smooth;
       padding-bottom: 60px;
     }
+    
+    /* Dezactivează meniul context (click dreapta) – măsură simplă de securitate */
+    body { 
+      -webkit-touch-callout: none; 
+      -webkit-user-select: none; 
+      -khtml-user-select: none; 
+      -moz-user-select: none; 
+      -ms-user-select: none; 
+      user-select: none; 
+    }
+    body.oncontextmenu { pointer-events: none; }
+    window.oncontextmenu = function() { return false; };
+    
     /* Header */
     header {
       background: var(--primary-gradient);
@@ -83,6 +97,7 @@
       border: none;
       color: #fff;
     }
+    
     /* Timer */
     #countdown-timer {
       position: fixed;
@@ -98,7 +113,8 @@
       z-index: 1200;
       border-bottom: 2px solid var(--primary-color);
     }
-    /* Buton fix de coș pentru mobil */
+    
+    /* Buton fix pentru coș pe mobil */
     .fixed-cart {
       position: fixed;
       bottom: 20px;
@@ -118,6 +134,7 @@
       display: none;
     }
     .fixed-cart:hover { background: var(--button-hover); }
+    
     /* Paginile */
     #pages { padding-top: 140px; }
     #pages section {
@@ -129,6 +146,7 @@
       transition: opacity 0.5s ease-in-out;
     }
     #pages section.active { display: block; opacity: 1; }
+    
     /* Slider */
     .slider {
       position: relative;
@@ -238,6 +256,7 @@
       transition: background 0.3s;
     }
     #filter-bar button:hover, #sort-bar button:hover { background: var(--button-hover); }
+    
     /* Grilă Produse */
     .product-grid {
       display: grid;
@@ -277,7 +296,7 @@
       text-align: center;
       transition: border-color 0.3s;
     }
-    /* Prevenim deschiderea modalului la clic pe input sau buton */
+    /* Prevenim deschiderea modalului pe elementele interactive */
     .product-card input[type="number"],
     .product-card button {
       cursor: auto;
@@ -301,7 +320,8 @@
       color: var(--error-color);
       margin: 20px;
     }
-    /* Secțiuni uniforme de informare (Despre Noi, Termeni & Condiții, Evenimente) */
+    
+    /* Secțiuni de informare uniform (Despre Noi, Termeni & Condiții, Evenimente) */
     .info-section {
       background: url('evenimente-bg.jpg') no-repeat center center/cover;
       padding: 40px 20px;
@@ -323,6 +343,7 @@
       text-transform: uppercase;
       letter-spacing: 1px;
     }
+    
     /* Footer */
     footer {
       background: #fff0f0;
@@ -355,6 +376,7 @@
       z-index: 1100;
     }
     .back-to-top:hover { background: var(--primary-color); }
+    
     @media (max-width: 768px) {
       .header-container { flex-direction: column; text-align: center; }
       nav ul { flex-direction: column; display: none; }
@@ -372,6 +394,8 @@
     }
     .fade-in { animation: fadeIn 1s ease-in-out; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    
+    /* Modal */
     .modal {
       display: none;
       position: fixed;
@@ -405,7 +429,8 @@
       font-size: 24px;
       color: #333;
     }
-    /* Formularul de finalizare comandă - design îmbunătățit */
+    
+    /* Formularul de finalizare comandă */
     .order-form {
       margin: 30px auto;
       max-width: 500px;
@@ -456,6 +481,7 @@
     .order-form .reset-btn:hover {
       background: #a93226;
     }
+    
     /* Stilul coșului de cumpărături */
     #cart-container {
       margin: 30px auto;
@@ -526,6 +552,7 @@
       </nav>
     </div>
   </header>
+  
   <div id="countdown-timer"><span id="timer"></span></div>
   
   <!-- Conținutul paginilor -->
@@ -549,8 +576,7 @@
       </div>
       <h2>Bine ai venit la Magazinul de Candele & Tradiții</h2>
       <p class="content-text">
-        Descoperă colecția noastră de lumânări, accesorii și produse tradiționale care aduc lumină și inspirație. 
-        Explorează paginile noastre pentru a afla detalii importante despre istoria și valorile noastre, despre produsele atent selecționate și despre evenimentele culturale care ne definesc.
+        Descoperă colecția noastră de lumânări, accesorii și produse tradiționale care aduc lumină și inspirație. Explorează pagina pentru a afla mai multe detalii despre valorile și istoria noastră.
       </p>
     </section>
     
@@ -581,18 +607,18 @@
       <div id="no-products" class="no-products" style="display:none;">Nu s-au găsit produse.</div>
     </section>
     
-    <!-- Secțiuni Info (Despre Noi, Termeni & Condiții, Evenimente) -->
+    <!-- Secțiuni de Informare (Design uniform pentru Despre Noi, Termeni & Condiții și Evenimente) -->
     <section id="despre-noi" class="fade-in info-section">
       <h2>Despre Noi</h2>
       <div class="content-text">
-        <p><strong>Magazinul de Candele & Tradiții</strong> este o afacere cu tradiție, dedicată aducerii în viața clienților noștri a valorilor culturale și spirituale. Ne mândrim cu selecția atentă de produse, realizate manual, care îmbină meșteșugul tradițional cu inovația modernă.</p>
+        <p><strong>Magazinul de Candele & Tradiții</strong> este o afacere cu tradiție, dedicată promovării valorilor culturale și spirituale. Ne mândrim cu produsele realizate manual, ce îmbină meșteșugul tradițional cu designul modern. Fiecare produs are o poveste, iar selecția noastră este o adevărată punte între trecut și prezent.</p>
         <p>Detalii importante:</p>
         <ul>
-          <li>Fiecare produs este ales cu grijă, astfel încât să aducă nu doar valoare estetică, ci și o semnificație profundă spirituală.</li>
-          <li>Colaborăm cu artizani locali și respectăm tradițiile care se transmit din generație în generație.</li>
-          <li>Ne dorim să creăm un spațiu unde cultura, credința și estetica se îmbină armonios.</li>
+          <li>Produsele noastre sunt fabricate de artizani locali, pasionați de tradiție.</li>
+          <li>Fiecare articol este ales pentru a aduce valoare estetică și spirituală.</li>
+          <li>Ne străduim să oferim o experiență unică, prin autenticitate și calitate.</li>
         </ul>
-        <p>Vă invităm să descoperiți toate detaliile despre povestea noastră și valorile pe care le promovăm, pentru a vă bucura de fiecare produs ca pe o experiență unică.</p>
+        <p>Citiți cu atenție și descoperiți bogăția tradițiilor care ne definesc.</p>
       </div>
     </section>
     
@@ -601,30 +627,54 @@
       <div class="content-text">
         <ul>
           <li>Produsele sunt disponibile în limita stocului.</li>
-          <li>Imaginile prezentate sunt doar orientative; pot exista mici variații față de produsul livrat.</li>
-          <li>Comenzile sunt procesate în 1-2 zile lucrătoare după confirmare și sunt supuse validării stocurilor.</li>
-          <li>Livrarea se efectuează prin curier rapid, respectând termenele de livrare specificate.</li>
-          <li>Returul este acceptat în termen de 14 zile de la primirea produsului, conform legislației.</li>
-          <li>Toate datele personale sunt protejate conform normelor GDPR.</li>
+          <li>Imaginile sunt orientative; pot exista diferențe minore față de produsul livrat.</li>
+          <li>Comenzile sunt procesate în 1-2 zile lucrătoare după confirmare.</li>
+          <li>Livrarea se face prin curier rapid, conform termenelor stabilite.</li>
+          <li>Returul este acceptat în termen de 14 zile, în conformitate cu legislația în vigoare.</li>
+          <li>Protecția datelor personale respectă normele GDPR.</li>
         </ul>
-        <p>Prin accesarea și utilizarea acestui site, confirmați că ați citit și sunteți de acord cu toți termenii și condițiile de utilizare.</p>
+        <p>Utilizarea site-ului implică acceptarea acestor termeni.</p>
       </div>
     </section>
     
     <section id="evenimente" class="fade-in info-section">
-      <h2>Evenimente și Calendar Creștin</h2>
+      <h2>Evenimente și Calendar Ortodox</h2>
       <div class="content-text">
-        <p>Aici găsiți principalele sărbători și evenimente din calendarul ortodox, împreună cu detalii importante și simboluri specifice fiecărei zile de sărbătoare.</p>
-        <ul>
-          <li><strong>Paști:</strong> Sărbătoarea Învierii Domnului – evenimentul central al credinței creștine.</li>
-          <li><strong>Crăciun:</strong> Nașterea lui Iisus Hristos – o zi de bucurie și celebrare.</li>
-          <li><strong>Bobotează:</strong> Sărbătoarea botezului lui Iisus – un moment de reînnoire spirituală.</li>
-          <li><strong>Adormirea Maicii Domnului:</strong> Sărbătoare dedicată memoriei Maicii Domnului, pe 15 august.</li>
-          <li><strong>Înălțarea Domnului:</strong> Marcată la 40 de zile după Paști, o zi de înălțare spirituală.</li>
-          <li><strong>Rusalii:</strong> Sărbătoare a Pogorârii Duhului Sfânt – un moment de celebrare a darurilor spirituale.</li>
-        </ul>
-        <!-- Calendar Ortodox (Placeholder; aici se poate integra un widget real dacă se dorește) -->
-        <p><em>Calendarul creștin ortodox: [Aici se poate integra un widget cu zilele de sărbătoare și sfinții zilei]</em></p>
+        <p>Aici puteți descoperi principalele sărbători din calendarul ortodox, alături de informații despre sfinții zilei. Mai jos este prezentat un calendar pentru luna aprilie, cu câteva exemple de sfinți și detalii relevante.</p>
+        <!-- Calendarul ortodox pentru luna aprilie – exemplu static -->
+        <table style="width:100%; border-collapse: collapse; margin-top: 20px;">
+          <thead>
+            <tr style="background: var(--primary-color); color: #fff;">
+              <th style="padding: 5px; border: 1px solid #fff;">Ziua</th>
+              <th style="padding: 5px; border: 1px solid #fff;">Sfântul/Ziua</th>
+              <th style="padding: 5px; border: 1px solid #fff;">Detalii</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 5px; border: 1px solid #ccc;">1 April</td>
+              <td style="padding: 5px; border: 1px solid #ccc;">Sfântul Ioan</td>
+              <td style="padding: 5px; border: 1px solid #ccc;">Zi de sărbătoare cu rugăciuni și tradiții.</td>
+            </tr>
+            <tr>
+              <td style="padding: 5px; border: 1px solid #ccc;">7 April</td>
+              <td style="padding: 5px; border: 1px solid #ccc;">Sfânta Maria</td>
+              <td style="padding: 5px; border: 1px solid #ccc;">O zi dedicată închinării și meditației.</td>
+            </tr>
+            <tr>
+              <td style="padding: 5px; border: 1px solid #ccc;">15 April</td>
+              <td style="padding: 5px; border: 1px solid #ccc;">Sfântul Dimitrie</td>
+              <td style="padding: 5px; border: 1px solid #ccc;">Un moment de comemorare și reflecție.</td>
+            </tr>
+            <tr>
+              <td style="padding: 5px; border: 1px solid #ccc;">25 April</td>
+              <td style="padding: 5px; border: 1px solid #ccc;">Sfânta Ecaterina</td>
+              <td style="padding: 5px; border: 1px solid #ccc;">Zi specială dedicată protectoarei.</td>
+            </tr>
+            <!-- Poți adăuga mai multe rânduri cu date reale pentru luna aprilie -->
+          </tbody>
+        </table>
+        <p style="margin-top: 10px;"><em>Informații despre sfinți: În fiecare zi a lunii, diverse icoane și legende transmit mesajele spirituale ale zilei. Află mai multe despre viața și faptele sfinților din această perioadă!</em></p>
       </div>
     </section>
     
@@ -681,7 +731,6 @@
         <div id="stock-list">
           <!-- Lista produselor pentru actualizare se generează dinamic -->
         </div>
-        <!-- Buton pentru actualizare simultană -->
         <div style="text-align:center; margin-top:15px;">
           <button onclick="updateAllStock()" style="padding:10px 20px; background:var(--button-bg); border:none; color:#fff; border-radius:6px; cursor:pointer;">Actualizează Tot Stocul</button>
         </div>
@@ -691,13 +740,11 @@
         <div id="orders-list">
           <!-- Lista comenzilor din localStorage -->
         </div>
-        <!-- Buton de ștergere a tuturor comenzilor (sau le poți șterge individual) -->
         <div style="text-align:center; margin-top:15px;">
           <button onclick="clearAllOrders()" style="padding:10px 20px; background:#c0392b; border:none; color:#fff; border-radius:6px; cursor:pointer;">Șterge Toate Comenzile</button>
         </div>
       </div>
     </section>
-  
   </div>
   
   <!-- Footer -->
@@ -747,7 +794,7 @@
       products = JSON.parse(localStorage.getItem("products"));
     }
     
-    // Coșul de cumpărături (stocăm și id-ul produsului)
+    // Coșul de cumpărături
     let cart = [];
     
     // Generare produse pe pagina "Produse"
@@ -883,7 +930,7 @@
     function toggleFilter() { document.getElementById("filter-bar").classList.toggle("active"); }
     function toggleSort() { document.getElementById("sort-bar").classList.toggle("active"); }
     
-    // Coș de cumpărături și gestionare stoc
+    // Coș și gestionare stoc
     function addToCart(name, price, prodId, qty) {
       qty = parseInt(qty);
       const prod = products.find(p => p.id === prodId);
@@ -957,7 +1004,7 @@
       updateCartUI();
     }
     
-    // Generare factură PDF – design îmbunătățit (antet: Furnizor / Client în coloane, tabel clar)
+    // Generare Factură PDF cu design de factură reală
     function generatePDFInvoice() {
       if(cart.length===0){
         alert("Coșul este gol!");
@@ -974,7 +1021,7 @@
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF('p', 'mm', 'a4');
       
-      // Antet: coloane Furnizor / Client
+      // Antet cu coloane: Furnizor / Client
       doc.setFont("helvetica", "bold");
       doc.setFontSize(16);
       doc.text("Furnizor", 10, 20);
@@ -982,13 +1029,13 @@
       
       doc.setFont("helvetica", "normal");
       doc.setFontSize(12);
-      // Furnizor (stânga)
+      // Detalii Furnizor (stânga)
       doc.text("Candele & Tradiții SRL", 10, 28);
       doc.text("Str. Exemplu nr.1, București", 10, 36);
       doc.text("CUI: RO123456", 10, 44);
       doc.text("Telefon: 0123456789", 10, 52);
       
-      // Client (dreapta)
+      // Detalii Client (dreapta)
       doc.text(`Nume: ${customerName}`, 110, 28);
       doc.text(`Email: ${customerEmail}`, 110, 36);
       doc.text(`Telefon: ${customerPhone}`, 110, 44);
@@ -997,7 +1044,7 @@
       // Linie separatoare
       doc.line(10, 60, 200, 60);
       
-      // Titlu factură
+      // Titlul facturii
       doc.setFont("helvetica", "bold");
       doc.setFontSize(18);
       const invoiceNumber = Math.floor(Math.random()*1000000);
@@ -1014,7 +1061,7 @@
       doc.text("Cantitate", 70, startY, { align: "center" });
       doc.text("Preț Unitar", 100, startY, { align: "center" });
       doc.text("Subtotal", 140, startY, { align: "center" });
-      doc.line(10, startY+2, 200, startY+2);
+      doc.line(10, startY + 2, 200, startY + 2);
       
       doc.setFont("helvetica", "normal");
       let posY = startY + 10;
