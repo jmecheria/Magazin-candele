@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Magazin Bisericesc</title>
-  <!-- Folosim Bootstrap pentru stilizări rapide -->
+  <!-- Bootstrap pentru stilizări rapide -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    /* HEADER și FOOTER: fundal roșu, text alb */
+    /* HEADER și FOOTER cu gradient roșu închis */
     header, footer {
-      background-color: #e60000;
+      background: linear-gradient(135deg, #4a0000, #a30000);
       color: #fff;
       padding: 10px 20px;
     }
@@ -22,6 +22,7 @@
       padding: 0;
       display: flex;
       gap: 15px;
+      flex-wrap: wrap;
     }
     nav ul li a {
       color: #fff;
@@ -56,7 +57,13 @@
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    /* Secțiuni de pagină: ascunse inițial */
+    /* Fiecare secțiune este încadrată cu o linie roșie subțire */
+    section {
+      border-top: 3px solid #a30000;
+      padding-top: 20px;
+      margin-top: 20px;
+    }
+    /* Secțiuni de pagină */
     .page { display: none; }
     .active-page { display: block; }
     /* Carduri pentru produse – fixăm înălțimea imaginii și asigurăm aspect uniform */
@@ -64,12 +71,17 @@
       border: 1px solid #ccc;
       border-radius: 5px;
       overflow: hidden;
-      margin-bottom: 20px;
       background-color: #f8f9fa;
       height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      transition: transform 0.3s ease;
+    }
+    /* Efect de mărire la hover */
+    .product-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
     .product-card img {
       width: 100%;
@@ -87,13 +99,13 @@
       margin-bottom: 20px;
     }
     footer { text-align: center; }
-    /* Slider de produse de pe pagina de start: imagine de fundal transparentă */
+    /* Slider de produse pe pagina de start */
     .slider-container {
       overflow: hidden;
       position: relative;
       height: 150px;
       margin-top: 20px;
-      opacity: 0.5;
+      opacity: 0.6;
     }
     .slider-track {
       display: flex;
@@ -110,11 +122,24 @@
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
+    /* Responsive ajustări */
+    @media (max-width: 768px) {
+      nav ul {
+        justify-content: center;
+      }
+      .main-container {
+        margin: 10px;
+        padding: 15px;
+      }
+      .product-card img {
+        height: 150px;
+      }
+    }
   </style>
 </head>
 <body>
   <!-- HEADER -->
-  <header class="d-flex justify-content-between align-items-center">
+  <header class="d-flex justify-content-between align-items-center flex-wrap">
     <div class="d-flex align-items-center">
       <img src="https://via.placeholder.com/150x50?text=Logo" alt="Logo" class="logo me-2">
       <span class="fs-4">Magazin Bisericesc</span>
@@ -141,7 +166,7 @@
     <span id="timer" class="fs-5 text-danger"></span>
   </div>
   
-  <!-- CONȚINUT PRINCIPAL ÎNCADRAT -->
+  <!-- CONTINUT PRINCIPAL ÎNCADRAT -->
   <main class="main-container" id="content">
     <!-- Pagina de start -->
     <section id="home" class="page active-page">
@@ -152,7 +177,7 @@
         <!-- Slider cu imagini de produse -->
         <div class="slider-container">
           <div class="slider-track" id="slider-track">
-            <!-- Imaginile vor fi generate din JavaScript -->
+            <!-- Imaginile se generează din JavaScript -->
           </div>
         </div>
       </div>
@@ -182,7 +207,7 @@
     <section id="despre" class="page">
       <h2>Despre noi</h2>
       <p>
-        Magazinul nostru Bisericesc a fost înființat din dorința de a sprijini și aduce împreună comunitatea credincioșilor prin oferirea de produse de calitate. Ne dedicăm cu pasiune păstrării tradițiilor și valorilor spirituale, asigurându-ne că fiecare produs este ales cu grijă pentru a reflecta autenticitatea și respectul față de credință. În colecția noastră veți găsi lumânări, icoane, cărți religioase și accesorii care inspiră și aduc liniște sufletească. Ne mândrim cu serviciul oferit și cu atenția la detalii, lucrând neobosit pentru a vă oferi o experiență de cumpărături inedită. Fiecare obiect este demonstrativ al respectului pentru tradiții și al dorinței de a împărtăși o moștenire spirituală valoroasă.
+        Magazinul nostru Bisericesc a fost fondat din dorința de a oferi comunității credincioșilor produse autentice și de calitate, care reflectă tradițiile spirituale. Ne străduim să aducem împreună valorile vechi cu tehnologiile moderne, creând un spațiu unde fiecare produs este ales cu grijă. De la lumânări și icoane la cărți religioase și accesorii, fiecare obiect spune o poveste și aduce liniște sufletească. Serviciile noastre sunt dedicate satisfacerii nevoilor clienților, punând accent pe transparență, promptitudine și respect. Ne mândrim cu calitatea produselor și cu suportul oferit, asigurând o experiență plăcută tuturor. Vă invităm să descoperiți universul nostru dedicat credinței și tradiției.
       </p>
     </section>
     
@@ -190,7 +215,7 @@
     <section id="termeni" class="page">
       <h2>Termeni și Condiții</h2>
       <p>
-        Vă rugăm să citiți cu atenție termenii și condițiile înainte de a utiliza acest magazin online. Prin plasarea unei comenzi, sunteți de acord cu politicile noastre privind returnările, garanțiile și confidențialitatea datelor. Ne rezervăm dreptul de a modifica aceste condiții în orice moment, iar utilizarea site-ului indică acceptarea versiunii curente. Fiecare tranzacție este tratată cu maximă seriozitate, iar informațiile personale sunt prelucrate conform reglementărilor în vigoare. Ne străduim să furnizăm produse de înaltă calitate și să oferim un serviciu clienți exemplar. Toate comenzile vor fi procesate cu promptitudine, iar în cazul oricăror întrebări, echipa noastră de suport este disponibilă pentru a asigura o experiență pozitivă și transparentă.
+        Vă rugăm să citiți cu atenție acești termeni și condiții înainte de a utiliza magazinul nostru online. Accesând acest site, sunteți de acord cu toate regulile și politica de confidențialitate. Ne rezervăm dreptul de a modifica termenii în orice moment, iar utilizarea continuă a site-ului implică acceptarea noilor condiții. Toate tranzacțiile sunt tratate cu maximă seriozitate și confidențialitate, iar informațiile dumneavoastră personale sunt gestionate în conformitate cu reglementările în vigoare. Serviciile noastre sunt oferite fără garanții explicite, dar cu angajamentul de a rezolva orice neînțelegere în cel mai scurt timp. Comenzile sunt procesate prompt și, în cazul unor întrebări, echipa noastră de suport este întotdeauna la dispoziția dumneavoastră.
       </p>
     </section>
     
@@ -216,7 +241,7 @@
     <section id="cos" class="page">
       <h2>Coșul de Cumpărături</h2>
       <div id="cart-container">
-        <!-- Se generează lista produselor din coș -->
+        <!-- Lista produselor din coș -->
       </div>
       <div id="order-form" style="display:none;" class="mt-4">
         <h4>Date pentru comandă</h4>
@@ -236,7 +261,7 @@
     <section id="admin" class="page">
       <h2>Admin</h2>
       <div id="admin-content">
-        <!-- Conținutul de login sau dashboard va fi actualizat dinamic -->
+        <!-- Conținutul de login sau dashboard se actualizează dinamic -->
       </div>
     </section>
   </main>
@@ -256,6 +281,7 @@
       if (pageId === 'admin') loadAdmin();
     }
     
+    // Setăm anul curent în footer
     document.getElementById('year').textContent = new Date().getFullYear();
     
     // Timer dinamic până la Paști (exemplu: 20 aprilie 2025)
@@ -279,7 +305,7 @@
     }
     startTimer();
     
-    /* ---- Produse și stocuri ---- */
+    /* ---- Produse și Stocuri ---- */
     const products = [
       {id: 1, name: "Lumânare Roșie", price: 10.00, image: "https://via.placeholder.com/400x200?text=Produs+1", description: "Lumânare din ceară naturală pentru rugăciune.", stock: 50, defaultStock: 50},
       {id: 2, name: "Lumânare Albă", price: 9.50, image: "https://via.placeholder.com/400x200?text=Produs+2", description: "Lumânare tradițională pentru biserică.", stock: 40, defaultStock: 40},
@@ -305,10 +331,10 @@
     
     // Coșul de cumpărături (stocat în memorie)
     let cart = [];
-    // Lista comenzilor (încărcată din localStorage)
+    // Comenzile sunt salvate în localStorage sub cheia "globalOrders"
     let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
     
-    // Generare imagini pentru slider-ul de pe pagina de start
+    // Sliderul de produse din pagina de start
     function renderSlider() {
       const track = document.getElementById("slider-track");
       track.innerHTML = "";
@@ -320,7 +346,7 @@
       });
     }
     
-    // Generare produse (carduri) în pagina "produse"
+    // Renderizează cardurile de produse în pagina "produse"
     function renderProducts() {
       const container = document.getElementById('products-container');
       container.innerHTML = "";
@@ -355,7 +381,7 @@
       renderProducts();
     }
     
-    // Afișare detalii produs
+    // Afișează detaliile unui produs
     function viewProduct(id) {
       const prod = products.find(p => p.id === id);
       if (!prod) return;
@@ -380,7 +406,7 @@
       navigateTo('produs');
     }
     
-    // Adaugă produs în coș și actualizează stocul (dacă stocul este suficient)
+    // Adaugă produs în coș și actualizează stocul
     function addToCart(id, source = 'list') {
       const qtyInput = source === 'list' ? document.getElementById(`qty-${id}`) : document.getElementById(`detail-qty-${id}`);
       let qty = parseInt(qtyInput.value) || 1;
@@ -402,7 +428,7 @@
       alert(`Produsul "${prod.name}" a fost adăugat în coș.`);
     }
     
-    // Actualizează numărul de produse din coș și salvează comenzile
+    // Actualizează numărul de produse din coș și randează coșul
     function updateCartCount() {
       let total = cart.reduce((sum, item) => sum + item.quantity, 0);
       document.getElementById('cart-count').textContent = total;
@@ -450,7 +476,7 @@
       document.getElementById('order-form').style.display = "block";
     }
     
-    // Șterge un produs din coș și recuperează stocul
+    // Elimină un produs din coș și recuperează stocul
     function removeFromCart(index) {
       const removed = cart.splice(index, 1)[0];
       const prod = products.find(p => p.id === removed.id);
@@ -460,7 +486,7 @@
       updateCartCount();
     }
     
-    // Plasează comanda și salvează global (în localStorage)
+    // Plasează comanda și salvează comenzile în localStorage pentru acces global
     function placeOrder() {
       const name = document.getElementById('customer-name').value.trim();
       const contact = document.getElementById('customer-contact').value.trim();
@@ -482,7 +508,6 @@
         items: [...cart],
         total: orderTotal
       };
-      // Salvează în localStorage (comenzi globale)
       orders.push(order);
       localStorage.setItem("globalOrders", JSON.stringify(orders));
       cart = [];
