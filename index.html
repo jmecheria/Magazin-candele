@@ -1,530 +1,511 @@
-<?php
-session_start();
-
-// ----------------------
-// Configurări de bază
-// ----------------------
-
-// Pentru simplitate, produsele sunt stocate într-un array asociativ.
-// Fiecare produs are: id, nume, preț, cale imagine, descriere.
-$products = [
-    1 => [
-        'name' => 'Lumânare Roșie',
-        'price' => 10.00,
-        'image' => 'images/lumânare_rosie.jpg',
-        'description' => 'Lumânare din ceară naturală, ideală pentru rugăciuni și momente de liniște.'
-    ],
-    2 => [
-        'name' => 'Icoană Sfântă',
-        'price' => 25.50,
-        'image' => 'images/icoana_sfanta.jpg',
-        'description' => 'Icoană lucrată manual, un simbol al credinței.'
-    ],
-    3 => [
-        'name' => 'Carte de Rugăciuni',
-        'price' => 15.75,
-        'image' => 'images/carte_rugaciuni.jpg',
-        'description' => 'Carte cu rugăciuni și imnuri bisericești tradiționale.'
-    ],
-    // ... completează până la 20 produse
-];
-
-// Pentru zona de comenzi, stocăm comenzile în sesiune (în practică – într-o bază de date)
-if (!isset($_SESSION['orders'])) {
-    $_SESSION['orders'] = [];
-}
-
-// Pentru coșul de cumpărături, folosim sesiunea
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = [];
-}
-
-// ----------------------
-// Funcții Ajutătoare
-// ----------------------
-
-// Randează header-ul comun (cu logo, meniu și timer)
-function renderHeader() {
-    ?>
-    <!DOCTYPE html>
-    <html lang="ro">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Magazin Bisericesc</title>
-      <!-- Bootstrap CDN pentru design modern -->
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-      <style>
-        body { background-color: #fff; }
-        header { background-color: #000; color: #fff; padding: 10px 20px; }
-        .navbar-brand { font-weight: bold; color: #e60000; }
-        .nav-link { color: #fff; margin: 0 10px; }
-        .timer { font-size: 1rem; color: #e60000; }
-        .cart-icon {
-            position: relative;
-            cursor: pointer;
-        }
-        .cart-icon .badge {
-            position: absolute;
-            top: -5px;
-            right: -10px;
-            background: red;
-            color: #fff;
-            border-radius: 50%;
-        }
-      </style>
-    </head>
-    <body>
-      <header class="d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center">
-          <img src="images/logo.png" alt="Logo" style="height:50px; margin-right:10px;">
-          <span class="navbar-brand">Numele Firmei</span>
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Magazin Bisericesc</title>
+  <!-- Folosim Bootstrap pentru câteva stilizări rapide -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Fundal gradient roșu de la un roșu intens la unul mai deschis */
+    body {
+      background: linear-gradient(135deg, #b30000, #ff6666);
+      color: #000;
+      min-height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    header, footer {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 10px 20px;
+    }
+    header img.logo {
+      height: 50px;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 15px;
+    }
+    nav ul li {
+      display: inline;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .cart-icon {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .cart-icon img {
+      height: 24px;
+    }
+    .cart-icon .badge {
+      position: absolute;
+      top: -5px;
+      right: -10px;
+      background: red;
+      color: #fff;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 0.8rem;
+    }
+    /* Stilizare secțiuni de pagină (ascunse inițial) */
+    .page {
+      display: none;
+      padding: 20px;
+    }
+    .active-page {
+      display: block;
+    }
+    /* Carduri produse */
+    .product-card {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .product-card .card-body {
+      padding: 15px;
+    }
+    /* Footer */
+    footer {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header comun -->
+  <header class="d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center">
+      <img src="https://via.placeholder.com/150x50?text=Logo" alt="Logo" class="logo me-2">
+      <span class="fs-4">Magazin Bisericesc</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a onclick="navigateTo('home')">Acasă</a></li>
+        <li><a onclick="navigateTo('produse')">Produsele noastre</a></li>
+        <li><a onclick="navigateTo('despre')">Despre noi</a></li>
+        <li><a onclick="navigateTo('termeni')">Termeni & Condiții</a></li>
+        <li><a onclick="navigateTo('calendar')">Calendar</a></li>
+        <li><a onclick="navigateTo('cos')">Coș</a></li>
+        <li><a onclick="navigateTo('admin')">Admin</a></li>
+      </ul>
+    </nav>
+    <!-- Iconiță coș + număr elemente -->
+    <div class="cart-icon" onclick="navigateTo('cos')">
+      <img src="https://via.placeholder.com/24?text=🛒" alt="Coș">
+      <span class="badge" id="cart-count">0</span>
+    </div>
+  </header>
+  
+  <!-- Timer dinamic până la Paști -->
+  <div class="text-center py-2 bg-light">
+    <span id="timer" class="fs-5 text-danger"></span>
+  </div>
+  
+  <!-- Conținutul principal, cu secțiuni pentru fiecare pagină -->
+  <main id="content">
+    <!-- Pagina de start -->
+    <section id="home" class="page active-page">
+      <div class="container">
+        <div class="text-center py-5">
+          <h1>Bine ați venit la Magazinul Bisericesc</h1>
+          <p>Descoperă produsele noastre pentru momente de spiritualitate.</p>
+          <button class="btn btn-dark" onclick="navigateTo('produse')">Vezi Produsele</button>
         </div>
-        <nav>
-          <ul class="nav">
-            <li class="nav-item"><a class="nav-link" href="?page=home">Acasă</a></li>
-            <li class="nav-item"><a class="nav-link" href="?page=produse">Produsele noastre</a></li>
-            <li class="nav-item"><a class="nav-link" href="?page=despre">Despre noi</a></li>
-            <li class="nav-item"><a class="nav-link" href="?page=termeni">Termeni și condiții</a></li>
-            <li class="nav-item"><a class="nav-link" href="?page=calendar">Calendar</a></li>
-            <li class="nav-item"><a class="nav-link" href="?page=admin">Admin</a></li>
-            <li class="nav-item">
-              <a class="nav-link cart-icon" href="?page=cos">
-                <img src="images/cos.png" alt="Coș" style="height:24px;">
-                <span class="badge"><?php echo array_sum($_SESSION['cart']); ?></span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </header>
-      <!-- Timer pentru Paști -->
-      <div class="text-center py-2 bg-light">
-        <span id="timer" class="timer"></span>
       </div>
-      <script>
-        // Setează data Paștilor (exemplu: 20 aprilie 2025)
-        let easterDate = new Date("2025-04-20T00:00:00").getTime();
-        // Actualizează timer-ul la fiecare secundă
-        let timerInterval = setInterval(function() {
+    </section>
+    
+    <!-- Pagina Produse (Lista produselor) -->
+    <section id="produse" class="page">
+      <div class="container">
+        <h2 class="mb-4">Produsele noastre</h2>
+        <div id="products-container" class="row">
+          <!-- Produsele vor fi generate din JavaScript -->
+        </div>
+      </div>
+    </section>
+    
+    <!-- Pagina Produs (Detalii produs) -->
+    <section id="produs" class="page">
+      <div class="container" id="produs-container">
+        <!-- Detaliile unui produs selectat vor fi generate din JavaScript -->
+      </div>
+      <div class="text-center mt-3">
+        <button class="btn btn-secondary" onclick="navigateTo('produse')">Înapoi la Produse</button>
+      </div>
+    </section>
+    
+    <!-- Pagina Despre noi -->
+    <section id="despre" class="page">
+      <div class="container">
+        <h2>Despre noi</h2>
+        <p>
+          Magazinul Bisericesc oferă o gamă variată de produse: lumânări, icoane, cărți, tămâie și multe altele. Ne mândrim cu calitatea și respectarea tradițiilor.
+        </p>
+      </div>
+    </section>
+    
+    <!-- Pagina Termeni și Condiții -->
+    <section id="termeni" class="page">
+      <div class="container">
+        <h2>Termeni și Condiții</h2>
+        <p>
+          Acest magazin respectă normele comerciale și oferă informații clare despre politica de returnare, garanții și drepturile consumatorilor.
+        </p>
+      </div>
+    </section>
+    
+    <!-- Pagina Calendar (exemplu pentru luna aprilie, 30 de zile) -->
+    <section id="calendar" class="page">
+      <div class="container">
+        <h2>Calendar Creștin Ortodox – Aprilie</h2>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Ziua</th>
+              <th>Sărbătoare</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Exemplu de calendar, se poate extinde -->
+            <tr><td>1</td><td>Intrarea în Post</td></tr>
+            <tr><td>2</td><td>-</td></tr>
+            <tr><td>3</td><td>-</td></tr>
+            <tr><td>4</td><td>-</td></tr>
+            <tr><td>5</td><td>-</td></tr>
+            <tr><td>6</td><td>-</td></tr>
+            <tr><td>7</td><td>-</td></tr>
+            <tr><td>8</td><td>-</td></tr>
+            <tr><td>9</td><td>-</td></tr>
+            <tr><td>10</td><td>-</td></tr>
+            <tr><td>11</td><td>-</td></tr>
+            <tr><td>12</td><td>-</td></tr>
+            <tr><td>13</td><td>-</td></tr>
+            <tr><td>14</td><td>Sfântul Vasile</td></tr>
+            <tr><td>15</td><td>-</td></tr>
+            <tr><td>16</td><td>-</td></tr>
+            <tr><td>17</td><td>-</td></tr>
+            <tr><td>18</td><td>-</td></tr>
+            <tr><td>19</td><td>-</td></tr>
+            <tr><td>20</td><td>-</td></tr>
+            <tr><td>21</td><td>-</td></tr>
+            <tr><td>22</td><td>-</td></tr>
+            <tr><td>23</td><td>-</td></tr>
+            <tr><td>24</td><td>-</td></tr>
+            <tr><td>25</td><td>-</td></tr>
+            <tr><td>26</td><td>-</td></tr>
+            <tr><td>27</td><td>-</td></tr>
+            <tr><td>28</td><td>-</td></tr>
+            <tr><td>29</td><td>-</td></tr>
+            <tr><td>30</td><td>-</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    
+    <!-- Pagina Coș -->
+    <section id="cos" class="page">
+      <div class="container">
+        <h2>Coșul de Cumpărături</h2>
+        <div id="cart-container">
+          <!-- Lista produselor adăugate în coș va fi generată din JS -->
+        </div>
+        <div id="order-form" style="display:none;" class="mt-4">
+          <h4>Completează datele pentru comandă</h4>
+          <div class="mb-3">
+            <label>Nume:</label>
+            <input type="text" id="customer-name" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label>Contact (Email/Telefon):</label>
+            <input type="text" id="customer-contact" class="form-control">
+          </div>
+          <button class="btn btn-success" onclick="placeOrder()">Finalizează Comanda</button>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Pagina Admin (exemplu simplificat de login și dashboard) -->
+    <section id="admin" class="page">
+      <div class="container">
+        <h2>Admin</h2>
+        <div id="admin-content">
+          <!-- Conținutul de login sau dashboard se va schimba dinamic -->
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <!-- Footer comun -->
+  <footer>
+    <p>&copy; <span id="year"></span> Magazin Bisericesc. Toate drepturile rezervate.</p>
+    <img src="https://via.placeholder.com/100x30?text=ANPC" alt="Logo ANPC">
+  </footer>
+  
+  <!-- JavaScript: Navigation, Timer, Produs, Coș, Admin -->
+  <script>
+    // Pentru navigare între "pagini": ascunde toate secțiunile și afișează pe cel dorit
+    function navigateTo(pageId) {
+      document.querySelectorAll('.page').forEach(function(page) {
+        page.classList.remove('active-page');
+      });
+      document.getElementById(pageId).classList.add('active-page');
+      
+      // Pentru a reseta pagina de admin, dacă este cazul
+      if(pageId === 'admin') loadAdmin();
+    }
+    
+    // Setăm anul în footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // Timer dinamic până la Paști (exemplu: 20 aprilie 2025)
+    function startTimer() {
+      let easterDate = new Date("2025-04-20T00:00:00").getTime();
+      let timerElem = document.getElementById("timer");
+      let interval = setInterval(function(){
           let now = new Date().getTime();
           let distance = easterDate - now;
-          // Calcul pentru zile, ore, minute, secunde
           let days = Math.floor(distance / (1000 * 60 * 60 * 24));
           let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
           let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
           let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-  
-          if (distance >= 0) {
-            document.getElementById("timer").innerHTML = "Timp până la Paști: " + days + "z " + hours + "h " + minutes + "m " + seconds + "s ";
+          if(distance > 0){
+            timerElem.textContent = "Timp până la Paști: " + days + "z " + hours + "h " + minutes + "m " + seconds + "s";
           } else {
-            // După trecerea timpului, afişează mesajul dorit pentru 3 zile, apoi pentru următoarea sărbătoare majoră
-            document.getElementById("timer").innerHTML = "Sărbătoarea a început! Următoarea mare sărbătoare se anunță în curând.";
-            clearInterval(timerInterval);
+            timerElem.textContent = "Sărbătoarea a început! Următoarea sărbătoare se anunță în curând.";
+            clearInterval(interval);
           }
-        }, 1000);
-      </script>
-    <?php
-}
-
-// Footer-ul comun
-function renderFooter() {
-    ?>
-      <footer class="bg-dark text-white text-center p-3 mt-5">
-        <p>&copy; <?php echo date("Y"); ?> Magazin Bisericesc. Toate drepturile rezervate.</p>
-        <img src="images/logo_anpc.png" alt="Logo ANPC" style="height:30px;">
-      </footer>
-      <!-- Bootstrap JS -->
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
-    </html>
-    <?php
-}
-
-// ----------------------
-// Funcții pentru diferite pagini
-// ----------------------
-
-// Pagina de start: un background atractiv (sau carousel) și un buton către Produse
-function renderHome() {
-    ?>
-    <div class="container mt-4">
-      <div class="jumbotron p-5 text-center bg-secondary text-white" style="background-image: url('images/background_home.jpg'); background-size: cover;">
-        <h1 class="display-4">Bine ați venit la Magazinul Bisericesc</h1>
-        <p class="lead">Descoperă produsele noastre de calitate pentru momente de spiritualitate.</p>
-        <a href="?page=produse" class="btn btn-danger btn-lg">Produsele noastre</a>
-      </div>
-    </div>
-    <?php
-}
-
-// Pagina cu listă de produse
-function renderProduse($products) {
-    ?>
-    <div class="container mt-4">
-      <h2 class="mb-4">Produsele noastre</h2>
-      <div class="row">
-        <?php foreach ($products as $id => $prod): ?>
-          <div class="col-md-4 mb-4">
-            <div class="card h-100">
-              <a href="?page=produs&id=<?php echo $id; ?>" style="text-decoration:none; color:inherit;">
-                <img src="<?php echo $prod['image']; ?>" class="card-img-top" alt="<?php echo htmlspecialchars($prod['name']); ?>">
-                <div class="card-body">
-                  <h5 class="card-title"><?php echo htmlspecialchars($prod['name']); ?></h5>
-                </div>
-              </a>
-              <div class="card-footer">
-                <form method="post" action="">
-                  <input type="hidden" name="action" value="add_to_cart">
-                  <input type="hidden" name="prod_id" value="<?php echo $id; ?>">
-                  <div class="input-group">
-                    <input type="number" name="quantity" value="1" min="1" class="form-control" style="max-width: 70px;">
-                    <button type="submit" class="btn btn-danger">Adaugă în coș</button>
-                  </div>
-                </form>
+      }, 1000);
+    }
+    startTimer();
+    
+    // Array de produse (20 produse exemplu)
+    const products = [
+      {id: 1, name: "Lumânare Roșie", price: 10.00, image: "https://via.placeholder.com/400x200?text=Produs+1", description: "Lumânare din ceară naturală pentru rugăciune."},
+      {id: 2, name: "Lumânare Albă", price: 9.50, image: "https://via.placeholder.com/400x200?text=Produs+2", description: "Lumânare tradițională pentru biserică."},
+      {id: 3, name: "Icoană Sfântă", price: 25.50, image: "https://via.placeholder.com/400x200?text=Produs+3", description: "Icoană lucrată manual."},
+      {id: 4, name: "Carte de Rugăciuni", price: 15.75, image: "https://via.placeholder.com/400x200?text=Produs+4", description: "Carte cu rugăciuni și imnuri."},
+      {id: 5, name: "Tămâie", price: 8.00, image: "https://via.placeholder.com/400x200?text=Produs+5", description: "Tămâie de înaltă calitate."},
+      {id: 6, name: "Candele Decorative", price: 12.50, image: "https://via.placeholder.com/400x200?text=Produs+6", description: "Candele cu design elegant."},
+      {id: 7, name: "Cruce Mică", price: 18.00, image: "https://via.placeholder.com/400x200?text=Produs+7", description: "Cruce din lemn sculptat."},
+      {id: 8, name: "Amuletă", price: 7.50, image: "https://via.placeholder.com/400x200?text=Produs+8", description: "Amuletă de protecție."},
+      {id: 9, name: "Set Rugăciuni", price: 20.00, image: "https://via.placeholder.com/400x200?text=Produs+9", description: "Set complet de rugăciuni."},
+      {id: 10, name: "Simbol Bisericesc", price: 11.00, image: "https://via.placeholder.com/400x200?text=Produs+10", description: "Simbol al credinței."},
+      {id: 11, name: "Lumanare Decorativă", price: 13.00, image: "https://via.placeholder.com/400x200?text=Produs+11", description: "Lumanare cu design modern."},
+      {id: 12, name: "Icoană Mică", price: 16.00, image: "https://via.placeholder.com/400x200?text=Produs+12", description: "Icoană pentru rugăciuni personale."},
+      {id: 13, name: "Carte de Sfinți", price: 14.25, image: "https://via.placeholder.com/400x200?text=Produs+13", description: "Carte cu viața sfinților."},
+      {id: 14, name: "Candele Aromatice", price: 9.75, image: "https://via.placeholder.com/400x200?text=Produs+14", description: "Candele cu arome plăcute."},
+      {id: 15, name: "Tablou Icoanic", price: 30.00, image: "https://via.placeholder.com/400x200?text=Produs+15", description: "Tablou cu imagine religioasă."},
+      {id: 16, name: "Breloc cu Cruce", price: 5.50, image: "https://via.placeholder.com/400x200?text=Produs+16", description: "Breloc simbolic."},
+      {id: 17, name: "Iconar Decorative", price: 22.00, image: "https://via.placeholder.com/400x200?text=Produs+17", description: "Set de iconar pentru casă."},
+      {id: 18, name: "Vază cu Cruce", price: 17.50, image: "https://via.placeholder.com/400x200?text=Produs+18", description: "Vază decorativă cu elemente bisericești."},
+      {id: 19, name: "Candelabru", price: 26.00, image: "https://via.placeholder.com/400x200?text=Produs+19", description: "Candelabru pentru slujbe."},
+      {id: 20, name: "Set de Rugăciune", price: 19.00, image: "https://via.placeholder.com/400x200?text=Produs+20", description: "Set complet cu accesoriu de rugăciune."}
+    ];
+    
+    // Coșul de cumpărături (stocat în memorie)
+    let cart = [];
+    
+    // Randează lista de produse în secțiunea "produse"
+    function renderProducts() {
+      const container = document.getElementById('products-container');
+      container.innerHTML = "";
+      products.forEach(prod => {
+        const col = document.createElement('div');
+        col.className = "col-md-4";
+        col.innerHTML = `
+          <div class="product-card">
+            <img src="${prod.image}" alt="${prod.name}">
+            <div class="card-body">
+              <h5>${prod.name}</h5>
+              <p>Preț: ${prod.price.toFixed(2)} Lei</p>
+              <button class="btn btn-dark btn-sm" onclick="viewProduct(${prod.id})">Detalii</button>
+              <div class="input-group mt-2" style="max-width:120px;">
+                <input type="number" id="qty-${prod.id}" value="1" min="1" class="form-control">
+                <button class="btn btn-danger btn-sm" onclick="addToCart(${prod.id})">Adaugă</button>
               </div>
             </div>
           </div>
-        <?php endforeach; ?>
-      </div>
-    </div>
-    <?php
-}
-
-// Pagina detaliu produs (afișează și câteva detalii suplimentare)
-function renderProdus($products, $id) {
-    if (!isset($products[$id])) {
-        echo "<div class='container mt-4'><h3>Produsul nu există.</h3></div>";
-        return;
-    }
-    $prod = $products[$id];
-    ?>
-    <div class="container mt-4">
-      <div class="row">
-        <div class="col-md-6">
-          <img src="<?php echo $prod['image']; ?>" class="img-fluid" alt="<?php echo htmlspecialchars($prod['name']); ?>">
-        </div>
-        <div class="col-md-6">
-          <h2><?php echo htmlspecialchars($prod['name']); ?></h2>
-          <p><?php echo $prod['description']; ?></p>
-          <p><strong>Preț:</strong> <?php echo number_format($prod['price'], 2); ?> Lei</p>
-          <form method="post" action="">
-              <input type="hidden" name="action" value="add_to_cart">
-              <input type="hidden" name="prod_id" value="<?php echo $id; ?>">
-              <div class="input-group mb-3" style="max-width:120px;">
-                <input type="number" name="quantity" value="1" min="1" class="form-control">
-                <button type="submit" class="btn btn-danger">Adaugă</button>
-              </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <?php
-}
-
-// Pagina Despre noi
-function renderDespre() {
-    ?>
-    <div class="container mt-4">
-      <h2>Despre Noi</h2>
-      <p>Acest magazin oferă o gamă variată de produse bisericești: lumânări, cărți, icoane, tămâie și multe altele. Ne mândrim cu calitatea produselor și respectarea tradițiilor.</p>
-    </div>
-    <?php
-}
-
-// Pagina Termeni și condiții
-function renderTermeni() {
-    ?>
-    <div class="container mt-4">
-      <h2>Termeni și Condiții</h2>
-      <p>Aici vor fi detaliate regulile și condițiile de vânzare, politica de returnare, drepturile consumatorilor etc.</p>
-    </div>
-    <?php
-}
-
-// Pagina Calendar (exemplu pentru luna aprilie – simplificat)
-function renderCalendar() {
-    ?>
-    <div class="container mt-4">
-      <h2>Calendar Creștin Ortodox – Aprilie</h2>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Ziua</th>
-            <th>Sărbătoare</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php for ($day = 1; $day <= 30; $day++): ?>
-            <tr>
-              <td><?php echo $day; ?></td>
-              <td>
-                <?php
-                  // Exemplu de sărbătoare: poți completa după necesități
-                  if ($day == 1) echo "Intrarea în Post";
-                  elseif ($day == 14) echo "Sfântul Vasile";
-                  else echo "-";
-                ?>
-              </td>
-            </tr>
-          <?php endfor; ?>
-        </tbody>
-      </table>
-    </div>
-    <?php
-}
-
-// Pagina Coș: afișează produsele selectate, posibilitatea de modificare a cantității și finalizare comenzii
-function renderCos() {
-    ?>
-    <div class="container mt-4">
-      <h2>Coșul de Cumpărături</h2>
-      <?php if (empty($_SESSION['cart'])): ?>
-        <p>Coșul este gol.</p>
-      <?php else: ?>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Produs</th>
-              <th>Cantitate</th>
-              <th>Preț Unitar</th>
-              <th>Total</th>
-              <th>Acțiune</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php 
-            $grandTotal = 0;
-            foreach ($_SESSION['cart'] as $prod_id => $qty):
-              global $products;
-              if (!isset($products[$prod_id])) continue;
-              $prod = $products[$prod_id];
-              $total = $prod['price'] * $qty;
-              $grandTotal += $total;
-            ?>
-              <tr>
-                <td><?php echo htmlspecialchars($prod['name']); ?></td>
-                <td><?php echo $qty; ?></td>
-                <td><?php echo number_format($prod['price'], 2); ?> Lei</td>
-                <td><?php echo number_format($total, 2); ?> Lei</td>
-                <td>
-                  <form method="post" action="" style="display:inline;">
-                    <input type="hidden" name="action" value="remove_from_cart">
-                    <input type="hidden" name="prod_id" value="<?php echo $prod_id; ?>">
-                    <button type="submit" class="btn btn-sm btn-warning">Șterge</button>
-                  </form>
-                </td>
-              </tr>
-            <?php endforeach; ?>
-            <tr>
-              <td colspan="3" class="text-end"><strong>Total General:</strong></td>
-              <td colspan="2"><strong><?php echo number_format($grandTotal,2); ?> Lei</strong></td>
-            </tr>
-          </tbody>
-        </table>
-        <!-- Formular de finalizare comanda -->
-        <h4>Date de contact</h4>
-        <form method="post" action="">
-          <input type="hidden" name="action" value="place_order">
-          <div class="mb-3">
-            <label>Nume:</label>
-            <input type="text" name="customer_name" class="form-control" required>
-          </div>
-          <div class="mb-3">
-            <label>Email/Telefon:</label>
-            <input type="text" name="customer_contact" class="form-control" required>
-          </div>
-          <button type="submit" class="btn btn-success">Finalizează comanda</button>
-        </form>
-      <?php endif; ?>
-    </div>
-    <?php
-}
-
-// Pagina Admin (autentificare simplă și dashboard)
-function renderAdmin($products) {
-    // Date hardcodate pentru autentificare admin
-    $adminUser = 'admin';
-    $adminPass = 'parola123';
-
-    // Verificare login (simplu, fără criptare – doar exemplificare)
-    if (isset($_POST['action']) && $_POST['action'] == 'admin_login') {
-        $username = $_POST['username'] ?? '';
-        $password = $_POST['password'] ?? '';
-        if ($username === $adminUser && $password === $adminPass) {
-            $_SESSION['admin'] = true;
-        } else {
-            echo "<div class='alert alert-danger'>Autentificare eșuată!</div>";
-        }
+        `;
+        container.appendChild(col);
+      });
     }
     
-    // Dacă nu suntem autentificați, afișăm formularul de login
-    if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
-        ?>
-        <div class="container mt-4">
-          <h2>Login Admin</h2>
-          <form method="post" action="">
-            <input type="hidden" name="action" value="admin_login">
-            <div class="mb-3">
-              <label>Utilizator:</label>
-              <input type="text" name="username" class="form-control" required>
+    // Afișează detaliile unui produs (secțiunea "produs")
+    function viewProduct(id) {
+      const prod = products.find(p => p.id === id);
+      if(!prod) return;
+      const container = document.getElementById('produs-container');
+      container.innerHTML = `
+        <div class="row">
+          <div class="col-md-6">
+            <img src="${prod.image}" alt="${prod.name}" class="img-fluid">
+          </div>
+          <div class="col-md-6">
+            <h2>${prod.name}</h2>
+            <p>${prod.description}</p>
+            <p><strong>Preț:</strong> ${prod.price.toFixed(2)} Lei</p>
+            <div class="input-group" style="max-width:120px;">
+              <input type="number" id="detail-qty-${prod.id}" value="1" min="1" class="form-control">
+              <button class="btn btn-danger" onclick="addToCart(${prod.id}, 'detail')">Adaugă</button>
             </div>
-            <div class="mb-3">
-              <label>Parolă:</label>
-              <input type="password" name="password" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-          </form>
+          </div>
         </div>
-        <?php
+      `;
+      navigateTo('produs');
+    }
+    
+    // Adaugă produs în coș
+    function addToCart(id, source = 'list') {
+      const qtyInput = source === 'list' ? document.getElementById(`qty-${id}`) : document.getElementById(`detail-qty-${id}`);
+      let qty = parseInt(qtyInput.value) || 1;
+      const prod = products.find(p => p.id === id);
+      // Caută produsul în coș
+      const index = cart.findIndex(item => item.id === id);
+      if(index > -1) {
+        cart[index].quantity += qty;
+      } else {
+        cart.push({ id: id, quantity: qty });
+      }
+      updateCartCount();
+      alert(`Produsul "${prod.name}" a fost adăugat în coș.`);
+    }
+    
+    // Actualizează afișarea numărului de produse în coș
+    function updateCartCount() {
+      let total = cart.reduce((sum, item) => sum + item.quantity, 0);
+      document.getElementById('cart-count').textContent = total;
+      renderCart();
+    }
+    
+    // Randează conținutul secțiunii "cos"
+    function renderCart() {
+      const container = document.getElementById('cart-container');
+      if(cart.length === 0){
+        container.innerHTML = "<p>Coșul este gol.</p>";
+        document.getElementById('order-form').style.display = "none";
         return;
+      }
+      let html = `<table class="table">
+                    <thead>
+                      <tr>
+                        <th>Produs</th>
+                        <th>Cantitate</th>
+                        <th>Preț</th>
+                        <th>Total</th>
+                        <th>Acțiune</th>
+                      </tr>
+                    </thead>
+                    <tbody>`;
+      let grandTotal = 0;
+      cart.forEach((item, index) => {
+        const prod = products.find(p => p.id === item.id);
+        const total = prod.price * item.quantity;
+        grandTotal += total;
+        html += `<tr>
+                    <td>${prod.name}</td>
+                    <td>${item.quantity}</td>
+                    <td>${prod.price.toFixed(2)}</td>
+                    <td>${total.toFixed(2)}</td>
+                    <td><button class="btn btn-warning btn-sm" onclick="removeFromCart(${index})">Șterge</button></td>
+                 </tr>`;
+      });
+      html += `<tr>
+                <td colspan="3" class="text-end"><strong>Total General:</strong></td>
+                <td colspan="2"><strong>${grandTotal.toFixed(2)} Lei</strong></td>
+              </tr>`;
+      html += `</tbody></table>`;
+      container.innerHTML = html;
+      document.getElementById('order-form').style.display = "block";
     }
-
-    // Dashboard Admin
-    ?>
-    <div class="container mt-4">
-      <h2>Panou Admin</h2>
-      
-      <!-- Secțiunea: Comenzi primite -->
-      <h4>Comenzi Plasate</h4>
-      <?php if (empty($_SESSION['orders'])): ?>
-        <p>Nu există comenzi până în acest moment.</p>
-      <?php else: ?>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>ID Comandă</th>
-              <th>Date client</th>
-              <th>Produse</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($_SESSION['orders'] as $orderId => $order): ?>
-            <tr>
-              <td><?php echo $orderId; ?></td>
-              <td><?php echo htmlspecialchars($order['customer_name']) . "<br>" . htmlspecialchars($order['customer_contact']); ?></td>
-              <td>
-                <?php 
-                  foreach ($order['items'] as $prod_id => $qty) {
-                      echo htmlspecialchars($products[$prod_id]['name']) . " x " . $qty . "<br>";
-                  }
-                ?>
-              </td>
-              <td><?php echo number_format($order['total'], 2); ?> Lei</td>
-            </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
-      <?php endif; ?>
-
-      <!-- Secțiunea: Actualizare stocuri (exemplu simplificat) -->
-      <h4>Actualizare Stocuri</h4>
-      <p>(Exemplu: aici se pot implementa funcționalități AJAX pentru actualizare dinamică.)</p>
-      <a href="?page=logout_admin" class="btn btn-secondary">Logout Admin</a>
-    </div>
-    <?php
-}
-
-// ----------------------
-// Procesarea cererilor POST
-// ----------------------
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Adăugare produs în coș
-    if (isset($_POST['action']) && $_POST['action'] == 'add_to_cart') {
-        $prod_id = intval($_POST['prod_id']);
-        $quantity = intval($_POST['quantity']);
-        if (isset($_SESSION['cart'][$prod_id])) {
-            $_SESSION['cart'][$prod_id] += $quantity;
-        } else {
-            $_SESSION['cart'][$prod_id] = $quantity;
-        }
-        // Redirect pentru a preveni resubmissionul formularului
-        header("Location: " . $_SERVER['REQUEST_URI']);
-        exit();
+    
+    // Șterge element din coș
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartCount();
     }
-    // Ștergere produs din coș
-    if (isset($_POST['action']) && $_POST['action'] == 'remove_from_cart') {
-        $prod_id = intval($_POST['prod_id']);
-        if (isset($_SESSION['cart'][$prod_id])) {
-            unset($_SESSION['cart'][$prod_id]);
-        }
-        header("Location: " . $_SERVER['REQUEST_URI']);
-        exit();
+    
+    // Finalizează comanda (simulare: doar șterge coșul și afișează un mesaj)
+    function placeOrder() {
+      const name = document.getElementById('customer-name').value.trim();
+      const contact = document.getElementById('customer-contact').value.trim();
+      if(name === "" || contact === ""){
+        alert("Completează datele de contact!");
+        return;
+      }
+      // Afișare mesaj de confirmare
+      alert("Comanda a fost plasată. Mulțumim, " + name + "!");
+      // Resetăm coșul și formularul
+      cart = [];
+      updateCartCount();
+      document.getElementById('customer-name').value = "";
+      document.getElementById('customer-contact').value = "";
+      navigateTo('home');
     }
-    // Finalizare comandă
-    if (isset($_POST['action']) && $_POST['action'] == 'place_order') {
-        $customerName = trim($_POST['customer_name']);
-        $customerContact = trim($_POST['customer_contact']);
-        if (!empty($_SESSION['cart']) && $customerName && $customerContact) {
-            $orderTotal = 0;
-            foreach ($_SESSION['cart'] as $prod_id => $qty) {
-                global $products;
-                $orderTotal += $products[$prod_id]['price'] * $qty;
-            }
-            $orderId = time(); // identificator simplificat
-            $_SESSION['orders'][$orderId] = [
-                'customer_name' => $customerName,
-                'customer_contact' => $customerContact,
-                'items' => $_SESSION['cart'],
-                'total' => $orderTotal
-            ];
-            // Golește coșul după plasarea comenzii
-            $_SESSION['cart'] = [];
-            // Redirect la pagina principală
-            header("Location: ?page=home");
-            exit();
-        }
+    
+    // Funcții simple pentru pagina Admin (exemplu)
+    let adminLogged = false;
+    function loadAdmin() {
+      const adminContent = document.getElementById('admin-content');
+      if(!adminLogged) {
+        adminContent.innerHTML = `
+          <h4>Login Admin</h4>
+          <div class="mb-3">
+            <label>Utilizator:</label>
+            <input type="text" id="admin-user" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label>Parolă:</label>
+            <input type="password" id="admin-pass" class="form-control">
+          </div>
+          <button class="btn btn-primary" onclick="adminLogin()">Login</button>
+        `;
+      } else {
+        adminContent.innerHTML = `
+          <h4>Dashboard Admin</h4>
+          <p>Aici se vor afișa comenzile primite (exemplu static, într-o implementare reală se folosesc date de la server).</p>
+          <button class="btn btn-secondary" onclick="adminLogout()">Logout</button>
+        `;
+      }
     }
-}
-
-// ----------------------
-// Routing: selectarea paginii în funcție de parametrul "page"
-// ----------------------
-$page = isset($_GET['page']) ? $_GET['page'] : 'home';
-
-// Pentru logout-ul admin (exemplu simplificat)
-if ($page == 'logout_admin') {
-    unset($_SESSION['admin']);
-    header("Location: ?page=admin");
-    exit();
-}
-
-// Randează header-ul
-renderHeader();
-
-// În funcție de pagina selectată se afișează conținutul:
-switch ($page) {
-    case 'home':
-        renderHome();
-        break;
-    case 'produse':
-        renderProduse($products);
-        break;
-    case 'produs':
-        // Se așteaptă parametrul id al produsului
-        $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-        renderProdus($products, $id);
-        break;
-    case 'despre':
-        renderDespre();
-        break;
-    case 'termeni':
-        renderTermeni();
-        break;
-    case 'calendar':
-        renderCalendar();
-        break;
-    case 'cos':
-        renderCos();
-        break;
-    case 'admin':
-        renderAdmin($products);
-        break;
-    default:
-        echo "<div class='container mt-4'><h3>Pagina cerută nu există!</h3></div>";
-        break;
-}
-
-// Randează footer-ul comun
-renderFooter();
-?>
+    
+    function adminLogin() {
+      const user = document.getElementById('admin-user').value.trim();
+      const pass = document.getElementById('admin-pass').value.trim();
+      // Date de autentificare exemplu
+      if(user === "admin" && pass === "parola123"){
+        adminLogged = true;
+        loadAdmin();
+      } else {
+        alert("Autentificare eșuată!");
+      }
+    }
+    function adminLogout() {
+      adminLogged = false;
+      loadAdmin();
+    }
+    
+    // La încărcarea paginii, asigură-te că secțiunea "produse" va avea conținutul
+    document.addEventListener("DOMContentLoaded", function(){
+      renderProducts();
+      updateCartCount();
+    });
+  </script>
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
