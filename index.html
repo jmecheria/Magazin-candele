@@ -63,10 +63,17 @@
       padding-top: 20px;
       margin-top: 20px;
     }
-    /* Secțiuni de pagină – ascunse inițial */
-    .page { display: none; }
-    .active-page { display: block; }
-    /* Carduri pentru produse – uniformizare și efect la hover */
+    /* Secțiuni de pagină cu tranziție: inițial opace */
+    .page {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      display: none;
+    }
+    .page.active-page {
+      display: block;
+      opacity: 1;
+    }
+    /* Carduri pentru produse – uniforme și cu efect hover */
     .product-card {
       border: 1px solid #ccc;
       border-radius: 5px;
@@ -198,7 +205,7 @@
         <!-- Slider cu imagini de produse -->
         <div class="slider-container">
           <div class="slider-track" id="slider-track">
-            <!-- Imaginile se generează în JS -->
+            <!-- Imaginile se generează din JS -->
           </div>
         </div>
       </div>
@@ -210,7 +217,7 @@
       <!-- Filtru de căutare -->
       <input type="text" id="filter-input" class="form-control" placeholder="Caută produs..." onkeyup="filterProducts()">
       <div id="products-container" class="row">
-        <!-- Cardurile produselor se generează în JS -->
+        <!-- Cardurile produselor se generează din JS -->
       </div>
     </section>
     
@@ -228,7 +235,7 @@
     <section id="despre" class="page">
       <h2>Despre noi</h2>
       <p>
-        Magazinul nostru Bisericesc a fost fondat din dorința de a oferi clienților produse autentice, care reflectă tradițiile și valorile spirituale. Ne mândrim cu atenția la detalii și cu serviciile dedicate, lucrând neîncetat pentru a asigura calitatea fiecărui obiect. Fiecare produs este ales cu grijă, pentru a aduce liniște și inspirație în viața credincioșilor. Suntem dedicați promovării culturii religioase și păstrării tradițiilor, combinând inovația cu respectul pentru moștenirea spirituală. Vă invităm să explorați colecția noastră variată și să descoperiți povestea fiecărui obiect în parte.
+        Magazinul nostru Bisericesc a fost fondat din dorința de a oferi clienților produse autentice, care reflectă tradițiile și valorile spirituale. Ne mândrim cu atenția la detalii și cu serviciile dedicate, lucrând neîncetat pentru a asigura calitatea fiecărui obiect. Fiecare produs este ales cu grijă pentru a aduce inspirație și liniște în viața credincioșilor. Prin combinarea tehnologiei moderne cu respectul pentru moștenirea spirituală, ne propunem să creăm o experiență plăcută pentru toți utilizatorii. Vă invităm să explorați colecția noastră variată și să descoperiți povestea fiecărui obiect.
       </p>
     </section>
     
@@ -236,7 +243,7 @@
     <section id="termeni" class="page">
       <h2>Termeni și Condiții</h2>
       <p>
-        Vă rugăm să citiți cu atenție acești termeni și condiții înainte de a utiliza acest magazin online. Accesând site-ul, vă asumați responsabilitatea de a respecta toate regulile prezentate aici. Ne rezervăm dreptul de a modifica condițiile în orice moment, iar utilizarea continuă a platformei înseamnă acceptarea modificărilor. Informațiile colectate sunt folosite exclusiv pentru procesarea comenzilor și îmbunătățirea experienței clienților. Orice reclamație sau neînțelegere va fi soluționată de echipa noastră de suport, care este disponibilă pentru clarificări. Vă mulțumim că alegeți să faceți parte din comunitatea noastră.
+        Vă rugăm să citiți cu atenție acești termeni și condiții înainte de a utiliza acest magazin online. Accesând site-ul, vă angajați să respectați toate regulile prezentate. Ne rezervăm dreptul de a modifica condițiile oricând, iar utilizarea continuă a platformei implică acceptarea acestor modificări. Datele colectate sunt utilizate exclusiv pentru procesarea comenzilor și îmbunătățirea experienței clienților. Orice neînțelegere va fi soluționată prompt de echipa noastră de suport. Vă mulțumim că alegeți să faceți parte din comunitatea noastră și sperăm să aveți o experiență plăcută pe acest site.
       </p>
     </section>
     
@@ -262,7 +269,7 @@
     <section id="cos" class="page">
       <h2>Coșul de Cumpărături</h2>
       <div id="cart-container">
-        <!-- Lista produselor din coș se generează în JS -->
+        <!-- Lista produselor din coș se generează din JS -->
       </div>
       <div id="order-form" style="display:none;" class="mt-4">
         <h4>Date pentru comandă</h4>
@@ -295,17 +302,32 @@
   
   <!-- JAVASCRIPT -->
   <script>
-    // Navigarea între secțiuni
+    // Funcție de tranziție între pagini (fade-out / fade-in)
     function navigateTo(pageId) {
-      document.querySelectorAll('.page').forEach(page => page.classList.remove('active-page'));
-      document.getElementById(pageId).classList.add('active-page');
+      const current = document.querySelector('.active-page');
+      if (current) {
+        current.style.opacity = 0;
+        setTimeout(() => {
+          current.classList.remove('active-page');
+          const target = document.getElementById(pageId);
+          target.classList.add('active-page');
+          target.style.opacity = 0;
+          setTimeout(() => {
+            target.style.opacity = 1;
+          }, 50);
+        }, 500);
+      } else {
+        const target = document.getElementById(pageId);
+        target.classList.add('active-page');
+        target.style.opacity = 1;
+      }
       if (pageId === 'admin') loadAdmin();
     }
     
-    // Anul curent în footer
+    // Setăm anul curent în footer
     document.getElementById('year').textContent = new Date().getFullYear();
     
-    // Timer dinamic până la Paști (ex: 20 aprilie 2025)
+    // Timer dinamic până la Paști (exemplu: 20 aprilie 2025)
     function startTimer() {
       let easterDate = new Date("2025-04-20T00:00:00").getTime();
       let timerElem = document.getElementById("timer");
@@ -326,7 +348,7 @@
     }
     startTimer();
     
-    /* ---- Produse și Stocuri ---- */
+    /* ---- Produse și stocuri ---- */
     const products = [
       {id: 1, name: "Lumânare Roșie", price: 10.00, image: "https://via.placeholder.com/400x200?text=Produs+1", description: "Lumânare din ceară naturală pentru rugăciune.", stock: 50, defaultStock: 50},
       {id: 2, name: "Lumânare Albă", price: 9.50, image: "https://via.placeholder.com/400x200?text=Produs+2", description: "Lumânare tradițională pentru biserică.", stock: 40, defaultStock: 40},
@@ -352,11 +374,10 @@
     
     // Coșul de cumpărături (în memorie)
     let cart = [];
-    // Comenzile – pentru globalitate, reține că localStorage este doar local;
-    // Pentru o soluție globală, este necesar un backend real.
+    // Comenzile – reține că, pentru comenzi globale, va fi nevoie de un backend real
     let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
     
-    // Sliderul de produse din pagina de start
+    // Sliderul de produse pe pagina de start
     function renderSlider() {
       const track = document.getElementById("slider-track");
       track.innerHTML = "";
@@ -398,7 +419,7 @@
       });
     }
     
-    // Filtrează produsele în funcție de input
+    // Filtrează produsele
     function filterProducts() {
       renderProducts();
     }
@@ -428,7 +449,7 @@
       navigateTo('produs');
     }
     
-    // Adaugă produsul în coș și actualizează stocul
+    // Adaugă produs în coș și actualizează stocul
     function addToCart(id, source = 'list') {
       const qtyInput = (source === 'list') ? document.getElementById(`qty-${id}`) : document.getElementById(`detail-qty-${id}`);
       let qty = parseInt(qtyInput.value) || 1;
@@ -457,7 +478,7 @@
       renderCart();
     }
     
-    // Renderizează lista de produse din coș
+    // Renderizează lista produselor din coș
     function renderCart() {
       const container = document.getElementById('cart-container');
       if (cart.length === 0) {
@@ -508,7 +529,7 @@
       updateCartCount();
     }
     
-    // Plasează comanda și salvează în localStorage; pentru global orders este necesar un backend real
+    // Plasează comanda și salvează în localStorage (notă: pentru comenzi globale, se necesită un backend)
     function placeOrder() {
       const name = document.getElementById('customer-name').value.trim();
       const contact = document.getElementById('customer-contact').value.trim();
@@ -561,7 +582,6 @@
       } else {
         adminDiv.innerHTML = `
           <h4>Dashboard Admin</h4>
-          <button class="btn btn-secondary mb-3" onclick="resetStock()">Reset Stocuri (toate produsele)</button>
           <h5>Filtrare Produse</h5>
           <input type="text" id="admin-filter" class="form-control mb-3" placeholder="Caută produs în admin..." onkeyup="renderAdminProducts()">
           <div id="admin-products-container" class="mb-4"></div>
@@ -590,7 +610,7 @@
       loadAdmin();
     }
     
-    // Renderizează produsele în secțiunea Admin cu opțiunea de a seta un nou stoc
+    // Renderizează produsele în secțiunea Admin cu opțiunea de a seta noul stoc introdus
     function renderAdminProducts() {
       const container = document.getElementById('admin-products-container');
       container.innerHTML = "";
@@ -609,7 +629,7 @@
       });
     }
     
-    // Actualizează stocul pentru un produs în funcție de valoarea introdusă în admin
+    // Actualizează stocul pentru un produs în baza valorii introduse de admin
     function updateProductStockCustom(id) {
       const newStock = parseInt(document.getElementById(`new-stock-${id}`).value) || 0;
       const prod = products.find(p => p.id === id);
@@ -620,18 +640,7 @@
       alert("Stocul pentru " + prod.name + " a fost actualizat la " + newStock + ".");
     }
     
-    // Reset global – setăm stocurile la valorile implicite
-    function resetStock() {
-      products.forEach(prod => {
-        prod.stock = prod.defaultStock;
-        document.getElementById(`stock-${prod.id}`) && (document.getElementById(`stock-${prod.id}`).textContent = prod.stock);
-        document.getElementById(`detail-stock-${prod.id}`) && (document.getElementById(`detail-stock-${prod.id}`).textContent = prod.stock);
-        document.getElementById(`admin-stock-${prod.id}`) && (document.getElementById(`admin-stock-${prod.id}`).textContent = prod.stock);
-      });
-      alert("Stocurile au fost resetate la valorile implicite.");
-    }
-    
-    // Renderizează comenzile în secțiunea Admin; OBSERVAȚIE: Pentru comenzi globale este necesar un backend
+    // Renderizează comenzile în secțiunea Admin
     function renderOrders() {
       const container = document.getElementById('admin-orders-container');
       orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
@@ -671,14 +680,13 @@
       container.innerHTML = html;
     }
     
-    // Marchează o comandă ca terminată și actualizează localStorage
     function finishOrder(index) {
       orders.splice(index, 1);
       localStorage.setItem("globalOrders", JSON.stringify(orders));
       renderOrders();
     }
     
-    // Tipărește factura pentru comanda selectată: deschide o fereastră nouă cu factură formattată
+    // Deschide fereastra pentru printarea facturii
     function printInvoice(index) {
       const order = orders[index];
       let invoiceWindow = window.open("", "PrintInvoice", "width=800,height=600");
@@ -688,7 +696,7 @@
           <title>Factura - Comanda ${order.id}</title>
           <style>
             body { font-family: Arial, sans-serif; padding: 20px; }
-            h2, p, table { margin-bottom: 10px; }
+            h2, p, table { margin: 0 0 10px; padding: 0; }
             table { width: 100%; border-collapse: collapse; }
             table, th, td { border: 1px solid #000; }
             th, td { padding: 5px; text-align: left; }
