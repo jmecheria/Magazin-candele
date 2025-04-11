@@ -1,22 +1,22 @@
 <?php
 header("Content-Type: application/json");
 
-// Definim căile pentru fișierele JSON pentru produse și comenzi
+// Definim căile pentru fișierele JSON
 $productsFile = "products.json";
-$ordersFile = "orders.json";
+$ordersFile   = "orders.json";
 
-// Dacă fișierul cu produse nu există, îl creăm cu stocurile inițiale (pentru cele 20 de produse)
+// Dacă fișierul cu produse nu există, îl creăm cu stocurile inițiale pentru cele 20 de produse
 if (!file_exists($productsFile)) {
     $initialProducts = [
-      ["id" => 1, "stock" => 50],
-      ["id" => 2, "stock" => 40],
-      ["id" => 3, "stock" => 30],
-      ["id" => 4, "stock" => 60],
-      ["id" => 5, "stock" => 80],
-      ["id" => 6, "stock" => 70],
-      ["id" => 7, "stock" => 35],
-      ["id" => 8, "stock" => 45],
-      ["id" => 9, "stock" => 55],
+      ["id" => 1,  "stock" => 50],
+      ["id" => 2,  "stock" => 40],
+      ["id" => 3,  "stock" => 30],
+      ["id" => 4,  "stock" => 60],
+      ["id" => 5,  "stock" => 80],
+      ["id" => 6,  "stock" => 70],
+      ["id" => 7,  "stock" => 35],
+      ["id" => 8,  "stock" => 45],
+      ["id" => 9,  "stock" => 55],
       ["id" => 10, "stock" => 50],
       ["id" => 11, "stock" => 60],
       ["id" => 12, "stock" => 40],
@@ -38,11 +38,8 @@ if (!file_exists($ordersFile)) {
 }
 
 $action = "";
-if (isset($_GET['action'])) {
-    $action = $_GET['action'];
-} else if (isset($_POST['action'])) {
-    $action = $_POST['action'];
-}
+if (isset($_GET['action'])) { $action = $_GET['action']; }
+else if (isset($_POST['action'])) { $action = $_POST['action']; }
 
 switch ($action) {
     case "get_products":
@@ -56,14 +53,14 @@ switch ($action) {
         break;
 
     case "place_order":
-        // Se așteaptă date POST JSON cu structura comenzii
+        // Se așteaptă un POST JSON cu "order"
         $input = json_decode(file_get_contents("php://input"), true);
         if (!isset($input["order"])) {
             echo json_encode(["status" => "error", "message" => "No order data"]);
             exit;
         }
         $order = $input["order"];
-        // Actualizăm stocurile pe baza produselor din comandă
+        // Actualizăm stocurile pentru produsele din comandă
         $products = json_decode(file_get_contents($productsFile), true);
         foreach ($order["items"] as $item) {
             foreach ($products as &$prod) {
@@ -73,7 +70,7 @@ switch ($action) {
             }
         }
         file_put_contents($productsFile, json_encode($products));
-        // Adăugăm comanda în lista globală
+        // Adăugăm comanda la lista globală
         $orders = json_decode(file_get_contents($ordersFile), true);
         $orders[] = $order;
         file_put_contents($ordersFile, json_encode($orders));
@@ -81,7 +78,7 @@ switch ($action) {
         break;
 
     case "update_stock_custom":
-        // Se așteaptă date POST JSON cu "product_id" și "new_stock"
+        // Așteptăm POST JSON cu "product_id" și "new_stock"
         $input = json_decode(file_get_contents("php://input"), true);
         if (!isset($input["product_id"]) || !isset($input["new_stock"])) {
             echo json_encode(["status" => "error", "message" => "Missing parameters"]);
@@ -100,9 +97,36 @@ switch ($action) {
         echo json_encode(["status" => "success", "message" => "Product stock updated"]);
         break;
 
+    case "reset_all_stocks":
+        // Resetează stocurile tuturor produselor la valorile inițiale
+        $initialProducts = [
+          ["id" => 1,  "stock" => 50],
+          ["id" => 2,  "stock" => 40],
+          ["id" => 3,  "stock" => 30],
+          ["id" => 4,  "stock" => 60],
+          ["id" => 5,  "stock" => 80],
+          ["id" => 6,  "stock" => 70],
+          ["id" => 7,  "stock" => 35],
+          ["id" => 8,  "stock" => 45],
+          ["id" => 9,  "stock" => 55],
+          ["id" => 10, "stock" => 50],
+          ["id" => 11, "stock" => 60],
+          ["id" => 12, "stock" => 40],
+          ["id" => 13, "stock" => 30],
+          ["id" => 14, "stock" => 45],
+          ["id" => 15, "stock" => 20],
+          ["id" => 16, "stock" => 100],
+          ["id" => 17, "stock" => 25],
+          ["id" => 18, "stock" => 30],
+          ["id" => 19, "stock" => 15],
+          ["id" => 20, "stock" => 40]
+        ];
+        file_put_contents($productsFile, json_encode($initialProducts));
+        echo json_encode(["status" => "success", "message" => "All stocks reset"]);
+        break;
+
     default:
         echo json_encode(["status" => "error", "message" => "Invalid action"]);
         break;
 }
 ?>
-
