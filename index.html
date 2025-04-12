@@ -15,9 +15,11 @@
     }
     header img.logo { height: 50px; }
     nav ul {
-      list-style: none; margin: 0; padding: 0;
+      list-style: none;
+      margin: 0; padding: 0;
       display: flex; gap: 15px; flex-wrap: wrap;
     }
+    /* Am eliminat elementul "Coș" din meniu, pentru a păstra doar iconița */
     nav ul li a {
       color: #fff; font-weight: bold; text-decoration: none; cursor: pointer;
     }
@@ -35,7 +37,7 @@
       background-color: #fff; margin: 20px auto; padding: 20px;
       max-width: 1200px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    /* Delimitarea secțiunilor cu o linie roșie subțire */
+    /* Secțiuni delimitate cu o linie roșie subțire */
     section {
       border-top: 3px solid #a30000; padding-top: 20px; margin-top: 20px;
     }
@@ -44,7 +46,7 @@
       opacity: 0; transition: opacity 0.5s ease; display: none;
     }
     .page.active-page { display: block; opacity: 1; }
-    /* Carduri de produs – uniforme, cu efect de scaling */
+    /* Carduri de produs – uniforme și cu efect de scaling */
     .product-card {
       border: 1px solid #ccc; border-radius: 5px; overflow: hidden;
       background-color: #f8f9fa; height: 100%;
@@ -58,6 +60,7 @@
       width: 100%; height: 200px; object-fit: cover; cursor: pointer;
     }
     .product-card .card-body { padding: 15px; flex-grow: 1; }
+    /* Stil pentru input-ul de filtrare a produselor */
     #filter-input { max-width: 400px; margin-bottom: 20px; }
     footer { text-align: center; }
     /* Slider pe pagina de start */
@@ -73,7 +76,7 @@
     @keyframes slide {
       0% { transform: translateX(0); } 100% { transform: translateX(-50%); }
     }
-    /* Stil pentru textul atractiv din secțiuni */
+    /* Stil text atractiv pentru secțiunile Despre noi și Termeni */
     .attractive-text { font-size: 1.1rem; line-height: 1.6; color: #333; }
     /* Stil pentru fereastra de factură */
     .invoice {
@@ -81,10 +84,21 @@
     }
     .invoice h2, .invoice p, .invoice table { margin: 0 0 10px; padding: 0; }
     .invoice table { width: 100%; border-collapse: collapse; }
-    .invoice table, .invoice table th, .invoice table td {
-      border: 1px solid #000;
-    }
+    .invoice table, .invoice table th, .invoice table td { border: 1px solid #000; }
     .invoice table th, .invoice table td { padding: 5px; text-align: left; }
+    /* Butoane – efect de transformare la apăsare */
+    button {
+      transition: transform 0.1s ease, background-color 0.2s ease;
+    }
+    button:active { transform: scale(0.98); }
+    /* Butonul "Back to Top" */
+    #backToTop {
+      position: fixed; bottom: 20px; right: 20px; z-index: 100;
+      background: #a30000; color: #fff; border: none; border-radius: 50%;
+      width: 50px; height: 50px; font-size: 1.5rem; display: none; cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    #backToTop:hover { background: #7a0000; }
     /* Responsive */
     @media (max-width: 768px) {
       nav ul { justify-content: center; }
@@ -107,17 +121,17 @@
         <li><a onclick="navigateTo('despre')">Despre noi</a></li>
         <li><a onclick="navigateTo('termeni')">Termeni & Condiții</a></li>
         <li><a onclick="navigateTo('calendar')">Calendar</a></li>
-        <li><a onclick="navigateTo('cos')">Coș</a></li>
         <li><a onclick="navigateTo('admin')">Admin</a></li>
       </ul>
     </nav>
+    <!-- Păstrăm doar iconița de coș -->
     <div class="cart-icon" onclick="navigateTo('cos')">
       <img src="https://via.placeholder.com/24?text=🛒" alt="Coș">
       <span class="badge" id="cart-count">0</span>
     </div>
   </header>
   
-  <!-- Timer dinamic până la Paști -->
+  <!-- Timer dinamic -->
   <div class="text-center py-2" style="background-color:#fff;">
     <span id="timer" class="fs-5 text-danger"></span>
   </div>
@@ -155,7 +169,7 @@
     <section id="despre" class="page">
       <h2>Despre noi</h2>
       <p class="attractive-text">
-        Magazinul nostru Bisericesc a fost fondat din pasiune și dorința de a păstra tradițiile spirituale. Ne dedicăm cu grijă selecționării produselor care aduc lumină și încurajare în viețile credincioșilor. Fiecare obiect din colecția noastră este ales pentru calitatea sa și pentru semnificația pe care o are, de la lumânări artizanale și icoane lucrate manual până la cărți și accesorii care inspiră. Aici, tehnologia modernă se îmbină cu valorile tradiționale pentru a crea o experiență unică, unde fiecare vizită devine o ocazie de reconectare cu esența spirituală.
+        Magazinul nostru Bisericesc a fost fondat din pasiune și dorința de a păstra tradițiile spirituale. Ne dedicăm cu grijă selecționării produselor care aduc lumină și inspirație în viața credincioșilor. Fiecare obiect este realizat manual sau ales cu atenție pentru a reflecta valorile autentice ale credinței. Experiența noastră îmbină tehnologia modernă cu tradiția, oferind clienților o selecție variată și de calitate. Vă invităm să explorați universul nostru și să descoperiți povestea fiecărui produs, care aduce un strop de misticism și echilibru în viața dumneavoastră.
       </p>
     </section>
     
@@ -163,7 +177,7 @@
     <section id="termeni" class="page">
       <h2>Termeni și Condiții</h2>
       <p class="attractive-text">
-        Vă rugăm să citiți cu atenție acești termeni și condiții înainte de a utiliza site-ul nostru. Accesând platforma, sunteți de acord să respectați toate regulile și politicile de confidențialitate prezentate. Informațiile colectate se folosesc exclusiv pentru procesarea comenzilor și optimizarea experienței clienților. Ne rezervăm dreptul de a modifica termenii oricând, iar utilizarea continuă a site-ului implică acceptarea acestora. Dacă aveți întrebări sau nelămuriri, echipa de suport este aici pentru a vă ajuta și pentru a asigura o experiență transparentă și profesionistă. Vă mulțumim că ați ales să faceți parte din comunitatea noastră!
+        Vă rugăm să citiți cu atenție acești termeni și condiții înainte de a utiliza site-ul nostru. Accesând platforma, vă angajați să respectați regulile stabilite și să utilizați informațiile oferite în mod responsabil. Datele colectate se folosesc doar pentru procesarea comenzilor și optimizarea experienței clienților. Ne rezervăm dreptul de a modifica în orice moment aceste condiții, iar utilizarea continuă a site-ului implică acceptarea celor mai recente actualizări. Dacă aveți întrebări sau nelămuriri, echipa noastră de suport este aici pentru a vă ajuta și pentru a asigura o experiență transparentă și profesionistă. Vă mulțumim că alegeți să faceți parte din comunitatea noastră!
       </p>
     </section>
     
@@ -213,6 +227,9 @@
     </section>
   </main>
   
+  <!-- Buton Back to Top -->
+  <button id="backToTop" onclick="scrollToTop()">&#8679;</button>
+  
   <!-- FOOTER -->
   <footer>
     <p>&copy; <span id="year"></span> Magazin Bisericesc. Toate drepturile rezervate.</p>
@@ -221,7 +238,7 @@
   
   <!-- JAVASCRIPT -->
   <script>
-    // Funcția de tranziție între pagini (fade)
+    // Tranziție între pagini (fade in/out)
     function navigateTo(pageId) {
       const current = document.querySelector('.active-page');
       if (current) {
@@ -242,10 +259,24 @@
       if (pageId === 'produse') fetchProductsFromBackend();
     }
     
-    // Anul curent în footer
+    // Back to Top: arată butonul când derulezi în jos
+    window.onscroll = function() { scrollFunction(); };
+    function scrollFunction() {
+      const btn = document.getElementById("backToTop");
+      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        btn.style.display = "block";
+      } else {
+        btn.style.display = "none";
+      }
+    }
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    // Setăm anul curent în footer
     document.getElementById('year').textContent = new Date().getFullYear();
     
-    // Timer până la Paști (exemplu: 20 aprilie 2025)
+    // Timer până la Paști (ex: 20 aprilie 2025)
     function startTimer() {
       let easterDate = new Date("2025-04-20T00:00:00").getTime();
       let timerElem = document.getElementById("timer");
@@ -256,17 +287,13 @@
         let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        if (distance > 0) {
-          timerElem.textContent = "Timp până la Paști: " + days + "z " + hours + "h " + minutes + "m " + seconds + "s";
-        } else {
-          timerElem.textContent = "Sărbătoarea a început! Următoarea se anunță în curând.";
-        }
+        if (distance > 0) { timerElem.textContent = "Timp până la Paști: " + days + "z " + hours + "h " + minutes + "m " + seconds + "s"; }
+        else { timerElem.textContent = "Sărbătoarea a început! Următoarea se anunță în curând."; }
       }, 1000);
     }
     startTimer();
     
-    /* ---- Funcționalități Produse și Stocuri ---- */
-    // Definim produsele de bază (stocurile vor fi actualizate din localStorage)
+    /* ---- Funcționalități Produse & Stocuri ---- */
     const products = [
       {id: 1, name: "Lumânare Roșie", price: 10.00, image: "https://via.placeholder.com/400x200?text=Produs+1", description: "Lumânare din ceară naturală pentru rugăciune.", stock: 50},
       {id: 2, name: "Lumânare Albă", price: 9.50, image: "https://via.placeholder.com/400x200?text=Produs+2", description: "Lumânare tradițională pentru biserică.", stock: 40},
@@ -290,14 +317,10 @@
       {id: 20, name: "Set de Rugăciune", price: 19.00, image: "https://via.placeholder.com/400x200?text=Produs+20", description: "Set complet cu accesorii de rugăciune.", stock: 40}
     ];
     
-    // Preia stocurile actualizate (simulare localStorage)
-    function fetchProductsFromBackend() {
-      // Într-un mediu real aici ai face un fetch la un API backend
-      // Pentru această implementare, presupunem că stocurile sunt deja actualizate în obiectul products
-      renderProducts();
-    }
+    let cart = [];
     
-    // Renderizează cardurile de produse
+    function fetchProductsFromBackend() { renderProducts(); }
+    
     function renderProducts() {
       const container = document.getElementById('products-container');
       container.innerHTML = "";
@@ -328,7 +351,6 @@
     
     function filterProducts() { renderProducts(); }
     
-    // Afișează detaliile unui produs
     function viewProduct(id) {
       const prod = products.find(p => p.id === id);
       if (!prod) return;
@@ -352,7 +374,6 @@
       navigateTo('produs');
     }
     
-    // Adaugă produs în coș și actualizează stocul local
     function addToCart(id, source = 'list') {
       const qtyInput = (source === 'list') ? document.getElementById(`qty-${id}`) : document.getElementById(`detail-qty-${id}`);
       let qty = parseInt(qtyInput.value) || 1;
@@ -362,19 +383,19 @@
       document.getElementById(`stock-${id}`) && (document.getElementById(`stock-${id}`).textContent = prod.stock);
       document.getElementById(`detail-stock-${id}`) && (document.getElementById(`detail-stock-${id}`).textContent = prod.stock);
       let index = cart.findIndex(item => item.id === id);
-      if (index > -1) { cart[index].quantity += qty; } else { cart.push({ id: id, quantity: qty }); }
+      if (index > -1) { cart[index].quantity += qty; } 
+      else { cart.push({ id: id, quantity: qty }); }
       updateCartCount();
+      console.log("Cart:", cart);
       alert(`Produsul "${prod.name}" a fost adăugat în coș.`);
     }
     
-    // Actualizează coșul
     function updateCartCount() {
       let total = cart.reduce((sum, item) => sum + item.quantity, 0);
       document.getElementById('cart-count').textContent = total;
       renderCart();
     }
     
-    // Renderizează conținutul coșului
     function renderCart() {
       const container = document.getElementById('cart-container');
       if (cart.length === 0) {
@@ -415,7 +436,6 @@
       document.getElementById('order-form').style.display = "block";
     }
     
-    // Elimină un element din coș și restochează produsul
     function removeFromCart(index) {
       const removed = cart.splice(index, 1)[0];
       const prod = products.find(p => p.id === removed.id);
@@ -425,7 +445,6 @@
       updateCartCount();
     }
     
-    // Butonul Clear Cart – golește coșul și restochează produsele
     function clearCart() {
       cart.forEach(item => {
         const prod = products.find(p => p.id === item.id);
@@ -436,7 +455,6 @@
       renderProducts();
     }
     
-    // Plasează comanda – salvează în localStorage
     function placeOrder() {
       const name = document.getElementById('customer-name').value.trim();
       const contact = document.getElementById('customer-contact').value.trim();
@@ -520,8 +538,7 @@
               <strong>${prod.name}</strong> - Stoc: <span id="admin-stock-${prod.id}">${prod.stock}</span>
               <input type="number" id="new-stock-${prod.id}" placeholder="Nou stoc" style="width:70px; margin-left:10px;">
               <button class="btn btn-warning btn-sm ms-2" onclick="updateProductStockCustom(${prod.id})">Setează stoc</button>
-            </div>
-          `;
+            </div>`;
           container.innerHTML += prodHTML;
         }
       });
@@ -537,22 +554,18 @@
       alert("Stocul pentru " + prod.name + " a fost actualizat la " + newStock + ".");
     }
     
-    // Buton pentru resetarea globală a stocurilor (actualizează toate produsele la valorile inițiale presetate)
     function resetAllStocks() {
-      // Valorile inițiale
       const initialStocks = {
         1: 50, 2: 40, 3: 30, 4: 60, 5: 80, 6: 70, 7: 35,
-        8: 45, 9: 55, 10: 50, 11: 60, 12: 40, 13: 30, 14: 45, 15: 20, 16: 100, 17: 25, 18: 30, 19: 15, 20: 40
+        8: 45, 9: 55, 10: 50, 11: 60, 12: 40, 13: 30, 14: 45, 15: 20,
+        16: 100, 17: 25, 18: 30, 19: 15, 20: 40
       };
-      products.forEach(prod => {
-        prod.stock = initialStocks[prod.id] || prod.stock;
-      });
+      products.forEach(prod => { prod.stock = initialStocks[prod.id] || prod.stock; });
       alert("Stocurile pentru toate produsele au fost resetate.");
       renderProducts();
       renderAdminProducts();
     }
     
-    // Renderizează comenzile din localStorage în Admin
     function renderAdminOrders() {
       const orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
       const container = document.getElementById('admin-orders-container');
@@ -590,7 +603,6 @@
     }
     
     function finishOrder(index) {
-      // În acest exemplu, pentru simplitate, doar ștergem comanda din localStorage
       let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
       orders.splice(index, 1);
       localStorage.setItem("globalOrders", JSON.stringify(orders));
@@ -650,13 +662,11 @@
       invoiceWindow.print();
     }
     
-    // La încărcarea paginii se preiau stocurile din "backend" (simulat) și se generează sliderul
     document.addEventListener("DOMContentLoaded", function() {
       fetchProductsFromBackend();
       renderSlider();
     });
   </script>
-  <!-- Bootstrap Bundle JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
