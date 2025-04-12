@@ -54,7 +54,7 @@
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    /* Delimitarea secțiunilor */
+    /* Delimitarea secțiunilor cu o linie roșie subțire */
     section {
       border-top: 3px solid #a30000;
       padding-top: 20px;
@@ -96,7 +96,7 @@
       padding: 15px;
       flex-grow: 1;
     }
-    /* Lărgirea butonului de adăugare în coș – folosim w-100 */
+    /* Butonul de "Adaugă în Coș" lărgit */
     .add-cart-btn {
       width: 100%;
     }
@@ -104,10 +104,8 @@
       max-width: 400px;
       margin-bottom: 20px;
     }
-    footer {
-      text-align: center;
-    }
-    /* Slider pe pagina de start */
+    footer { text-align: center; }
+    /* Slider pe pagina de start – produse ușor transparente */
     .slider-container {
       overflow: hidden;
       position: relative;
@@ -130,7 +128,7 @@
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
-    /* Stil text atractiv pentru secțiunile Despre noi și Termeni */
+    /* Stil text atractiv pentru Despre noi și Termeni */
     .attractive-text {
       font-size: 1.1rem;
       line-height: 1.6;
@@ -140,9 +138,7 @@
     button {
       transition: transform 0.1s ease, background-color 0.2s ease;
     }
-    button:active {
-      transform: scale(0.98);
-    }
+    button:active { transform: scale(0.98); }
     /* Buton Back to Top */
     #backToTop {
       position: fixed;
@@ -160,10 +156,8 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-    #backToTop:hover {
-      background: #7a0000;
-    }
-    /* Stil pentru fereastra de factură (Times New Roman) */
+    #backToTop:hover { background: #7a0000; }
+    /* Stil pentru fereastra de factură – folosim Times New Roman */
     .invoice {
       max-width: 800px;
       margin: 20px auto;
@@ -210,7 +204,7 @@
         <li><a onclick="navigateTo('admin')">Admin</a></li>
       </ul>
     </nav>
-    <!-- Păstrăm doar iconița coșului -->
+    <!-- Păstrăm doar iconița de coș -->
     <div class="cart-icon" onclick="navigateTo('cos')">
       <img src="https://via.placeholder.com/24?text=🛒" alt="Coș">
       <span class="badge" id="cart-count">0</span>
@@ -229,7 +223,8 @@
       <div class="text-center py-5">
         <h1>Bine ați venit la Magazinul Bisericesc</h1>
         <p>Descoperă produsele noastre pentru momente de spiritualitate!</p>
-        <button class="btn btn-dark" onclick="navigateTo('produse')">Vezi produsele</button>
+        <!-- Butonul duce la Produse, dar în spate slider-ul este vizibil -->
+        <button class="btn btn-dark mb-3" onclick="navigateTo('produse')">Vezi produsele</button>
         <div class="slider-container">
           <div class="slider-track" id="slider-track"></div>
         </div>
@@ -333,7 +328,7 @@
   
   <!-- JAVASCRIPT -->
   <script>
-    // Funcție de tranziție între pagini (fade in/out)
+    // Tranziție între pagini (fade in/out)
     function navigateTo(pageId) {
       const current = document.querySelector('.active-page');
       if (current) {
@@ -354,7 +349,7 @@
       if (pageId === 'produse') fetchProductsFromBackend();
     }
     
-    // Butonul Back to Top
+    // Back to Top
     window.onscroll = function() { scrollFunction(); };
     function scrollFunction() {
       const btn = document.getElementById("backToTop");
@@ -381,39 +376,43 @@
         let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        if (distance > 0) { timerElem.textContent = "Timp până la Paști: " + days + "z " + hours + "h " + minutes + "m " + seconds + "s"; }
-        else { timerElem.textContent = "Sărbătoarea a început! Următoarea se anunță în curând."; }
+        if (distance > 0) { 
+          timerElem.textContent = "Timp până la Paști: " + days + "z " + hours + "h " + minutes + "m " + seconds + "s"; 
+        } else { 
+          timerElem.textContent = "Sărbătoarea a început! Următoarea se anunță în curând."; 
+        }
       }, 1000);
     }
     startTimer();
     
     /* ---- Funcționalități Produse & Stocuri ---- */
+    // Produsele au acum o proprietate suplimentară labels
     const products = [
-      {id: 1, name: "Lumânare Roșie", price: 10.00, image: "https://via.placeholder.com/400x200?text=Produs+1", description: "Lumânare din ceară naturală pentru rugăciune.", stock: 50},
-      {id: 2, name: "Lumânare Albă", price: 9.50, image: "https://via.placeholder.com/400x200?text=Produs+2", description: "Lumânare tradițională pentru biserică.", stock: 40},
-      {id: 3, name: "Icoană Sfântă", price: 25.50, image: "https://via.placeholder.com/400x200?text=Produs+3", description: "Icoană lucrată manual.", stock: 30},
-      {id: 4, name: "Carte de Rugăciuni", price: 15.75, image: "https://via.placeholder.com/400x200?text=Produs+4", description: "Carte cu rugăciuni și imnuri.", stock: 60},
-      {id: 5, name: "Tămâie", price: 8.00, image: "https://via.placeholder.com/400x200?text=Produs+5", description: "Tămâie de înaltă calitate.", stock: 80},
-      {id: 6, name: "Candele Decorative", price: 12.50, image: "https://via.placeholder.com/400x200?text=Produs+6", description: "Candele cu design elegant.", stock: 70},
-      {id: 7, name: "Cruce Mică", price: 18.00, image: "https://via.placeholder.com/400x200?text=Produs+7", description: "Cruce din lemn sculptat.", stock: 35},
-      {id: 8, name: "Amuletă", price: 7.50, image: "https://via.placeholder.com/400x200?text=Produs+8", description: "Amuletă de protecție.", stock: 45},
-      {id: 9, name: "Set Rugăciuni", price: 20.00, image: "https://via.placeholder.com/400x200?text=Produs+9", description: "Set complet de rugăciuni.", stock: 55},
-      {id: 10, name: "Simbol Bisericesc", price: 11.00, image: "https://via.placeholder.com/400x200?text=Produs+10", description: "Simbol al credinței.", stock: 50},
-      {id: 11, name: "Lumânare Decorativă", price: 13.00, image: "https://via.placeholder.com/400x200?text=Produs+11", description: "Lumânare cu design modern.", stock: 60},
-      {id: 12, name: "Icoană Mică", price: 16.00, image: "https://via.placeholder.com/400x200?text=Produs+12", description: "Icoană personală pentru rugăciuni.", stock: 40},
-      {id: 13, name: "Carte de Sfinți", price: 14.25, image: "https://via.placeholder.com/400x200?text=Produs+13", description: "Carte cu vieți de sfinți.", stock: 30},
-      {id: 14, name: "Candele Aromatice", price: 9.75, image: "https://via.placeholder.com/400x200?text=Produs+14", description: "Candele cu arome plăcute.", stock: 45},
-      {id: 15, name: "Tablou Icoanic", price: 30.00, image: "https://via.placeholder.com/400x200?text=Produs+15", description: "Tablou religios elegant.", stock: 20},
-      {id: 16, name: "Breloc cu Cruce", price: 5.50, image: "https://via.placeholder.com/400x200?text=Produs+16", description: "Breloc simbolic.", stock: 100},
-      {id: 17, name: "Iconar Decorative", price: 22.00, image: "https://via.placeholder.com/400x200?text=Produs+17", description: "Set de iconar pentru casă.", stock: 25},
-      {id: 18, name: "Vază cu Cruce", price: 17.50, image: "https://via.placeholder.com/400x200?text=Produs+18", description: "Vază decorativă cu motive religioase.", stock: 30},
-      {id: 19, name: "Candelabru", price: 26.00, image: "https://via.placeholder.com/400x200?text=Produs+19", description: "Candelabru pentru slujbe.", stock: 15},
-      {id: 20, name: "Set de Rugăciune", price: 19.00, image: "https://via.placeholder.com/400x200?text=Produs+20", description: "Set complet cu accesorii de rugăciune.", stock: 40}
+      {id: 1, name: "Lumânare Roșie", price: 10.00, image: "https://via.placeholder.com/400x200?text=Produs+1", description: "Lumânare din ceară naturală pentru rugăciune.", stock: 50, labels: ["Nou", "Popular"]},
+      {id: 2, name: "Lumânare Albă", price: 9.50, image: "https://via.placeholder.com/400x200?text=Produs+2", description: "Lumânare tradițională pentru biserică.", stock: 40, labels: ["Best Seller"]},
+      {id: 3, name: "Icoană Sfântă", price: 25.50, image: "https://via.placeholder.com/400x200?text=Produs+3", description: "Icoană lucrată manual.", stock: 30, labels: ["Artizanal"]},
+      {id: 4, name: "Carte de Rugăciuni", price: 15.75, image: "https://via.placeholder.com/400x200?text=Produs+4", description: "Carte cu rugăciuni și imnuri.", stock: 60, labels: []},
+      {id: 5, name: "Tămâie", price: 8.00, image: "https://via.placeholder.com/400x200?text=Produs+5", description: "Tămâie de înaltă calitate.", stock: 80, labels: ["Premium"]},
+      {id: 6, name: "Candele Decorative", price: 12.50, image: "https://via.placeholder.com/400x200?text=Produs+6", description: "Candele cu design elegant.", stock: 70, labels: []},
+      {id: 7, name: "Cruce Mică", price: 18.00, image: "https://via.placeholder.com/400x200?text=Produs+7", description: "Cruce din lemn sculptat.", stock: 35, labels: ["Handmade"]},
+      {id: 8, name: "Amuletă", price: 7.50, image: "https://via.placeholder.com/400x200?text=Produs+8", description: "Amuletă de protecție.", stock: 45, labels: []},
+      {id: 9, name: "Set Rugăciuni", price: 20.00, image: "https://via.placeholder.com/400x200?text=Produs+9", description: "Set complet de rugăciuni.", stock: 55, labels: []},
+      {id: 10, name: "Simbol Bisericesc", price: 11.00, image: "https://via.placeholder.com/400x200?text=Produs+10", description: "Simbol al credinței.", stock: 50, labels: []},
+      {id: 11, name: "Lumânare Decorativă", price: 13.00, image: "https://via.placeholder.com/400x200?text=Produs+11", description: "Lumânare cu design modern.", stock: 60, labels: ["Nou"]},
+      {id: 12, name: "Icoană Mică", price: 16.00, image: "https://via.placeholder.com/400x200?text=Produs+12", description: "Icoană personală pentru rugăciuni.", stock: 40, labels: []},
+      {id: 13, name: "Carte de Sfinți", price: 14.25, image: "https://via.placeholder.com/400x200?text=Produs+13", description: "Carte cu vieți de sfinți.", stock: 30, labels: ["Recomandat"]},
+      {id: 14, name: "Candele Aromatice", price: 9.75, image: "https://via.placeholder.com/400x200?text=Produs+14", description: "Candele cu arome plăcute.", stock: 45, labels: []},
+      {id: 15, name: "Tablou Icoanic", price: 30.00, image: "https://via.placeholder.com/400x200?text=Produs+15", description: "Tablou religios elegant.", stock: 20, labels: ["Limited Edition"]},
+      {id: 16, name: "Breloc cu Cruce", price: 5.50, image: "https://via.placeholder.com/400x200?text=Produs+16", description: "Breloc simbolic.", stock: 100, labels: []},
+      {id: 17, name: "Iconar Decorative", price: 22.00, image: "https://via.placeholder.com/400x200?text=Produs+17", description: "Set de iconar pentru casă.", stock: 25, labels: []},
+      {id: 18, name: "Vază cu Cruce", price: 17.50, image: "https://via.placeholder.com/400x200?text=Produs+18", description: "Vază decorativă cu motive religioase.", stock: 30, labels: []},
+      {id: 19, name: "Candelabru", price: 26.00, image: "https://via.placeholder.com/400x200?text=Produs+19", description: "Candelabru pentru slujbe.", stock: 15, labels: ["Special"]},
+      {id: 20, name: "Set de Rugăciune", price: 19.00, image: "https://via.placeholder.com/400x200?text=Produs+20", description: "Set complet cu accesorii de rugăciune.", stock: 40, labels: []}
     ];
     
     let cart = [];
     
-    // Preia stocurile actualizate (simulăm folosind produsele deja definite)
+    // Funcție de simulare: preia stocurile din "backend" – aici folosim direct datele din obiectul products
     function fetchProductsFromBackend() { renderProducts(); }
     
     function renderProducts() {
@@ -431,6 +430,7 @@
                 <h5>${prod.name}</h5>
                 <p>Preț: ${prod.price.toFixed(2)} Lei</p>
                 <p>Stoc: <span id="stock-${prod.id}">${prod.stock}</span></p>
+                ${prod.labels.length ? `<p>${prod.labels.map(l => `<span class="badge bg-info text-dark me-1">${l}</span>`).join("")}</p>` : ""}
               </div>
               <div class="p-2">
                 <div class="input-group" style="max-width:120px;">
@@ -450,6 +450,10 @@
       const prod = products.find(p => p.id === id);
       if (!prod) return;
       const container = document.getElementById('produs-container');
+      let labelsHtml = "";
+      if (prod.labels && prod.labels.length) {
+        labelsHtml = prod.labels.map(l => `<span class="badge bg-info text-dark me-1">${l}</span>`).join("");
+      }
       container.innerHTML = `
         <div class="row">
           <div class="col-md-6">
@@ -458,6 +462,7 @@
           <div class="col-md-6">
             <h2>${prod.name}</h2>
             <p>${prod.description}</p>
+            ${labelsHtml ? `<p>${labelsHtml}</p>` : ""}
             <p><strong>Preț:</strong> ${prod.price.toFixed(2)} Lei</p>
             <p><strong>Stoc disponibil:</strong> <span id="detail-stock-${prod.id}">${prod.stock}</span></p>
             <div class="input-group" style="max-width:120px;">
@@ -478,7 +483,7 @@
       document.getElementById(`stock-${id}`) && (document.getElementById(`stock-${id}`).textContent = prod.stock);
       document.getElementById(`detail-stock-${id}`) && (document.getElementById(`detail-stock-${id}`).textContent = prod.stock);
       let index = cart.findIndex(item => item.id === id);
-      if (index > -1) { cart[index].quantity += qty; } 
+      if (index > -1) { cart[index].quantity += qty; }
       else { cart.push({ id: id, quantity: qty }); }
       updateCartCount();
       console.log("Cart:", cart);
@@ -550,7 +555,7 @@
       renderProducts();
     }
     
-    // Plasează comanda și apoi afișează secțiunea Detalii Comandă
+    // Plasează comanda: salvează în localStorage și afișează pagina de Detalii Comandă
     function placeOrder() {
       const name = document.getElementById('customer-name').value.trim();
       const contact = document.getElementById('customer-contact').value.trim();
@@ -579,7 +584,7 @@
       navigateTo('order-details');
     }
     
-    // Afișează detaliile comenzii finalizate, inclusiv informații despre client (pentru factură)
+    // Afișează detaliile comenzii (inclusiv etichetele produselor) în secțiunea "order-details"
     function renderOrderDetails(order) {
       const container = document.getElementById('order-details-container');
       let html = `<p><strong>Client:</strong> ${order.customer.name}</p>
@@ -589,6 +594,7 @@
                     <thead>
                       <tr>
                         <th>Produs</th>
+                        <th>Etichete</th>
                         <th>Cantitate</th>
                         <th>Preț</th>
                         <th>Total</th>
@@ -600,8 +606,13 @@
         const prod = products.find(p => p.id === item.id);
         let total = prod.price * item.quantity;
         grandTotal += total;
+        let labelsHtml = "";
+        if (prod.labels && prod.labels.length) {
+          labelsHtml = prod.labels.map(l => `<span class="badge bg-secondary me-1">${l}</span>`).join("");
+        }
         html += `<tr>
                    <td>${prod.name}</td>
+                   <td>${labelsHtml}</td>
                    <td>${item.quantity}</td>
                    <td>${prod.price.toFixed(2)}</td>
                    <td>${total.toFixed(2)}</td>
@@ -654,10 +665,7 @@
       else { alert("Autentificare eșuată!"); }
     }
     
-    function adminLogout() {
-      adminLogged = false;
-      loadAdmin();
-    }
+    function adminLogout() { adminLogged = false; loadAdmin(); }
     
     function renderAdminProducts() {
       const container = document.getElementById('admin-products-container');
@@ -717,7 +725,11 @@
         let details = "";
         order.items.forEach(item => {
           const prod = products.find(p => p.id === item.id);
-          details += prod.name + " x " + item.quantity + "<br>";
+          let labelsHtml = "";
+          if (prod.labels && prod.labels.length) {
+            labelsHtml = prod.labels.map(l => `<span class="badge bg-secondary me-1">${l}</span>`).join("");
+          }
+          details += prod.name + " " + labelsHtml + " x " + item.quantity + "<br>";
         });
         html += `<tr>
                    <td>${order.id}</td>
@@ -768,6 +780,7 @@
             <thead>
               <tr>
                 <th>Produs</th>
+                <th>Etichete</th>
                 <th>Cantitate</th>
                 <th>Preț</th>
                 <th>Total</th>
@@ -777,8 +790,13 @@
       order.items.forEach(item => {
         const prod = products.find(p => p.id === item.id);
         const total = prod.price * item.quantity;
+        let labelsHtml = "";
+        if (prod.labels && prod.labels.length) {
+          labelsHtml = prod.labels.map(l => `<span class="badge bg-secondary me-1">${l}</span>`).join("");
+        }
         htmlContent += `<tr>
                           <td>${prod.name}</td>
+                          <td>${labelsHtml}</td>
                           <td>${item.quantity}</td>
                           <td>${prod.price.toFixed(2)}</td>
                           <td>${total.toFixed(2)}</td>
@@ -793,6 +811,45 @@
       invoiceWindow.document.close();
       invoiceWindow.focus();
       invoiceWindow.print();
+    }
+    
+    // Secțiunea de afișare a detaliilor comenzii (după finalizare)
+    function renderOrderDetails(order) {
+      const container = document.getElementById('order-details-container');
+      let html = `<p><strong>Client:</strong> ${order.customer.name}</p>
+                  <p><strong>Contact:</strong> ${order.customer.contact}</p>
+                  <p><strong>Furnizor:</strong> Magazin Bisericesc, Str. Exemplu 123, Oraș, Telefon: 0123 456 789</p>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Produs</th>
+                        <th>Etichete</th>
+                        <th>Cantitate</th>
+                        <th>Preț</th>
+                        <th>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>`;
+      let grandTotal = 0;
+      order.items.forEach(item => {
+        const prod = products.find(p => p.id === item.id);
+        let total = prod.price * item.quantity;
+        grandTotal += total;
+        let labelsHtml = "";
+        if (prod.labels && prod.labels.length) {
+          labelsHtml = prod.labels.map(l => `<span class="badge bg-secondary me-1">${l}</span>`).join("");
+        }
+        html += `<tr>
+                   <td>${prod.name}</td>
+                   <td>${labelsHtml}</td>
+                   <td>${item.quantity}</td>
+                   <td>${prod.price.toFixed(2)}</td>
+                   <td>${total.toFixed(2)}</td>
+                 </tr>`;
+      });
+      html += `</tbody></table>
+               <p><strong>Total Comandă:</strong> ${order.total.toFixed(2)} Lei</p>`;
+      container.innerHTML = html;
     }
     
     document.addEventListener("DOMContentLoaded", function() {
