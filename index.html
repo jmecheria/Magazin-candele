@@ -3,980 +3,1206 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Magazin Bisericesc</title>
-  <!-- Bootstrap pentru stilizare rapidă -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Magazinul de Candele & Tradiții</title>
+  
+  <!-- jsPDF pentru generarea facturii -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+  
   <style>
-    /* HEADER și FOOTER cu gradient de roșu închis */
-    header, footer {
-      background: linear-gradient(135deg, #500000, #a30000);
+    /* Variabile CSS */
+    :root {
+      --red-start: #b71c1c;
+      --red-end: #d32f2f;
+      --primary-gradient: linear-gradient(90deg, var(--red-start), var(--red-end));
+      --primary-color: var(--red-start);
+      --secondary-color: #000; /* accent negru */
+      --highlight-color: #ff8a80;
+      --button-bg: #e53935;
+      --button-hover: #c62828;
+      --error-color: var(--red-start);
+      --light-bg: #ffffff;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Merriweather', serif;
+      line-height: 1.6;
+      background: var(--light-bg);
+      color: #000;
+      padding-bottom: 60px;
+      scroll-behavior: smooth;
+    }
+    /* Dezactivare click-dreapta (sau o soluție minimă client-side) */
+    window.oncontextmenu = function() { return false; };
+    
+    /* HEADER – fixat, cu fundal roșu (gradient), text alb */
+    header {
+      background: var(--primary-gradient);
       color: #fff;
-      padding: 10px 20px;
+      padding: 12px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1100;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
-    header img.logo { height: 50px; }
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .logo { width: 60px; }
+    .header-title { font-size: 28px; margin-left: 10px; }
     nav ul {
-      list-style: none; margin: 0; padding: 0;
-      display: flex; gap: 15px; flex-wrap: wrap;
+      list-style: none;
+      display: flex;
+      align-items: center;
     }
-    /* Eliminat textul "Coș" din meniu – se păstrează doar iconița */
+    nav ul li { margin-left: 20px; }
     nav ul li a {
-      color: #fff; font-weight: bold; text-decoration: none; cursor: pointer;
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s;
     }
-    .cart-icon {
-      position: relative; display: inline-block; cursor: pointer;
+    nav ul li a:hover { color: var(--highlight-color); }
+    .cart-icon { width: 30px; vertical-align: middle; }
+    .cart-count {
+      background: #e74c3c;
+      color: #fff;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 12px;
+      margin-left: 2px;
     }
-    .cart-icon img { height: 24px; }
-    .cart-icon .badge {
-      position: absolute; top: -5px; right: -10px;
-      background: yellow; color: #000; border-radius: 50%;
-      padding: 2px 6px; font-size: 0.8rem;
+    .hamburger { display: none; font-size: 28px; cursor: pointer; background: none; border: none; color: #fff; }
+    
+    /* TIMER – fixat sub header, pentru vizibilitate constantă */
+    #countdown-timer {
+      position: fixed;
+      top: 62px; /* plasat puțin mai jos față de header */
+      left: 0;
+      width: 100%;
+      background: #333;
+      color: #fff;
+      padding: 8px 10px;
+      text-align: center;
+      font-size: 20px;
+      z-index: 1090;
+      border-bottom: 2px solid var(--primary-color);
     }
-    /* Container principal – aspect modern */
-    .main-container {
-      background-color: #fff; margin: 20px auto; padding: 20px;
-      max-width: 1200px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    
+    /* Buton fix pentru coș (pe mobil) */
+    .fixed-cart {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--button-bg);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+      z-index: 1100;
+      cursor: pointer;
+      display: none;
     }
-    /* Secțiuni delimitate cu o linie roșie subțire */
-    section {
-      border-top: 3px solid #a30000; padding-top: 20px; margin-top: 20px;
+    .fixed-cart:hover { background: var(--button-hover); }
+    
+    /* PAGINILE SITE-ULUI */
+    #pages {
+      padding-top: 140px;
     }
-    /* Tranziție între pagini (fade in/out) */
-    .page {
-      opacity: 0; transition: opacity 0.5s ease; display: none;
+    #pages section {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
     }
-    .page.active-page { display: block; opacity: 1; }
-    /* Carduri pentru produse – uniforme și cu efect de scaling */
+    #pages section.active {
+      display: block;
+      opacity: 1;
+    }
+    
+    /* Slider */
+    .slider {
+      position: relative;
+      width: 100%;
+      height: 450px;
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+    .slides img {
+      width: 100%;
+      height: 450px;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .slides img.active { opacity: 1; }
+    .slider .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 450px;
+      background: rgba(0, 0, 0, 0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .btn-shop {
+      padding: 12px 24px;
+      background: var(--button-bg);
+      border: none;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+    .btn-shop:hover { background: var(--button-hover); }
+    .slider-indicators {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 100;
+    }
+    .slider-indicators button {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: none;
+      background-color: rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .slider-indicators button.active {
+      background-color: rgba(255,255,255,0.9);
+    }
+    
+    /* Bara de căutare */
+    #search-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    #search-container input {
+      padding: 10px 15px;
+      width: 80%;
+      max-width: 400px;
+      border: 2px solid #ccc;
+      border-radius: 30px;
+      font-size: 16px;
+      outline: none;
+      transition: all 0.3s;
+      background: #fff;
+      background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23ccc" viewBox="0 0 16 16"><path d="M11.742 10.344l3.85 3.85-1.397 1.397-3.85-3.85a6.5 6.5 0 1 1 1.397-1.397zm-5.242 1.656a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg>');
+      background-repeat: no-repeat;
+      background-size: 20px;
+      background-position: 10px 50%;
+      padding-left: 40px;
+    }
+    #search-container input:focus {
+      border-color: var(--button-bg);
+      box-shadow: 0 0 8px rgba(41,128,185,0.5);
+    }
+    /* Butoanele de filtrare și sortare */
+    #filter-toggle, #sort-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--button-bg);
+      margin: 10px auto;
+    }
+    #filter-bar, #sort-bar {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    #filter-bar button, #sort-bar button {
+      padding: 8px 14px;
+      margin: 5px;
+      border: none;
+      border-radius: 4px;
+      background: var(--button-bg);
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    #filter-bar button:hover, #sort-bar button:hover {
+      background: var(--button-hover);
+    }
+    
+    /* Grila de produse */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
     .product-card {
-      border: 1px solid #ccc; border-radius: 5px; overflow: hidden;
-      background-color: #f8f9fa; height: 100%;
-      display: flex; flex-direction: column; justify-content: space-between;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid #ddd;
+      padding: 15px;
+      text-align: center;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
     }
     .product-card:hover {
-      transform: scale(1.05); box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transform: scale(1.03);
+      box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
     }
     .product-card img {
-      width: 100%; height: 200px; object-fit: cover; cursor: pointer;
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-bottom: 10px;
     }
-    .product-card .card-body { padding: 15px; flex-grow: 1; }
-    #filter-input { max-width: 400px; margin-bottom: 20px; }
-    footer { text-align: center; }
-    /* Slider pe pagina de start */
-    .slider-container {
-      overflow: hidden; position: relative; height: 150px; margin-top: 20px; opacity: 0.6;
+    .product-card h3 {
+      font-size: 22px;
+      margin-bottom: 5px;
     }
-    .slider-track {
-      display: flex; width: max-content; animation: slide 20s linear infinite;
+    .product-card p {
+      font-size: 18px;
+      margin-bottom: 10px;
     }
-    .slider-track img {
-      margin-right: 10px; height: 150px; width: auto; border-radius: 5px;
+    .product-card input[type="number"] {
+      width: 70px;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+      text-align: center;
+      transition: border-color 0.3s;
     }
-    @keyframes slide {
-      0% { transform: translateX(0); } 100% { transform: translateX(-50%); }
+    /* Pentru a preveni deschiderea modalului la interacțiuni interne */
+    .product-card input[type="number"],
+    .product-card button {
+      cursor: auto;
     }
-    /* Stil text atractiv pentru secțiunile Despre noi și Termeni */
-    .attractive-text { font-size: 1.1rem; line-height: 1.6; color: #333; }
-    /* Butoane – efect de transformare la click */
-    button { transition: transform 0.1s ease, background-color 0.2s ease; }
-    button:active { transform: scale(0.98); }
-    /* Buton Back to Top */
-    #backToTop {
-      position: fixed; bottom: 20px; right: 20px; z-index: 100;
-      background: #a30000; color: #fff; border: none; border-radius: 50%;
-      width: 50px; height: 50px; font-size: 1.5rem; display: none; cursor: pointer;
-      transition: background-color 0.3s ease;
+    .product-card button {
+      padding: 10px 16px;
+      background: #e67e22;
+      border: none;
+      color: #fff;
+      border-radius: 6px;
+      transition: background 0.3s;
     }
-    #backToTop:hover { background: #7a0000; }
-    /* Stil pentru fereastra de factură */
-    .invoice {
-      max-width: 800px; margin: 20px auto; padding: 20px; font-family: Arial, sans-serif;
+    .product-card button:hover {
+      background: #d35400;
     }
-    .invoice h2, .invoice p, .invoice table { margin: 0 0 10px; padding: 0; }
-    .invoice table { width: 100%; border-collapse: collapse; }
-    .invoice table, .invoice table th, .invoice table td {
-      border: 1px solid #000;
+    .no-products {
+      text-align: center;
+      font-size: 20px;
+      color: var(--error-color);
+      margin: 20px;
     }
-    .invoice table th, .invoice table td { padding: 5px; text-align: left; }
-    /* Responsive */
+    
+    /* Secțiuni Info (Despre Noi, Termeni & Condiții, Evenimente) */
+    .info-section {
+      background: url('evenimente-bg.jpg') no-repeat center center/cover;
+      padding: 40px 20px;
+      border: 2px solid var(--primary-color);
+      margin-bottom: 40px;
+      border-radius: 8px;
+    }
+    .info-section .content-text {
+      background: rgba(255,255,255,0.95);
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .info-section h2 {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    /* Calendar în Evenimente */
+    .calendar {
+      margin-top: 20px;
+      overflow-x: auto;
+    }
+    .calendar table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 400px;
+    }
+    .calendar th, .calendar td {
+      padding: 8px;
+      border: 1px solid var(--primary-color);
+      text-align: left;
+      font-size: 14px;
+    }
+    .calendar th {
+      background: var(--primary-color);
+      color: #fff;
+    }
+    .calendar td.important {
+      background: var(--button-bg);
+      color: #fff;
+      font-weight: bold;
+    }
+    
+    /* Formular de Comandă */
+    .order-form {
+      margin: 30px auto;
+      max-width: 500px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      border: 1px solid #ddd;
+    }
+    .order-form h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+    }
+    .order-form label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      display: block;
+    }
+    .order-form input[type="text"],
+    .order-form input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+    .order-form button {
+      width: 48%;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .order-form button[type="submit"] {
+      background: var(--button-bg);
+      color: #fff;
+    }
+    .order-form button[type="submit"]:hover {
+      background: var(--button-hover);
+    }
+    .order-form .reset-btn {
+      background: #c0392b;
+      color: #fff;
+    }
+    .order-form .reset-btn:hover {
+      background: #a93226;
+    }
+    
+    /* Coș de Cumpărături */
+    #cart-container {
+      margin: 30px auto;
+      max-width: 500px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      border: 1px solid #ddd;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #ccc;
+    }
+    .cart-item:last-child { border-bottom: none; }
+    .cart-item span { font-size: 16px; }
+    .cart-item input[type="number"] {
+      width: 60px;
+      padding: 5px;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 5px;
+    }
+    .cart-item button {
+      padding: 5px 10px;
+      background: #c0392b;
+      border: none;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .cart-item button:hover { background: #a93226; }
+    
+    /* Secțiunea Comenzi (stocare locală) */
+    #comenzi {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    #comenzi h2 {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .comanda {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      background: #fff;
+    }
+    .comanda button {
+      margin-top: 5px;
+      padding: 5px 10px;
+      background: var(--button-bg);
+      border: none;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .comanda button:hover { background: var(--button-hover); }
+    
+    /* Footer */
+    footer {
+      background: #fff0f0;
+      border-top: 2px solid var(--primary-color);
+      padding: 20px;
+      text-align: center;
+      font-size: 16px;
+      color: #555;
+    }
+    .footer-container { max-width: 1200px; margin: auto; }
+    .footer-logos img { width: 30px; vertical-align: middle; margin: 0 5px; }
+    footer a { text-decoration: none; color: var(--primary-color); }
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      background: var(--secondary-color);
+      color: #fff;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+      display: none;
+      transition: background 0.3s;
+      z-index: 1100;
+    }
+    .back-to-top:hover { background: var(--primary-color); }
+    
     @media (max-width: 768px) {
-      nav ul { justify-content: center; }
-      .main-container { margin: 10px; padding: 15px; }
-      .product-card img { height: 150px; }
+      .header-container { flex-direction: column; text-align: center; }
+      nav ul { flex-direction: column; display: none; }
+      nav ul.active { display: flex; }
+      nav ul li { margin: 10px 0; }
+      .hamburger { display: block; }
+      .slider, .slides img { height: 220px; }
+      .overlay { height: 220px; }
+      #filter-bar, #sort-bar { display: none; }
+      #filter-bar.active, #sort-bar.active { display: block; }
+      #filter-toggle, #sort-toggle { display: inline-block; }
+      #search-container input { width: 90%; }
+      .fixed-cart { display: flex; }
+      #countdown-timer { font-size: 16px; }
     }
+    
+    .fade-in { animation: fadeIn 1s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   </style>
 </head>
 <body>
   <!-- HEADER -->
-  <header class="d-flex justify-content-between align-items-center flex-wrap">
-    <div class="d-flex align-items-center">
-      <img src="https://via.placeholder.com/150x50?text=Logo" alt="Logo" class="logo me-2">
-      <span class="fs-4">Magazin Bisericesc</span>
-    </div>
-    <nav>
-      <ul>
-        <li><a onclick="navigateTo('home')">Acasă</a></li>
-        <li><a onclick="navigateTo('produse')">Produse</a></li>
-        <li><a onclick="navigateTo('despre')">Despre noi</a></li>
-        <li><a onclick="navigateTo('termeni')">Termeni & Condiții</a></li>
-        <li><a onclick="navigateTo('calendar')">Calendar</a></li>
-        <li><a onclick="navigateTo('admin')">Admin</a></li>
-      </ul>
-    </nav>
-    <!-- Păstrăm doar iconița de coș -->
-    <div class="cart-icon" onclick="navigateTo('cos')">
-      <img src="https://via.placeholder.com/24?text=🛒" alt="Coș">
-      <span class="badge" id="cart-count">0</span>
+  <header>
+    <div class="header-container">
+      <img src="logo.jpg" alt="Logo" class="logo">
+      <span class="header-title">Magazinul de Candele & Tradiții</span>
+      <button class="hamburger" onclick="toggleMenu()">&#9776;</button>
+      <nav>
+        <ul id="nav-menu">
+          <li><a onclick="showPage('home')">Acasă</a></li>
+          <li><a onclick="showPage('produse')">Produse</a></li>
+          <li><a onclick="showPage('despre-noi')">Despre Noi</a></li>
+          <li><a onclick="showPage('termeni-si-conditii')">Termeni & Condiții</a></li>
+          <li>
+            <a onclick="showPage('cos')">
+              <img src="cos.jpg" alt="Coș" class="cart-icon">
+              <span class="cart-count" id="cart-count">0</span>
+            </a>
+          </li>
+          <li><a onclick="showPage('evenimente')">Evenimente</a></li>
+          <li><a onclick="showPage('comenzi')">Comenzi</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
   
-  <!-- Timer dinamic -->
-  <div class="text-center py-2" style="background-color:#fff;">
-    <span id="timer" class="fs-5 text-danger"></span>
+  <!-- TIMER -->
+  <div id="countdown-timer"><span id="timer"></span></div>
+  
+  <!-- PAGINILE SITE-ULUI -->
+  <div id="pages">
+    <!-- Acasă -->
+    <section id="home" class="active fade-in">
+      <div class="slider">
+        <div class="slides">
+          <img src="icoana1.jpg" alt="Slider 1" class="active">
+          <img src="lumânare.jpg" alt="Slider 2">
+          <img src="candela-mare.jpg" alt="Slider 3">
+        </div>
+        <div class="overlay">
+          <button class="btn-shop" onclick="showPage('produse')">Vezi Produsele</button>
+        </div>
+        <div class="slider-indicators">
+          <button onclick="setSlide(0)" id="indicator-0" class="active"></button>
+          <button onclick="setSlide(1)" id="indicator-1"></button>
+          <button onclick="setSlide(2)" id="indicator-2"></button>
+        </div>
+      </div>
+      <h2>Bine ai venit la Magazinul de Candele & Tradiții</h2>
+      <p class="content-text">
+        Descoperă colecția noastră unică de lumânări și accesorii tradiționale. Află povestea și valorile care ne definesc.
+      </p>
+    </section>
+    
+    <!-- Produse -->
+    <section id="produse" class="fade-in">
+      <h2 id="prod-title" style="text-align: center; color: var(--primary-color);">Produsele Noastre</h2>
+      <div id="search-container">
+        <input type="text" id="product-search" placeholder="Caută produs..." onkeyup="searchProducts()">
+      </div>
+      <button id="filter-toggle" onclick="toggleFilter()">Filtre</button>
+      <button id="sort-toggle" onclick="toggleSort()">Sortare</button>
+      <div id="filter-bar">
+        <button onclick="filterProducts('all')">Toate</button>
+        <button onclick="filterProducts('candele')">Candele</button>
+        <button onclick="filterProducts('lumânări')">Lumânări</button>
+        <button onclick="filterProducts('tămâie')">Tămâie</button>
+        <button onclick="filterProducts('accesorii')">Accesorii</button>
+        <button onclick="filterProducts('icoane')">Icoane</button>
+      </div>
+      <div id="sort-bar">
+        <button onclick="sortProducts('asc')">Preț: Crescător</button>
+        <button onclick="sortProducts('desc')">Preț: Descrescător</button>
+        <button onclick="sortProducts('alpha')">Alfabetic</button>
+      </div>
+      <div class="product-grid" id="product-grid">
+        <!-- Produsele se generează dinamic -->
+      </div>
+      <div id="no-products" class="no-products" style="display: none;">Nu s-au găsit produse.</div>
+    </section>
+    
+    <!-- Despre Noi -->
+    <section id="despre-noi" class="fade-in info-section">
+      <h2>Despre Noi</h2>
+      <div class="content-text">
+        <p><strong>Magazinul de Candele & Tradiții</strong> se dedică promovării valorilor culturale și spirituale. Fiecare produs este creat cu pasiune și măiestrie, combinând tradiția cu un design modern pentru a oferi o experiență autentică.</p>
+        <p>Detalii importante:</p>
+        <ul>
+          <li>Produsele reflectă măiestria și tradiția autentică.</li>
+          <li>Experiența de cumpărare oferă inspirație și autenticitate.</li>
+          <li>Valorile noastre se bazează pe credință și cultură.</li>
+        </ul>
+      </div>
+    </section>
+    
+    <!-- Termeni & Condiții -->
+    <section id="termeni-si-conditii" class="fade-in info-section">
+      <h2>Termeni & Condiții</h2>
+      <div class="content-text">
+        <ul>
+          <li>Produsele sunt disponibile în limita stocului și pot avea mici variații.</li>
+          <li>Imaginile sunt orientative; produsul livrat poate diferi ușor.</li>
+          <li>Comenzile se procesează în 1-2 zile lucrătoare, după confirmarea stocului.</li>
+          <li>Livrarea se realizează prin curier rapid, conform termenelor stabilite.</li>
+          <li>Returul este permis în termen de 14 zile, conform legislației.</li>
+          <li>Datele personale sunt protejate conform normelor GDPR.</li>
+        </ul>
+        <p>Prin utilizarea site-ului, confirmați că ați citit și acceptat acești termeni.</p>
+      </div>
+    </section>
+    
+    <!-- Evenimente – Calendar Ortodox pentru luna aprilie -->
+    <section id="evenimente" class="fade-in info-section">
+      <h2>Calendar Ortodox – Aprilie</h2>
+      <div class="content-text">
+        <p>Această secțiune prezintă calendarul lunii aprilie, evidențiind sfinții și sărbătorile importante conform tradiției ortodoxe.</p>
+        <div class="calendar">
+          <table>
+            <thead>
+              <tr>
+                <th>Ziua</th>
+                <th>Sfânt/Sărbătoare</th>
+                <th>Detalii</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Exemplu pentru 30 de zile; completează după datele reale -->
+              <tr>
+                <td>1 April</td>
+                <td class="important">Sfântul Ioan</td>
+                <td>Slujbe speciale, procesiuni.</td>
+              </tr>
+              <tr>
+                <td>2 April</td>
+                <td>Sfântul Fecioarei</td>
+                <td>Rugăciune și meditație.</td>
+              </tr>
+              <tr>
+                <td>3 April</td>
+                <td>Sfântul Gavriil</td>
+                <td>Memorare și pomenire.</td>
+              </tr>
+              <!-- ... continuă până la 30 April ... -->
+              <tr>
+                <td>30 April</td>
+                <td class="important">Sfântul Grigorie</td>
+                <td>Sărbătoare majoră, evenimente speciale.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Coșul de Cumpărături & Formularul de Comandă -->
+    <section id="cos" class="fade-in">
+      <h2>Coșul de Cumpărături</h2>
+      <div id="cart-container">
+        <!-- Produsele se generează dinamic -->
+      </div>
+      <h3>Total: <span id="total-amount">0</span> RON</h3>
+      <h2>Finalizare Comandă</h2>
+      <!-- Formularul folosește FormSubmit pentru trimiterea pe email; înlocuiește YOUR_EMAIL@example.com cu adresa ta -->
+      <form id="order-form" class="order-form" action="https://formsubmit.co/YOUR_EMAIL@example.com" method="POST">
+        <!-- Parametri pentru FormSubmit -->
+        <input type="hidden" name="_next" value="https://exemplu.ro/thankyou.html">
+        <input type="hidden" name="_captcha" value="false">
+        <!-- Câmpul ascuns ce va conține detaliile comenzii -->
+        <input type="hidden" name="orderData" id="orderData">
+        <h2>Completează Datele pentru Comandă</h2>
+        <label for="customer-name">Nume:</label>
+        <input type="text" id="customer-name" name="customer_name" required>
+        <label for="customer-email">Email:</label>
+        <input type="email" id="customer-email" name="customer_email" required>
+        <label for="customer-phone">Telefon:</label>
+        <input type="text" id="customer-phone" name="customer_phone" required>
+        <label for="customer-address">Adresă:</label>
+        <input type="text" id="customer-address" name="customer_address" required>
+        <input type="hidden" id="order-details" name="order_details" value="">
+        <div style="display: flex; justify-content: space-between;">
+          <button type="submit">Plasează Comandă</button>
+          <button type="reset" class="reset-btn">Resetare</button>
+        </div>
+        <!-- Buton pentru tipărirea facturii -->
+        <div style="text-align: center; margin-top: 15px;">
+          <button type="button" onclick="printInvoice()" style="padding: 10px 20px; background: var(--button-bg); border: none; color: #fff; border-radius:6px; cursor:pointer;">
+            Tipărește Factura
+          </button>
+        </div>
+      </form>
+    </section>
+    
+    <!-- Secțiunea Comenzi (locally stored) -->
+    <section id="comenzi" class="fade-in">
+      <h2>Comenzile Plasate</h2>
+      <div id="orders-list">
+        <!-- Comenzile vor fi afișate aici -->
+      </div>
+      <div style="text-align: center; margin-top: 15px;">
+        <button onclick="clearAllOrders()" style="padding: 10px 20px; background: #c0392b; border: none; color: #fff; border-radius:6px; cursor: pointer;">
+          Șterge Toate Comenzile
+        </button>
+      </div>
+    </section>
   </div>
   
-  <!-- CONȚINUT PRINCIPAL -->
-  <main class="main-container" id="content">
-    <!-- Pagina de start -->
-    <section id="home" class="page active-page">
-      <div class="text-center py-5">
-        <h1>Bine ați venit la Magazinul Bisericesc</h1>
-        <p>Descoperă produsele noastre pentru momente de spiritualitate!</p>
-        <button class="btn btn-dark" onclick="navigateTo('produse')">Vezi produsele</button>
-        <div class="slider-container">
-          <div class="slider-track" id="slider-track"></div>
-        </div>
-      </div>
-    </section>
-    
-    <!-- Pagina Produse -->
-    <section id="produse" class="page">
-      <h2 class="mb-4">Produsele noastre</h2>
-      <input type="text" id="filter-input" class="form-control" placeholder="Caută produs..." onkeyup="filterProducts()">
-      <div id="products-container" class="row"></div>
-    </section>
-    
-    <!-- Pagina Detalii Produs -->
-    <section id="produs" class="page">
-      <div id="produs-container"></div>
-      <div class="text-center mt-3">
-        <button class="btn btn-secondary" onclick="navigateTo('produse')">Înapoi la Produse</button>
-      </div>
-    </section>
-    
-    <!-- Pagina Despre noi -->
-    <section id="despre" class="page">
-      <h2>Despre noi</h2>
-      <p class="attractive-text">
-        Magazinul nostru Bisericesc a fost fondat din pasiune și dorința de a păstra tradițiile spirituale. Ne dedicăm cu grijă selecționării produselor care aduc lumină și inspirație în viața credincioșilor. Fiecare obiect este realizat manual sau ales cu atenție pentru a reflecta valorile autentice ale credinței. Experiența noastră îmbină tehnologia modernă cu tradiția, oferind o selecție variată și de calitate. Vă invităm să explorați universul nostru și să descoperiți povestea fiecărui produs, care aduce un strop de misticism și echilibru în viața dumneavoastră.
-      </p>
-    </section>
-    
-    <!-- Pagina Termeni și Condiții -->
-    <section id="termeni" class="page">
-      <h2>Termeni și Condiții</h2>
-      <p class="attractive-text">
-        Vă rugăm să citiți cu atenție acești termeni și condiții înainte de a utiliza site-ul nostru. Accesând platforma, vă angajați să respectați regulile stabilite și să utilizați informațiile oferite în mod responsabil. Datele colectate se folosesc doar pentru procesarea comenzilor și optimizarea experienței clienților. Ne rezervăm dreptul de a modifica în orice moment aceste condiții, iar utilizarea continuă a site-ului implică acceptarea celor mai recente actualizări. Dacă aveți întrebări sau nelămuriri, echipa noastră de suport este aici pentru a vă ajuta și pentru a asigura o experiență transparentă și profesionistă. Vă mulțumim că alegeți să faceți parte din comunitatea noastră!
-      </p>
-    </section>
-    
-    <!-- Pagina Calendar -->
-    <section id="calendar" class="page">
-      <h2>Calendar Creștin Ortodox – Aprilie</h2>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Ziua</th>
-            <th>Sărbătoare</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>1</td><td>Intrarea în Post</td></tr>
-          <tr><td>14</td><td>Sfântul Vasile</td></tr>
-          <tr><td>30</td><td>-</td></tr>
-        </tbody>
-      </table>
-    </section>
-    
-    <!-- Pagina Coș -->
-    <section id="cos" class="page">
-      <h2>Coșul de Cumpărături</h2>
-      <div id="cart-container"></div>
-      <div class="mt-3">
-        <button class="btn btn-danger" onclick="clearCart()">Clear Cart</button>
-      </div>
-      <div id="order-form" style="display:none;" class="mt-4">
-        <h4>Date pentru comandă</h4>
-        <div class="mb-3">
-          <label>Nume:</label>
-          <input type="text" id="customer-name" class="form-control">
-        </div>
-        <div class="mb-3">
-          <label>Contact (Email/Telefon):</label>
-          <input type="text" id="customer-contact" class="form-control">
-        </div>
-        <button class="btn btn-success" onclick="placeOrder()">Finalizează Comanda</button>
-      </div>
-    </section>
-    
-    <!-- Pagina Detalii Comandă (apare după finalizarea comenzii) -->
-    <section id="order-details" class="page">
-      <h2>Detalii Comandă</h2>
-      <div id="order-details-container"></div>
-      <button class="btn btn-secondary" onclick="navigateTo('home')">Înapoi Acasă</button>
-    </section>
-    
-    <!-- Pagina Admin -->
-    <section id="admin" class="page">
-      <h2>Admin</h2>
-      <div id="admin-content"></div>
-    </section>
-  </main>
-  
-  <!-- Buton Back to Top -->
-  <button id="backToTop" onclick="scrollToTop()">&#8679;</button>
-  
-  <!-- FOOTER -->
+  <!-- Footer -->
   <footer>
-    <p>&copy; <span id="year"></span> Magazin Bisericesc. Toate drepturile rezervate.</p>
-    <img src="https://via.placeholder.com/100x30?text=ANPC" alt="Logo ANPC">
+    <div class="footer-container">
+      <p>&copy; 2025 Magazinul de Candele & Tradiții. Toate drepturile rezervate.</p>
+      <div class="footer-logos">
+        <img src="anpc.jpg" alt="Logo">
+      </div>
+    </div>
   </footer>
   
-  <!-- JAVASCRIPT -->
+  <!-- Buton Back to Top -->
+  <button class="back-to-top" onclick="scrollToTop()">&#8679;</button>
+  
+  <!-- Buton fix pentru Coș (pe mobil) -->
+  <div class="fixed-cart" onclick="showPage('cos')">
+    <img src="cos.jpg" alt="Coș" style="width:30px;">
+    <span class="cart-count" id="fixed-cart-count">0</span>
+  </div>
+  
+  <!-- Modal Produs (pentru detalii complete la click pe card) -->
+  <div id="product-modal" class="modal" onclick="closeModal(event)">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeModal(event)">&times;</span>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+  
   <script>
-    // Tranziție între pagini (fade in/out)
-    function navigateTo(pageId) {
-      const current = document.querySelector('.active-page');
-      if (current) {
-        current.style.opacity = 0;
-        setTimeout(() => {
-          current.classList.remove('active-page');
-          const target = document.getElementById(pageId);
-          target.classList.add('active-page');
-          target.style.opacity = 0;
-          setTimeout(() => { target.style.opacity = 1; }, 50);
-        }, 500);
-      } else {
-        const target = document.getElementById(pageId);
-        target.classList.add('active-page');
-        target.style.opacity = 1;
-      }
-      if (pageId === 'admin') loadAdmin();
-      if (pageId === 'produse') fetchProductsFromBackend();
-    }
-    
-    // Back to Top
-    window.onscroll = function() { scrollFunction(); };
-    function scrollFunction() {
-      const btn = document.getElementById("backToTop");
-      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-        btn.style.display = "block";
-      } else {
-        btn.style.display = "none";
-      }
-    }
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-    
-    document.getElementById('year').textContent = new Date().getFullYear();
-    
-    // Timer până la Paști (ex: 20 aprilie 2025)
-    function startTimer() {
-      let easterDate = new Date("2025-04-20T00:00:00").getTime();
-      let timerElem = document.getElementById("timer");
-      setInterval(() => {
-        let now = new Date().getTime();
-        let distance = easterDate - now;
-        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        if (distance > 0) {
-          timerElem.textContent = "Timp până la Paști: " + days + "z " + hours + "h " + minutes + "m " + seconds + "s";
-        } else { timerElem.textContent = "Sărbătoarea a început! Următoarea se anunță în curând."; }
-      }, 1000);
-    }
-    startTimer();
-    
-    /* ---- Funcționalități Produse & Stocuri ---- */
-    const products = [
-      {id: 1, name: "Lumânare Roșie", price: 10.00, image: "https://via.placeholder.com/400x200?text=Produs+1", description: "Lumânare din ceară naturală pentru rugăciune.", stock: 50},
-      {id: 2, name: "Lumânare Albă", price: 9.50, image: "https://via.placeholder.com/400x200?text=Produs+2", description: "Lumânare tradițională pentru biserică.", stock: 40},
-      {id: 3, name: "Icoană Sfântă", price: 25.50, image: "https://via.placeholder.com/400x200?text=Produs+3", description: "Icoană lucrată manual.", stock: 30},
-      {id: 4, name: "Carte de Rugăciuni", price: 15.75, image: "https://via.placeholder.com/400x200?text=Produs+4", description: "Carte cu rugăciuni și imnuri.", stock: 60},
-      {id: 5, name: "Tămâie", price: 8.00, image: "https://via.placeholder.com/400x200?text=Produs+5", description: "Tămâie de înaltă calitate.", stock: 80},
-      {id: 6, name: "Candele Decorative", price: 12.50, image: "https://via.placeholder.com/400x200?text=Produs+6", description: "Candele cu design elegant.", stock: 70},
-      {id: 7, name: "Cruce Mică", price: 18.00, image: "https://via.placeholder.com/400x200?text=Produs+7", description: "Cruce din lemn sculptat.", stock: 35},
-      {id: 8, name: "Amuletă", price: 7.50, image: "https://via.placeholder.com/400x200?text=Produs+8", description: "Amuletă de protecție.", stock: 45},
-      {id: 9, name: "Set Rugăciuni", price: 20.00, image: "https://via.placeholder.com/400x200?text=Produs+9", description: "Set complet de rugăciuni.", stock: 55},
-      {id: 10, name: "Simbol Bisericesc", price: 11.00, image: "https://via.placeholder.com/400x200?text=Produs+10", description: "Simbol al credinței.", stock: 50},
-      {id: 11, name: "Lumânare Decorativă", price: 13.00, image: "https://via.placeholder.com/400x200?text=Produs+11", description: "Lumânare cu design modern.", stock: 60},
-      {id: 12, name: "Icoană Mică", price: 16.00, image: "https://via.placeholder.com/400x200?text=Produs+12", description: "Icoană personală pentru rugăciuni.", stock: 40},
-      {id: 13, name: "Carte de Sfinți", price: 14.25, image: "https://via.placeholder.com/400x200?text=Produs+13", description: "Carte cu vieți de sfinți.", stock: 30},
-      {id: 14, name: "Candele Aromatice", price: 9.75, image: "https://via.placeholder.com/400x200?text=Produs+14", description: "Candele cu arome plăcute.", stock: 45},
-      {id: 15, name: "Tablou Icoanic", price: 30.00, image: "https://via.placeholder.com/400x200?text=Produs+15", description: "Tablou religios elegant.", stock: 20},
-      {id: 16, name: "Breloc cu Cruce", price: 5.50, image: "https://via.placeholder.com/400x200?text=Produs+16", description: "Breloc simbolic.", stock: 100},
-      {id: 17, name: "Iconar Decorative", price: 22.00, image: "https://via.placeholder.com/400x200?text=Produs+17", description: "Set de iconar pentru casă.", stock: 25},
-      {id: 18, name: "Vază cu Cruce", price: 17.50, image: "https://via.placeholder.com/400x200?text=Produs+18", description: "Vază decorativă cu motive religioase.", stock: 30},
-      {id: 19, name: "Candelabru", price: 26.00, image: "https://via.placeholder.com/400x200?text=Produs+19", description: "Candelabru pentru slujbe.", stock: 15},
-      {id: 20, name: "Set de Rugăciune", price: 19.00, image: "https://via.placeholder.com/400x200?text=Produs+20", description: "Set complet cu accesorii de rugăciune.", stock: 40}
+    /* Produsele inițiale – salvate în localStorage */
+    let products = [
+      { id: "candela_mare", name: "Candelă Mare", price: 20, stock: 10, category: "candele", description: "O candelă mare, realizată din ceară naturală, perfectă pentru momente de reculegere.", image: "candela-mare.jpg" },
+      { id: "candela_mica", name: "Candelă Mică", price: 10, stock: 15, category: "candele", description: "Candelă mică cu design tradițional, ideală pentru iluminat ambiental.", image: "candela-mica.jpg" },
+      { id: "lumanare_inviere", name: "Lumânare Înviere", price: 50, stock: 8, category: "lumânări", description: "Lumânare specială pentru slujbe, creată cu arome deosebite.", image: "lumânare.jpg" },
+      { id: "tamai_naturala", name: "Tămâie Naturală", price: 20, stock: 12, category: "tămâie", description: "Tămâie de calitate, perfectă pentru ritualuri și meditație.", image: "tamai.jpg" },
+      { id: "pomelnice_anuale", name: "Pomelnice Anuale", price: 100, stock: 5, category: "accesorii", description: "Pomelnice artizanale pentru comemorare și ritualuri.", image: "candela-mare.jpg" },
+      { id: "ceaslov", name: "Ceaslov", price: 70, stock: 7, category: "accesorii", description: "Accesoriu tradițional, ideal pentru biserici și decor.", image: "Ceaslov.jpg" },
+      { id: "psaltire", name: "Psaltire", price: 55, stock: 6, category: "accesorii", description: "Psaltire cu fragmente sacre, instrument esențial în ritualuri.", image: "psaltire.jpg" },
+      { id: "mir", name: "Mir", price: 20, stock: 20, category: "accesorii", description: "Mir de cea mai înaltă calitate, folosit în slujbe și ritualuri.", image: "mir.jpg" },
+      { id: "icoana_mica", name: "Icoană Mică", price: 40, stock: 9, category: "icoane", description: "Icoană mică pictată manual, ce reflectă tradiția ortodoxă.", image: "icoana1.jpg" },
+      { id: "icoana_mare", name: "Icoană Mare", price: 100, stock: 4, category: "icoane", description: "Icoană mare, lucrare impresionantă pentru spații de închinare.", image: "icoana2.jpg" }
     ];
+    if (!localStorage.getItem("products")) {
+      localStorage.setItem("products", JSON.stringify(products));
+    } else {
+      products = JSON.parse(localStorage.getItem("products"));
+    }
     
+    /* Coșul */
     let cart = [];
     
-    function fetchProductsFromBackend() { renderProducts(); }
-    
     function renderProducts() {
-      const container = document.getElementById('products-container');
-      container.innerHTML = "";
-      const filterValue = document.getElementById('filter-input').value.toLowerCase();
+      const grid = document.getElementById("product-grid");
+      grid.innerHTML = "";
       products.forEach(prod => {
-        if (prod.name.toLowerCase().includes(filterValue)) {
-          const col = document.createElement('div');
-          col.className = "col-md-4 mb-4";
-          col.innerHTML = `
-            <div class="product-card h-100">
-              <img src="${prod.image}" alt="${prod.name}" onclick="viewProduct(${prod.id})">
-              <div class="card-body">
-                <h5>${prod.name}</h5>
-                <p>Preț: ${prod.price.toFixed(2)} Lei</p>
-                <p>Stoc: <span id="stock-${prod.id}">${prod.stock}</span></p>
-              </div>
-              <div class="p-2">
-                <div class="input-group" style="max-width:120px;">
-                  <input type="number" id="qty-${prod.id}" value="1" min="1" class="form-control">
-                  <button class="btn btn-danger btn-sm" onclick="addToCart(${prod.id}, 'list')">Adaugă</button>
-                </div>
-              </div>
-            </div>`;
-          container.appendChild(col);
-        }
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.setAttribute("data-category", prod.category);
+        card.setAttribute("data-description", prod.description);
+        card.innerHTML = `
+          <img src="${prod.image}" alt="${prod.name}">
+          <h3>${prod.name}</h3>
+          <p>Preț: ${prod.price} RON</p>
+          <p style="font-size:14px; color:green;">Stoc: ${prod.stock}</p>
+          <input type="number" id="qty-${prod.id}" min="1" value="1" onclick="event.stopPropagation()">
+          <button onclick="event.stopPropagation(); addToCart('${prod.name}', ${prod.price}, '${prod.id}', document.getElementById('qty-${prod.id}').value)">Adaugă în Coș</button>
+        `;
+        card.addEventListener("click", function() {
+          openModal(card);
+        });
+        grid.appendChild(card);
       });
     }
+    renderProducts();
     
-    function filterProducts() { renderProducts(); }
+    /* Slider */
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slides img');
+    const indicators = Array.from(document.querySelectorAll('.slider-indicators button'));
+    function setSlide(index) {
+      slides.forEach((img, idx) => {
+        img.classList.toggle('active', idx === index);
+        indicators[idx].classList.toggle('active', idx === index);
+      });
+      currentSlide = index;
+    }
+    function autoRotateSlides() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      setSlide(currentSlide);
+    }
+    setInterval(autoRotateSlides, 4000);
     
-    function viewProduct(id) {
-      const prod = products.find(p => p.id === id);
-      if (!prod) return;
-      const container = document.getElementById('produs-container');
-      container.innerHTML = `
-        <div class="row">
-          <div class="col-md-6">
-            <img src="${prod.image}" alt="${prod.name}" class="img-fluid">
-          </div>
-          <div class="col-md-6">
-            <h2>${prod.name}</h2>
-            <p>${prod.description}</p>
-            <p><strong>Preț:</strong> ${prod.price.toFixed(2)} Lei</p>
-            <p><strong>Stoc disponibil:</strong> <span id="detail-stock-${prod.id}">${prod.stock}</span></p>
-            <div class="input-group" style="max-width:120px;">
-              <input type="number" id="detail-qty-${prod.id}" value="1" min="1" class="form-control">
-              <button class="btn btn-danger" onclick="addToCart(${prod.id}, 'detail')">Adaugă</button>
-            </div>
-          </div>
-        </div>`;
-      navigateTo('produs');
+    /* Timer */
+    const events = [
+      { name: "Paști", start: new Date("Apr 20, 2025 00:00:00").getTime(), duration: 3*24*60*60*1000, message: "Hristos a înviat!" },
+      { name: "Înălțarea Domnului", start: new Date("May 29, 2025 00:00:00").getTime(), duration: 24*60*60*1000, message: "Hristos s-a înălțat!" },
+      { name: "Rusalii", start: new Date("Jun 8, 2025 00:00:00").getTime(), duration: 24*60*60*1000, message: "Rusalii: Pogorârea Duhului Sfânt" },
+      { name: "Adormirea Maicii Domnului", start: new Date("Aug 15, 2025 00:00:00").getTime(), duration: 24*60*60*1000, message: "Adormirea Maicii Domnului" },
+      { name: "Crăciun", start: new Date("Dec 25, 2025 00:00:00").getTime(), duration: 7*24*60*60*1000, message: "Sărbătoarea Nașterii" }
+    ];
+    function updateEventTimer() {
+      const now = new Date().getTime();
+      let currentEvent = null, nextEvent = null;
+      for (let ev of events) {
+        if (now >= ev.start && now < ev.start + ev.duration) { currentEvent = ev; break; }
+        else if (now < ev.start) { nextEvent = ev; break; }
+      }
+      const timerEl = document.getElementById("timer");
+      if (currentEvent) {
+        timerEl.innerText = currentEvent.message;
+      } else if (nextEvent) {
+        const distance = nextEvent.start - now;
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        timerEl.innerText = `Timp până la ${nextEvent.name}: ${days} zile ${hours} ore ${minutes} minute ${seconds} secunde`;
+      } else {
+        timerEl.innerText = "Nu mai există evenimente planificate.";
+      }
+    }
+    setInterval(updateEventTimer, 1000);
+    
+    /* Navigare între pagini */
+    function showPage(pageId) {
+      document.querySelectorAll("#pages section").forEach(section => section.classList.remove("active"));
+      document.getElementById(pageId).classList.add("active");
+      document.getElementById("nav-menu").classList.remove("active");
+      if (pageId === "comenzi") {
+        loadOrders();
+      }
+    }
+    function toggleMenu() {
+      document.getElementById("nav-menu").classList.toggle("active");
     }
     
-    function addToCart(id, source = 'list') {
-      const qtyInput = (source === 'list') ? document.getElementById(`qty-${id}`) : document.getElementById(`detail-qty-${id}`);
-      let qty = parseInt(qtyInput.value) || 1;
-      const prod = products.find(p => p.id === id);
-      if (prod.stock < qty) { alert("Nu există suficient stoc!"); return; }
+    /* Filtrare, căutare, sortare */
+    function filterProducts(category) {
+      let cards = document.querySelectorAll(".product-card");
+      let count = 0;
+      cards.forEach(card => {
+        if (category === "all" || card.dataset.category === category) {
+          card.style.display = "block"; count++;
+        } else {
+          card.style.display = "none";
+        }
+      });
+      document.getElementById("no-products").style.display = (count === 0 ? "block" : "none");
+    }
+    function searchProducts() {
+      const query = document.getElementById("product-search").value.toLowerCase();
+      let cards = document.querySelectorAll(".product-card");
+      let count = 0;
+      cards.forEach(card => {
+        const name = card.querySelector("h3").innerText.toLowerCase();
+        if (name.includes(query)) { card.style.display = "block"; count++; }
+        else { card.style.display = "none"; }
+      });
+      document.getElementById("no-products").style.display = (count === 0 ? "block" : "none");
+    }
+    function sortProducts(criteria) {
+      const grid = document.getElementById("product-grid");
+      let cards = Array.from(grid.getElementsByClassName("product-card"));
+      cards.sort((a, b) => {
+        let nameA = a.querySelector("h3").innerText.toLowerCase();
+        let nameB = b.querySelector("h3").innerText.toLowerCase();
+        let priceA = parseFloat(a.querySelector("p").innerText.replace(/[^\d\.]/g, ''));
+        let priceB = parseFloat(b.querySelector("p").innerText.replace(/[^\d\.]/g, ''));
+        if (criteria === "asc") return priceA - priceB;
+        else if (criteria === "desc") return priceB - priceA;
+        else if (criteria === "alpha") return nameA.localeCompare(nameB);
+      });
+      cards.forEach(card => grid.appendChild(card));
+    }
+    function toggleFilter() { document.getElementById("filter-bar").classList.toggle("active"); }
+    function toggleSort() { document.getElementById("sort-bar").classList.toggle("active"); }
+    
+    /* Coș & gestionare stoc */
+    function addToCart(name, price, prodId, qty) {
+      qty = parseInt(qty);
+      const prod = products.find(p => p.id === prodId);
+      if (prod.stock < qty) { alert("Stoc insuficient!"); return; }
       prod.stock -= qty;
-      document.getElementById(`stock-${id}`) && (document.getElementById(`stock-${id}`).textContent = prod.stock);
-      document.getElementById(`detail-stock-${id}`) && (document.getElementById(`detail-stock-${id}`).textContent = prod.stock);
-      let index = cart.findIndex(item => item.id === id);
-      if (index > -1) { cart[index].quantity += qty; }
-      else { cart.push({ id: id, quantity: qty }); }
-      updateCartCount();
-      console.log("Cart:", cart);
-      alert(`Produsul "${prod.name}" a fost adăugat în coș.`);
+      localStorage.setItem("products", JSON.stringify(products));
+      renderProducts();
+      const existing = cart.find(item => item.id === prodId);
+      if (existing) { existing.qty += qty; }
+      else { cart.push({ id: prodId, name, price, qty }); }
+      updateCartUI();
+    }
+    function updateCartUI() {
+      const container = document.getElementById("cart-container");
+      container.innerHTML = "";
+      let total = 0;
+      cart.forEach((item, idx) => {
+        total += item.price * item.qty;
+        container.innerHTML += `
+          <div class="cart-item">
+            <span>${item.name} - ${item.qty} x ${item.price} RON</span>
+            <span>
+              <input type="number" value="${item.qty}" min="1" onchange="updateItem(${idx}, this.value)">
+              <button onclick="removeItem(${idx})">Șterge</button>
+            </span>
+          </div>
+        `;
+      });
+      document.getElementById("total-amount").innerText = total;
+      document.getElementById("cart-count").innerText = cart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById("fixed-cart-count").innerText = cart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById("order-details").value = JSON.stringify(cart);
+    }
+    function updateItem(idx, newQty) {
+      newQty = parseInt(newQty);
+      let item = cart[idx];
+      let prod = products.find(p => p.id === item.id);
+      let oldQty = item.qty;
+      if (newQty < oldQty) { prod.stock += (oldQty - newQty); }
+      else if (newQty > oldQty) {
+        if (prod.stock < (newQty - oldQty)) { alert("Stoc insuficient pentru actualizare!"); return; }
+        prod.stock -= (newQty - oldQty);
+      }
+      item.qty = newQty;
+      localStorage.setItem("products", JSON.stringify(products));
+      renderProducts();
+      updateCartUI();
+    }
+    function removeItem(idx) {
+      let item = cart[idx];
+      let prod = products.find(p => p.id === item.id);
+      prod.stock += item.qty;
+      localStorage.setItem("products", JSON.stringify(products));
+      renderProducts();
+      cart.splice(idx, 1);
+      updateCartUI();
     }
     
-    function updateCartCount() {
-      let total = cart.reduce((sum, item) => sum + item.quantity, 0);
-      document.getElementById('cart-count').textContent = total;
-      renderCart();
-    }
+    /* Formularul de comandă: setare câmp ascuns cu detaliile comenzii */
+    document.getElementById("order-form").addEventListener("submit", function(event) {
+      document.getElementById("order-details").value = JSON.stringify(cart);
+      const order = {
+        customerName: document.getElementById("customer-name").value,
+        customerEmail: document.getElementById("customer-email").value,
+        customerPhone: document.getElementById("customer-phone").value,
+        customerAddress: document.getElementById("customer-address").value,
+        details: cart,
+        date: new Date().toLocaleString()
+      };
+      document.getElementById("orderData").value = JSON.stringify(order);
+      if(cart.length === 0) {
+        event.preventDefault();
+        alert("Coșul este gol!");
+      }
+    });
     
-    function renderCart() {
-      const container = document.getElementById('cart-container');
-      if (cart.length === 0) {
-        container.innerHTML = "<p>Coșul este gol.</p>";
-        document.getElementById('order-form').style.display = "none";
+    /* Funcția de generare a facturii folosind jsPDF (folosește fontul "times" pentru un aspect formal) */
+    function printInvoice() {
+      if(cart.length === 0) {
+        alert("Coșul este gol!");
         return;
       }
-      let html = `<table class="table">
-                    <thead>
-                      <tr>
-                        <th>Produs</th>
-                        <th>Cantitate</th>
-                        <th>Preț</th>
-                        <th>Total</th>
-                        <th>Acțiune</th>
-                      </tr>
-                    </thead>
-                    <tbody>`;
-      let grandTotal = 0;
-      cart.forEach((item, index) => {
-        let prod = products.find(p => p.id === item.id);
-        let total = prod.price * item.quantity;
-        grandTotal += total;
-        html += `<tr>
-                   <td>${prod.name}</td>
-                   <td>${item.quantity}</td>
-                   <td>${prod.price.toFixed(2)}</td>
-                   <td>${total.toFixed(2)}</td>
-                   <td><button class="btn btn-warning btn-sm" onclick="removeFromCart(${index})">Șterge</button></td>
-                 </tr>`;
-      });
-      html += `<tr>
-                 <td colspan="3" class="text-end"><strong>Total General:</strong></td>
-                 <td colspan="2"><strong>${grandTotal.toFixed(2)} Lei</strong></td>
-               </tr>`;
-      html += `</tbody></table>`;
-      container.innerHTML = html;
-      document.getElementById('order-form').style.display = "block";
-    }
-    
-    function removeFromCart(index) {
-      const removed = cart.splice(index, 1)[0];
-      const prod = products.find(p => p.id === removed.id);
-      prod.stock += removed.quantity;
-      document.getElementById(`stock-${prod.id}`) && (document.getElementById(`stock-${prod.id}`).textContent = prod.stock);
-      document.getElementById(`detail-stock-${prod.id}`) && (document.getElementById(`detail-stock-${prod.id}`).textContent = prod.stock);
-      updateCartCount();
-    }
-    
-    function clearCart() {
+      const customerName = document.getElementById("customer-name").value;
+      const customerEmail = document.getElementById("customer-email").value;
+      const customerPhone = document.getElementById("customer-phone").value;
+      const customerAddress = document.getElementById("customer-address").value;
+      if(!customerName || !customerEmail || !customerPhone || !customerAddress) {
+        alert("Completează datele de contact pentru a tipări factura!");
+        return;
+      }
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF('p','mm','a4');
+      
+      // Setăm fontul Times pentru factură
+      doc.setFont("times");
+      
+      // Detalii furnizor
+      doc.setFontSize(16);
+      doc.text("Furnizor", 10, 20);
+      doc.setFontSize(12);
+      doc.text("Magazinul de Candele & Tradiții SRL", 10, 28);
+      doc.text("Str. Exemplu nr.1, București", 10, 36);
+      doc.text("CUI: RO123456", 10, 44);
+      doc.text("Telefon: 0123456789", 10, 52);
+      
+      // Detalii client
+      doc.setFontSize(16);
+      doc.text("Client", 110, 20);
+      doc.setFontSize(12);
+      doc.text(`Nume: ${customerName}`, 110, 28);
+      doc.text(`Email: ${customerEmail}`, 110, 36);
+      doc.text(`Telefon: ${customerPhone}`, 110, 44);
+      doc.text(`Adresă: ${customerAddress}`, 110, 52);
+      
+      doc.line(10, 60, 200, 60);
+      
+      doc.setFontSize(18);
+      const invoiceNumber = Math.floor(Math.random()*1000000);
+      const invoiceDate = new Date().toLocaleDateString();
+      doc.text("FACTURĂ", 105, 70, { align: "center" });
+      doc.setFontSize(12);
+      doc.text(`Factura Nr: ${invoiceNumber}`, 105, 78, { align: "center" });
+      doc.text(`Data: ${invoiceDate}`, 105, 86, { align: "center" });
+      
+      let startY = 96;
+      doc.setFontSize(12);
+      doc.setFont("times", "bold");
+      doc.text("Produs", 10, startY);
+      doc.text("Cantitate", 70, startY, { align: "center" });
+      doc.text("Preț Unitar", 110, startY, { align: "center" });
+      doc.text("Subtotal", 150, startY, { align: "center" });
+      doc.line(10, startY+2, 200, startY+2);
+      doc.setFont("times", "normal");
+      let posY = startY + 10;
       cart.forEach(item => {
-        const prod = products.find(p => p.id === item.id);
-        prod.stock += item.quantity;
+        const itemTotal = item.price * item.qty;
+        doc.text(item.name, 10, posY);
+        doc.text(String(item.qty), 70, posY, { align: "center" });
+        doc.text(String(item.price) + " RON", 110, posY, { align: "center" });
+        doc.text(String(itemTotal) + " RON", 150, posY, { align: "center" });
+        posY += 10;
+        if(posY > 250) { doc.addPage(); posY = 20; }
       });
-      cart = [];
-      updateCartCount();
-      renderProducts();
+      const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      doc.setFont("times", "bold");
+      doc.text(`Total: ${total} RON`, 150, posY+10, { align: "center" });
+      doc.setFontSize(10);
+      doc.setFont("times", "normal");
+      doc.text("Mulțumim pentru comandă!", 10, 290);
+      
+      doc.save(`Factura_${invoiceNumber}.pdf`);
     }
     
-    // Funcția de finalizare a comenzii: stochează comanda în localStorage și apoi afișează o secțiune cu detalii despre comandă
-    function placeOrder() {
-      const name = document.getElementById('customer-name').value.trim();
-      const contact = document.getElementById('customer-contact').value.trim();
-      if (name === "" || contact === "") { alert("Completează datele de contact!"); return; }
-      if (cart.length === 0) { alert("Coșul este gol!"); return; }
-      let orderTotal = cart.reduce((sum, item) => {
-        const prod = products.find(p => p.id === item.id);
-        return sum + (prod.price * item.quantity);
-      }, 0);
-      let order = {
-        id: Date.now(),
-        customer: { name, contact },
-        items: [...cart],
-        total: orderTotal
-      };
-      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
-      orders.push(order);
-      localStorage.setItem("globalOrders", JSON.stringify(orders));
-      alert("Comanda a fost plasată. Mulțumim, " + name + "!");
-      renderOrderDetails(order);
-      cart = [];
-      updateCartCount();
-      document.getElementById('customer-name').value = "";
-      document.getElementById('customer-contact').value = "";
-      renderProducts();
-      navigateTo('order-details');
+    /* Modal Produs – deschide detalii complete la click pe card */
+    function openModal(card) {
+      const modal = document.getElementById("product-modal");
+      const modalBody = document.getElementById("modal-body");
+      const imgSrc = card.querySelector("img").src;
+      const title = card.querySelector("h3").innerText;
+      const price = card.querySelector("p").innerText;
+      const description = card.getAttribute("data-description") || "Fără descriere";
+      modalBody.innerHTML = `<img src="${imgSrc}" alt="${title}">
+                             <h2>${title}</h2>
+                             <p>${price}</p>
+                             <p>${description}</p>`;
+      modal.style.display = "block";
     }
-    
-    // Afișează detaliile comenzii finalizate pe o pagină separată
-    function renderOrderDetails(order) {
-      const container = document.getElementById('order-details-container');
-      let html = `<p><strong>Client:</strong> ${order.customer.name}</p>
-                  <p><strong>Contact:</strong> ${order.customer.contact}</p>
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Produs</th>
-                        <th>Cantitate</th>
-                        <th>Preț</th>
-                        <th>Total</th>
-                      </tr>
-                    </thead>
-                    <tbody>`;
-      let grandTotal = 0;
-      order.items.forEach(item => {
-        const prod = products.find(p => p.id === item.id);
-        let total = prod.price * item.quantity;
-        grandTotal += total;
-        html += `<tr>
-                   <td>${prod.name}</td>
-                   <td>${item.quantity}</td>
-                   <td>${prod.price.toFixed(2)}</td>
-                   <td>${total.toFixed(2)}</td>
-                 </tr>`;
-      });
-      html += `</tbody></table>
-               <p><strong>Total Comandă:</strong> ${order.total.toFixed(2)} Lei</p>`;
-      container.innerHTML = html;
-    }
-    
-    /* ---- Funcționalități Admin ---- */
-    let adminLogged = false;
-    function loadAdmin() {
-      const adminDiv = document.getElementById('admin-content');
-      if (!adminLogged) {
-        adminDiv.innerHTML = `
-          <h4>Login Admin</h4>
-          <div class="mb-3">
-            <label>Utilizator:</label>
-            <input type="text" id="admin-user" class="form-control">
-          </div>
-          <div class="mb-3">
-            <label>Parolă:</label>
-            <input type="password" id="admin-pass" class="form-control">
-          </div>
-          <button class="btn btn-primary" onclick="adminLogin()">Login</button>
-        `;
-      } else {
-        adminDiv.innerHTML = `
-          <h4>Dashboard Admin</h4>
-          <div class="d-flex gap-2 mb-3">
-            <button class="btn btn-secondary" onclick="resetAllStocks()">Reset All Stocks</button>
-          </div>
-          <h5>Filtrare Produse</h5>
-          <input type="text" id="admin-filter" class="form-control mb-3" placeholder="Caută produs în admin..." onkeyup="renderAdminProducts()">
-          <div id="admin-products-container" class="mb-4"></div>
-          <h5>Comenzi Plasate</h5>
-          <div id="admin-orders-container"></div>
-          <button class="btn btn-secondary mt-3" onclick="adminLogout()">Logout</button>
-        `;
-        renderAdminProducts();
-        renderAdminOrders();
+    function closeModal(event) {
+      if (event.target.classList.contains("modal") || event.target.classList.contains("modal-close")) {
+        document.getElementById("product-modal").style.display = "none";
       }
     }
     
-    function adminLogin() {
-      const user = document.getElementById('admin-user').value.trim();
-      const pass = document.getElementById('admin-pass').value.trim();
-      if (user === "admin" && pass === "parola123") { adminLogged = true; loadAdmin(); }
-      else { alert("Autentificare eșuată!"); }
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
-    
-    function adminLogout() { adminLogged = false; loadAdmin(); }
-    
-    function renderAdminProducts() {
-      const container = document.getElementById('admin-products-container');
-      container.innerHTML = "";
-      const filter = document.getElementById('admin-filter').value.toLowerCase();
-      products.forEach(prod => {
-        if (prod.name.toLowerCase().includes(filter)) {
-          const prodHTML = `
-            <div class="mb-2 p-2" style="border:1px solid #ccc; border-radius:5px;">
-              <strong>${prod.name}</strong> - Stoc: <span id="admin-stock-${prod.id}">${prod.stock}</span>
-              <input type="number" id="new-stock-${prod.id}" placeholder="Nou stoc" style="width:70px; margin-left:10px;">
-              <button class="btn btn-warning btn-sm ms-2" onclick="updateProductStockCustom(${prod.id})">Setează stoc</button>
-            </div>`;
-          container.innerHTML += prodHTML;
-        }
-      });
-    }
-    
-    function updateProductStockCustom(id) {
-      const newStock = parseInt(document.getElementById(`new-stock-${id}`).value) || 0;
-      const prod = products.find(p => p.id === id);
-      prod.stock = newStock;
-      document.getElementById(`admin-stock-${id}`).textContent = prod.stock;
-      document.getElementById(`stock-${id}`) && (document.getElementById(`stock-${id}`).textContent = prod.stock);
-      document.getElementById(`detail-stock-${id}`) && (document.getElementById(`detail-stock-${id}`).textContent = prod.stock);
-      alert("Stocul pentru " + prod.name + " a fost actualizat la " + newStock + ".");
-    }
-    
-    function resetAllStocks() {
-      const initialStocks = {
-        1: 50, 2: 40, 3: 30, 4: 60, 5: 80, 6: 70, 7: 35,
-        8: 45, 9: 55, 10: 50, 11: 60, 12: 40, 13: 30, 14: 45, 15: 20,
-        16: 100, 17: 25, 18: 30, 19: 15, 20: 40
-      };
-      products.forEach(prod => { prod.stock = initialStocks[prod.id] || prod.stock; });
-      alert("Stocurile pentru toate produsele au fost resetate.");
-      renderProducts();
-      renderAdminProducts();
-    }
-    
-    function renderAdminOrders() {
-      const orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
-      const container = document.getElementById('admin-orders-container');
-      if (orders.length === 0) { container.innerHTML = "<p>Nu există comenzi.</p>"; return; }
-      let html = `<table class="table">
-                    <thead>
-                      <tr>
-                        <th>ID Comandă</th>
-                        <th>Client</th>
-                        <th>Detalii Produse</th>
-                        <th>Total</th>
-                        <th>Acțiuni</th>
-                      </tr>
-                    </thead>
-                    <tbody>`;
-      orders.forEach((order, idx) => {
-        let details = "";
-        order.items.forEach(item => {
-          const prod = products.find(p => p.id === item.id);
-          details += prod.name + " x " + item.quantity + "<br>";
-        });
-        html += `<tr>
-                   <td>${order.id}</td>
-                   <td>${order.customer.name}<br>${order.customer.contact}</td>
-                   <td>${details}</td>
-                   <td>${order.total.toFixed(2)} Lei</td>
-                   <td>
-                     <button class="btn btn-success btn-sm" onclick="finishOrder(${idx})">Terminată</button>
-                     <button class="btn btn-info btn-sm" onclick="printInvoice(${idx})">Tipărește Factura</button>
-                   </td>
-                 </tr>`;
-      });
-      html += `</tbody></table>`;
-      container.innerHTML = html;
-    }
-    
-    function finishOrder(index) {
-      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
-      orders.splice(index, 1);
-      localStorage.setItem("globalOrders", JSON.stringify(orders));
-      alert("Comanda a fost finalizată.");
-      renderAdminOrders();
-    }
-    
-    function printInvoice(index) {
-      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
-      if (orders.length <= index) return;
-      const order = orders[index];
-      let invoiceWindow = window.open("", "PrintInvoice", "width=800,height=600");
-      let htmlContent = `
-        <html>
-        <head>
-          <title>Factura - Comanda ${order.id}</title>
-          <style>
-            body { font-family: Arial, sans-serif; padding: 20px; }
-            h2, p, table { margin: 0 0 10px; padding: 0; }
-            table { width: 100%; border-collapse: collapse; }
-            table, th, td { border: 1px solid #000; }
-            th, td { padding: 5px; text-align: left; }
-          </style>
-        </head>
-        <body>
-          <h2>Factura - Comanda ${order.id}</h2>
-          <p><strong>Client:</strong> ${order.customer.name}</p>
-          <p><strong>Contact:</strong> ${order.customer.contact}</p>
-          <table>
-            <thead>
-              <tr>
-                <th>Produs</th>
-                <th>Cantitate</th>
-                <th>Preț</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>`;
-      order.items.forEach(item => {
-        const prod = products.find(p => p.id === item.id);
-        const total = prod.price * item.quantity;
-        htmlContent += `<tr>
-                          <td>${prod.name}</td>
-                          <td>${item.quantity}</td>
-                          <td>${prod.price.toFixed(2)}</td>
-                          <td>${total.toFixed(2)}</td>
-                        </tr>`;
-      });
-      htmlContent += `</tbody>
-          </table>
-          <p><strong>Total Comandă:</strong> ${order.total.toFixed(2)} Lei</p>
-        </body>
-        </html>`;
-      invoiceWindow.document.write(htmlContent);
-      invoiceWindow.document.close();
-      invoiceWindow.focus();
-      invoiceWindow.print();
-    }
-    
-    // Funcție pentru a afișa detaliile comenzii client (secțiunea "order-details")
-    function renderOrderDetails(order) {
-      const container = document.getElementById('order-details-container');
-      let html = `<p><strong>Client:</strong> ${order.customer.name}</p>
-                  <p><strong>Contact:</strong> ${order.customer.contact}</p>
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Produs</th>
-                        <th>Cantitate</th>
-                        <th>Preț</th>
-                        <th>Total</th>
-                      </tr>
-                    </thead>
-                    <tbody>`;
-      let grandTotal = 0;
-      order.items.forEach(item => {
-        const prod = products.find(p => p.id === item.id);
-        let total = prod.price * item.quantity;
-        grandTotal += total;
-        html += `<tr>
-                   <td>${prod.name}</td>
-                   <td>${item.quantity}</td>
-                   <td>${prod.price.toFixed(2)}</td>
-                   <td>${total.toFixed(2)}</td>
-                 </tr>`;
-      });
-      html += `</tbody></table>
-               <p><strong>Total Comandă:</strong> ${order.total.toFixed(2)} Lei</p>`;
-      container.innerHTML = html;
-    }
-    
-    // Funcția de finalizare a comenzii – stochează comanda și apoi afișează secțiunea de detalii comanda
-    function placeOrder() {
-      const name = document.getElementById('customer-name').value.trim();
-      const contact = document.getElementById('customer-contact').value.trim();
-      if (name === "" || contact === "") { alert("Completează datele de contact!"); return; }
-      if (cart.length === 0) { alert("Coșul este gol!"); return; }
-      let orderTotal = cart.reduce((sum, item) => {
-        const prod = products.find(p => p.id === item.id);
-        return sum + (prod.price * item.quantity);
-      }, 0);
-      let order = {
-        id: Date.now(),
-        customer: { name, contact },
-        items: [...cart],
-        total: orderTotal
-      };
-      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
-      orders.push(order);
-      localStorage.setItem("globalOrders", JSON.stringify(orders));
-      alert("Comanda a fost plasată. Mulțumim, " + name + "!");
-      renderOrderDetails(order);
-      cart = [];
-      updateCartCount();
-      document.getElementById('customer-name').value = "";
-      document.getElementById('customer-contact').value = "";
-      renderProducts();
-      navigateTo('order-details');
-    }
-    
-    /* ---- Funcționalități Admin ---- */
-    let adminLogged = false;
-    function loadAdmin() {
-      const adminDiv = document.getElementById('admin-content');
-      if (!adminLogged) {
-        adminDiv.innerHTML = `
-          <h4>Login Admin</h4>
-          <div class="mb-3">
-            <label>Utilizator:</label>
-            <input type="text" id="admin-user" class="form-control">
-          </div>
-          <div class="mb-3">
-            <label>Parolă:</label>
-            <input type="password" id="admin-pass" class="form-control">
-          </div>
-          <button class="btn btn-primary" onclick="adminLogin()">Login</button>
-        `;
-      } else {
-        adminDiv.innerHTML = `
-          <h4>Dashboard Admin</h4>
-          <div class="d-flex gap-2 mb-3">
-            <button class="btn btn-secondary" onclick="resetAllStocks()">Reset All Stocks</button>
-          </div>
-          <h5>Filtrare Produse</h5>
-          <input type="text" id="admin-filter" class="form-control mb-3" placeholder="Caută produs în admin..." onkeyup="renderAdminProducts()">
-          <div id="admin-products-container" class="mb-4"></div>
-          <h5>Comenzi Plasate</h5>
-          <div id="admin-orders-container"></div>
-          <button class="btn btn-secondary mt-3" onclick="adminLogout()">Logout</button>
-        `;
-        renderAdminProducts();
-        renderAdminOrders();
-      }
-    }
-    
-    function adminLogin() {
-      const user = document.getElementById('admin-user').value.trim();
-      const pass = document.getElementById('admin-pass').value.trim();
-      if (user === "admin" && pass === "parola123") { adminLogged = true; loadAdmin(); }
-      else { alert("Autentificare eșuată!"); }
-    }
-    
-    function adminLogout() { adminLogged = false; loadAdmin(); }
-    
-    function renderAdminProducts() {
-      const container = document.getElementById('admin-products-container');
-      container.innerHTML = "";
-      const filter = document.getElementById('admin-filter').value.toLowerCase();
-      products.forEach(prod => {
-        if (prod.name.toLowerCase().includes(filter)) {
-          const prodHTML = `
-            <div class="mb-2 p-2" style="border:1px solid #ccc; border-radius:5px;">
-              <strong>${prod.name}</strong> - Stoc: <span id="admin-stock-${prod.id}">${prod.stock}</span>
-              <input type="number" id="new-stock-${prod.id}" placeholder="Nou stoc" style="width:70px; margin-left:10px;">
-              <button class="btn btn-warning btn-sm ms-2" onclick="updateProductStockCustom(${prod.id})">Setează stoc</button>
-            </div>`;
-          container.innerHTML += prodHTML;
-        }
-      });
-    }
-    
-    function updateProductStockCustom(id) {
-      const newStock = parseInt(document.getElementById(`new-stock-${id}`).value) || 0;
-      const prod = products.find(p => p.id === id);
-      prod.stock = newStock;
-      document.getElementById(`admin-stock-${id}`).textContent = prod.stock;
-      document.getElementById(`stock-${id}`) && (document.getElementById(`stock-${id}`).textContent = prod.stock);
-      document.getElementById(`detail-stock-${id}`) && (document.getElementById(`detail-stock-${id}`).textContent = prod.stock);
-      alert("Stocul pentru " + prod.name + " a fost actualizat la " + newStock + ".");
-    }
-    
-    function resetAllStocks() {
-      const initialStocks = {
-        1: 50, 2: 40, 3: 30, 4: 60, 5: 80, 6: 70, 7: 35,
-        8: 45, 9: 55, 10: 50, 11: 60, 12: 40, 13: 30, 14: 45, 15: 20,
-        16: 100, 17: 25, 18: 30, 19: 15, 20: 40
-      };
-      products.forEach(prod => { prod.stock = initialStocks[prod.id] || prod.stock; });
-      alert("Stocurile pentru toate produsele au fost resetate.");
-      renderProducts();
-      renderAdminProducts();
-    }
-    
-    function renderAdminOrders() {
-      const orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
-      const container = document.getElementById('admin-orders-container');
-      if (orders.length === 0) { container.innerHTML = "<p>Nu există comenzi.</p>"; return; }
-      let html = `<table class="table">
-                    <thead>
-                      <tr>
-                        <th>ID Comandă</th>
-                        <th>Client</th>
-                        <th>Detalii Produse</th>
-                        <th>Total</th>
-                        <th>Acțiuni</th>
-                      </tr>
-                    </thead>
-                    <tbody>`;
-      orders.forEach((order, idx) => {
-        let details = "";
-        order.items.forEach(item => {
-          const prod = products.find(p => p.id === item.id);
-          details += prod.name + " x " + item.quantity + "<br>";
-        });
-        html += `<tr>
-                   <td>${order.id}</td>
-                   <td>${order.customer.name}<br>${order.customer.contact}</td>
-                   <td>${details}</td>
-                   <td>${order.total.toFixed(2)} Lei</td>
-                   <td>
-                     <button class="btn btn-success btn-sm" onclick="finishOrder(${idx})">Terminată</button>
-                     <button class="btn btn-info btn-sm" onclick="printInvoice(${idx})">Tipărește Factura</button>
-                   </td>
-                 </tr>`;
-      });
-      html += `</tbody></table>`;
-      container.innerHTML = html;
-    }
-    
-    function finishOrder(index) {
-      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
-      orders.splice(index, 1);
-      localStorage.setItem("globalOrders", JSON.stringify(orders));
-      alert("Comanda a fost finalizată.");
-      renderAdminOrders();
-    }
-    
-    function printInvoice(index) {
-      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
-      if (orders.length <= index) return;
-      const order = orders[index];
-      let invoiceWindow = window.open("", "PrintInvoice", "width=800,height=600");
-      let htmlContent = `
-        <html>
-        <head>
-          <title>Factura - Comanda ${order.id}</title>
-          <style>
-            body { font-family: Arial, sans-serif; padding: 20px; }
-            h2, p, table { margin: 0 0 10px; padding: 0; }
-            table { width: 100%; border-collapse: collapse; }
-            table, th, td { border: 1px solid #000; }
-            th, td { padding: 5px; text-align: left; }
-          </style>
-        </head>
-        <body>
-          <h2>Factura - Comanda ${order.id}</h2>
-          <p><strong>Client:</strong> ${order.customer.name}</p>
-          <p><strong>Contact:</strong> ${order.customer.contact}</p>
-          <table>
-            <thead>
-              <tr>
-                <th>Produs</th>
-                <th>Cantitate</th>
-                <th>Preț</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>`;
-      order.items.forEach(item => {
-        const prod = products.find(p => p.id === item.id);
-        const total = prod.price * item.quantity;
-        htmlContent += `<tr>
-                          <td>${prod.name}</td>
-                          <td>${item.quantity}</td>
-                          <td>${prod.price.toFixed(2)}</td>
-                          <td>${total.toFixed(2)}</td>
-                        </tr>`;
-      });
-      htmlContent += `</tbody>
-          </table>
-          <p><strong>Total Comandă:</strong> ${order.total.toFixed(2)} Lei</p>
-        </body>
-        </html>`;
-      invoiceWindow.document.write(htmlContent);
-      invoiceWindow.document.close();
-      invoiceWindow.focus();
-      invoiceWindow.print();
-    }
-    
-    // Secțiunea Order Details – pentru a afișa comanda imediat după finalizare
-    function renderOrderDetails(order) {
-      const container = document.getElementById('order-details-container');
-      let html = `<p><strong>Client:</strong> ${order.customer.name}</p>
-                  <p><strong>Contact:</strong> ${order.customer.contact}</p>
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Produs</th>
-                        <th>Cantitate</th>
-                        <th>Preț</th>
-                        <th>Total</th>
-                      </tr>
-                    </thead>
-                    <tbody>`;
-      let grandTotal = 0;
-      order.items.forEach(item => {
-        const prod = products.find(p => p.id === item.id);
-        let total = prod.price * item.quantity;
-        grandTotal += total;
-        html += `<tr>
-                   <td>${prod.name}</td>
-                   <td>${item.quantity}</td>
-                   <td>${prod.price.toFixed(2)}</td>
-                   <td>${total.toFixed(2)}</td>
-                 </tr>`;
-      });
-      html += `</tbody></table>
-               <p><strong>Total Comandă:</strong> ${order.total.toFixed(2)} Lei</p>`;
-      container.innerHTML = html;
-    }
-    
-    document.addEventListener("DOMContentLoaded", function() {
-      fetchProductsFromBackend();
-      renderSlider();
+    window.addEventListener("scroll", () => {
+      document.querySelector(".back-to-top").style.display = window.pageYOffset > 300 ? "block" : "none";
     });
+    
+    /* Secțiunea Comenzi: încărcare din localStorage (dacă ai salvat anterior comenzi) */
+    function loadOrders() {
+      const ordersDiv = document.getElementById("orders-list");
+      let orders = JSON.parse(localStorage.getItem("orders") || "[]");
+      ordersDiv.innerHTML = "";
+      if (orders.length === 0) {
+        ordersDiv.innerHTML = "<p>Nu există comenzi.</p>";
+        return;
+      }
+      orders.forEach((order, idx) => {
+        let orderDiv = document.createElement("div");
+        orderDiv.className = "comanda";
+        orderDiv.innerHTML = `<strong>Comanda ${idx + 1}</strong><br>
+                              Nume: ${order.customerName}<br>
+                              Email: ${order.customerEmail}<br>
+                              Telefon: ${order.customerPhone}<br>
+                              Adresă: ${order.customerAddress}<br>
+                              Detalii: ${order.details}<br>
+                              Data: ${order.date}<br>
+                              <button onclick="printInvoiceForOrder(${idx})">Tipărește Factura</button>`;
+        ordersDiv.appendChild(orderDiv);
+      });
+    }
+    function clearAllOrders() {
+      if (confirm("Ești sigur că vrei să ștergi toate comenzile?")) {
+        localStorage.removeItem("orders");
+        loadOrders();
+      }
+    }
+    function printInvoiceForOrder(idx) {
+      let orders = JSON.parse(localStorage.getItem("orders") || "[]");
+      if (idx < 0 || idx >= orders.length) {
+        alert("Comandă invalidă!");
+        return;
+      }
+      const order = orders[idx];
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF('p','mm','a4');
+      doc.setFont("times");
+      
+      // Detalii furnizor
+      doc.setFontSize(16);
+      doc.text("Furnizor", 10, 20);
+      doc.setFontSize(12);
+      doc.text("Magazinul de Candele & Tradiții SRL", 10, 28);
+      doc.text("Str. Exemplu nr.1, București", 10, 36);
+      doc.text("CUI: RO123456", 10, 44);
+      doc.text("Telefon: 0123456789", 10, 52);
+      
+      // Detalii client
+      doc.setFontSize(16);
+      doc.text("Client", 110, 20);
+      doc.setFontSize(12);
+      doc.text(`Nume: ${order.customerName}`, 110, 28);
+      doc.text(`Email: ${order.customerEmail}`, 110, 36);
+      doc.text(`Telefon: ${order.customerPhone}`, 110, 44);
+      doc.text(`Adresă: ${order.customerAddress}`, 110, 52);
+      
+      doc.line(10, 60, 200, 60);
+      
+      doc.setFontSize(18);
+      const invoiceNumber = Math.floor(Math.random()*1000000);
+      const invoiceDate = new Date().toLocaleDateString();
+      doc.text("FACTURĂ", 105, 70, { align: "center" });
+      doc.setFontSize(12);
+      doc.text(`Factura Nr: ${invoiceNumber}`, 105, 78, { align: "center" });
+      doc.text(`Data: ${invoiceDate}`, 105, 86, { align: "center" });
+      
+      let startY = 96;
+      doc.setFont("times", "bold");
+      doc.text("Produs", 10, startY);
+      doc.text("Cantitate", 70, startY, { align: "center" });
+      doc.text("Preț", 110, startY, { align: "center" });
+      doc.text("Subtotal", 150, startY, { align: "center" });
+      doc.line(10, startY+2, 200, startY+2);
+      doc.setFont("times", "normal");
+      let posY = startY + 10;
+      let orderItems = JSON.parse(order.details);
+      orderItems.forEach(item => {
+        const itemTotal = item.price * item.qty;
+        doc.text(item.name, 10, posY);
+        doc.text(String(item.qty), 70, posY, { align: "center" });
+        doc.text(String(item.price) + " RON", 110, posY, { align: "center" });
+        doc.text(String(itemTotal) + " RON", 150, posY, { align: "center" });
+        posY += 10;
+        if (posY > 250) { doc.addPage(); posY = 20; }
+      });
+      const total = orderItems.reduce((sum, item) => sum + item.price * item.qty, 0);
+      doc.setFont("times", "bold");
+      doc.text(`Total: ${total} RON`, 150, posY+10, { align: "center" });
+      doc.setFont("times", "normal");
+      doc.setFontSize(10);
+      doc.text("Mulțumim pentru comandă!", 10, 290);
+      
+      doc.save(`Factura_${invoiceNumber}.pdf`);
+    }
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-  </html>
+                  </html>
