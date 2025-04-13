@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Magazin Bisericesc</title>
-  <!-- Bootstrap pentru stilizare rapidă -->
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    /* Container pentru fiecare secțiune (formă de tabel cu colțuri rotunjite și bordură roșie) */
+    /* Container pentru secțiuni – aspect de "tabel" cu bordură roșie și colțuri rotunjite */
     .section-container {
       border: 1px solid #a30000;
       border-radius: 8px;
@@ -22,7 +22,7 @@
       padding: 10px 20px;
     }
     header img.logo { height: 50px; }
-    /* Actualizare logo ANPC la 150x50 */
+    /* Logo ANPC ajustat la 150x50 */
     footer img { height: 50px; }
     nav ul {
       list-style: none;
@@ -32,7 +32,7 @@
       gap: 15px;
       flex-wrap: wrap;
     }
-    /* Eliminat textul „Coș” – se păstrează doar iconița */
+    /* Eliminat textul "Coș" din meniu – doar iconița */
     nav ul li a {
       color: #fff;
       font-weight: bold;
@@ -64,17 +64,19 @@
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    /* Fiecare secțiune - învelită într-un container cu stil tabel */
+    /* Secțiuni (fiecare învelită într-un container) */
     section { padding: 10px; }
-    .section-container h2 { background-color: #a30000; color: #fff; padding: 5px; border-radius: 4px; }
-    /* Tranziție între pagini */
+    /* Tranziție între pagini (fade) */
     .page {
       opacity: 0;
       transition: opacity 0.5s ease;
       display: none;
     }
-    .page.active-page { display: block; opacity: 1; }
-    /* Carduri produse */
+    .page.active-page {
+      display: block;
+      opacity: 1;
+    }
+    /* Carduri de produs – uniforme, cu efect de scaling */
     .product-card {
       border: 1px solid #ccc;
       border-radius: 5px;
@@ -96,12 +98,15 @@
       object-fit: cover;
       cursor: pointer;
     }
-    .product-card .card-body { padding: 15px; flex-grow: 1; }
-    /* Butonul de adăugare în coș lărgit */
+    .product-card .card-body {
+      padding: 15px;
+      flex-grow: 1;
+    }
+    /* Butonul de "Adaugă în Coș" – lărgit */
     .add-cart-btn { width: 100%; }
     #filter-input { max-width: 400px; margin-bottom: 20px; }
     footer { text-align: center; }
-    /* Slider transparent în pagina de start */
+    /* Slider pe pagina de start */
     .slider-container {
       overflow: hidden;
       position: relative;
@@ -124,13 +129,13 @@
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
-    /* Stil text atractiv pentru secțiuni */
+    /* Stil text atractiv */
     .attractive-text {
       font-size: 1.1rem;
       line-height: 1.6;
       color: #333;
     }
-    /* Butoane – efect la click */
+    /* Butoane – efect de transformare la click */
     button {
       transition: transform 0.1s ease, background-color 0.2s ease;
     }
@@ -217,7 +222,6 @@
         <h2>Bine ați venit la Magazinul Bisericesc</h2>
         <div class="text-center py-3">
           <p>Descoperă produsele noastre pentru momente de spiritualitate!</p>
-          <!-- Butonul și sliderul sunt în interiorul aceluiași container -->
           <button class="btn btn-dark mb-3" onclick="navigateTo('produse')">Vezi produsele</button>
           <div class="slider-container">
             <div class="slider-track" id="slider-track"></div>
@@ -252,6 +256,28 @@
         <p class="attractive-text">
           Magazinul nostru Bisericesc a fost fondat din pasiune și dorința de a păstra tradițiile spirituale. Ne dedicăm cu grijă selecționării produselor care aduc lumină și inspirație în viața credincioșilor. Fiecare obiect este realizat manual sau ales cu atenție pentru a reflecta valorile autentice ale credinței. Experiența noastră îmbină tehnologia modernă cu tradiția, oferind o selecție variată și de calitate. Vă invităm să explorați universul nostru și să descoperiți povestea fiecărui produs, care aduce un strop de misticism și echilibru în viața dumneavoastră.
         </p>
+        <!-- Slider pentru secțiunea "Despre noi" -->
+        <div id="aboutCarousel" class="carousel slide mt-3" data-bs-ride="carousel" data-bs-touch="true">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="https://via.placeholder.com/600x400?text=Biserica+1" class="d-block w-100" alt="Biserica 1">
+            </div>
+            <div class="carousel-item">
+              <img src="https://via.placeholder.com/600x400?text=Biserica+2" class="d-block w-100" alt="Biserica 2">
+            </div>
+            <div class="carousel-item">
+              <img src="https://via.placeholder.com/600x400?text=Productie+1" class="d-block w-100" alt="Productie 1">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#aboutCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#aboutCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
       </div>
     </section>
     
@@ -360,7 +386,7 @@
       if (pageId === 'produse') fetchProductsFromBackend();
     }
     
-    // Buton Back to Top
+    // Back to Top
     window.onscroll = function() { scrollFunction(); };
     function scrollFunction() {
       const btn = document.getElementById("backToTop");
@@ -395,7 +421,6 @@
     startTimer();
     
     /* ---- Funcționalități Produse & Stocuri ---- */
-    // Fiecare produs are acum și o proprietate "labels" pentru etichete
     const products = [
       {id: 1, name: "Lumânare Roșie", price: 10.00, image: "https://via.placeholder.com/400x200?text=Produs+1", description: "Lumânare din ceară naturală pentru rugăciune.", stock: 50, labels: ["Nou", "Popular"]},
       {id: 2, name: "Lumânare Albă", price: 9.50, image: "https://via.placeholder.com/400x200?text=Produs+2", description: "Lumânare tradițională pentru biserică.", stock: 40, labels: ["Best Seller"]},
@@ -421,7 +446,6 @@
     
     let cart = [];
     
-    // Preia stocurile actualizate (simulăm folosind produsele definite)
     function fetchProductsFromBackend() { renderProducts(); }
     
     function renderProducts() {
@@ -492,7 +516,7 @@
       document.getElementById(`stock-${id}`) && (document.getElementById(`stock-${id}`).textContent = prod.stock);
       document.getElementById(`detail-stock-${id}`) && (document.getElementById(`detail-stock-${id}`).textContent = prod.stock);
       let index = cart.findIndex(item => item.id === id);
-      if (index > -1) { cart[index].quantity += qty; } 
+      if (index > -1) { cart[index].quantity += qty; }
       else { cart.push({ id: id, quantity: qty }); }
       updateCartCount();
       console.log("Cart:", cart);
@@ -564,7 +588,7 @@
       renderProducts();
     }
     
-    // Plasează comanda și afișează secțiunea Detalii Comandă
+    // Plasează comanda și afișează detaliile comenzii
     function placeOrder() {
       const name = document.getElementById('customer-name').value.trim();
       const contact = document.getElementById('customer-contact').value.trim();
@@ -616,7 +640,7 @@
         let total = prod.price * item.quantity;
         grandTotal += total;
         let labelsHtml = "";
-        if (prod.labels && prod.labels.length) {
+        if(prod.labels && prod.labels.length) {
           labelsHtml = prod.labels.map(l => `<span class="badge bg-secondary me-1">${l}</span>`).join("");
         }
         html += `<tr>
@@ -654,7 +678,6 @@
         adminDiv.innerHTML = `
           <div class="section-container">
             <h2>Dashboard Admin</h2>
-            <!-- Un singur buton pentru actualizarea tuturor stocurilor -->
             <div class="mb-3">
               <button class="btn btn-secondary" onclick="updateAllStocks()">Actualizează toate stocurile</button>
             </div>
@@ -677,9 +700,12 @@
       else { alert("Autentificare eșuată!"); }
     }
     
-    function adminLogout() { adminLogged = false; loadAdmin(); }
+    function adminLogout() {
+      adminLogged = false;
+      loadAdmin();
+    }
     
-    // Funcție pentru actualizarea tuturor stocurilor din admin
+    // Actualizarea tuturor stocurilor din admin pe baza datelor din input-uri
     function updateAllStocks() {
       const inputs = document.querySelectorAll("[id^='new-stock-']");
       inputs.forEach(input => {
@@ -688,13 +714,12 @@
         const prod = products.find(p => p.id === id);
         if(prod) {
           prod.stock = newStock;
-          // Actualizează în admin și în secțiunile comune
           document.getElementById(`admin-stock-${id}`).textContent = prod.stock;
           if(document.getElementById(`stock-${id}`)) document.getElementById(`stock-${id}`).textContent = prod.stock;
           if(document.getElementById(`detail-stock-${id}`)) document.getElementById(`detail-stock-${id}`).textContent = prod.stock;
         }
       });
-      alert("Toate stocurile au fost actualizate conform datelor introduse.");
+      alert("Stocurile pentru toate produsele au fost actualizate.");
       renderProducts();
       renderAdminProducts();
     }
@@ -705,7 +730,6 @@
       const filter = document.getElementById('admin-filter').value.toLowerCase();
       products.forEach(prod => {
         if (prod.name.toLowerCase().includes(filter)) {
-          // Afișăm input pentru noul stoc, fără buton individual
           const prodHTML = `
             <div class="mb-2 p-2" style="border:1px solid #ccc; border-radius:5px;">
               <strong>${prod.name}</strong> - Stoc curent: <span id="admin-stock-${prod.id}">${prod.stock}</span>
@@ -801,7 +825,7 @@
         const prod = products.find(p => p.id === item.id);
         const total = prod.price * item.quantity;
         let labelsHtml = "";
-        if (prod.labels && prod.labels.length) {
+        if(prod.labels && prod.labels.length) {
           labelsHtml = prod.labels.map(l => `<span class="badge bg-secondary me-1">${l}</span>`).join("");
         }
         htmlContent += `<tr>
@@ -827,7 +851,21 @@
       fetchProductsFromBackend();
       renderSlider();
     });
+    
+    // Funcție pentru sliderul de pe pagina de start (generare imagini din produse)
+    function renderSlider() {
+      const sliderTrack = document.getElementById("slider-track");
+      sliderTrack.innerHTML = "";
+      // Exemplu: folosim imaginile primelor 5 produse pentru slider
+      products.slice(0, 5).forEach(prod => {
+        const img = document.createElement("img");
+        img.src = prod.image;
+        img.alt = prod.name;
+        sliderTrack.appendChild(img);
+      });
+    }
   </script>
+  <!-- Bootstrap Bundle JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
