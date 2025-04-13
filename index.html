@@ -64,11 +64,9 @@
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    /* Secțiunile (fiecare învelită în .section-container) */
+    /* Secțiuni */
     section { padding: 10px; }
-    /* Nu mai aplicăm background roșu la titlu – folosim doar o linie subțire sau un text simplu */
     .section-container h2 {
-      /* Exemplu: poți alege o bordură inferioară în loc de background */
       border-bottom: 2px solid #a30000;
       color: #a30000;
       padding-bottom: 5px;
@@ -81,7 +79,7 @@
       display: none;
     }
     .page.active-page { display: block; opacity: 1; }
-    /* Carduri de produs */
+    /* Carduri pentru produse */
     .product-card {
       border: 1px solid #ccc;
       border-radius: 5px;
@@ -104,7 +102,7 @@
       cursor: pointer;
     }
     .product-card .card-body { padding: 15px; flex-grow: 1; }
-    /* Butonul "Adaugă în Coș" lărgit */
+    /* Butonul de "Adaugă în Coș" lărgit */
     .add-cart-btn { width: 100%; }
     #filter-input { max-width: 400px; margin-bottom: 20px; }
     footer { text-align: center; }
@@ -121,10 +119,12 @@
       width: max-content;
       animation: slide 20s linear infinite;
     }
+    /* Toate imaginile din slider vor avea aceeași dimensiune */
     .slider-track img {
-      margin-right: 10px;
+      width: 250px;
       height: 150px;
-      width: auto;
+      object-fit: cover;
+      margin-right: 10px;
       border-radius: 5px;
     }
     @keyframes slide {
@@ -204,7 +204,7 @@
         <li><a onclick="navigateTo('admin')">Admin</a></li>
       </ul>
     </nav>
-    <!-- Păstrăm doar iconița de coș -->
+    <!-- Iconița de coș -->
     <div class="cart-icon" onclick="navigateTo('cos')">
       <img src="https://via.placeholder.com/24?text=🛒" alt="Coș">
       <span class="badge" id="cart-count">0</span>
@@ -258,7 +258,7 @@
         <p class="attractive-text">
           Magazinul nostru Bisericesc a fost fondat din pasiune și dorința de a păstra tradițiile spirituale. Ne dedicăm cu grijă selecționării produselor care aduc lumină și inspirație în viața credincioșilor. Fiecare obiect este realizat manual sau ales cu atenție pentru a reflecta valorile autentice ale credinței. Experiența noastră îmbină tehnologia modernă cu tradiția, oferind o selecție variată și de calitate. Vă invităm să explorați universul nostru și să descoperiți povestea fiecărui produs.
         </p>
-        <!-- Carousel în secțiunea "Despre noi" -->
+        <!-- Carousel pentru secțiunea "Despre noi" -->
         <div id="aboutCarousel" class="carousel slide mt-3" data-bs-ride="carousel" data-bs-touch="true">
           <div class="carousel-inner">
             <div class="carousel-item active">
@@ -365,7 +365,7 @@
     <img src="https://via.placeholder.com/150x50?text=ANPC" alt="Logo ANPC">
   </footer>
   
-  <!-- Formular de notificare (FormSubmit) – trimite e-mailul notificării către admin -->
+  <!-- Formular de notificare (FormSubmit) pentru e-mail -->
   <form id="notifyForm" action="https://formsubmit.co/admin@example.com" method="POST" target="_blank" style="display: none;">
     <input type="hidden" name="subject" value="Notificare Comandă - Magazin Bisericesc">
     <input type="hidden" name="orderDetails" id="orderDetailsInput">
@@ -373,7 +373,7 @@
   
   <!-- JAVASCRIPT -->
   <script>
-    // Funcție de tranziție între pagini (fade in/out)
+    // Tranziție între pagini (fade in/out)
     function navigateTo(pageId) {
       const current = document.querySelector('.active-page');
       if (current) {
@@ -429,7 +429,6 @@
     startTimer();
     
     /* ---- Funcționalități Produse & Stocuri ---- */
-    // Lista de produse, fiecare cu etichete (labels)
     const products = [
       {id: 1, name: "Lumânare Roșie", price: 10.00, image: "https://via.placeholder.com/400x200?text=Produs+1", description: "Lumânare din ceară naturală pentru rugăciune.", stock: 50, labels: ["Nou", "Popular"]},
       {id: 2, name: "Lumânare Albă", price: 9.50, image: "https://via.placeholder.com/400x200?text=Produs+2", description: "Lumânare tradițională pentru biserică.", stock: 40, labels: ["Best Seller"]},
@@ -525,7 +524,7 @@
       document.getElementById(`stock-${id}`) && (document.getElementById(`stock-${id}`).textContent = prod.stock);
       document.getElementById(`detail-stock-${id}`) && (document.getElementById(`detail-stock-${id}`).textContent = prod.stock);
       let index = cart.findIndex(item => item.id === id);
-      if (index > -1) { cart[index].quantity += qty; }
+      if (index > -1) { cart[index].quantity += qty; } 
       else { cart.push({ id: id, quantity: qty }); }
       updateCartCount();
       console.log("Cart:", cart);
@@ -597,7 +596,6 @@
       renderProducts();
     }
     
-    // Plasează comanda, salvează în localStorage și trimite notificare prin e-mail
     function placeOrder() {
       const name = document.getElementById('customer-name').value.trim();
       const contact = document.getElementById('customer-contact').value.trim();
@@ -618,7 +616,7 @@
       localStorage.setItem("globalOrders", JSON.stringify(orders));
       alert("Comanda a fost plasată. Mulțumim, " + name + "!");
       
-      // Notificare e-mail folosind FormSubmit (formularul ascuns)
+      // Notificare e-mail prin Formular (FormSubmit)
       var orderSummary = "Comandă ID: " + order.id + "\nClient: " + order.customer.name + "\nContact: " + order.customer.contact + "\nTotal: " + order.total.toFixed(2) + " Lei";
       document.getElementById("orderDetailsInput").value = orderSummary;
       document.getElementById("notifyForm").submit();
@@ -632,7 +630,6 @@
       navigateTo('order-details');
     }
     
-    // Afișează detaliile comenzii în secțiunea "order-details"
     function renderOrderDetails(order) {
       const container = document.getElementById('order-details-container');
       let html = `<p><strong>Client:</strong> ${order.customer.name}</p>
@@ -717,7 +714,6 @@
     
     function adminLogout() { adminLogged = false; loadAdmin(); }
     
-    // Actualizează toate stocurile din Admin pe baza input-urilor
     function updateAllStocks() {
       const inputs = document.querySelectorAll("[id^='new-stock-']");
       inputs.forEach(input => {
@@ -848,8 +844,7 @@
                           <td>${total.toFixed(2)}</td>
                         </tr>`;
       });
-      htmlContent += `</tbody>
-          </table>
+      htmlContent += `</tbody></table>
           <p><strong>Total Comandă:</strong> ${order.total.toFixed(2)} Lei</p>
         </body>
         </html>`;
@@ -859,7 +854,7 @@
       invoiceWindow.print();
     }
     
-    // Secțiunea de afișare a detaliilor comenzii (după plasare)
+    // Secțiunea pentru afișarea detaliilor comenzii
     function renderOrderDetails(order) {
       const container = document.getElementById('order-details-container');
       let html = `<p><strong>Client:</strong> ${order.customer.name}</p>
@@ -902,24 +897,12 @@
       fetchProductsFromBackend();
       renderSlider();
     });
-    
-    // Funcție pentru sliderul din pagina de start (folosește primele 5 imagini de la produse)
-    function renderSlider() {
-      const sliderTrack = document.getElementById("slider-track");
-      sliderTrack.innerHTML = "";
-      products.slice(0,5).forEach(prod => {
-        const img = document.createElement("img");
-        img.src = prod.image;
-        img.alt = prod.name;
-        sliderTrack.appendChild(img);
-      });
-    }
   </script>
-  <!-- Formularul pentru notificare e-mail folosind FormSubmit -->
+  <!-- Formular notificare e-mail (FormSubmit) -->
   <form id="notifyForm" action="https://formsubmit.co/admin@example.com" method="POST" target="_blank" style="display: none;">
     <input type="hidden" name="subject" value="Notificare Comandă - Magazin Bisericesc">
     <input type="hidden" name="orderDetails" id="orderDetailsInput">
   </form>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
+            </html>
