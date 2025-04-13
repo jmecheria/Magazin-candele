@@ -216,7 +216,7 @@
       border: 1px solid #000;
     }
     .invoice table th, .invoice table td { padding: 5px; text-align: center; }
-    /* Regulile pentru carousel-ul din "Despre noi" */
+    /* Carousel din "Despre noi": imaginile să fie uniforme */
     #aboutCarousel .carousel-item img {
       width: 600px;
       height: 400px;
@@ -235,7 +235,7 @@
   <!-- HEADER -->
   <header class="d-flex justify-content-between align-items-center flex-wrap">
     <div class="d-flex align-items-center">
-      <img src="logo.jpg" alt="Logo" class="logo me-2">
+      <img src="https://via.placeholder.com/150x50?text=Logo" alt="Logo" class="logo me-2">
       <span class="fs-4">Magazin Bisericesc</span>
     </div>
     <nav>
@@ -249,7 +249,7 @@
       </ul>
     </nav>
     <div class="cart-icon" onclick="navigateTo('cos')">
-      <img src="cos.jpg" alt="Coș">
+      <img src="https://via.placeholder.com/24?text=🛒" alt="Coș">
       <span class="badge" id="cart-count">0</span>
     </div>
   </header>
@@ -301,29 +301,17 @@
         <p class="attractive-text">
           Magazinul nostru Bisericesc a fost fondat din pasiune și dorința de a păstra tradițiile spirituale. Ne dedicăm cu grijă selecționării produselor care aduc lumină și inspirație în viața credincioșilor. Fiecare obiect este realizat manual sau ales cu atenție pentru a reflecta valorile autentice ale credinței. Experiența noastră îmbină tehnologia modernă cu tradiția, oferind o selecție variată și de calitate. Vă invităm să explorați universul nostru și să descoperiți povestea fiecărui produs.
         </p>
-        <!-- Carousel pentru secțiunea "Despre noi" cu imagini de dimensiuni fixe -->
+        <!-- Carousel pentru secțiunea "Despre noi" -->
         <div id="aboutCarousel" class="carousel slide mt-3" data-bs-ride="carousel" data-bs-touch="true">
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img src="21.jpg" class="d-block w-100" alt="Biserica 1">
+              <img src="https://via.placeholder.com/600x400?text=Biserica+1" class="d-block w-100" alt="Biserica 1">
             </div>
             <div class="carousel-item">
-              <img src="22.jpg" class="d-block w-100" alt="Biserica 2">
+              <img src="https://via.placeholder.com/600x400?text=Biserica+2" class="d-block w-100" alt="Biserica 2">
             </div>
             <div class="carousel-item">
-              <img src="23.jpg" class="d-block w-100" alt="Productie 1">
-            </div>
-            <div class="carousel-item">
-              <img src="24.jpg" alt="Productie 2">
-            </div>
-            <div class="carousel-item">
-              <img src="25.jpg" alt="Productie 3">
-            </div>
-            <div class="carousel-item">
-              <img src="26.jpg" alt="Productie 4">
-            </div>
-            <div class="carousel-item">
-              <img src="27.jpg" alt="Productie 5">
+              <img src="https://via.placeholder.com/600x400?text=Productie+1" class="d-block w-100" alt="Productie 1">
             </div>
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#aboutCarousel" data-bs-slide="prev">
@@ -360,40 +348,9 @@
             </tr>
           </thead>
           <tbody>
-           <tr><td>1</td><td>M	Sf. Cuv. Maria Egipteanca; Sf. Cuv. Macarie Mărt.; Sf. Mc. Gherontie; Sf. Varsanufie de la Optina (Post)</td></tr>
-            <tr><td>2</td><td>M  Sf. Cuv. Tit, făcătorul de minuni; Sf. Mc. Amfian și Edesie (Denia Canonului cel Mare) (Post)</td></tr>
-            <tr><td>3</td><td>J  Sf. Cuv. Nichita Mărt. și Ilirie (Dezlegare la ulei și vin)</td></tr>
-            <tr><td>4</td><td>V  Sf. Cuv. Iosif Imnograful, Gheorghe din Maleon și Zosima (Denia Acatistului Bunei Vestiri) (Post)</td></tr>
-            <tr><td>5</td><td>S  Sf. Mc. Victorin și cei împreună cu el; Sf. Mc. Teodul și Agatopod (Sâmbăta a V-a din Post - Pomenirea morților) (Dezlegare la ulei și vin)</td></tr>
-            <tr><td>6</td><td>D  † Sf. Sfințit Mc. Irineu, ep. de Sirmium; Sf. Ier. Eutihie, patr. Constantinopolului; Sf. Cuv. Grigorie Sinaitul și Platonida (Dezlegare la ulei și vin)
-Duminica a V-a din Post (a Sf. Cuv. Maria Egipteanca; Prevestirea Patimilor; Cererea fiilor lui Zevedeu; Pocăința femeii păcătoase); Ap. Evrei IX, 11-14; Galateni III, 23-29; Ev. Marcu X, 32-45; Luca VII, 36-50; glas 8, voscr. 8</td></tr>
-            <tr><td>7</td><td>L	Sf. Mc. Caliopie; Sf. Ier. Gheorghe Mărt., ep. Mitilenei (Post)</td></tr>
-            <tr><td>8</td><td>M  Sf. Ap. Irodion, Agav, Ruf, Flegon, Asincrit și Ermis; Sf. Ier. Celestin, ep. Romei (Post)</td></tr>
-            <tr><td>9</td><td>M	Sf. Mc. Eupsihie din Cezareea Capadociei; Sf. Cuv. Vadim (Post)</td></tr>
-            <tr><td>10</td><td>J  Sf. Mc. Terentie, Pompei, African, Maxim și Dima (Post)</td></tr>
-            <tr><td>11</td><td>V  †) Sf. Ier. Calinic de la Cernica, ep. Râmnicului; Sf. Sfințit Mc. Antipa, ep. Pergamului Asiei (Dezlegare la ulei și vin)</td></tr>
-            <tr><td>12</td><td>S  †) Sf. Mc. Sava de la Buzău; Sf. Ier. Vasile Mărt., ep. Pariei (Sâmbăta lui Lazăr - Pomenirea morților) (Dezlegare la ulei și vin)</td></tr>
-            <tr><td>13</td><td>D	(Denia Sf. și Marii Luni) (Dezlegare la pește)
-(†) Intrarea Domnului în Ierusalim (Duminica a VI-a din Post - a Floriilor); Ap. Filipeni IV, 4-9; Ev. Ioan XII, 1-18</td></tr>                                       
-            <tr><td>14</td><td>L	Sf. și Marea Luni; †) Sf. Ier. Pahomie de la Gledin, ep. Romanului; Sf. Ier. Martin Mărt., ep. Romei; Sf. Mc. Tomaida (Denia Sf. și Marii Marți) (Numai seara, pâine și apă)</td></tr>
-            <tr><td>15</td><td>M	Sf. și Marea Marți; Sf. Ap. Aristarh, Pud și Trofim; Sf. Mc. Crescent (Denia Sf. și Marii Miercuri) (Numai seara, pâine și apă)</td></tr>
-            <tr><td>16</td><td>M	Sf. și Marea Miercuri; Sf. Mc. fecioare Agapia, Irina și Hionia (Denia Sf. și Marii Joi) (Numai seara, pâine și apă)</td></tr>
-            <tr><td>17</td><td>J	Sf. și Marea Joi; Sf. Sfințit Mc. Simeon, ep. Persiei (Pomenirea morților - Denia celor 12 Evanghelii, a Sf. și Marii Vineri) (Dezlegare la ulei și vin)</td></tr>
-            <tr><td>18</td><td>v  Sf. și Marea Vineri - Scoaterea Sf. Aer; Sf. Cuv. Ioan, ucenicul Sf. Grigorie Decapolitul (Denia Prohodului Domnului, a Sf. și Marii Sâmbete) (Zi aliturgică) (Post negru)</td></tr>
-            <tr><td>19</td><td>S	Sf. și Marea Sâmbătă; Sf. Cuv. Ioan de la Lavra Veche; Sf. Sfințit Mc. Pafnutie (Dezlegare la ulei și vin)</td></tr>
-            <tr><td>20</td><td>	D	
-(†) Învierea Domnului (Sfintele Paști); Ap. Fapte I, 1-8; Ev. Ioan I, 1-17</td></tr>
-            <tr><td>21</td><td>	L	(†) A doua zi de Paști (Mărturia lui Ioan Botezătorul); †) Cinstirea Sf. Ic. a M. D. „Axion Estin” de la M. Protaton - Athos; Sf. Sfințit Mc. Ianuarie, ep. de Benevent; Sf. Mc. Teodor din Perga; Sf. Mc. Alexandra, împ.</td></tr>
-            <tr><td>22</td><td>	M	(†) A treia zi de Paști (Drumul spre Emaus); Sf. Ier. Teodor Sicheotul, ep. Anastasiopolei</td></tr>
-            <tr><td>23</td><td>	M	†) Sf. M. Mc. Gheorghe, Purtătorul de biruință; Sf. Mc. Valerie (Harți)</td></tr>
-            <tr><td>24</td><td>	J	†) Sf. Ier. Mărt. Ilie Iorest, Sava Brancovici și Simion Ștefan, mitr. Transilvaniei; Sf. Ier. Iosif Mărt. din Maramureș; Sf. Mc. Pasicrat și Valentin; Sf. Cuv. Elisabeta</td></tr>
-            <tr><td>25</td><td>	V	†) Izvorul Tămăduirii; †) Cinstirea Sf. Ic. a M. D. „Siriaca” de la M. Ghighiu; Sf. Ap. și Ev. Marcu; †) Sf. Cuv. Vasile de la Poiana Mărului (Harți)</td></tr>
-            <tr><td>26</td><td>	S	Sf. Sfințit Mc. Vasilevs, ep. Amasiei; Sf. Cuv. Glafira; † Sf. Mc. Chiril, Chindeu și Tasie din Axiopolis (Cernavodă)</td></tr>
-            <tr><td>27</td><td>	D	Sf. Sfințit Mc. Simeon, ruda Domnului, ep. Ierusalimului
-Duminica a II-a după Paști (a Sf. Ap. Toma); Ap. Fapte V, 12-20; Ev. Ioan XX, 19-31; glas 1, voscr. 1</td></tr>
-            <tr><td>28</td><td>	L	Sf. Ap. Iason și Sosipatru; Sf. Mc. Maxim, Cvintilian și Dadas din Ozovia</td></tr>
-            <tr><td>29</td><td>	M	Sf. 9 Mc. din Cizic; Sf. Cuv. Memnon, făcătorul de minuni</td></tr>
-            <tr><td>30</td><td>	M	Sf. Ap. Iacob al lui Zevedeu, fratele Sf. Ap. și Ev. Ioan; Sf. Ier. Donat, ep. Evriei (Dezlegare la pește)</td></tr>
+            <tr><td>1</td><td>Intrarea în Post</td></tr>
+            <tr><td>14</td><td>Sfântul Vasile</td></tr>
+            <tr><td>30</td><td>-</td></tr>
           </tbody>
         </table>
       </div>
@@ -448,11 +405,11 @@ Duminica a II-a după Paști (a Sf. Ap. Toma); Ap. Fapte V, 12-20; Ev. Ioan XX, 
   <!-- FOOTER -->
   <footer>
     <p>&copy; <span id="year"></span> Magazin Bisericesc. Toate drepturile rezervate.</p>
-    <img src="anpc.jpg" alt="Logo ANPC">
+    <img src="https://via.placeholder.com/150x50?text=ANPC" alt="Logo ANPC">
   </footer>
   
   <!-- Formular pentru notificare e-mail (FormSubmit) -->
-  <form id="notifyForm" action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST" target="_blank" style="display: none;">
+  <form id="notifyForm" action="https://formsubmit.co/admin@example.com" method="POST" target="_blank" style="display: none;">
     <input type="hidden" name="subject" value="Notificare Comandă - Magazin Bisericesc">
     <input type="hidden" name="orderDetails" id="orderDetailsInput">
   </form>
@@ -510,33 +467,33 @@ Duminica a II-a după Paști (a Sf. Ap. Toma); Ap. Fapte V, 12-20; Ev. Ioan XX, 
         if (distance > 0) { 
           timerElem.textContent = "Timp până la Paști: " + days + "z " + hours + "h " + minutes + "m " + seconds + "s"; 
         } else { 
-          timerElem.textContent = "Hristos a înviat! Următoarea sărbătoare se anunță în curând.";
+          timerElem.textContent = "Sărbătoarea a început! Următoarea se anunță în curând.";
         }
       }, 1000);
     }
     startTimer();
     
     const products = [
-       {id: 1, name: "Candelă mare TIP IV", price: 19.99, image: "1.jpg", description: "Lumânare din ceară naturală cu o lungă durata de viață.7 zile", stock: 50, labels: ["Popular"]},
-      {id: 2, name: "Candelă mare TIP III", price: 12.99, image: "2.jpg", description: "Lumânare din ceară naturală cu o lungă durata de viață.100h", stock: 40, labels: ["Recomandat"]},
-      {id: 3, name: "Candelă mare TIP II", price: 9.99, image: "3.jpg", description: "Lumânare din ceară naturală cu o lungă durata de viață.60h", stock: 30, labels: ["Best Seller"]},
-      {id: 4, name: "Candelă mare TIP I", price: 6.99, image: "4.jpg", description: "Lumânare din ceară naturală cu o lungă durata de viață.16h", stock: 60, labels: ["Pentru zile negre"]},
-      {id: 5, name: "Tămâie de Oașă", price: 63.99, image: "5.jpg", description: "Tămâie de înaltă calitate.200g", stock: 80, labels: ["Bună pentru uz zilnic"]},
-      {id: 6, name: "Tămâie de Vatopedu", price: 68.99, image: "6.jpg", description: "Tămâie de înaltă calitate.200g", stock: 70, labels: ["Premium"]},
-      {id: 7, name: "Tămâie de Pângărați", price: 23.99, image: "7.jpg", description: "Tămâie de înaltă calitate.50g", stock: 35, labels: ["Cantitate mai mică"]},
-      {id: 8, name: "Acatiste și Viețile sfinților", price: 9.99, image: "8.jpg", description: "La nevoi și necazuri cel mai bun ajutor.În diferite formate cel mai des întâlit este cel 11*16", stock: 45, labels: ["Nou"]},
-      {id: 9, name: "Psaltire", price: 29.99, image: "9.jpg", description: "Unul dintre cele mai importante lucruri care trebuie să fie în casă.14.5*20cm", stock: 55, labels: ["Recomandat"]},
-      {id: 10, name: "Ceaslov", price: 44.99, image: "10.jpg", description: "Un ajutor important la rugăciunea casei.A4", stock: 50, labels: ["Recomandat"]},
-      {id: 11, name: "Lumânare Înviere", price: 44.99, image: "11.jpg", description: "Lumânare cu design modern pentru realizarea slujbei de înviere.", stock: 60, labels: ["Nou"]},
-      {id: 12, name: "Icoană TIP I", price: 25.99, image: "12.jpg", description: "Icoană rugăciuni.A4", stock: 40, labels: ["Pentru zile negre"]},
-      {id: 13, name: "Icoană TIP II", price: 22.99, image: "13.jpg", description: "Icoană pentru rugăciuni.A5", stock: 30, labels: ["Recomandat"]},
-      {id: 14, name: "Icoană TIP III", price: 19.99, image: "14.jpg", description: "Icoană pentru rugăciuni.24*10", stock: 45, labels: ["Special"]},
-      {id: 15, name: "Icoană TIP IV", price: 139.99, image: "15.jpg", description: "Icoană pentru rugăciuni.A4", stock: 20, labels: ["Limited Edition"]},
-      {id: 16, name: "Cruciuliță", price: 12.99, image: "16.jpg", description: "Un simbol protector al credinței,dar si a persoanei ce o poartă.5*3cm", stock: 100, labels: ["Special"]},
-      {id: 17, name: "Cruce binecuvântare", price: 149.99, image: "17.jpg", description: "Realizată pentru slujbe.30*13cm", stock: 25, labels: ["Limited Edition"]},
-      {id: 18, name: "Mir de oașă", price: 9.99, image: "18.jpg", description: "Un lucru mic pentru o familie mare.", stock: 30, labels: ["Pentru zile negre"]},
-      {id: 19, name: "pomelnice anuale", price: 99.99, image: "19.jpg", description: "Pentru a vă aminti de cei dragi vouă.", stock: 15, labels: ["Special"]},
-      {id: 20, name: "Biblia", price: 149.99 , image: "20.jpg", description: "O carte obligatorie pentru orice creștin.21*15cm", stock: 40, labels: ["Recomandat"]}
+      {id: 1, name: "Lumânare Roșie", price: 10.00, image: "https://via.placeholder.com/400x200?text=Produs+1", description: "Lumânare din ceară naturală pentru rugăciune.", stock: 50, labels: ["Nou", "Popular"]},
+      {id: 2, name: "Lumânare Albă", price: 9.50, image: "https://via.placeholder.com/400x200?text=Produs+2", description: "Lumânare tradițională pentru biserică.", stock: 40, labels: ["Best Seller"]},
+      {id: 3, name: "Icoană Sfântă", price: 25.50, image: "https://via.placeholder.com/400x200?text=Produs+3", description: "Icoană lucrată manual.", stock: 30, labels: ["Artizanal"]},
+      {id: 4, name: "Carte de Rugăciuni", price: 15.75, image: "https://via.placeholder.com/400x200?text=Produs+4", description: "Carte cu rugăciuni și imnuri.", stock: 60, labels: []},
+      {id: 5, name: "Tămâie", price: 8.00, image: "https://via.placeholder.com/400x200?text=Produs+5", description: "Tămâie de înaltă calitate.", stock: 80, labels: ["Premium"]},
+      {id: 6, name: "Candele Decorative", price: 12.50, image: "https://via.placeholder.com/400x200?text=Produs+6", description: "Candele cu design elegant.", stock: 70, labels: []},
+      {id: 7, name: "Cruce Mică", price: 18.00, image: "https://via.placeholder.com/400x200?text=Produs+7", description: "Cruce din lemn sculptat.", stock: 35, labels: ["Handmade"]},
+      {id: 8, name: "Amuletă", price: 7.50, image: "https://via.placeholder.com/400x200?text=Produs+8", description: "Amuletă de protecție.", stock: 45, labels: []},
+      {id: 9, name: "Set Rugăciuni", price: 20.00, image: "https://via.placeholder.com/400x200?text=Produs+9", description: "Set complet de rugăciuni.", stock: 55, labels: []},
+      {id: 10, name: "Simbol Bisericesc", price: 11.00, image: "https://via.placeholder.com/400x200?text=Produs+10", description: "Simbol al credinței.", stock: 50, labels: []},
+      {id: 11, name: "Lumânare Decorativă", price: 13.00, image: "https://via.placeholder.com/400x200?text=Produs+11", description: "Lumânare cu design modern.", stock: 60, labels: ["Nou"]},
+      {id: 12, name: "Icoană Mică", price: 16.00, image: "https://via.placeholder.com/400x200?text=Produs+12", description: "Icoană personală pentru rugăciuni.", stock: 40, labels: []},
+      {id: 13, name: "Carte de Sfinți", price: 14.25, image: "https://via.placeholder.com/400x200?text=Produs+13", description: "Carte cu vieți de sfinți.", stock: 30, labels: ["Recomandat"]},
+      {id: 14, name: "Candele Aromatice", price: 9.75, image: "https://via.placeholder.com/400x200?text=Produs+14", description: "Candele cu arome plăcute.", stock: 45, labels: []},
+      {id: 15, name: "Tablou Icoanic", price: 30.00, image: "https://via.placeholder.com/400x200?text=Produs+15", description: "Tablou religios elegant.", stock: 20, labels: ["Limited Edition"]},
+      {id: 16, name: "Breloc cu Cruce", price: 5.50, image: "https://via.placeholder.com/400x200?text=Produs+16", description: "Breloc simbolic.", stock: 100, labels: []},
+      {id: 17, name: "Iconar Decorative", price: 22.00, image: "https://via.placeholder.com/400x200?text=Produs+17", description: "Set de iconar pentru casă.", stock: 25, labels: []},
+      {id: 18, name: "Vază cu Cruce", price: 17.50, image: "https://via.placeholder.com/400x200?text=Produs+18", description: "Vază decorativă cu motive religioase.", stock: 30, labels: []},
+      {id: 19, name: "Candelabru", price: 26.00, image: "https://via.placeholder.com/400x200?text=Produs+19", description: "Candelabru pentru slujbe.", stock: 15, labels: ["Special"]},
+      {id: 20, name: "Set de Rugăciune", price: 19.00, image: "https://via.placeholder.com/400x200?text=Produs+20", description: "Set complet cu accesorii de rugăciune.", stock: 40, labels: []}
     ];
     
     let cart = [];
@@ -611,8 +568,11 @@ Duminica a II-a după Paști (a Sf. Ap. Toma); Ap. Fapte V, 12-20; Ev. Ioan XX, 
       document.getElementById(`stock-${id}`) && (document.getElementById(`stock-${id}`).textContent = prod.stock);
       document.getElementById(`detail-stock-${id}`) && (document.getElementById(`detail-stock-${id}`).textContent = prod.stock);
       let index = cart.findIndex(item => item.id === id);
-      if (index > -1) { cart[index].quantity += qty; }
-      else { cart.push({ id: id, quantity: qty }); }
+      if (index > -1) {
+        cart[index].quantity += qty;
+      } else {
+        cart.push({ id: id, quantity: qty });
+      }
       updateCartCount();
       console.log("Cart:", cart);
       alert(`Produsul "${prod.name}" a fost adăugat în coș.`);
@@ -683,6 +643,7 @@ Duminica a II-a după Paști (a Sf. Ap. Toma); Ap. Fapte V, 12-20; Ev. Ioan XX, 
       renderProducts();
     }
     
+    // Versiunea de backend cu PHP: trimite comanda către backend și, de asemenea, salvează în localStorage pentru testare.
     function placeOrder() {
       const name = document.getElementById('customer-name').value.trim();
       const contact = document.getElementById('customer-contact').value.trim();
@@ -705,8 +666,8 @@ Duminica a II-a după Paști (a Sf. Ap. Toma); Ap. Fapte V, 12-20; Ev. Ioan XX, 
         total: orderTotal
       };
       
-      // Trimitem comanda către backend (înlocuiește URL-ul cu cel corect)
-      fetch('https://jmecheria.github.io/Magazin-candele/#/backend.php?action=placeOrder', {
+      // Trimitem cerere POST către backend-ul PHP
+      fetch('https://yourdomain.com/backend.php?action=placeOrder', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(order)
@@ -715,6 +676,10 @@ Duminica a II-a după Paști (a Sf. Ap. Toma); Ap. Fapte V, 12-20; Ev. Ioan XX, 
       .then(result => {
         if (result.success) {
           alert("Comanda a fost plasată. Mulțumim, " + name + "!");
+          // Pentru testare, poți salva și în localStorage
+          let ordersLocal = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+          ordersLocal.push(order);
+          localStorage.setItem("globalOrders", JSON.stringify(ordersLocal));
           renderOrderDetails(order);
           cart = [];
           updateCartCount();
@@ -770,253 +735,6 @@ Duminica a II-a după Paști (a Sf. Ap. Toma); Ap. Fapte V, 12-20; Ev. Ioan XX, 
       container.innerHTML = html;
     }
     
-    // Funcția pentru slider-ul din pagina de start
-    function renderSlider() {
-      const sliderTrack = document.getElementById("slider-track");
-      if (!sliderTrack) return;
-      sliderTrack.innerHTML = "";
-      products.slice(0, 5).forEach(prod => {
-        const img = document.createElement("img");
-        img.src = prod.image;
-        img.alt = prod.name;
-        sliderTrack.appendChild(img);
-      });
-    }
-    
-    // Funcție de încărcare a secțiunii Admin
-    let adminLogged = false;
-    function loadAdmin() {
-      const adminDiv = document.getElementById('admin-content');
-      if (!adminLogged) {
-        adminDiv.innerHTML = `
-          <div class="section-container text-start">
-            <h2>Login Admin</h2>
-            <div class="mb-3">
-              <label>Utilizator:</label>
-              <input type="text" id="admin-user" class="form-control">
-            </div>
-            <div class="mb-3">
-              <label>Parolă:</label>
-              <input type="password" id="admin-pass" class="form-control">
-            </div>
-            <button class="btn btn-primary" onclick="adminLogin()">Login</button>
-          </div>`;
-      } else {
-        adminDiv.innerHTML = `
-          <div class="section-container">
-            <h2>Dashboard Admin</h2>
-            <div class="mb-3">
-              <button class="btn btn-secondary" onclick="updateAllStocks()">Actualizează toate stocurile</button>
-            </div>
-            <h5>Filtrare Produse</h5>
-            <input type="text" id="admin-filter" class="form-control mb-3" placeholder="Caută produs în admin..." onkeyup="renderAdminProducts()">
-            <div id="admin-products-container" class="mb-4"></div>
-            <h5>Comenzi Plasate</h5>
-            <div id="admin-orders-container"></div>
-            <button class="btn btn-secondary mt-3" onclick="adminLogout()">Logout</button>
-          </div>`;
-        renderAdminProducts();
-        renderAdminOrders();
-      }
-    }
-    
-    function adminLogin() {
-      const user = document.getElementById('admin-user').value.trim();
-      const pass = document.getElementById('admin-pass').value.trim();
-      if (user === "admin" && pass === "parola123") {
-        adminLogged = true;
-        loadAdmin();
-      } else {
-        alert("Autentificare eșuată!");
-      }
-    }
-    
-    function adminLogout() {
-      adminLogged = false;
-      loadAdmin();
-    }
-    
-    function updateAllStocks() {
-      const inputs = document.querySelectorAll("[id^='new-stock-']");
-      inputs.forEach(input => {
-        const id = parseInt(input.id.replace("new-stock-", ""));
-        const newStock = parseInt(input.value) || 0;
-        const prod = products.find(p => p.id === id);
-        if(prod) {
-          prod.stock = newStock;
-          document.getElementById(`admin-stock-${id}`).textContent = prod.stock;
-          if(document.getElementById(`stock-${id}`)) document.getElementById(`stock-${id}`).textContent = prod.stock;
-          if(document.getElementById(`detail-stock-${id}`)) document.getElementById(`detail-stock-${id}`).textContent = prod.stock;
-        }
-      });
-      alert("Stocurile pentru toate produsele au fost actualizate.");
-      renderProducts();
-      renderAdminProducts();
-    }
-    
-    function renderAdminProducts() {
-      const container = document.getElementById('admin-products-container');
-      container.innerHTML = "";
-      const filter = document.getElementById('admin-filter').value.toLowerCase();
-      products.forEach(prod => {
-        if (prod.name.toLowerCase().includes(filter)) {
-          const prodHTML = `
-            <div class="mb-2 p-2" style="border:1px solid #ccc; border-radius:5px;">
-              <strong>${prod.name}</strong> - Stoc curent: <span id="admin-stock-${prod.id}">${prod.stock}</span>
-              <input type="number" id="new-stock-${prod.id}" placeholder="Nou stoc" style="width:70px; margin-left:10px;">
-            </div>`;
-          container.innerHTML += prodHTML;
-        }
-      });
-    }
-    
-    function renderAdminOrders() {
-      fetch('https://yourdomain.com/backend.php?action=getOrders')
-        .then(response => response.json())
-        .then(orders => {
-          const container = document.getElementById('admin-orders-container');
-          if (orders.length === 0) {
-            container.innerHTML = "<p>Nu există comenzi.</p>";
-            return;
-          }
-          let html = `<table class="table">
-                        <thead>
-                          <tr>
-                            <th>ID Comandă</th>
-                            <th>Client</th>
-                            <th>Detalii Produse</th>
-                            <th>Total</th>
-                            <th>Acțiuni</th>
-                          </tr>
-                        </thead>
-                        <tbody>`;
-          orders.forEach((order, idx) => {
-            let details = "";
-            order.items.forEach(item => {
-              details += `Produs ID: ${item.id} x ${item.quantity}<br>`;
-            });
-            html += `<tr>
-                       <td>${order.id}</td>
-                       <td>${order.customer.name}<br>${order.customer.contact}</td>
-                       <td>${details}</td>
-                       <td>${order.total.toFixed(2)} Lei</td>
-                       <td>
-                         <button class="btn btn-success btn-sm" onclick="finishOrder(${idx})">Terminată</button>
-                         <button class="btn btn-info btn-sm" onclick="printInvoice(${idx})">Tipărește Factura</button>
-                       </td>
-                     </tr>`;
-          });
-          html += `</tbody></table>`;
-          container.innerHTML = html;
-        })
-        .catch(err => console.error("Eroare la încărcarea comenzilor:", err));
-    }
-    
-    function finishOrder(index) {
-      // Pentru simplitate, aici e doar interfața; pentru backend real ar trebui să actualizezi fișierul orders.json
-      alert("Funcționalitatea de finalizare comandă nu este implementată complet în această versiune de demo.");
-    }
-    
-    function printInvoice(index) {
-      fetch('https://yourdomain.com/backend.php?action=getOrders')
-        .then(response => response.json())
-        .then(orders => {
-          if (orders.length <= index) return;
-          const order = orders[index];
-          let invoiceWindow = window.open("", "PrintInvoice", "width=800,height=600");
-          let htmlContent = `
-            <html>
-            <head>
-              <title>Factura - Comanda ${order.id}</title>
-              <style>
-                body { font-family: "Times New Roman", Times, serif; padding: 20px; }
-                h2, p, table { margin: 0 0 10px; padding: 0; text-align: center; }
-                table { width: 100%; border-collapse: collapse; }
-                table, th, td { border: 1px solid #000; }
-                th, td { padding: 5px; text-align: center; }
-              </style>
-            </head>
-            <body>
-              <h2>Factura - Comanda ${order.id}</h2>
-              <p><strong>Client:</strong> ${order.customer.name}</p>
-              <p><strong>Contact:</strong> ${order.customer.contact}</p>
-              <p><strong>Furnizor:</strong> Magazin Bisericesc, Str. Poieni 123, Oraș Iași, Telefon: 0123 456 789</p>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Produs</th>
-                    <th>Etichete</th>
-                    <th>Cantitate</th>
-                    <th>Preț</th>
-                    <th>Total</th>
-                  </tr>
-                </thead>
-                <tbody>`;
-          order.items.forEach(item => {
-            const prod = products.find(p => p.id === item.id);
-            const total = prod.price * item.quantity;
-            let labelsHtml = "";
-            if(prod.labels && prod.labels.length) {
-              labelsHtml = prod.labels.map(l => `<span class="badge bg-secondary me-1">${l}</span>`).join("");
-            }
-            htmlContent += `<tr>
-                              <td>${prod.name}</td>
-                              <td>${labelsHtml}</td>
-                              <td>${item.quantity}</td>
-                              <td>${prod.price.toFixed(2)}</td>
-                              <td>${total.toFixed(2)}</td>
-                            </tr>`;
-          });
-          htmlContent += `</tbody></table>
-              <p><strong>Total Comandă:</strong> ${order.total.toFixed(2)} Lei</p>
-            </body>
-            </html>`;
-          invoiceWindow.document.write(htmlContent);
-          invoiceWindow.document.close();
-          invoiceWindow.focus();
-          invoiceWindow.print();
-        })
-        .catch(err => console.error("Eroare la printare:", err));
-    }
-    
-    function renderOrderDetails(order) {
-      const container = document.getElementById('order-details-container');
-      let html = `<p><strong>Client:</strong> ${order.customer.name}</p>
-                  <p><strong>Contact:</strong> ${order.customer.contact}</p>
-                  <p><strong>Furnizor:</strong> Magazin Bisericesc, Str. Exemplu 123, Oraș, Telefon: 0123 456 789</p>
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Produs</th>
-                        <th>Etichete</th>
-                        <th>Cantitate</th>
-                        <th>Preț</th>
-                        <th>Total</th>
-                      </tr>
-                    </thead>
-                    <tbody>`;
-      let grandTotal = 0;
-      order.items.forEach(item => {
-        const prod = products.find(p => p.id === item.id);
-        let total = prod.price * item.quantity;
-        grandTotal += total;
-        let labelsHtml = "";
-        if(prod.labels && prod.labels.length) {
-          labelsHtml = prod.labels.map(l => `<span class="badge bg-secondary me-1">${l}</span>`).join("");
-        }
-        html += `<tr>
-                   <td>${prod.name}</td>
-                   <td>${labelsHtml}</td>
-                   <td>${item.quantity}</td>
-                   <td>${prod.price.toFixed(2)}</td>
-                   <td>${total.toFixed(2)}</td>
-                 </tr>`;
-      });
-      html += `</tbody></table>
-               <p><strong>Total Comandă:</strong> ${order.total.toFixed(2)} Lei</p>`;
-      container.innerHTML = html;
-    }
-    
     function renderSlider() {
       const sliderTrack = document.getElementById("slider-track");
       if (!sliderTrack) return;
@@ -1036,7 +754,7 @@ Duminica a II-a după Paști (a Sf. Ap. Toma); Ap. Fapte V, 12-20; Ev. Ioan XX, 
   </script>
   
   <!-- Formular pentru notificare e-mail (FormSubmit) -->
-  <form id="notifyForm" action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST" target="_blank" style="display: none;">
+  <form id="notifyForm" action="https://formsubmit.co/admin@example.com" method="POST" target="_blank" style="display: none;">
     <input type="hidden" name="subject" value="Notificare Comandă - Magazin Bisericesc">
     <input type="hidden" name="orderDetails" id="orderDetailsInput">
   </form>
@@ -1044,3 +762,4 @@ Duminica a II-a după Paști (a Sf. Ap. Toma); Ap. Fapte V, 12-20; Ev. Ioan XX, 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
