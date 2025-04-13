@@ -7,15 +7,16 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    /* Container pentru secțiuni – tabel cu bordură roșie și colțuri rotunjite */
+    /* Container pentru secțiuni – aspect de tabel cu bordură roșie și colțuri rotunjite */
     .section-container {
       border: 1px solid #a30000;
       border-radius: 8px;
       padding: 15px;
       margin-bottom: 20px;
       background-color: #fff;
+      text-align: center;
     }
-    /* Stil pentru tabele */
+    /* Stil pentru tabele: bordură vizibilă și celule aliniate */
     table.table {
       border: 1px solid #a30000;
       border-collapse: collapse;
@@ -41,6 +42,7 @@
       display: flex;
       gap: 15px;
       flex-wrap: wrap;
+      justify-content: center;
     }
     nav ul li a {
       color: #fff;
@@ -73,13 +75,15 @@
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
+    /* Titlurile secțiunilor centrate */
     .section-container h2 {
       border-bottom: 2px solid #a30000;
       color: #a30000;
       padding-bottom: 5px;
       margin-bottom: 10px;
+      text-align: center;
     }
-    /* Tranziție între pagini */
+    /* Tranziție între pagini (fade) */
     .page {
       opacity: 0;
       transition: opacity 0.5s ease;
@@ -97,6 +101,7 @@
       flex-direction: column;
       justify-content: space-between;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
     }
     .product-card:hover {
       transform: scale(1.05);
@@ -116,7 +121,7 @@
       text-align: center;
       height: 38px;
     }
-    /* Stil personalizat pentru butonul "Adaugă în Coș" */
+    /* Stil pentru butonul "Adaugă în Coș" */
     .add-cart-btn {
       border: 1px solid #a30000;
       background-color: #a30000;
@@ -129,10 +134,7 @@
     .add-cart-btn:hover {
       background-color: #7a0000;
     }
-    /* Butoanele din modal (detalii produs) folosesc aceleași clase pentru consistență */
-    /* Inputul de cantitate și butonul din modal pot reutiliza clasele .quantity-input și .add-cart-btn */
-    
-    #filter-input { max-width: 400px; margin-bottom: 20px; }
+    #filter-input { max-width: 400px; margin-bottom: 20px; margin-left: auto; margin-right: auto; }
     footer { text-align: center; }
     /* Slider pe pagina de start */
     .slider-container {
@@ -147,7 +149,6 @@
       width: max-content;
       animation: slide 20s linear infinite;
     }
-    /* Imaginile din slider: dimensiuni fixe */
     .slider-track img {
       width: 250px;
       height: 150px;
@@ -163,6 +164,7 @@
       font-size: 1.1rem;
       line-height: 1.6;
       color: #333;
+      text-align: center;
     }
     button {
       transition: transform 0.1s ease, background-color 0.2s ease;
@@ -186,7 +188,7 @@
       transition: background-color 0.3s ease;
     }
     #backToTop:hover { background: #7a0000; }
-    /* Factură – Times New Roman */
+    /* Stil pentru fereastra de factură – Times New Roman */
     .invoice {
       max-width: 800px;
       margin: 20px auto;
@@ -196,6 +198,7 @@
     .invoice h2, .invoice p, .invoice table {
       margin: 0 0 10px;
       padding: 0;
+      text-align: center;
     }
     .invoice table {
       width: 100%;
@@ -204,7 +207,7 @@
     .invoice table, .invoice table th, .invoice table td {
       border: 1px solid #000;
     }
-    .invoice table th, .invoice table td { padding: 5px; text-align: left; }
+    .invoice table th, .invoice table td { padding: 5px; text-align: center; }
     /* Responsive */
     @media (max-width: 768px) {
       nav ul { justify-content: center; }
@@ -230,7 +233,7 @@
         <li><a onclick="navigateTo('admin')">Admin</a></li>
       </ul>
     </nav>
-    <!-- Iconiță coș -->
+    <!-- Iconița de coș -->
     <div class="cart-icon" onclick="navigateTo('cos')">
       <img src="https://via.placeholder.com/24?text=🛒" alt="Coș">
       <span class="badge" id="cart-count">0</span>
@@ -399,7 +402,7 @@
   
   <!-- JAVASCRIPT -->
   <script>
-    // Tranziție între pagini (fade)
+    // Funcție de tranziție între pagini (fade)
     function navigateTo(pageId) {
       const current = document.querySelector('.active-page');
       if (current) {
@@ -420,7 +423,7 @@
       if (pageId === 'produse') fetchProductsFromBackend();
     }
     
-    // Back to Top
+    // Buton Back to Top
     window.onscroll = function() { scrollFunction(); };
     function scrollFunction() {
       const btn = document.getElementById("backToTop");
@@ -500,7 +503,7 @@
                 ${ prod.labels && prod.labels.length ? `<p>${prod.labels.map(l => `<span class="badge bg-info text-dark me-1">${l}</span>`).join("")}</p>` : "" }
               </div>
               <div class="p-2">
-                <div class="input-group" style="max-width:160px;">
+                <div class="input-group" style="max-width:160px; margin: auto;">
                   <input type="number" id="qty-${prod.id}" value="1" min="1" class="form-control quantity-input">
                   <button class="btn btn-danger btn-sm add-cart-btn" onclick="addToCart(${prod.id}, 'list')">Adaugă în Coș</button>
                 </div>
@@ -532,7 +535,7 @@
             ${labelsHtml ? `<p>${labelsHtml}</p>` : ""}
             <p><strong>Preț:</strong> ${prod.price.toFixed(2)} Lei</p>
             <p><strong>Stoc disponibil:</strong> <span id="detail-stock-${prod.id}">${prod.stock}</span></p>
-            <div class="input-group" style="max-width:160px;">
+            <div class="input-group" style="max-width:160px; margin: auto;">
               <input type="number" id="detail-qty-${prod.id}" value="1" min="1" class="form-control quantity-input">
               <button class="btn btn-danger add-cart-btn" onclick="addToCart(${prod.id}, 'detail')">Adaugă în Coș</button>
             </div>
@@ -654,230 +657,6 @@
       document.getElementById('customer-contact').value = "";
       renderProducts();
       navigateTo('order-details');
-    }
-    
-    function renderOrderDetails(order) {
-      const container = document.getElementById('order-details-container');
-      let html = `<p><strong>Client:</strong> ${order.customer.name}</p>
-                  <p><strong>Contact:</strong> ${order.customer.contact}</p>
-                  <p><strong>Furnizor:</strong> Magazin Bisericesc, Str. Exemplu 123, Oraș, Telefon: 0123 456 789</p>
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Produs</th>
-                        <th>Etichete</th>
-                        <th>Cantitate</th>
-                        <th>Preț</th>
-                        <th>Total</th>
-                      </tr>
-                    </thead>
-                    <tbody>`;
-      let grandTotal = 0;
-      order.items.forEach(item => {
-        const prod = products.find(p => p.id === item.id);
-        let total = prod.price * item.quantity;
-        grandTotal += total;
-        let labelsHtml = "";
-        if(prod.labels && prod.labels.length) {
-          labelsHtml = prod.labels.map(l => `<span class="badge bg-secondary me-1">${l}</span>`).join("");
-        }
-        html += `<tr>
-                   <td>${prod.name}</td>
-                   <td>${labelsHtml}</td>
-                   <td>${item.quantity}</td>
-                   <td>${prod.price.toFixed(2)}</td>
-                   <td>${total.toFixed(2)}</td>
-                 </tr>`;
-      });
-      html += `</tbody></table>
-               <p><strong>Total Comandă:</strong> ${order.total.toFixed(2)} Lei</p>`;
-      container.innerHTML = html;
-    }
-    
-    /* ---- Funcționalități Admin ---- */
-    let adminLogged = false;
-    function loadAdmin() {
-      const adminDiv = document.getElementById('admin-content');
-      if (!adminLogged) {
-        adminDiv.innerHTML = `
-          <div class="section-container">
-            <h2>Login Admin</h2>
-            <div class="mb-3">
-              <label>Utilizator:</label>
-              <input type="text" id="admin-user" class="form-control">
-            </div>
-            <div class="mb-3">
-              <label>Parolă:</label>
-              <input type="password" id="admin-pass" class="form-control">
-            </div>
-            <button class="btn btn-primary" onclick="adminLogin()">Login</button>
-          </div>`;
-      } else {
-        adminDiv.innerHTML = `
-          <div class="section-container">
-            <h2>Dashboard Admin</h2>
-            <div class="mb-3">
-              <button class="btn btn-secondary" onclick="updateAllStocks()">Actualizează toate stocurile</button>
-            </div>
-            <h5>Filtrare Produse</h5>
-            <input type="text" id="admin-filter" class="form-control mb-3" placeholder="Caută produs în admin..." onkeyup="renderAdminProducts()">
-            <div id="admin-products-container" class="mb-4"></div>
-            <h5>Comenzi Plasate</h5>
-            <div id="admin-orders-container"></div>
-            <button class="btn btn-secondary mt-3" onclick="adminLogout()">Logout</button>
-          </div>`;
-        renderAdminProducts();
-        renderAdminOrders();
-      }
-    }
-    
-    function adminLogin() {
-      const user = document.getElementById('admin-user').value.trim();
-      const pass = document.getElementById('admin-pass').value.trim();
-      if (user === "admin" && pass === "parola123") { adminLogged = true; loadAdmin(); }
-      else { alert("Autentificare eșuată!"); }
-    }
-    
-    function adminLogout() { adminLogged = false; loadAdmin(); }
-    
-    function updateAllStocks() {
-      const inputs = document.querySelectorAll("[id^='new-stock-']");
-      inputs.forEach(input => {
-        const id = parseInt(input.id.replace("new-stock-", ""));
-        const newStock = parseInt(input.value) || 0;
-        const prod = products.find(p => p.id === id);
-        if(prod) {
-          prod.stock = newStock;
-          document.getElementById(`admin-stock-${id}`).textContent = prod.stock;
-          if(document.getElementById(`stock-${id}`)) document.getElementById(`stock-${id}`).textContent = prod.stock;
-          if(document.getElementById(`detail-stock-${id}`)) document.getElementById(`detail-stock-${id}`).textContent = prod.stock;
-        }
-      });
-      alert("Stocurile pentru toate produsele au fost actualizate.");
-      renderProducts();
-      renderAdminProducts();
-    }
-    
-    function renderAdminProducts() {
-      const container = document.getElementById('admin-products-container');
-      container.innerHTML = "";
-      const filter = document.getElementById('admin-filter').value.toLowerCase();
-      products.forEach(prod => {
-        if (prod.name.toLowerCase().includes(filter)) {
-          const prodHTML = `
-            <div class="mb-2 p-2" style="border:1px solid #ccc; border-radius:5px;">
-              <strong>${prod.name}</strong> - Stoc curent: <span id="admin-stock-${prod.id}">${prod.stock}</span>
-              <input type="number" id="new-stock-${prod.id}" placeholder="Nou stoc" style="width:70px; margin-left:10px;">
-            </div>`;
-          container.innerHTML += prodHTML;
-        }
-      });
-    }
-    
-    function renderAdminOrders() {
-      const orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
-      const container = document.getElementById('admin-orders-container');
-      if (orders.length === 0) { container.innerHTML = "<p>Nu există comenzi.</p>"; return; }
-      let html = `<table class="table">
-                    <thead>
-                      <tr>
-                        <th>ID Comandă</th>
-                        <th>Client</th>
-                        <th>Detalii Produse</th>
-                        <th>Total</th>
-                        <th>Acțiuni</th>
-                      </tr>
-                    </thead>
-                    <tbody>`;
-      orders.forEach((order, idx) => {
-        let details = "";
-        order.items.forEach(item => {
-          const prod = products.find(p => p.id === item.id);
-          let labelsHtml = "";
-          if(prod.labels && prod.labels.length) {
-            labelsHtml = prod.labels.map(l => `<span class="badge bg-secondary me-1">${l}</span>`).join("");
-          }
-          details += prod.name + " " + labelsHtml + " x " + item.quantity + "<br>";
-        });
-        html += `<tr>
-                   <td>${order.id}</td>
-                   <td>${order.customer.name}<br>${order.customer.contact}</td>
-                   <td>${details}</td>
-                   <td>${order.total.toFixed(2)} Lei</td>
-                   <td>
-                     <button class="btn btn-success btn-sm" onclick="finishOrder(${idx})">Terminată</button>
-                     <button class="btn btn-info btn-sm" onclick="printInvoice(${idx})">Tipărește Factura</button>
-                   </td>
-                 </tr>`;
-      });
-      html += `</tbody></table>`;
-      container.innerHTML = html;
-    }
-    
-    function finishOrder(index) {
-      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
-      orders.splice(index, 1);
-      localStorage.setItem("globalOrders", JSON.stringify(orders));
-      alert("Comanda a fost finalizată.");
-      renderAdminOrders();
-    }
-    
-    function printInvoice(index) {
-      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
-      if (orders.length <= index) return;
-      const order = orders[index];
-      let invoiceWindow = window.open("", "PrintInvoice", "width=800,height=600");
-      let htmlContent = `
-        <html>
-        <head>
-          <title>Factura - Comanda ${order.id}</title>
-          <style>
-            body { font-family: "Times New Roman", Times, serif; padding: 20px; }
-            h2, p, table { margin: 0 0 10px; padding: 0; }
-            table { width: 100%; border-collapse: collapse; }
-            table, th, td { border: 1px solid #000; }
-            th, td { padding: 5px; text-align: left; }
-          </style>
-        </head>
-        <body>
-          <h2>Factura - Comanda ${order.id}</h2>
-          <p><strong>Client:</strong> ${order.customer.name}</p>
-          <p><strong>Contact:</strong> ${order.customer.contact}</p>
-          <p><strong>Furnizor:</strong> Magazin Bisericesc, Str. Exemplu 123, Oraș, Telefon: 0123 456 789</p>
-          <table>
-            <thead>
-              <tr>
-                <th>Produs</th>
-                <th>Etichete</th>
-                <th>Cantitate</th>
-                <th>Preț</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>`;
-      order.items.forEach(item => {
-        const prod = products.find(p => p.id === item.id);
-        const total = prod.price * item.quantity;
-        let labelsHtml = "";
-        if(prod.labels && prod.labels.length) {
-          labelsHtml = prod.labels.map(l => `<span class="badge bg-secondary me-1">${l}</span>`).join("");
-        }
-        htmlContent += `<tr>
-                          <td>${prod.name}</td>
-                          <td>${labelsHtml}</td>
-                          <td>${item.quantity}</td>
-                          <td>${prod.price.toFixed(2)}</td>
-                          <td>${total.toFixed(2)}</td>
-                        </tr>`;
-      });
-      htmlContent += `</tbody></table>
-          <p><strong>Total Comandă:</strong> ${order.total.toFixed(2)} Lei</p>
-        </body>
-        </html>`;
-      invoiceWindow.document.write(htmlContent);
-      invoiceWindow.document.close();
-      invoiceWindow.focus();
-      invoiceWindow.print();
     }
     
     function renderOrderDetails(order) {
