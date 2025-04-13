@@ -7,13 +7,23 @@
   <!-- Bootstrap pentru stilizare rapidă -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    /* HEADER și FOOTER cu gradient de roșu închis */
+    /* Container pentru fiecare secțiune (formă de tabel cu colțuri rotunjite și bordură roșie) */
+    .section-container {
+      border: 1px solid #a30000;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      background-color: #fff;
+    }
+    /* HEADER și FOOTER */
     header, footer {
       background: linear-gradient(135deg, #500000, #a30000);
       color: #fff;
       padding: 10px 20px;
     }
     header img.logo { height: 50px; }
+    /* Actualizare logo ANPC la 150x50 */
+    footer img { height: 50px; }
     nav ul {
       list-style: none;
       margin: 0;
@@ -22,7 +32,7 @@
       gap: 15px;
       flex-wrap: wrap;
     }
-    /* Am eliminat textul "Coș" din meniu, păstrând doar iconița */
+    /* Eliminat textul „Coș” – se păstrează doar iconița */
     nav ul li a {
       color: #fff;
       font-weight: bold;
@@ -45,7 +55,7 @@
       padding: 2px 6px;
       font-size: 0.8rem;
     }
-    /* Container principal – aspect modern */
+    /* Container principal */
     .main-container {
       background-color: #fff;
       margin: 20px auto;
@@ -54,23 +64,17 @@
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    /* Delimitarea secțiunilor cu o linie roșie subțire */
-    section {
-      border-top: 3px solid #a30000;
-      padding-top: 20px;
-      margin-top: 20px;
-    }
-    /* Tranziție între pagini (fade in/out) */
+    /* Fiecare secțiune - învelită într-un container cu stil tabel */
+    section { padding: 10px; }
+    .section-container h2 { background-color: #a30000; color: #fff; padding: 5px; border-radius: 4px; }
+    /* Tranziție între pagini */
     .page {
       opacity: 0;
       transition: opacity 0.5s ease;
       display: none;
     }
-    .page.active-page {
-      display: block;
-      opacity: 1;
-    }
-    /* Carduri pentru produse – uniforme și cu efect de scaling */
+    .page.active-page { display: block; opacity: 1; }
+    /* Carduri produse */
     .product-card {
       border: 1px solid #ccc;
       border-radius: 5px;
@@ -92,20 +96,12 @@
       object-fit: cover;
       cursor: pointer;
     }
-    .product-card .card-body {
-      padding: 15px;
-      flex-grow: 1;
-    }
-    /* Butonul de "Adaugă în Coș" lărgit */
-    .add-cart-btn {
-      width: 100%;
-    }
-    #filter-input {
-      max-width: 400px;
-      margin-bottom: 20px;
-    }
+    .product-card .card-body { padding: 15px; flex-grow: 1; }
+    /* Butonul de adăugare în coș lărgit */
+    .add-cart-btn { width: 100%; }
+    #filter-input { max-width: 400px; margin-bottom: 20px; }
     footer { text-align: center; }
-    /* Slider pe pagina de start – produse ușor transparente */
+    /* Slider transparent în pagina de start */
     .slider-container {
       overflow: hidden;
       position: relative;
@@ -128,13 +124,13 @@
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
-    /* Stil text atractiv pentru Despre noi și Termeni */
+    /* Stil text atractiv pentru secțiuni */
     .attractive-text {
       font-size: 1.1rem;
       line-height: 1.6;
       color: #333;
     }
-    /* Butoane – efect de transformare la click */
+    /* Butoane – efect la click */
     button {
       transition: transform 0.1s ease, background-color 0.2s ease;
     }
@@ -157,7 +153,7 @@
       transition: background-color 0.3s ease;
     }
     #backToTop:hover { background: #7a0000; }
-    /* Stil pentru fereastra de factură – folosim Times New Roman */
+    /* Stil pentru fereastra de factură – Times New Roman */
     .invoice {
       max-width: 800px;
       margin: 20px auto;
@@ -175,10 +171,7 @@
     .invoice table, .invoice table th, .invoice table td {
       border: 1px solid #000;
     }
-    .invoice table th, .invoice table td {
-      padding: 5px;
-      text-align: left;
-    }
+    .invoice table th, .invoice table td { padding: 5px; text-align: left; }
     /* Responsive */
     @media (max-width: 768px) {
       nav ul { justify-content: center; }
@@ -191,7 +184,7 @@
   <!-- HEADER -->
   <header class="d-flex justify-content-between align-items-center flex-wrap">
     <div class="d-flex align-items-center">
-      <img src="logo.jpg" alt="Logo" class="logo me-2">
+      <img src="https://via.placeholder.com/150x50?text=Logo" alt="Logo" class="logo me-2">
       <span class="fs-4">Magazin Bisericesc</span>
     </div>
     <nav>
@@ -206,7 +199,7 @@
     </nav>
     <!-- Păstrăm doar iconița de coș -->
     <div class="cart-icon" onclick="navigateTo('cos')">
-      <img src="cos.jpg" alt="Coș">
+      <img src="https://via.placeholder.com/24?text=🛒" alt="Coș">
       <span class="badge" id="cart-count">0</span>
     </div>
   </header>
@@ -220,100 +213,118 @@
   <main class="main-container" id="content">
     <!-- Pagina de start -->
     <section id="home" class="page active-page">
-      <div class="text-center py-5">
-        <h1>Bine ați venit la Magazinul Bisericesc</h1>
-        <p>Descoperă produsele noastre pentru momente de spiritualitate!</p>
-        <!-- Butonul duce la Produse, dar în spate slider-ul este vizibil -->
-        <button class="btn btn-dark mb-3" onclick="navigateTo('produse')">Vezi produsele</button>
-        <div class="slider-container">
-          <div class="slider-track" id="slider-track"></div>
+      <div class="section-container">
+        <h2>Bine ați venit la Magazinul Bisericesc</h2>
+        <div class="text-center py-3">
+          <p>Descoperă produsele noastre pentru momente de spiritualitate!</p>
+          <!-- Butonul și sliderul sunt în interiorul aceluiași container -->
+          <button class="btn btn-dark mb-3" onclick="navigateTo('produse')">Vezi produsele</button>
+          <div class="slider-container">
+            <div class="slider-track" id="slider-track"></div>
+          </div>
         </div>
       </div>
     </section>
     
     <!-- Pagina Produse -->
     <section id="produse" class="page">
-      <h2 class="mb-4">Produsele noastre</h2>
-      <input type="text" id="filter-input" class="form-control" placeholder="Caută produs..." onkeyup="filterProducts()">
-      <div id="products-container" class="row"></div>
+      <div class="section-container">
+        <h2>Produsele noastre</h2>
+        <input type="text" id="filter-input" class="form-control mb-3" placeholder="Caută produs..." onkeyup="filterProducts()">
+        <div id="products-container" class="row"></div>
+      </div>
     </section>
     
     <!-- Pagina Detalii Produs -->
     <section id="produs" class="page">
-      <div id="produs-container"></div>
-      <div class="text-center mt-3">
-        <button class="btn btn-secondary" onclick="navigateTo('produse')">Înapoi la Produse</button>
+      <div class="section-container">
+        <div id="produs-container"></div>
+        <div class="text-center mt-3">
+          <button class="btn btn-secondary" onclick="navigateTo('produse')">Înapoi la Produse</button>
+        </div>
       </div>
     </section>
     
     <!-- Pagina Despre noi -->
     <section id="despre" class="page">
-      <h2>Despre noi</h2>
-      <p class="attractive-text">
-        Magazinul nostru Bisericesc a fost fondat din pasiune și dorința de a păstra tradițiile spirituale. Ne dedicăm cu grijă selecționării produselor care aduc lumină și inspirație în viața credincioșilor. Fiecare obiect este realizat manual sau ales cu atenție pentru a reflecta valorile autentice ale credinței. Experiența noastră îmbină tehnologia modernă cu tradiția, oferind o selecție variată și de calitate. Vă invităm să explorați universul nostru și să descoperiți povestea fiecărui produs, care aduce un strop de misticism și echilibru în viața dumneavoastră.
-      </p>
+      <div class="section-container">
+        <h2>Despre noi</h2>
+        <p class="attractive-text">
+          Magazinul nostru Bisericesc a fost fondat din pasiune și dorința de a păstra tradițiile spirituale. Ne dedicăm cu grijă selecționării produselor care aduc lumină și inspirație în viața credincioșilor. Fiecare obiect este realizat manual sau ales cu atenție pentru a reflecta valorile autentice ale credinței. Experiența noastră îmbină tehnologia modernă cu tradiția, oferind o selecție variată și de calitate. Vă invităm să explorați universul nostru și să descoperiți povestea fiecărui produs, care aduce un strop de misticism și echilibru în viața dumneavoastră.
+        </p>
+      </div>
     </section>
     
     <!-- Pagina Termeni și Condiții -->
     <section id="termeni" class="page">
-      <h2>Termeni și Condiții</h2>
-      <p class="attractive-text">
-        Vă rugăm să citiți cu atenție acești termeni și condiții înainte de a utiliza site-ul nostru. Accesând platforma, vă angajați să respectați regulile stabilite și să utilizați informațiile oferite în mod responsabil. Datele colectate se folosesc doar pentru procesarea comenzilor și optimizarea experienței clienților. Ne rezervăm dreptul de a modifica în orice moment aceste condiții, iar utilizarea continuă a site-ului implică acceptarea celor mai recente actualizări. Dacă aveți întrebări sau nelămuriri, echipa noastră de suport este aici pentru a vă ajuta și pentru a asigura o experiență transparentă și profesionistă. Vă mulțumim că alegeți să faceți parte din comunitatea noastră!
-      </p>
+      <div class="section-container">
+        <h2>Termeni și Condiții</h2>
+        <p class="attractive-text">
+          Vă rugăm să citiți cu atenție acești termeni și condiții înainte de a utiliza site-ul nostru. Accesând platforma, vă angajați să respectați regulile stabilite și să utilizați informațiile oferite în mod responsabil. Datele colectate se folosesc doar pentru procesarea comenzilor și optimizarea experienței clienților. Ne rezervăm dreptul de a modifica în orice moment aceste condiții, iar utilizarea continuă a site-ului implică acceptarea celor mai recente actualizări. Dacă aveți întrebări sau nelămuriri, echipa noastră de suport este aici pentru a vă ajuta și pentru a asigura o experiență transparentă și profesionistă. Vă mulțumim că alegeți să faceți parte din comunitatea noastră!
+        </p>
+      </div>
     </section>
     
     <!-- Pagina Calendar -->
     <section id="calendar" class="page">
-      <h2>Calendar Creștin Ortodox – Aprilie</h2>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Ziua</th>
-            <th>Sărbătoare</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>1</td><td>Intrarea în Post</td></tr>
-          <tr><td>14</td><td>Sfântul Vasile</td></tr>
-          <tr><td>30</td><td>-</td></tr>
-        </tbody>
-      </table>
+      <div class="section-container">
+        <h2>Calendar Creștin Ortodox – Aprilie</h2>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Ziua</th>
+              <th>Sărbătoare</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Intrarea în Post</td></tr>
+            <tr><td>14</td><td>Sfântul Vasile</td></tr>
+            <tr><td>30</td><td>-</td></tr>
+          </tbody>
+        </table>
+      </div>
     </section>
     
     <!-- Pagina Coș -->
     <section id="cos" class="page">
-      <h2>Coșul de Cumpărături</h2>
-      <div id="cart-container"></div>
-      <div class="mt-3">
-        <button class="btn btn-danger" onclick="clearCart()">Clear Cart</button>
-      </div>
-      <div id="order-form" style="display:none;" class="mt-4">
-        <h4>Date pentru comandă</h4>
-        <div class="mb-3">
-          <label>Nume:</label>
-          <input type="text" id="customer-name" class="form-control">
+      <div class="section-container">
+        <h2>Coșul de Cumpărături</h2>
+        <div id="cart-container"></div>
+        <div class="mt-3">
+          <button class="btn btn-danger" onclick="clearCart()">Clear Cart</button>
         </div>
-        <div class="mb-3">
-          <label>Contact (Email/Telefon):</label>
-          <input type="text" id="customer-contact" class="form-control">
+        <div id="order-form" style="display:none;" class="mt-4">
+          <h4>Date pentru comandă</h4>
+          <div class="mb-3">
+            <label>Nume:</label>
+            <input type="text" id="customer-name" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label>Contact (Email/Telefon):</label>
+            <input type="text" id="customer-contact" class="form-control">
+          </div>
+          <button class="btn btn-success" onclick="placeOrder()">Finalizează Comanda</button>
         </div>
-        <button class="btn btn-success" onclick="placeOrder()">Finalizează Comanda</button>
       </div>
     </section>
     
     <!-- Pagina Detalii Comandă -->
     <section id="order-details" class="page">
-      <h2>Detalii Comandă</h2>
-      <div id="order-details-container"></div>
-      <div class="text-center mt-3">
-        <button class="btn btn-secondary" onclick="navigateTo('home')">Înapoi Acasă</button>
+      <div class="section-container">
+        <h2>Detalii Comandă</h2>
+        <div id="order-details-container"></div>
+        <div class="text-center mt-3">
+          <button class="btn btn-secondary" onclick="navigateTo('home')">Înapoi Acasă</button>
+        </div>
       </div>
     </section>
     
     <!-- Pagina Admin -->
     <section id="admin" class="page">
-      <h2>Admin</h2>
-      <div id="admin-content"></div>
+      <div class="section-container">
+        <h2>Admin</h2>
+        <div id="admin-content"></div>
+      </div>
     </section>
   </main>
   
@@ -323,7 +334,7 @@
   <!-- FOOTER -->
   <footer>
     <p>&copy; <span id="year"></span> Magazin Bisericesc. Toate drepturile rezervate.</p>
-    <img src="anpc.jp" alt="Logo ANPC">
+    <img src="https://via.placeholder.com/150x50?text=ANPC" alt="Logo ANPC">
   </footer>
   
   <!-- JAVASCRIPT -->
@@ -349,15 +360,13 @@
       if (pageId === 'produse') fetchProductsFromBackend();
     }
     
-    // Back to Top
+    // Buton Back to Top
     window.onscroll = function() { scrollFunction(); };
     function scrollFunction() {
       const btn = document.getElementById("backToTop");
       if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
         btn.style.display = "block";
-      } else {
-        btn.style.display = "none";
-      }
+      } else { btn.style.display = "none"; }
     }
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -379,40 +388,40 @@
         if (distance > 0) { 
           timerElem.textContent = "Timp până la Paști: " + days + "z " + hours + "h " + minutes + "m " + seconds + "s"; 
         } else { 
-          timerElem.textContent = "Hristos a înviat! Următoarea promoție se anunță în curând."; 
+          timerElem.textContent = "Sărbătoarea a început! Următoarea se anunță în curând."; 
         }
       }, 1000);
     }
     startTimer();
     
     /* ---- Funcționalități Produse & Stocuri ---- */
-    // Produsele au acum o proprietate suplimentară labels
+    // Fiecare produs are acum și o proprietate "labels" pentru etichete
     const products = [
-      {id: 1, name: "Candelă mare TIP IV", price: 19.99, image: "1.jpg", description: "Lumânare din ceară naturală cu o lungă durata de viață.7 zile", stock: 50, labels: ["Popular"]},
-      {id: 2, name: "Candelă mare TIP III", price: 12.99, image: "2.jpg", description: "Lumânare din ceară naturală cu o lungă durata de viață.100h", stock: 40, labels: ["Recomandat"]},
-      {id: 3, name: "Candelă mare TIP II", price: 9.99, image: "3.jpg", description: "Lumânare din ceară naturală cu o lungă durata de viață.60h", stock: 30, labels: ["Best Seller"]},
-      {id: 4, name: "Candelă mare TIP I", price: 6.99, image: "4.jpg", description: "Lumânare din ceară naturală cu o lungă durata de viață.16h", stock: 60, labels: ["Pentru zile negre"]},
-      {id: 5, name: "Tămâie de Oașă", price: 63.99, image: "5.jpg", description: "Tămâie de înaltă calitate.200g", stock: 80, labels: ["Bună pentru uz zilnic"]},
-      {id: 6, name: "Tămâie de Vatopedu", price: 68.99, image: "6.jpg", description: "Tămâie de înaltă calitate.200g", stock: 70, labels: ["Premium"]},
-      {id: 7, name: "Tămâie de Pângărați", price: 23.99, image: "7.jpg", description: "Tămâie de înaltă calitate.50g", stock: 35, labels: ["Cantitate mai mică"]},
-      {id: 8, name: "Acatiste și Viețile sfinților", price: 9.99, image: "8.jpg", description: "La nevoi și necazuri cel mai bun ajutor.În diferite formate cel mai des întâlit este cel 11*16", stock: 45, labels: ["Nou"]},
-      {id: 9, name: "Psaltire", price: 29.99, image: "9.jpg", description: "Unul dintre cele mai importante lucruri care trebuie să fie în casă.14.5*20cm", stock: 55, labels: ["Recomandat"]},
-      {id: 10, name: "Ceaslov", price: 44.99, image: "10.jpg", description: "Un ajutor important la rugăciunea casei.A4", stock: 50, labels: ["Recomandat"]},
-      {id: 11, name: "Lumânare Înviere", price: 44.99, image: "11.jpg", description: "Lumânare cu design modern pentru realizarea slujbei de înviere.", stock: 60, labels: ["Nou"]},
-      {id: 12, name: "Icoană TIP I", price: 25.99, image: "12.jpg", description: "Icoană rugăciuni.A4", stock: 40, labels: ["Pentru zile negre"]},
-      {id: 13, name: "Icoană TIP II", price: 22.99, image: "13.jpg", description: "Icoană pentru rugăciuni.A5", stock: 30, labels: ["Recomandat"]},
-      {id: 14, name: "Icoană TIP III", price: 19.99, image: "14.jpg", description: "Icoană pentru rugăciuni.24*10", stock: 45, labels: ["Special"]},
-      {id: 15, name: "Icoană TIP IV", price: 139.99, image: "15.jpg", description: "Icoană pentru rugăciuni.A4", stock: 20, labels: ["Limited Edition"]},
-      {id: 16, name: "Cruciuliță", price: 12.99, image: "16.jpg", description: "Un simbol protector al credinței,dar si a persoanei ce o poartă.5*3cm", stock: 100, labels: ["Special"]},
-      {id: 17, name: "Cruce binecuvântare", price: 149.99, image: "17.jpg", description: "Realizată pentru slujbe.30*13cm", stock: 25, labels: ["Limited Edition"]},
-      {id: 18, name: "Mir de oașă", price: 9.99, image: "18.jpg", description: "Un lucru mic pentru o familie mare.", stock: 30, labels: ["Pentru zile negre"]},
-      {id: 19, name: "pomelnice anuale", price: 99.99, image: "19.jpg", description: "Pentru a vă aminti de cei dragi vouă.", stock: 15, labels: ["Special"]},
-      {id: 20, name: "Biblia", price: 149.99 , image: "20.jpg", description: "O carte obligatorie pentru orice creștin.21*15cm", stock: 40, labels: ["Recomandat"]}
+      {id: 1, name: "Lumânare Roșie", price: 10.00, image: "https://via.placeholder.com/400x200?text=Produs+1", description: "Lumânare din ceară naturală pentru rugăciune.", stock: 50, labels: ["Nou", "Popular"]},
+      {id: 2, name: "Lumânare Albă", price: 9.50, image: "https://via.placeholder.com/400x200?text=Produs+2", description: "Lumânare tradițională pentru biserică.", stock: 40, labels: ["Best Seller"]},
+      {id: 3, name: "Icoană Sfântă", price: 25.50, image: "https://via.placeholder.com/400x200?text=Produs+3", description: "Icoană lucrată manual.", stock: 30, labels: ["Artizanal"]},
+      {id: 4, name: "Carte de Rugăciuni", price: 15.75, image: "https://via.placeholder.com/400x200?text=Produs+4", description: "Carte cu rugăciuni și imnuri.", stock: 60, labels: []},
+      {id: 5, name: "Tămâie", price: 8.00, image: "https://via.placeholder.com/400x200?text=Produs+5", description: "Tămâie de înaltă calitate.", stock: 80, labels: ["Premium"]},
+      {id: 6, name: "Candele Decorative", price: 12.50, image: "https://via.placeholder.com/400x200?text=Produs+6", description: "Candele cu design elegant.", stock: 70, labels: []},
+      {id: 7, name: "Cruce Mică", price: 18.00, image: "https://via.placeholder.com/400x200?text=Produs+7", description: "Cruce din lemn sculptat.", stock: 35, labels: ["Handmade"]},
+      {id: 8, name: "Amuletă", price: 7.50, image: "https://via.placeholder.com/400x200?text=Produs+8", description: "Amuletă de protecție.", stock: 45, labels: []},
+      {id: 9, name: "Set Rugăciuni", price: 20.00, image: "https://via.placeholder.com/400x200?text=Produs+9", description: "Set complet de rugăciuni.", stock: 55, labels: []},
+      {id: 10, name: "Simbol Bisericesc", price: 11.00, image: "https://via.placeholder.com/400x200?text=Produs+10", description: "Simbol al credinței.", stock: 50, labels: []},
+      {id: 11, name: "Lumânare Decorativă", price: 13.00, image: "https://via.placeholder.com/400x200?text=Produs+11", description: "Lumânare cu design modern.", stock: 60, labels: ["Nou"]},
+      {id: 12, name: "Icoană Mică", price: 16.00, image: "https://via.placeholder.com/400x200?text=Produs+12", description: "Icoană personală pentru rugăciuni.", stock: 40, labels: []},
+      {id: 13, name: "Carte de Sfinți", price: 14.25, image: "https://via.placeholder.com/400x200?text=Produs+13", description: "Carte cu vieți de sfinți.", stock: 30, labels: ["Recomandat"]},
+      {id: 14, name: "Candele Aromatice", price: 9.75, image: "https://via.placeholder.com/400x200?text=Produs+14", description: "Candele cu arome plăcute.", stock: 45, labels: []},
+      {id: 15, name: "Tablou Icoanic", price: 30.00, image: "https://via.placeholder.com/400x200?text=Produs+15", description: "Tablou religios elegant.", stock: 20, labels: ["Limited Edition"]},
+      {id: 16, name: "Breloc cu Cruce", price: 5.50, image: "https://via.placeholder.com/400x200?text=Produs+16", description: "Breloc simbolic.", stock: 100, labels: []},
+      {id: 17, name: "Iconar Decorative", price: 22.00, image: "https://via.placeholder.com/400x200?text=Produs+17", description: "Set de iconar pentru casă.", stock: 25, labels: []},
+      {id: 18, name: "Vază cu Cruce", price: 17.50, image: "https://via.placeholder.com/400x200?text=Produs+18", description: "Vază decorativă cu motive religioase.", stock: 30, labels: []},
+      {id: 19, name: "Candelabru", price: 26.00, image: "https://via.placeholder.com/400x200?text=Produs+19", description: "Candelabru pentru slujbe.", stock: 15, labels: ["Special"]},
+      {id: 20, name: "Set de Rugăciune", price: 19.00, image: "https://via.placeholder.com/400x200?text=Produs+20", description: "Set complet cu accesorii de rugăciune.", stock: 40, labels: []}
     ];
     
     let cart = [];
     
-    // Funcție de simulare: preia stocurile din "backend" – aici folosim direct datele din obiectul products
+    // Preia stocurile actualizate (simulăm folosind produsele definite)
     function fetchProductsFromBackend() { renderProducts(); }
     
     function renderProducts() {
@@ -430,7 +439,7 @@
                 <h5>${prod.name}</h5>
                 <p>Preț: ${prod.price.toFixed(2)} Lei</p>
                 <p>Stoc: <span id="stock-${prod.id}">${prod.stock}</span></p>
-                ${prod.labels.length ? `<p>${prod.labels.map(l => `<span class="badge bg-info text-dark me-1">${l}</span>`).join("")}</p>` : ""}
+                ${ prod.labels && prod.labels.length ? `<p>${prod.labels.map(l => `<span class="badge bg-info text-dark me-1">${l}</span>`).join("")}</p>` : "" }
               </div>
               <div class="p-2">
                 <div class="input-group" style="max-width:120px;">
@@ -483,7 +492,7 @@
       document.getElementById(`stock-${id}`) && (document.getElementById(`stock-${id}`).textContent = prod.stock);
       document.getElementById(`detail-stock-${id}`) && (document.getElementById(`detail-stock-${id}`).textContent = prod.stock);
       let index = cart.findIndex(item => item.id === id);
-      if (index > -1) { cart[index].quantity += qty; }
+      if (index > -1) { cart[index].quantity += qty; } 
       else { cart.push({ id: id, quantity: qty }); }
       updateCartCount();
       console.log("Cart:", cart);
@@ -555,7 +564,7 @@
       renderProducts();
     }
     
-    // Plasează comanda: salvează în localStorage și afișează pagina de Detalii Comandă
+    // Plasează comanda și afișează secțiunea Detalii Comandă
     function placeOrder() {
       const name = document.getElementById('customer-name').value.trim();
       const contact = document.getElementById('customer-contact').value.trim();
@@ -584,7 +593,7 @@
       navigateTo('order-details');
     }
     
-    // Afișează detaliile comenzii (inclusiv etichetele produselor) în secțiunea "order-details"
+    // Afișează detaliile comenzii în secțiunea "order-details"
     function renderOrderDetails(order) {
       const container = document.getElementById('order-details-container');
       let html = `<p><strong>Client:</strong> ${order.customer.name}</p>
@@ -629,30 +638,33 @@
       const adminDiv = document.getElementById('admin-content');
       if (!adminLogged) {
         adminDiv.innerHTML = `
-          <h4>Login Admin</h4>
-          <div class="mb-3">
-            <label>Utilizator:</label>
-            <input type="text" id="admin-user" class="form-control">
-          </div>
-          <div class="mb-3">
-            <label>Parolă:</label>
-            <input type="password" id="admin-pass" class="form-control">
-          </div>
-          <button class="btn btn-primary" onclick="adminLogin()">Login</button>
-        `;
+          <div class="section-container">
+            <h2>Login Admin</h2>
+            <div class="mb-3">
+              <label>Utilizator:</label>
+              <input type="text" id="admin-user" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label>Parolă:</label>
+              <input type="password" id="admin-pass" class="form-control">
+            </div>
+            <button class="btn btn-primary" onclick="adminLogin()">Login</button>
+          </div>`;
       } else {
         adminDiv.innerHTML = `
-          <h4>Dashboard Admin</h4>
-          <div class="d-flex gap-2 mb-3">
-            <button class="btn btn-secondary" onclick="resetAllStocks()">Reset All Stocks</button>
-          </div>
-          <h5>Filtrare Produse</h5>
-          <input type="text" id="admin-filter" class="form-control mb-3" placeholder="Caută produs în admin..." onkeyup="renderAdminProducts()">
-          <div id="admin-products-container" class="mb-4"></div>
-          <h5>Comenzi Plasate</h5>
-          <div id="admin-orders-container"></div>
-          <button class="btn btn-secondary mt-3" onclick="adminLogout()">Logout</button>
-        `;
+          <div class="section-container">
+            <h2>Dashboard Admin</h2>
+            <!-- Un singur buton pentru actualizarea tuturor stocurilor -->
+            <div class="mb-3">
+              <button class="btn btn-secondary" onclick="updateAllStocks()">Actualizează toate stocurile</button>
+            </div>
+            <h5>Filtrare Produse</h5>
+            <input type="text" id="admin-filter" class="form-control mb-3" placeholder="Caută produs în admin..." onkeyup="renderAdminProducts()">
+            <div id="admin-products-container" class="mb-4"></div>
+            <h5>Comenzi Plasate</h5>
+            <div id="admin-orders-container"></div>
+            <button class="btn btn-secondary mt-3" onclick="adminLogout()">Logout</button>
+          </div>`;
         renderAdminProducts();
         renderAdminOrders();
       }
@@ -667,43 +679,41 @@
     
     function adminLogout() { adminLogged = false; loadAdmin(); }
     
+    // Funcție pentru actualizarea tuturor stocurilor din admin
+    function updateAllStocks() {
+      const inputs = document.querySelectorAll("[id^='new-stock-']");
+      inputs.forEach(input => {
+        const id = parseInt(input.id.replace("new-stock-", ""));
+        const newStock = parseInt(input.value) || 0;
+        const prod = products.find(p => p.id === id);
+        if(prod) {
+          prod.stock = newStock;
+          // Actualizează în admin și în secțiunile comune
+          document.getElementById(`admin-stock-${id}`).textContent = prod.stock;
+          if(document.getElementById(`stock-${id}`)) document.getElementById(`stock-${id}`).textContent = prod.stock;
+          if(document.getElementById(`detail-stock-${id}`)) document.getElementById(`detail-stock-${id}`).textContent = prod.stock;
+        }
+      });
+      alert("Toate stocurile au fost actualizate conform datelor introduse.");
+      renderProducts();
+      renderAdminProducts();
+    }
+    
     function renderAdminProducts() {
       const container = document.getElementById('admin-products-container');
       container.innerHTML = "";
       const filter = document.getElementById('admin-filter').value.toLowerCase();
       products.forEach(prod => {
         if (prod.name.toLowerCase().includes(filter)) {
+          // Afișăm input pentru noul stoc, fără buton individual
           const prodHTML = `
             <div class="mb-2 p-2" style="border:1px solid #ccc; border-radius:5px;">
-              <strong>${prod.name}</strong> - Stoc: <span id="admin-stock-${prod.id}">${prod.stock}</span>
+              <strong>${prod.name}</strong> - Stoc curent: <span id="admin-stock-${prod.id}">${prod.stock}</span>
               <input type="number" id="new-stock-${prod.id}" placeholder="Nou stoc" style="width:70px; margin-left:10px;">
-              <button class="btn btn-warning btn-sm ms-2" onclick="updateProductStockCustom(${prod.id})">Setează stoc</button>
             </div>`;
           container.innerHTML += prodHTML;
         }
       });
-    }
-    
-    function updateProductStockCustom(id) {
-      const newStock = parseInt(document.getElementById(`new-stock-${id}`).value) || 0;
-      const prod = products.find(p => p.id === id);
-      prod.stock = newStock;
-      document.getElementById(`admin-stock-${id}`).textContent = prod.stock;
-      document.getElementById(`stock-${id}`) && (document.getElementById(`stock-${id}`).textContent = prod.stock);
-      document.getElementById(`detail-stock-${id}`) && (document.getElementById(`detail-stock-${id}`).textContent = prod.stock);
-      alert("Stocul pentru " + prod.name + " a fost actualizat la " + newStock + ".");
-    }
-    
-    function resetAllStocks() {
-      const initialStocks = {
-        1: 50, 2: 40, 3: 30, 4: 60, 5: 80, 6: 70, 7: 35,
-        8: 45, 9: 55, 10: 50, 11: 60, 12: 40, 13: 30, 14: 45, 15: 20,
-        16: 100, 17: 25, 18: 30, 19: 15, 20: 40
-      };
-      products.forEach(prod => { prod.stock = initialStocks[prod.id] || prod.stock; });
-      alert("Stocurile pentru toate produsele au fost resetate.");
-      renderProducts();
-      renderAdminProducts();
     }
     
     function renderAdminOrders() {
@@ -726,7 +736,7 @@
         order.items.forEach(item => {
           const prod = products.find(p => p.id === item.id);
           let labelsHtml = "";
-          if (prod.labels && prod.labels.length) {
+          if(prod.labels && prod.labels.length) {
             labelsHtml = prod.labels.map(l => `<span class="badge bg-secondary me-1">${l}</span>`).join("");
           }
           details += prod.name + " " + labelsHtml + " x " + item.quantity + "<br>";
@@ -811,45 +821,6 @@
       invoiceWindow.document.close();
       invoiceWindow.focus();
       invoiceWindow.print();
-    }
-    
-    // Secțiunea de afișare a detaliilor comenzii (după finalizare)
-    function renderOrderDetails(order) {
-      const container = document.getElementById('order-details-container');
-      let html = `<p><strong>Client:</strong> ${order.customer.name}</p>
-                  <p><strong>Contact:</strong> ${order.customer.contact}</p>
-                  <p><strong>Furnizor:</strong> Magazin Bisericesc, Str. Exemplu 123, Oraș, Telefon: 0123 456 789</p>
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Produs</th>
-                        <th>Etichete</th>
-                        <th>Cantitate</th>
-                        <th>Preț</th>
-                        <th>Total</th>
-                      </tr>
-                    </thead>
-                    <tbody>`;
-      let grandTotal = 0;
-      order.items.forEach(item => {
-        const prod = products.find(p => p.id === item.id);
-        let total = prod.price * item.quantity;
-        grandTotal += total;
-        let labelsHtml = "";
-        if (prod.labels && prod.labels.length) {
-          labelsHtml = prod.labels.map(l => `<span class="badge bg-secondary me-1">${l}</span>`).join("");
-        }
-        html += `<tr>
-                   <td>${prod.name}</td>
-                   <td>${labelsHtml}</td>
-                   <td>${item.quantity}</td>
-                   <td>${prod.price.toFixed(2)}</td>
-                   <td>${total.toFixed(2)}</td>
-                 </tr>`;
-      });
-      html += `</tbody></table>
-               <p><strong>Total Comandă:</strong> ${order.total.toFixed(2)} Lei</p>`;
-      container.innerHTML = html;
     }
     
     document.addEventListener("DOMContentLoaded", function() {
