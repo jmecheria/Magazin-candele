@@ -16,6 +16,10 @@
       background-color: #fff;
       text-align: center;
     }
+    /* Asigurăm că inputurile din formular rămân aliniate la stânga */
+    .section-container form .form-control {
+      text-align: left;
+    }
     /* Stil pentru tabele: bordură vizibilă și celule aliniate */
     table.table {
       border: 1px solid #a30000;
@@ -34,6 +38,7 @@
       padding: 10px 20px;
     }
     header img.logo { height: 50px; }
+    /* Logo ANPC ajustat la 150x50 */
     footer img { height: 50px; }
     nav ul {
       list-style: none;
@@ -114,7 +119,7 @@
       cursor: pointer;
     }
     .product-card .card-body { padding: 15px; flex-grow: 1; }
-    /* Stil personalizat pentru inputul cantității */
+    /* Stil pentru inputul cantității */
     .quantity-input {
       border: 1px solid #a30000;
       border-radius: 4px 0 0 4px;
@@ -134,7 +139,12 @@
     .add-cart-btn:hover {
       background-color: #7a0000;
     }
-    #filter-input { max-width: 400px; margin-bottom: 20px; margin-left: auto; margin-right: auto; }
+    #filter-input {
+      max-width: 400px;
+      margin-bottom: 20px;
+      margin-left: auto;
+      margin-right: auto;
+    }
     footer { text-align: center; }
     /* Slider pe pagina de start */
     .slider-container {
@@ -188,12 +198,13 @@
       transition: background-color 0.3s ease;
     }
     #backToTop:hover { background: #7a0000; }
-    /* Stil pentru fereastra de factură – Times New Roman */
+    /* Factură – Times New Roman, aliniat central */
     .invoice {
       max-width: 800px;
       margin: 20px auto;
       padding: 20px;
       font-family: "Times New Roman", Times, serif;
+      text-align: center;
     }
     .invoice h2, .invoice p, .invoice table {
       margin: 0 0 10px;
@@ -233,7 +244,6 @@
         <li><a onclick="navigateTo('admin')">Admin</a></li>
       </ul>
     </nav>
-    <!-- Iconița de coș -->
     <div class="cart-icon" onclick="navigateTo('cos')">
       <img src="https://via.placeholder.com/24?text=🛒" alt="Coș">
       <span class="badge" id="cart-count">0</span>
@@ -697,16 +707,31 @@
       container.innerHTML = html;
     }
     
+    // Funcția pentru slider-ul de pe pagina de start: folosește primele 5 imagini din lista de produse
+    function renderSlider() {
+      const sliderTrack = document.getElementById("slider-track");
+      if (!sliderTrack) return;
+      sliderTrack.innerHTML = "";
+      products.slice(0, 5).forEach(prod => {
+        const img = document.createElement("img");
+        img.src = prod.image;
+        img.alt = prod.name;
+        sliderTrack.appendChild(img);
+      });
+    }
+    
     document.addEventListener("DOMContentLoaded", function() {
       fetchProductsFromBackend();
       renderSlider();
     });
   </script>
+  
   <!-- Formular notificare e-mail (FormSubmit) -->
   <form id="notifyForm" action="https://formsubmit.co/admin@example.com" method="POST" target="_blank" style="display: none;">
     <input type="hidden" name="subject" value="Notificare Comandă - Magazin Bisericesc">
     <input type="hidden" name="orderDetails" id="orderDetailsInput">
   </form>
+  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
