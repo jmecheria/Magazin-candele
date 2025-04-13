@@ -7,7 +7,7 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    /* Container pentru secțiuni – aspect de "tabel" cu bordură roșie și colțuri rotunjite */
+    /* Container pentru fiecare secțiune (tabel cu bordură roșie și colțuri rotunjite) */
     .section-container {
       border: 1px solid #a30000;
       border-radius: 8px;
@@ -32,7 +32,7 @@
       gap: 15px;
       flex-wrap: wrap;
     }
-    /* Eliminat textul "Coș" din meniu – doar iconița */
+    /* Se păstrează doar iconița de coș */
     nav ul li a {
       color: #fff;
       font-weight: bold;
@@ -64,19 +64,24 @@
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    /* Secțiuni (fiecare învelită într-un container) */
+    /* Secțiunile (fiecare învelită în .section-container) */
     section { padding: 10px; }
+    /* Nu mai aplicăm background roșu la titlu – folosim doar o linie subțire sau un text simplu */
+    .section-container h2 {
+      /* Exemplu: poți alege o bordură inferioară în loc de background */
+      border-bottom: 2px solid #a30000;
+      color: #a30000;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
+    }
     /* Tranziție între pagini (fade) */
     .page {
       opacity: 0;
       transition: opacity 0.5s ease;
       display: none;
     }
-    .page.active-page {
-      display: block;
-      opacity: 1;
-    }
-    /* Carduri de produs – uniforme, cu efect de scaling */
+    .page.active-page { display: block; opacity: 1; }
+    /* Carduri de produs */
     .product-card {
       border: 1px solid #ccc;
       border-radius: 5px;
@@ -98,11 +103,8 @@
       object-fit: cover;
       cursor: pointer;
     }
-    .product-card .card-body {
-      padding: 15px;
-      flex-grow: 1;
-    }
-    /* Butonul de "Adaugă în Coș" – lărgit */
+    .product-card .card-body { padding: 15px; flex-grow: 1; }
+    /* Butonul "Adaugă în Coș" lărgit */
     .add-cart-btn { width: 100%; }
     #filter-input { max-width: 400px; margin-bottom: 20px; }
     footer { text-align: center; }
@@ -135,7 +137,7 @@
       line-height: 1.6;
       color: #333;
     }
-    /* Butoane – efect de transformare la click */
+    /* Butoane – efect la click */
     button {
       transition: transform 0.1s ease, background-color 0.2s ease;
     }
@@ -158,7 +160,7 @@
       transition: background-color 0.3s ease;
     }
     #backToTop:hover { background: #7a0000; }
-    /* Stil pentru fereastra de factură – Times New Roman */
+    /* Fereastra de factură – Times New Roman */
     .invoice {
       max-width: 800px;
       margin: 20px auto;
@@ -254,9 +256,9 @@
       <div class="section-container">
         <h2>Despre noi</h2>
         <p class="attractive-text">
-          Magazinul nostru Bisericesc a fost fondat din pasiune și dorința de a păstra tradițiile spirituale. Ne dedicăm cu grijă selecționării produselor care aduc lumină și inspirație în viața credincioșilor. Fiecare obiect este realizat manual sau ales cu atenție pentru a reflecta valorile autentice ale credinței. Experiența noastră îmbină tehnologia modernă cu tradiția, oferind o selecție variată și de calitate. Vă invităm să explorați universul nostru și să descoperiți povestea fiecărui produs, care aduce un strop de misticism și echilibru în viața dumneavoastră.
+          Magazinul nostru Bisericesc a fost fondat din pasiune și dorința de a păstra tradițiile spirituale. Ne dedicăm cu grijă selecționării produselor care aduc lumină și inspirație în viața credincioșilor. Fiecare obiect este realizat manual sau ales cu atenție pentru a reflecta valorile autentice ale credinței. Experiența noastră îmbină tehnologia modernă cu tradiția, oferind o selecție variată și de calitate. Vă invităm să explorați universul nostru și să descoperiți povestea fiecărui produs.
         </p>
-        <!-- Slider pentru secțiunea "Despre noi" -->
+        <!-- Carousel în secțiunea "Despre noi" -->
         <div id="aboutCarousel" class="carousel slide mt-3" data-bs-ride="carousel" data-bs-touch="true">
           <div class="carousel-inner">
             <div class="carousel-item active">
@@ -363,9 +365,15 @@
     <img src="https://via.placeholder.com/150x50?text=ANPC" alt="Logo ANPC">
   </footer>
   
+  <!-- Formular de notificare (FormSubmit) – trimite e-mailul notificării către admin -->
+  <form id="notifyForm" action="https://formsubmit.co/admin@example.com" method="POST" target="_blank" style="display: none;">
+    <input type="hidden" name="subject" value="Notificare Comandă - Magazin Bisericesc">
+    <input type="hidden" name="orderDetails" id="orderDetailsInput">
+  </form>
+  
   <!-- JAVASCRIPT -->
   <script>
-    // Tranziție între pagini (fade in/out)
+    // Funcție de tranziție între pagini (fade in/out)
     function navigateTo(pageId) {
       const current = document.querySelector('.active-page');
       if (current) {
@@ -386,7 +394,7 @@
       if (pageId === 'produse') fetchProductsFromBackend();
     }
     
-    // Back to Top
+    // Buton Back to Top
     window.onscroll = function() { scrollFunction(); };
     function scrollFunction() {
       const btn = document.getElementById("backToTop");
@@ -421,6 +429,7 @@
     startTimer();
     
     /* ---- Funcționalități Produse & Stocuri ---- */
+    // Lista de produse, fiecare cu etichete (labels)
     const products = [
       {id: 1, name: "Lumânare Roșie", price: 10.00, image: "https://via.placeholder.com/400x200?text=Produs+1", description: "Lumânare din ceară naturală pentru rugăciune.", stock: 50, labels: ["Nou", "Popular"]},
       {id: 2, name: "Lumânare Albă", price: 9.50, image: "https://via.placeholder.com/400x200?text=Produs+2", description: "Lumânare tradițională pentru biserică.", stock: 40, labels: ["Best Seller"]},
@@ -588,7 +597,7 @@
       renderProducts();
     }
     
-    // Plasează comanda și afișează detaliile comenzii
+    // Plasează comanda, salvează în localStorage și trimite notificare prin e-mail
     function placeOrder() {
       const name = document.getElementById('customer-name').value.trim();
       const contact = document.getElementById('customer-contact').value.trim();
@@ -608,6 +617,12 @@
       orders.push(order);
       localStorage.setItem("globalOrders", JSON.stringify(orders));
       alert("Comanda a fost plasată. Mulțumim, " + name + "!");
+      
+      // Notificare e-mail folosind FormSubmit (formularul ascuns)
+      var orderSummary = "Comandă ID: " + order.id + "\nClient: " + order.customer.name + "\nContact: " + order.customer.contact + "\nTotal: " + order.total.toFixed(2) + " Lei";
+      document.getElementById("orderDetailsInput").value = orderSummary;
+      document.getElementById("notifyForm").submit();
+      
       renderOrderDetails(order);
       cart = [];
       updateCartCount();
@@ -700,12 +715,9 @@
       else { alert("Autentificare eșuată!"); }
     }
     
-    function adminLogout() {
-      adminLogged = false;
-      loadAdmin();
-    }
+    function adminLogout() { adminLogged = false; loadAdmin(); }
     
-    // Actualizarea tuturor stocurilor din admin pe baza datelor din input-uri
+    // Actualizează toate stocurile din Admin pe baza input-urilor
     function updateAllStocks() {
       const inputs = document.querySelectorAll("[id^='new-stock-']");
       inputs.forEach(input => {
@@ -847,17 +859,55 @@
       invoiceWindow.print();
     }
     
+    // Secțiunea de afișare a detaliilor comenzii (după plasare)
+    function renderOrderDetails(order) {
+      const container = document.getElementById('order-details-container');
+      let html = `<p><strong>Client:</strong> ${order.customer.name}</p>
+                  <p><strong>Contact:</strong> ${order.customer.contact}</p>
+                  <p><strong>Furnizor:</strong> Magazin Bisericesc, Str. Exemplu 123, Oraș, Telefon: 0123 456 789</p>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Produs</th>
+                        <th>Etichete</th>
+                        <th>Cantitate</th>
+                        <th>Preț</th>
+                        <th>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>`;
+      let grandTotal = 0;
+      order.items.forEach(item => {
+        const prod = products.find(p => p.id === item.id);
+        let total = prod.price * item.quantity;
+        grandTotal += total;
+        let labelsHtml = "";
+        if(prod.labels && prod.labels.length) {
+          labelsHtml = prod.labels.map(l => `<span class="badge bg-secondary me-1">${l}</span>`).join("");
+        }
+        html += `<tr>
+                   <td>${prod.name}</td>
+                   <td>${labelsHtml}</td>
+                   <td>${item.quantity}</td>
+                   <td>${prod.price.toFixed(2)}</td>
+                   <td>${total.toFixed(2)}</td>
+                 </tr>`;
+      });
+      html += `</tbody></table>
+               <p><strong>Total Comandă:</strong> ${order.total.toFixed(2)} Lei</p>`;
+      container.innerHTML = html;
+    }
+    
     document.addEventListener("DOMContentLoaded", function() {
       fetchProductsFromBackend();
       renderSlider();
     });
     
-    // Funcție pentru sliderul de pe pagina de start (generare imagini din produse)
+    // Funcție pentru sliderul din pagina de start (folosește primele 5 imagini de la produse)
     function renderSlider() {
       const sliderTrack = document.getElementById("slider-track");
       sliderTrack.innerHTML = "";
-      // Exemplu: folosim imaginile primelor 5 produse pentru slider
-      products.slice(0, 5).forEach(prod => {
+      products.slice(0,5).forEach(prod => {
         const img = document.createElement("img");
         img.src = prod.image;
         img.alt = prod.name;
@@ -865,7 +915,11 @@
       });
     }
   </script>
-  <!-- Bootstrap Bundle JS -->
+  <!-- Formularul pentru notificare e-mail folosind FormSubmit -->
+  <form id="notifyForm" action="https://formsubmit.co/admin@example.com" method="POST" target="_blank" style="display: none;">
+    <input type="hidden" name="subject" value="Notificare Comandă - Magazin Bisericesc">
+    <input type="hidden" name="orderDetails" id="orderDetailsInput">
+  </form>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
