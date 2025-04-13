@@ -7,7 +7,7 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    /* Container pentru secțiuni – aspect de tabel cu bordură roșie și colțuri rotunjite */
+    /* Container pentru secțiuni – tabel cu bordură roșie și colțuri rotunjite */
     .section-container {
       border: 1px solid #a30000;
       border-radius: 8px;
@@ -15,7 +15,7 @@
       margin-bottom: 20px;
       background-color: #fff;
     }
-    /* Stil pentru tabele: bordură vizibilă și celule aliniate */
+    /* Stil pentru tabele */
     table.table {
       border: 1px solid #a30000;
       border-collapse: collapse;
@@ -33,7 +33,6 @@
       padding: 10px 20px;
     }
     header img.logo { height: 50px; }
-    /* Logo ANPC ajustat la 150x50 */
     footer img { height: 50px; }
     nav ul {
       list-style: none;
@@ -43,7 +42,6 @@
       gap: 15px;
       flex-wrap: wrap;
     }
-    /* Se păstrează doar iconița de coș */
     nav ul li a {
       color: #fff;
       font-weight: bold;
@@ -75,7 +73,6 @@
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    /* Titlurile secțiunilor */
     .section-container h2 {
       border-bottom: 2px solid #a30000;
       color: #a30000;
@@ -112,8 +109,29 @@
       cursor: pointer;
     }
     .product-card .card-body { padding: 15px; flex-grow: 1; }
-    /* Butonul de "Adaugă în Coș" lărgit */
-    .add-cart-btn { width: 100%; }
+    /* Stil personalizat pentru inputul cantității */
+    .quantity-input {
+      border: 1px solid #a30000;
+      border-radius: 4px 0 0 4px;
+      text-align: center;
+      height: 38px;
+    }
+    /* Stil personalizat pentru butonul "Adaugă în Coș" */
+    .add-cart-btn {
+      border: 1px solid #a30000;
+      background-color: #a30000;
+      color: #fff;
+      border-radius: 0 4px 4px 0;
+      height: 38px;
+      font-weight: bold;
+      width: 100%;
+    }
+    .add-cart-btn:hover {
+      background-color: #7a0000;
+    }
+    /* Butoanele din modal (detalii produs) folosesc aceleași clase pentru consistență */
+    /* Inputul de cantitate și butonul din modal pot reutiliza clasele .quantity-input și .add-cart-btn */
+    
     #filter-input { max-width: 400px; margin-bottom: 20px; }
     footer { text-align: center; }
     /* Slider pe pagina de start */
@@ -129,7 +147,7 @@
       width: max-content;
       animation: slide 20s linear infinite;
     }
-    /* Toate imaginile din slider vor avea dimensiuni fixe */
+    /* Imaginile din slider: dimensiuni fixe */
     .slider-track img {
       width: 250px;
       height: 150px;
@@ -141,13 +159,11 @@
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
-    /* Stil text atractiv */
     .attractive-text {
       font-size: 1.1rem;
       line-height: 1.6;
       color: #333;
     }
-    /* Efecte la butoane */
     button {
       transition: transform 0.1s ease, background-color 0.2s ease;
     }
@@ -170,7 +186,7 @@
       transition: background-color 0.3s ease;
     }
     #backToTop:hover { background: #7a0000; }
-    /* Factură – font Times New Roman */
+    /* Factură – Times New Roman */
     .invoice {
       max-width: 800px;
       margin: 20px auto;
@@ -214,7 +230,7 @@
         <li><a onclick="navigateTo('admin')">Admin</a></li>
       </ul>
     </nav>
-    <!-- Iconița de coș -->
+    <!-- Iconiță coș -->
     <div class="cart-icon" onclick="navigateTo('cos')">
       <img src="https://via.placeholder.com/24?text=🛒" alt="Coș">
       <span class="badge" id="cart-count">0</span>
@@ -375,7 +391,7 @@
     <img src="https://via.placeholder.com/150x50?text=ANPC" alt="Logo ANPC">
   </footer>
   
-  <!-- Formular de notificare (FormSubmit) -->
+  <!-- Formular pentru notificare e-mail (FormSubmit) -->
   <form id="notifyForm" action="https://formsubmit.co/admin@example.com" method="POST" target="_blank" style="display: none;">
     <input type="hidden" name="subject" value="Notificare Comandă - Magazin Bisericesc">
     <input type="hidden" name="orderDetails" id="orderDetailsInput">
@@ -383,7 +399,7 @@
   
   <!-- JAVASCRIPT -->
   <script>
-    // Tranziție între pagini (fade in/out)
+    // Tranziție între pagini (fade)
     function navigateTo(pageId) {
       const current = document.querySelector('.active-page');
       if (current) {
@@ -404,7 +420,7 @@
       if (pageId === 'produse') fetchProductsFromBackend();
     }
     
-    // Buton Back to Top
+    // Back to Top
     window.onscroll = function() { scrollFunction(); };
     function scrollFunction() {
       const btn = document.getElementById("backToTop");
@@ -484,8 +500,8 @@
                 ${ prod.labels && prod.labels.length ? `<p>${prod.labels.map(l => `<span class="badge bg-info text-dark me-1">${l}</span>`).join("")}</p>` : "" }
               </div>
               <div class="p-2">
-                <div class="input-group" style="max-width:120px;">
-                  <input type="number" id="qty-${prod.id}" value="1" min="1" class="form-control">
+                <div class="input-group" style="max-width:160px;">
+                  <input type="number" id="qty-${prod.id}" value="1" min="1" class="form-control quantity-input">
                   <button class="btn btn-danger btn-sm add-cart-btn" onclick="addToCart(${prod.id}, 'list')">Adaugă în Coș</button>
                 </div>
               </div>
@@ -516,8 +532,8 @@
             ${labelsHtml ? `<p>${labelsHtml}</p>` : ""}
             <p><strong>Preț:</strong> ${prod.price.toFixed(2)} Lei</p>
             <p><strong>Stoc disponibil:</strong> <span id="detail-stock-${prod.id}">${prod.stock}</span></p>
-            <div class="input-group" style="max-width:120px;">
-              <input type="number" id="detail-qty-${prod.id}" value="1" min="1" class="form-control">
+            <div class="input-group" style="max-width:160px;">
+              <input type="number" id="detail-qty-${prod.id}" value="1" min="1" class="form-control quantity-input">
               <button class="btn btn-danger add-cart-btn" onclick="addToCart(${prod.id}, 'detail')">Adaugă în Coș</button>
             </div>
           </div>
@@ -626,7 +642,7 @@
       localStorage.setItem("globalOrders", JSON.stringify(orders));
       alert("Comanda a fost plasată. Mulțumim, " + name + "!");
       
-      // Trimitere notificare e-mail prin formular (FormSubmit)
+      // Notificare e-mail prin FormSubmit
       var orderSummary = "Comandă ID: " + order.id + "\nClient: " + order.customer.name + "\nContact: " + order.customer.contact + "\nTotal: " + order.total.toFixed(2) + " Lei";
       document.getElementById("orderDetailsInput").value = orderSummary;
       document.getElementById("notifyForm").submit();
@@ -864,7 +880,6 @@
       invoiceWindow.print();
     }
     
-    // Secțiunea de afișare a detaliilor comenzii
     function renderOrderDetails(order) {
       const container = document.getElementById('order-details-container');
       let html = `<p><strong>Client:</strong> ${order.customer.name}</p>
@@ -908,11 +923,11 @@
       renderSlider();
     });
   </script>
-  <!-- Formular de notificare e-mail (FormSubmit) -->
+  <!-- Formular notificare e-mail (FormSubmit) -->
   <form id="notifyForm" action="https://formsubmit.co/admin@example.com" method="POST" target="_blank" style="display: none;">
     <input type="hidden" name="subject" value="Notificare Comandă - Magazin Bisericesc">
     <input type="hidden" name="orderDetails" id="orderDetailsInput">
   </form>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-  </html>
+</html>
