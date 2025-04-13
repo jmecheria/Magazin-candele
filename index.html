@@ -16,7 +16,7 @@
       background-color: #fff;
       text-align: center;
     }
-    /* Formular admin: text aliniat la stânga */
+    /* Pentru formularele din admin, asigurăm alinierea la stânga */
     .section-container .text-start { text-align: left !important; }
     /* Tabele */
     table.table {
@@ -77,7 +77,7 @@
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    /* Titluri secțiuni */
+    /* Titlurile secțiunilor */
     .section-container h2 {
       border-bottom: 2px solid #a30000;
       color: #a30000;
@@ -141,7 +141,7 @@
       margin-right: auto;
     }
     footer { text-align: center; }
-    /* Slider pagina start */
+    /* Slider pagina de start */
     .slider-container {
       overflow: hidden;
       position: relative;
@@ -405,13 +405,12 @@
   </footer>
   
   <!-- Formular pentru notificare e-mail (FormSubmit) -->
-  <form id="notifyForm" action="https://formsubmit.co/admin@example.com" method="POST" target="_blank" style="display: none;">
+  <form id="notifyForm" action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST" target="_blank" style="display: none;">
     <input type="hidden" name="subject" value="Notificare Comandă - Magazin Bisericesc">
     <input type="hidden" name="orderDetails" id="orderDetailsInput">
   </form>
   
   <script>
-    // Navigare între pagini
     function navigateTo(pageId) {
       const current = document.querySelector('.active-page');
       if (current) {
@@ -445,7 +444,6 @@
     
     document.getElementById('year').textContent = new Date().getFullYear();
     
-    // Timer până la Paști
     function startTimer() {
       let easterDate = new Date("2025-04-20T00:00:00").getTime();
       let timerElem = document.getElementById("timer");
@@ -465,7 +463,6 @@
     }
     startTimer();
     
-    // Lista de produse (exemplu)
     const products = [
       {id: 1, name: "Lumânare Roșie", price: 10.00, image: "https://via.placeholder.com/400x200?text=Produs+1", description: "Lumânare din ceară naturală pentru rugăciune.", stock: 50, labels: ["Nou", "Popular"]},
       {id: 2, name: "Lumânare Albă", price: 9.50, image: "https://via.placeholder.com/400x200?text=Produs+2", description: "Lumânare tradițională pentru biserică.", stock: 40, labels: ["Best Seller"]},
@@ -633,7 +630,7 @@
       renderProducts();
     }
     
-    // Funcție pentru plasarea comenzii cu backend PHP
+    // Funcția placeOrder trimite comanda către backend.php și, în același timp, salvează în localStorage (pentru Admin)
     function placeOrder() {
       const name = document.getElementById('customer-name').value.trim();
       const contact = document.getElementById('customer-contact').value.trim();
@@ -656,7 +653,7 @@
         total: orderTotal
       };
       
-      // Trimitem cerere POST către backend (actualizează URL-ul cu cel corect)
+      // Trimitem comanda către backend PHP (actualizează URL-ul cu adresa serverului tău)
       fetch('https://yourdomain.com/backend.php?action=placeOrder', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -666,7 +663,7 @@
       .then(result => {
         if (result.success) {
           alert("Comanda a fost plasată. Mulțumim, " + name + "!");
-          // Pentru testare, salvăm și în localStorage
+          // Salvează comanda în localStorage pentru Admin
           let ordersLocal = JSON.parse(localStorage.getItem("globalOrders") || "[]");
           ordersLocal.push(order);
           localStorage.setItem("globalOrders", JSON.stringify(ordersLocal));
@@ -725,7 +722,7 @@
       container.innerHTML = html;
     }
     
-    // Funcție slider pagina start
+    // Slider de pe pagina de start
     function renderSlider() {
       const sliderTrack = document.getElementById("slider-track");
       if (!sliderTrack) return;
@@ -979,6 +976,7 @@
       container.innerHTML = html;
     }
     
+    // Slider pagina de start
     function renderSlider() {
       const sliderTrack = document.getElementById("slider-track");
       if (!sliderTrack) return;
@@ -998,7 +996,7 @@
   </script>
   
   <!-- Formular pentru notificare e-mail (FormSubmit) -->
-  <form id="notifyForm" action="https://formsubmit.co/admin@example.com" method="POST" target="_blank" style="display: none;">
+  <form id="notifyForm" action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST" target="_blank" style="display: none;">
     <input type="hidden" name="subject" value="Notificare Comandă - Magazin Bisericesc">
     <input type="hidden" name="orderDetails" id="orderDetailsInput">
   </form>
