@@ -16,7 +16,7 @@
       background-color: #fff;
       text-align: center;
     }
-    /* Forțăm alinierea la stânga pentru formulare (de exemplu, în Admin) */
+    /* Forțăm alinierea la stânga pentru formulare */
     .text-start { text-align: left !important; }
     /* Tabele */
     table.table {
@@ -85,7 +85,7 @@
       margin-bottom: 10px;
       text-align: center;
     }
-    /* Paginile – tranziție fade */
+    /* Paginile – efect fade */
     .page {
       opacity: 0;
       transition: opacity 0.5s ease;
@@ -116,7 +116,7 @@
       cursor: pointer;
     }
     .product-card .card-body { padding: 15px; flex-grow: 1; }
-    /* Input cantitate */
+    /* Input de cantitate */
     .quantity-input {
       border: 1px solid #a30000;
       border-radius: 4px 0 0 4px;
@@ -139,7 +139,7 @@
       margin: 0 auto 20px auto;
     }
     footer { text-align: center; }
-    /* Slider pentru pagina de start */
+    /* Slider pagina de start */
     .slider-container {
       overflow: hidden;
       position: relative;
@@ -295,7 +295,7 @@
         <p class="attractive-text">
           Magazinul nostru Bisericesc a fost fondat din pasiune și dorința de a păstra tradițiile spirituale. Ne dedicăm cu grijă selecționării produselor care aduc lumină și inspirație în viața credincioșilor. Fiecare obiect este realizat manual sau ales cu atenție pentru a reflecta valorile autentice ale credinței. Experiența noastră îmbină tehnologia modernă cu tradiția, oferind o selecție variată și de calitate. Vă invităm să explorați universul nostru și să descoperiți povestea fiecărui produs.
         </p>
-        <!-- Carousel pentru "Despre noi" -->
+        <!-- Carousel "Despre noi" -->
         <div id="aboutCarousel" class="carousel slide mt-3" data-bs-ride="carousel" data-bs-touch="true">
           <div class="carousel-inner">
             <div class="carousel-item active">
@@ -368,11 +368,12 @@
             <label>Contact (Email/Telefon):</label>
             <input type="text" id="customer-contact" class="form-control" required>
           </div>
-          <!-- Câmp pentru cod de reducere -->
           <div class="mb-3 text-start">
             <label>Cod Reducere (opțional):</label>
             <input type="text" id="discount-code" class="form-control" placeholder="Ex: DISC10">
           </div>
+          <!-- Afișare total final actualizat -->
+          <div id="final-total-display" class="mb-3"></div>
           <button class="btn btn-success" onclick="placeOrder()">Finalizează Comanda</button>
         </div>
       </div>
@@ -413,11 +414,9 @@
     <input type="hidden" name="orderDetails" id="orderDetailsInput">
   </form>
   
-  <!-- Scripturi externe -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  
   <script>
-    // Funcția pentru navigare între pagini (fade)
+    // Navigare între pagini cu efect fade
     function navigateTo(pageId) {
       const current = document.querySelector('.active-page');
       if (current) {
@@ -438,8 +437,8 @@
       if (pageId === 'produse') { renderProducts(); }
     }
     
-    // Funcție Back to Top
-    window.onscroll = function() { 
+    // Back to Top
+    window.onscroll = function() {
       const btn = document.getElementById("backToTop");
       btn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "block" : "none";
     };
@@ -447,7 +446,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
-    // Setare an curent
+    // Setează anul curent în footer
     document.getElementById('year').textContent = new Date().getFullYear();
     
     // Timer până la Paști
@@ -461,14 +460,14 @@
         let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        timerElem.textContent = (distance > 0) 
+        timerElem.textContent = (distance > 0)
           ? "Timp până la Paști: " + days + "z " + hours + "h " + minutes + "m " + seconds + "s"
           : "Sărbătoarea a început! Următoarea se anunță în curând.";
       }, 1000);
     }
     startTimer();
     
-    // Exemplu listă produse
+    // Exemplu listă produse (poți completa cu restul produselor)
     const products = [
       {id: 1, name: "Lumânare Roșie", price: 10.00, image: "https://via.placeholder.com/400x200?text=Produs+1", description: "Lumânare din ceară naturală pentru rugăciune.", stock: 50, labels: ["Nou", "Popular"]},
       {id: 2, name: "Lumânare Albă", price: 9.50, image: "https://via.placeholder.com/400x200?text=Produs+2", description: "Lumânare tradițională pentru biserică.", stock: 40, labels: ["Best Seller"]},
@@ -480,7 +479,6 @@
       {id: 8, name: "Amuletă", price: 7.50, image: "https://via.placeholder.com/400x200?text=Produs+8", description: "Amuletă de protecție.", stock: 45, labels: []},
       {id: 9, name: "Set Rugăciuni", price: 20.00, image: "https://via.placeholder.com/400x200?text=Produs+9", description: "Set complet de rugăciuni.", stock: 55, labels: []},
       {id: 10, name: "Simbol Bisericesc", price: 11.00, image: "https://via.placeholder.com/400x200?text=Produs+10", description: "Simbol al credinței.", stock: 50, labels: []}
-      // ... poți adăuga și restul produselor
     ];
     
     let cart = [];
@@ -546,7 +544,10 @@
       const qtyInput = (source === 'list') ? document.getElementById(`qty-${id}`) : document.getElementById(`detail-qty-${id}`);
       let qty = parseInt(qtyInput.value) || 1;
       const prod = products.find(p => p.id === id);
-      if (prod.stock < qty) { alert("Nu există suficient stoc!"); return; }
+      if (prod.stock < qty) { 
+        alert("Nu există suficient stoc!");
+        return; 
+      }
       prod.stock -= qty;
       if (document.getElementById(`stock-${id}`)) {
         document.getElementById(`stock-${id}`).textContent = prod.stock;
@@ -568,6 +569,7 @@
       let total = cart.reduce((sum, item) => sum + item.quantity, 0);
       document.getElementById('cart-count').textContent = total;
       renderCart();
+      updateFinalTotal(); // Actualizează și totalul final dacă există discount
     }
     
     function renderCart() {
@@ -602,7 +604,7 @@
                  </tr>`;
       });
       html += `<tr>
-                 <td colspan="3" class="text-end"><strong>Total General:</strong></td>
+                 <td colspan="3" class="text-end"><strong>Total Inițial:</strong></td>
                  <td colspan="2"><strong>${grandTotal.toFixed(2)} Lei</strong></td>
                </tr>`;
       html += `</tbody></table>`;
@@ -633,7 +635,24 @@
       renderProducts();
     }
     
-    // Funcție pentru finalizarea comenzii – se procesează reducerea și se trimite emailul prin FormSubmit
+    // Funcție care actualizează finalul comenzii în funcție de discount (se apelează la actualizarea coșului și când se tastează codul)
+    function updateFinalTotal() {
+      let orderTotal = cart.reduce((sum, item) => {
+        const prod = products.find(p => p.id === item.id);
+        return sum + prod.price * item.quantity;
+      }, 0);
+      let discountCode = document.getElementById("discount-code").value.trim();
+      let discountPercent = 0;
+      if (discountCode === "DISC10") discountPercent = 10;
+      else if (discountCode === "DISC20") discountPercent = 20;
+      let discountAmount = orderTotal * (discountPercent / 100);
+      let finalTotal = orderTotal - discountAmount;
+      document.getElementById("final-total-display").innerText = "Total Final: " + finalTotal.toFixed(2) + " Lei";
+    }
+    
+    document.getElementById("discount-code").addEventListener("input", updateFinalTotal);
+    
+    // Funcția pentru plasarea comenzii (se trimite email prin FormSubmit)
     function placeOrder() {
       const name = document.getElementById('customer-name').value.trim();
       const contact = document.getElementById('customer-contact').value.trim();
@@ -645,17 +664,14 @@
         alert("Coșul este gol!");
         return;
       }
-      // Calculăm totalul inițial
       let orderTotal = cart.reduce((sum, item) => {
         const prod = products.find(p => p.id === item.id);
         return sum + prod.price * item.quantity;
       }, 0);
-      // Verificăm codul de reducere
-      const discountCode = document.getElementById('discount-code').value.trim();
+      let discountCode = document.getElementById("discount-code").value.trim();
       let discountPercent = 0;
       if (discountCode === "DISC10") discountPercent = 10;
       else if (discountCode === "DISC20") discountPercent = 20;
-      
       let discountAmount = orderTotal * (discountPercent / 100);
       let finalTotal = orderTotal - discountAmount;
       
@@ -670,7 +686,6 @@
         finalTotal: finalTotal.toFixed(2)
       };
       
-      // Combinăm detaliile comenzii într-un șir
       let orderSummary = "ID Comandă: " + order.id + "\n";
       orderSummary += "Client: " + order.customer.name + "\n";
       orderSummary += "Contact: " + order.customer.contact + "\n\n";
@@ -685,15 +700,13 @@
       }
       orderSummary += "Total Final: " + order.finalTotal + " Lei\n";
       
-      // Setăm detaliile în câmpul ascuns al formularului de email
       document.getElementById("orderDetailsInput").value = orderSummary;
-      
-      // Trimiterea formularului prin FormSubmit
+      // Trimitem formularul email prin FormSubmit
       document.getElementById("notifyForm").submit();
       
       alert("Comanda a fost plasată. Mulțumim, " + name + "!");
       
-      // Salvăm comanda în localStorage pentru Admin și resetăm coșul
+      // Salvăm comanda în localStorage (pentru Admin)
       let ordersLocal = JSON.parse(localStorage.getItem("globalOrders") || "[]");
       ordersLocal.push(order);
       localStorage.setItem("globalOrders", JSON.stringify(ordersLocal));
@@ -704,6 +717,7 @@
       document.getElementById('customer-name').value = "";
       document.getElementById('customer-contact').value = "";
       document.getElementById('discount-code').value = "";
+      updateFinalTotal();
       renderProducts();
       navigateTo('order-details');
     }
@@ -742,7 +756,6 @@
       container.innerHTML = html;
     }
     
-    // Slider de pe pagina de start
     function renderSlider() {
       const sliderTrack = document.getElementById("slider-track");
       if (!sliderTrack) return;
@@ -755,7 +768,6 @@
       });
     }
     
-    // Inițializare
     document.addEventListener("DOMContentLoaded", function() {
       renderProducts();
       renderSlider();
@@ -871,7 +883,7 @@
       orders.forEach((order, idx) => {
         let details = "";
         order.items.forEach(item => {
-          details += `Produs ID: ${item.id} x ${item.quantity}<br>`;
+          details += "Produs ID: " + item.id + " x " + item.quantity + "<br>";
         });
         html += `<tr>
                    <td>${order.id}</td>
@@ -889,7 +901,13 @@
     }
     
     function finishOrder(index) {
-      alert("Funcționalitatea de finalizare comandă este doar demo.");
+      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      if (index >= 0 && index < orders.length) {
+        orders.splice(index, 1);
+        localStorage.setItem("globalOrders", JSON.stringify(orders));
+        alert("Comanda a fost finalizată.");
+        renderAdminOrders();
+      }
     }
     
     function printInvoice(index) {
