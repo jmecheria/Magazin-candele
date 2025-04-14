@@ -7,7 +7,7 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    /* Stilizare generală pentru secțiuni */
+    /* Stilizare generală */
     .section-container {
       border: 1px solid #a30000;
       border-radius: 8px;
@@ -35,8 +35,7 @@
     header img.logo, footer img { height: 50px; }
     nav ul {
       list-style: none;
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       display: flex;
       gap: 15px;
       flex-wrap: wrap;
@@ -56,10 +55,8 @@
     .cart-icon img { height: 24px; }
     .cart-icon .badge {
       position: absolute;
-      top: -5px;
-      right: -10px;
-      background: yellow;
-      color: #000;
+      top: -5px; right: -10px;
+      background: yellow; color: #000;
       border-radius: 50%;
       padding: 2px 6px;
       font-size: 0.8rem;
@@ -85,7 +82,7 @@
       display: none;
     }
     .page.active-page { display: block; opacity: 1; }
-    /* Carduri pentru produse – în listă afișăm doar imaginea, numele și prețul/intervalul de preț */
+    /* Carduri pentru produse – în listă se afișează doar imaginea, numele și prețul/intervalul */
     .product-card {
       border: 1px solid #ccc;
       border-radius: 5px;
@@ -110,7 +107,7 @@
     }
     .product-card .card-body { padding: 15px; }
     .price-range { font-weight: bold; color: #a30000; }
-    /* Modalul de detalii: afișează toate informațiile produsului */
+    /* Modalul de detalii */
     .modal-details { text-align: left; }
     .quantity-select, .unit-input {
       border: 1px solid #a30000;
@@ -129,10 +126,7 @@
       width: 100%;
     }
     .add-cart-btn:hover { background-color: #7a0000; }
-    #filter-input {
-      max-width: 400px;
-      margin: 0 auto 20px;
-    }
+    #filter-input { max-width: 400px; margin: 0 auto 20px; }
     footer { text-align: center; }
     /* Slider pentru pagina de start */
     .slider-container {
@@ -215,6 +209,25 @@
       .main-container { margin: 10px; padding: 15px; }
       .product-card img { height: 150px; }
     }
+    /* Slider pentru variante în modal: imaginea ambalajelor */
+    .variant-slider-container {
+      overflow: hidden;
+      position: relative;
+      height: 100px;
+      margin-top: 10px;
+    }
+    .variant-slider-track {
+      display: flex;
+      width: max-content;
+      animation: slide 10s linear infinite;
+    }
+    .variant-slider-track img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      margin-right: 5px;
+      border-radius: 5px;
+    }
   </style>
 </head>
 <body>
@@ -261,7 +274,7 @@
       </div>
     </section>
     
-    <!-- Pagina Produse: Afișează doar imaginea, numele și prețul (sau intervalul de preț) -->
+    <!-- Pagina Produse: Imagine, nume și preț/interval -->
     <section id="produse" class="page">
       <div class="section-container">
         <h2>Produsele noastre</h2>
@@ -270,7 +283,7 @@
       </div>
     </section>
     
-    <!-- Pagina Detalii Produs (Modal) -->
+    <!-- Modal de Detalii Produs -->
     <section id="produs" class="page">
       <div class="section-container">
         <div id="produs-container"></div>
@@ -286,9 +299,9 @@
       <div class="section-container">
         <h2>Despre noi</h2>
         <p class="attractive-text">
-          Magazinul Bisericesc se remarcă prin pasiunea pentru tradiție și spiritualitate. Fondat pentru a oferi obiecte de cult de cea mai înaltă calitate, colaborăm cu meșteri locali care își pun inima în fiecare lucrare. Fiecare produs este ales cu grijă, iar oferta noastră reunește atât obiecte artizanale cât și accesorii moderne, pentru a îmbogăți experiența ta spirituală. Ne mândrim cu transparența informațiilor tehnice oferite despre fiecare produs.
+          Magazinul Bisericesc se remarcă prin pasiunea pentru tradiție și spiritualitate. Fondat pentru a oferi obiecte de cult de cea mai înaltă calitate, colaborăm cu meșteri locali dedicați care își pun inima în fiecare lucrare. Oferta noastră reunește atât obiecte artizanale, cât și accesorii moderne, toate selectate cu atenție pentru a oferi o experiență spirituală autentică. Ne mândrim cu transparența informațiilor tehnice despre fiecare produs, pentru ca tu să te simți în siguranță în alegerea ta.
         </p>
-        <!-- Slider: asigurăm aceeași dimensiune pentru toate imaginile -->
+        <!-- Carousel pentru "Despre noi" -->
         <div id="aboutCarousel" class="carousel slide mt-3" data-bs-ride="carousel" data-bs-touch="true">
           <div class="carousel-inner">
             <div class="carousel-item active">
@@ -318,12 +331,12 @@
       <div class="section-container">
         <h2>Termeni și Condiții</h2>
         <p class="attractive-text">
-          Accesând acest site, sunteți de acord cu toți termenii și condițiile de utilizare. Informațiile furnizate sunt menite să asigure o experiență transparentă și sigură, iar continuarea utilizării platformei implică acceptarea acestor condiții. Magazinul își rezervă dreptul de a modifica periodic aceste condiții, iar clienții sunt responsabili pentru verificarea actualizărilor. Datele personale sunt protejate conform normelor în vigoare, iar orice solicitare de suport este tratată cu seriozitate.
+          Accesând acest site, sunteți de acord cu toți termenii și condițiile de utilizare. Informațiile furnizate vizează asigurarea unei experiențe transparente și sigure. Magazinul își rezervă dreptul de a modifica periodic aceste condiții, iar continuarea utilizării platformei implică acceptarea modificărilor. Datele personale sunt protejate conform normelor în vigoare, iar orice solicitare de suport va fi tratată cu maximă seriozitate.
         </p>
       </div>
     </section>
     
-    <!-- Pagina Calendar (30 de zile) -->
+    <!-- Pagina Calendar -->
     <section id="calendar" class="page">
       <div class="section-container">
         <h2>Calendar Creștin Ortodox – Aprilie</h2>
@@ -335,6 +348,7 @@
             </tr>
           </thead>
           <tbody>
+            <!-- 30 de rânduri pentru luna aprilie -->
             <tr><td>1</td><td>Sărbătoarea 1</td></tr>
             <tr><td>2</td><td>Sărbătoarea 2</td></tr>
             <tr><td>3</td><td>Sărbătoarea 3</td></tr>
@@ -439,7 +453,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
   <script>
-    // Navigare între pagini (efect fade)
+    // Navigare între pagini cu efect fade
     function navigateTo(pageId) {
       const current = document.querySelector('.active-page');
       if(current) {
@@ -490,29 +504,29 @@
     }
     startTimer();
     
-    // Lista de produse (extinde până la 20 după necesitate)
+    // Exemplu de produse – extinde până la 20 produse după necesitate
     const products = [
       {
         id: 1,
-        type: "variant", // produs cu variante (gramaj)
+        type: "variant",
         name: "Lumânare Roșie",
         image: "https://via.placeholder.com/400x200?text=Produs+1",
-        description: "Lumânare din ceară naturală, realizată artizanal, ideală pentru rugăciune.",
+        description: "Lumânare din ceară naturală, realizată artizanal, ideală pentru momente de rugăciune.",
         labels: ["Nou", "Popular"],
         variants: [
-          { weight: 100, price: 10.00, stock: 10 },
-          { weight: 200, price: 19.00, stock: 8 },
-          { weight: 300, price: 27.00, stock: 6 },
-          { weight: 400, price: 34.00, stock: 4 },
-          { weight: 500, price: 40.00, stock: 3 }
+          { weight: 100, price: 10.00, stock: 10, image: "https://via.placeholder.com/100?text=100g" },
+          { weight: 200, price: 19.00, stock: 8,  image: "https://via.placeholder.com/100?text=200g" },
+          { weight: 300, price: 27.00, stock: 6,  image: "https://via.placeholder.com/100?text=300g" },
+          { weight: 400, price: 34.00, stock: 4,  image: "https://via.placeholder.com/100?text=400g" },
+          { weight: 500, price: 40.00, stock: 3,  image: "https://via.placeholder.com/100?text=500g" }
         ]
       },
       {
         id: 2,
-        type: "standard", // produs standard
+        type: "standard",
         name: "Cruce Sculptată Manual",
         image: "https://via.placeholder.com/400x200?text=Produs+2",
-        description: "Cruce din lemn masiv, realizată manual, cu detalii fine.",
+        description: "Cruce din lemn masiv, realizată manual, cu detalii fine și design tradițional.",
         material: "Lemn de stejar",
         dimensions: "20 x 10 x 2 cm",
         weight: "150g",
@@ -528,19 +542,19 @@
         description: "Icoană lucrată manual, cu detalii fine, ideală pentru rugăciune.",
         labels: ["Artizanal"],
         variants: [
-          { weight: 100, price: 25.50, stock: 5 },
-          { weight: 200, price: 50.00, stock: 4 },
-          { weight: 300, price: 74.50, stock: 3 },
-          { weight: 400, price: 98.00, stock: 3 },
-          { weight: 500, price: 120.00, stock: 2 }
+          { weight: 100, price: 25.50, stock: 5, image: "https://via.placeholder.com/100?text=100g" },
+          { weight: 200, price: 50.00, stock: 4, image: "https://via.placeholder.com/100?text=200g" },
+          { weight: 300, price: 74.50, stock: 3, image: "https://via.placeholder.com/100?text=300g" },
+          { weight: 400, price: 98.00, stock: 3, image: "https://via.placeholder.com/100?text=400g" },
+          { weight: 500, price: 120.00, stock: 2, image: "https://via.placeholder.com/100?text=500g" }
         ]
       }
-      // Adaugă produsele până la 20...
+      // Adaugă și alte produse până la 20...
     ];
     
     let cart = [];
     
-    // Renderizează produsele în pagina "Produse": afișează doar imaginea, numele și prețul (sau intervalul)
+    // Renderizează lista de produse (pagina "Produse") – afișează doar imaginea, numele și prețul/intervalul de preț
     function renderProducts() {
       const container = document.getElementById('products-container');
       container.innerHTML = "";
@@ -582,9 +596,22 @@
       
       let detailsHtml = "";
       if(prod.type === "variant") {
+        // Dropdown pentru selectarea variantei
         let variantOptions = prod.variants.map((v, idx) =>
           `<option value="${idx}">${v.weight}g - ${v.price.toFixed(2)} Lei (Stoc: ${v.stock} buc)</option>`
         ).join("");
+        // Slider pentru imagini ale ambalajelor variantei
+        let variantSlider = `
+          <div class="mb-3">
+            <label>Ambalaje disponibile:</label>
+            <div id="variantSlider-${prod.id}" class="variant-slider-container">
+              <div class="variant-slider-track">
+                ${prod.variants.map((v, idx) => 
+                  `<img src="${v.image ? v.image : prod.image}" alt="Variant ${v.weight}g">`
+                ).join("")}
+              </div>
+            </div>
+          </div>`;
         detailsHtml = `
           <div class="mb-3 modal-details">
             <label>Selectează varianta:</label>
@@ -592,6 +619,7 @@
               ${variantOptions}
             </select>
           </div>
+          ${variantSlider}
           <div class="mb-3 modal-details">
             <label>Număr de unități:</label>
             <input type="number" id="unit-${prod.id}" class="unit-input" value="1" min="1">
@@ -769,7 +797,7 @@
         document.getElementById(`detail-stock-${prod.id}`).textContent = stockText;
     }
     
-    // Actualizează totalul final aplicând discount-ul
+    // Actualizează totalul final cu discount
     function updateFinalTotal() {
       let orderTotal = cart.reduce((sum, item) => sum + item.cost, 0);
       let discountCode = document.getElementById("discount-code").value.trim();
@@ -783,7 +811,7 @@
     
     document.getElementById("discount-code").addEventListener("input", updateFinalTotal);
     
-    // Plasează comanda: se compilează sumarul și se trimite prin FormSubmit, apoi se salvează comanda în localStorage
+    // Plasează comanda: compilează sumarul și trimite emailul prin FormSubmit, salvând comanda în localStorage
     function placeOrder() {
       const name = document.getElementById('customer-name').value.trim();
       const contact = document.getElementById('customer-contact').value.trim();
@@ -874,12 +902,12 @@
                  <tbody>`;
       order.items.forEach(item => {
         const prod = products.find(p => p.id === item.id);
-        let prodInfo = prod.name;
+        let info = prod.name;
         if(prod.type === "variant") {
-          prodInfo += ` (${prod.variants[item.variantIndex].weight}g)`;
+          info += ` (${prod.variants[item.variantIndex].weight}g)`;
         }
         html += `<tr>
-                   <td>${prodInfo}</td>
+                   <td>${info}</td>
                    <td>${item.units}</td>
                    <td>${item.cost.toFixed(2)} Lei</td>
                  </tr>`;
@@ -888,12 +916,12 @@
       container.innerHTML = html;
     }
     
-    // Slider pe pagina de start
+    // Slider pe pagina de start (același cod ca înainte)
     function renderSlider() {
       const sliderTrack = document.getElementById("slider-track");
       if(!sliderTrack) return;
       sliderTrack.innerHTML = "";
-      products.slice(0,5).forEach(prod => {
+      products.slice(0, 5).forEach(prod => {
         const img = document.createElement("img");
         img.src = prod.image;
         img.alt = prod.name;
@@ -906,7 +934,7 @@
       renderSlider();
     });
     
-    // Secțiunea Admin: afișează, pentru fiecare produs, stocurile separate
+    // Secțiunea Admin
     let adminLogged = false;
     function loadAdmin() {
       const adminDiv = document.getElementById('admin-content');
@@ -959,13 +987,12 @@
       loadAdmin();
     }
     
-    // Actualizează stocurile: pentru fiecare produs, adminul poate actualiza separat stocul fiecărei variante (sau stocul produselor standard)
+    // Actualizează stocurile: pentru fiecare produs, adminul poate actualiza separat stocul fiecărei variante sau stocul produselor standard
     function updateAllStocks() {
-      // Pentru fiecare produs
       products.forEach(prod => {
         if(prod.type === "variant") {
-          prod.variants.forEach((variant, index) => {
-            const input = document.getElementById(`new-stock-${prod.id}-${index}`);
+          prod.variants.forEach((variant, idx) => {
+            const input = document.getElementById(`new-stock-${prod.id}-${idx}`);
             if(input) {
               const newStock = parseInt(input.value) || variant.stock;
               variant.stock = newStock;
@@ -991,10 +1018,470 @@
         if(prod.name.toLowerCase().includes(filter)) {
           let stockHtml = "";
           if(prod.type === "variant") {
-            prod.variants.forEach((v, index) => {
+            prod.variants.forEach((v, idx) => {
               stockHtml += `<div style="margin-bottom: 5px;">
                 <strong>${v.weight}g:</strong> ${v.stock} buc
-                <br><input type="number" id="new-stock-${prod.id}-${index}" placeholder="Nou stoc" style="width:70px; margin-top:3px;">
+                <br><input type="number" id="new-stock-${prod.id}-${idx}" placeholder="Nou stoc" style="width:70px; margin-top:3px;">
+              </div>`;
+            });
+          } else {
+            stockHtml = `<strong>Stoc:</strong> ${prod.stock} buc<br>
+              <input type="number" id="new-stock-${prod.id}" placeholder="Nou stoc" style="width:70px; margin-top:3px;">`;
+          }
+          const prodHTML = `
+            <div class="mb-2 p-2" style="border:1px solid #ccc; border-radius:5px;">
+              <strong>${prod.name}</strong><br>
+              ${stockHtml}
+            </div>`;
+          container.innerHTML += prodHTML;
+        }
+      });
+    }
+    
+    function renderAdminOrders() {
+      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      const container = document.getElementById('admin-orders-container');
+      if(orders.length === 0) {
+        container.innerHTML = "<p>Nu există comenzi.</p>";
+        return;
+      }
+      let html = `<table class="table">
+                    <thead>
+                      <tr>
+                        <th>ID Comandă</th>
+                        <th>Client</th>
+                        <th>Detalii Produse</th>
+                        <th>Total Final</th>
+                        <th>Acțiuni</th>
+                      </tr>
+                    </thead>
+                    <tbody>`;
+      orders.forEach((order, idx) => {
+        let details = "";
+        order.items.forEach(item => {
+          const prod = products.find(p => p.id === item.id);
+          if(prod.type === "variant")
+            details += "Produs ID: " + item.id + " - " + item.units + " unități, variantă: " + prod.variants[item.variantIndex].weight + "g<br>";
+          else
+            details += "Produs ID: " + item.id + " - " + item.units + " unități<br>";
+        });
+        html += `<tr>
+                   <td>${order.id}</td>
+                   <td>${order.customer.name}<br>${order.customer.contact}</td>
+                   <td>${details}</td>
+                   <td>${order.finalTotal} Lei</td>
+                   <td>
+                     <button class="btn btn-success btn-sm" onclick="finishOrder(${idx})">Terminată</button>
+                     <button class="btn btn-info btn-sm" onclick="printInvoice(${idx})">Tipărește Factura</button>
+                   </td>
+                 </tr>`;
+      });
+      html += `</tbody></table>`;
+      container.innerHTML = html;
+    }
+    
+    function finishOrder(index) {
+      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      if(index >= 0 && index < orders.length) {
+        orders.splice(index, 1);
+        localStorage.setItem("globalOrders", JSON.stringify(orders));
+        alert("Comanda a fost finalizată.");
+        renderAdminOrders();
+      }
+    }
+    
+    function printInvoice(index) {
+      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      if(orders.length <= index) return;
+      const order = orders[index];
+      let invoiceWindow = window.open("", "PrintInvoice", "width=800,height=600");
+      let htmlContent = `
+        <html>
+        <head>
+          <title>Factura - Comanda ${order.id}</title>
+          <style>
+            body { font-family: "Times New Roman", Times, serif; padding: 20px; text-align: center; }
+            h2, p, table { margin: 0 0 10px; padding: 0; text-align: center; }
+            table { width: 100%; border-collapse: collapse; }
+            table, th, td { border: 1px solid #000; }
+            th, td { padding: 5px; text-align: center; }
+          </style>
+        </head>
+        <body>
+          <h2>Factura - Comanda ${order.id}</h2>
+          <p><strong>Client:</strong> ${order.customer.name}</p>
+          <p><strong>Contact:</strong> ${order.customer.contact}</p>
+          <p><strong>Total Inițial:</strong> ${order.orderTotal} Lei</p>`;
+      if(order.discountPercent > 0) {
+        htmlContent += `<p><strong>Cod Reducere:</strong> ${order.discountCode} (${order.discountPercent}%)</p>
+                        <p><strong>Valoare Reducere:</strong> ${order.discountAmount} Lei</p>`;
+      }
+      htmlContent += `<p><strong>Total Final:</strong> ${order.finalTotal} Lei</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Produs</th>
+                <th>Unități</th>
+                <th>Cost</th>
+              </tr>
+            </thead>
+            <tbody>`;
+      order.items.forEach(item => {
+        const prod = products.find(p => p.id === item.id);
+        let info = prod.name;
+        if(prod.type === "variant")
+          info += ` (${prod.variants[item.variantIndex].weight}g)`;
+        htmlContent += `<tr>
+                          <td>${info}</td>
+                          <td>${item.units}</td>
+                          <td>${item.cost.toFixed(2)} Lei</td>
+                        </tr>`;
+      });
+      htmlContent += `</tbody></table>
+          </body>
+          </html>`;
+      invoiceWindow.document.write(htmlContent);
+      invoiceWindow.document.close();
+      invoiceWindow.focus();
+      invoiceWindow.print();
+    }
+    
+    // Slider pe pagina de start
+    function renderSlider() {
+      const sliderTrack = document.getElementById("slider-track");
+      if(!sliderTrack) return;
+      sliderTrack.innerHTML = "";
+      products.slice(0,5).forEach(prod => {
+        const img = document.createElement("img");
+        img.src = prod.image;
+        img.alt = prod.name;
+        sliderTrack.appendChild(img);
+      });
+    }
+    
+    document.addEventListener("DOMContentLoaded", function() {
+      renderProducts();
+      renderSlider();
+    });
+    
+    // Secțiunea Admin
+    let adminLogged = false;
+    function loadAdmin() {
+      const adminDiv = document.getElementById('admin-content');
+      if(!adminLogged) {
+        adminDiv.innerHTML = `
+          <div class="section-container text-start">
+            <h2>Login Admin</h2>
+            <div class="mb-3">
+              <label>Utilizator:</label>
+              <input type="text" id="admin-user" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label>Parolă:</label>
+              <input type="password" id="admin-pass" class="form-control">
+            </div>
+            <button class="btn btn-primary" onclick="adminLogin()">Login</button>
+          </div>`;
+      } else {
+        adminDiv.innerHTML = `
+          <div class="section-container">
+            <h2>Dashboard Admin</h2>
+            <div class="mb-3">
+              <button class="btn btn-secondary" onclick="updateAllStocks()">Actualizează stocurile</button>
+            </div>
+            <h5>Filtrare Produse</h5>
+            <input type="text" id="admin-filter" class="form-control mb-3" placeholder="Caută produs în admin..." onkeyup="renderAdminProducts()">
+            <div id="admin-products-container" class="mb-4"></div>
+            <h5>Comenzi Plasate</h5>
+            <div id="admin-orders-container"></div>
+            <button class="btn btn-secondary mt-3" onclick="adminLogout()">Logout</button>
+          </div>`;
+        renderAdminProducts();
+        renderAdminOrders();
+      }
+    }
+    
+    function adminLogin() {
+      const user = document.getElementById('admin-user').value.trim();
+      const pass = document.getElementById('admin-pass').value.trim();
+      if(user === "admin" && pass === "parola123") {
+        adminLogged = true;
+        loadAdmin();
+      } else {
+        alert("Autentificare eșuată!");
+      }
+    }
+    
+    function adminLogout() {
+      adminLogged = false;
+      loadAdmin();
+    }
+    
+    // Actualizează stocurile, pentru fiecare produs actualizând separat stocurile (variantelor pentru produsele de tip variant)
+    function updateAllStocks() {
+      products.forEach(prod => {
+        if(prod.type === "variant") {
+          prod.variants.forEach((variant, idx) => {
+            const input = document.getElementById(`new-stock-${prod.id}-${idx}`);
+            if(input) {
+              const newStock = parseInt(input.value) || variant.stock;
+              variant.stock = newStock;
+            }
+          });
+        } else {
+          const input = document.getElementById(`new-stock-${prod.id}`);
+          if(input) {
+            prod.stock = parseInt(input.value) || prod.stock;
+          }
+        }
+      });
+      alert("Stocurile au fost actualizate.");
+      renderProducts();
+      renderAdminProducts();
+    }
+    
+    function renderAdminProducts() {
+      const container = document.getElementById('admin-products-container');
+      container.innerHTML = "";
+      const filter = document.getElementById('admin-filter').value.toLowerCase();
+      products.forEach(prod => {
+        if(prod.name.toLowerCase().includes(filter)) {
+          let stockHtml = "";
+          if(prod.type === "variant") {
+            prod.variants.forEach((v, idx) => {
+              stockHtml += `<div style="margin-bottom: 5px;">
+                <strong>${v.weight}g:</strong> ${v.stock} buc
+                <br><input type="number" id="new-stock-${prod.id}-${idx}" placeholder="Nou stoc" style="width:70px; margin-top:3px;">
+              </div>`;
+            });
+          } else {
+            stockHtml = `<strong>Stoc:</strong> ${prod.stock} buc<br>
+              <input type="number" id="new-stock-${prod.id}" placeholder="Nou stoc" style="width:70px; margin-top:3px;">`;
+          }
+          const prodHTML = `
+            <div class="mb-2 p-2" style="border:1px solid #ccc; border-radius:5px;">
+              <strong>${prod.name}</strong><br>
+              ${stockHtml}
+            </div>`;
+          container.innerHTML += prodHTML;
+        }
+      });
+    }
+    
+    function renderAdminOrders() {
+      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      const container = document.getElementById('admin-orders-container');
+      if(orders.length === 0) {
+        container.innerHTML = "<p>Nu există comenzi.</p>";
+        return;
+      }
+      let html = `<table class="table">
+                    <thead>
+                      <tr>
+                        <th>ID Comandă</th>
+                        <th>Client</th>
+                        <th>Detalii Produse</th>
+                        <th>Total Final</th>
+                        <th>Acțiuni</th>
+                      </tr>
+                    </thead>
+                    <tbody>`;
+      orders.forEach((order, idx) => {
+        let details = "";
+        order.items.forEach(item => {
+          const prod = products.find(p => p.id === item.id);
+          if(prod.type === "variant")
+            details += "Produs ID: " + item.id + " - " + item.units + " unități, variantă: " + prod.variants[item.variantIndex].weight + "g<br>";
+          else
+            details += "Produs ID: " + item.id + " - " + item.units + " unități<br>";
+        });
+        html += `<tr>
+                   <td>${order.id}</td>
+                   <td>${order.customer.name}<br>${order.customer.contact}</td>
+                   <td>${details}</td>
+                   <td>${order.finalTotal} Lei</td>
+                   <td>
+                     <button class="btn btn-success btn-sm" onclick="finishOrder(${idx})">Terminată</button>
+                     <button class="btn btn-info btn-sm" onclick="printInvoice(${idx})">Tipărește Factura</button>
+                   </td>
+                 </tr>`;
+      });
+      html += `</tbody></table>`;
+      container.innerHTML = html;
+    }
+    
+    function finishOrder(index) {
+      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      if(index >= 0 && index < orders.length) {
+        orders.splice(index, 1);
+        localStorage.setItem("globalOrders", JSON.stringify(orders));
+        alert("Comanda a fost finalizată.");
+        renderAdminOrders();
+      }
+    }
+    
+    function printInvoice(index) {
+      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      if(orders.length <= index) return;
+      const order = orders[index];
+      let invoiceWindow = window.open("", "PrintInvoice", "width=800,height=600");
+      let htmlContent = `
+        <html>
+        <head>
+          <title>Factura - Comanda ${order.id}</title>
+          <style>
+            body { font-family: "Times New Roman", Times, serif; padding: 20px; text-align: center; }
+            h2, p, table { margin: 0 0 10px; padding: 0; text-align: center; }
+            table { width: 100%; border-collapse: collapse; }
+            table, th, td { border: 1px solid #000; }
+            th, td { padding: 5px; text-align: center; }
+          </style>
+        </head>
+        <body>
+          <h2>Factura - Comanda ${order.id}</h2>
+          <p><strong>Client:</strong> ${order.customer.name}</p>
+          <p><strong>Contact:</strong> ${order.customer.contact}</p>
+          <p><strong>Total Inițial:</strong> ${order.orderTotal} Lei</p>`;
+      if(order.discountPercent > 0) {
+        htmlContent += `<p><strong>Cod Reducere:</strong> ${order.discountCode} (${order.discountPercent}%)</p>
+                        <p><strong>Valoare Reducere:</strong> ${order.discountAmount} Lei</p>`;
+      }
+      htmlContent += `<p><strong>Total Final:</strong> ${order.finalTotal} Lei</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Produs</th>
+                <th>Unități</th>
+                <th>Cost</th>
+              </tr>
+            </thead>
+            <tbody>`;
+      order.items.forEach(item => {
+        const prod = products.find(p => p.id === item.id);
+        let info = prod.name;
+        if(prod.type === "variant")
+          info += ` (${prod.variants[item.variantIndex].weight}g)`;
+        htmlContent += `<tr>
+                          <td>${info}</td>
+                          <td>${item.units}</td>
+                          <td>${item.cost.toFixed(2)} Lei</td>
+                        </tr>`;
+      });
+      htmlContent += `</tbody></table>
+          </body>
+          </html>`;
+      invoiceWindow.document.write(htmlContent);
+      invoiceWindow.document.close();
+      invoiceWindow.focus();
+      invoiceWindow.print();
+    }
+    
+    // Slider pe pagina de start
+    function renderSlider() {
+      const sliderTrack = document.getElementById("slider-track");
+      if(!sliderTrack) return;
+      sliderTrack.innerHTML = "";
+      products.slice(0,5).forEach(prod => {
+        const img = document.createElement("img");
+        img.src = prod.image;
+        img.alt = prod.name;
+        sliderTrack.appendChild(img);
+      });
+    }
+    
+    document.addEventListener("DOMContentLoaded", function() {
+      renderProducts();
+      renderSlider();
+    });
+    
+    // Secțiunea Admin
+    let adminLogged = false;
+    function loadAdmin() {
+      const adminDiv = document.getElementById('admin-content');
+      if(!adminLogged) {
+        adminDiv.innerHTML = `
+          <div class="section-container text-start">
+            <h2>Login Admin</h2>
+            <div class="mb-3">
+              <label>Utilizator:</label>
+              <input type="text" id="admin-user" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label>Parolă:</label>
+              <input type="password" id="admin-pass" class="form-control">
+            </div>
+            <button class="btn btn-primary" onclick="adminLogin()">Login</button>
+          </div>`;
+      } else {
+        adminDiv.innerHTML = `
+          <div class="section-container">
+            <h2>Dashboard Admin</h2>
+            <div class="mb-3">
+              <button class="btn btn-secondary" onclick="updateAllStocks()">Actualizează stocurile</button>
+            </div>
+            <h5>Filtrare Produse</h5>
+            <input type="text" id="admin-filter" class="form-control mb-3" placeholder="Caută produs în admin..." onkeyup="renderAdminProducts()">
+            <div id="admin-products-container" class="mb-4"></div>
+            <h5>Comenzi Plasate</h5>
+            <div id="admin-orders-container"></div>
+            <button class="btn btn-secondary mt-3" onclick="adminLogout()">Logout</button>
+          </div>`;
+        renderAdminProducts();
+        renderAdminOrders();
+      }
+    }
+    
+    function adminLogin() {
+      const user = document.getElementById('admin-user').value.trim();
+      const pass = document.getElementById('admin-pass').value.trim();
+      if(user === "admin" && pass === "parola123") {
+        adminLogged = true;
+        loadAdmin();
+      } else {
+        alert("Autentificare eșuată!");
+      }
+    }
+    
+    function adminLogout() {
+      adminLogged = false;
+      loadAdmin();
+    }
+    
+    // Actualizează stocurile: pentru fiecare produs, actualizează separat stocul fiecărei variante sau stocul produselor standard
+    function updateAllStocks() {
+      products.forEach(prod => {
+        if(prod.type === "variant") {
+          prod.variants.forEach((variant, idx) => {
+            const input = document.getElementById(`new-stock-${prod.id}-${idx}`);
+            if(input) {
+              const newStock = parseInt(input.value) || variant.stock;
+              variant.stock = newStock;
+            }
+          });
+        } else {
+          const input = document.getElementById(`new-stock-${prod.id}`);
+          if(input) {
+            prod.stock = parseInt(input.value) || prod.stock;
+          }
+        }
+      });
+      alert("Stocurile au fost actualizate.");
+      renderProducts();
+      renderAdminProducts();
+    }
+    
+    function renderAdminProducts() {
+      const container = document.getElementById('admin-products-container');
+      container.innerHTML = "";
+      const filter = document.getElementById('admin-filter').value.toLowerCase();
+      products.forEach(prod => {
+        if(prod.name.toLowerCase().includes(filter)) {
+          let stockHtml = "";
+          if(prod.type === "variant") {
+            prod.variants.forEach((v, idx) => {
+              stockHtml += `<div style="margin-bottom: 5px;">
+                <strong>${v.weight}g:</strong> ${v.stock} buc
+                <br><input type="number" id="new-stock-${prod.id}-${idx}" placeholder="Nou stoc" style="width:70px; margin-top:3px;">
               </div>`;
             });
           } else {
@@ -1125,6 +1612,572 @@
       if(!sliderTrack) return;
       sliderTrack.innerHTML = "";
       products.slice(0, 5).forEach(prod => {
+        const img = document.createElement("img");
+        img.src = prod.image;
+        img.alt = prod.name;
+        sliderTrack.appendChild(img);
+      });
+    }
+    
+    document.addEventListener("DOMContentLoaded", function() {
+      renderProducts();
+      renderSlider();
+    });
+    
+    // Secțiunea Admin
+    let adminLogged = false;
+    function loadAdmin() {
+      const adminDiv = document.getElementById('admin-content');
+      if(!adminLogged) {
+        adminDiv.innerHTML = `
+          <div class="section-container text-start">
+            <h2>Login Admin</h2>
+            <div class="mb-3">
+              <label>Utilizator:</label>
+              <input type="text" id="admin-user" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label>Parolă:</label>
+              <input type="password" id="admin-pass" class="form-control">
+            </div>
+            <button class="btn btn-primary" onclick="adminLogin()">Login</button>
+          </div>`;
+      } else {
+        adminDiv.innerHTML = `
+          <div class="section-container">
+            <h2>Dashboard Admin</h2>
+            <div class="mb-3">
+              <button class="btn btn-secondary" onclick="updateAllStocks()">Actualizează stocurile</button>
+            </div>
+            <h5>Filtrare Produse</h5>
+            <input type="text" id="admin-filter" class="form-control mb-3" placeholder="Caută produs în admin..." onkeyup="renderAdminProducts()">
+            <div id="admin-products-container" class="mb-4"></div>
+            <h5>Comenzi Plasate</h5>
+            <div id="admin-orders-container"></div>
+            <button class="btn btn-secondary mt-3" onclick="adminLogout()">Logout</button>
+          </div>`;
+        renderAdminProducts();
+        renderAdminOrders();
+      }
+    }
+    
+    function adminLogin() {
+      const user = document.getElementById('admin-user').value.trim();
+      const pass = document.getElementById('admin-pass').value.trim();
+      if(user === "admin" && pass === "parola123") {
+        adminLogged = true;
+        loadAdmin();
+      } else {
+        alert("Autentificare eșuată!");
+      }
+    }
+    
+    function adminLogout() {
+      adminLogged = false;
+      loadAdmin();
+    }
+    
+    // Actualizează stocurile: pentru fiecare produs, adminul poate actualiza stocurile separate
+    function updateAllStocks() {
+      products.forEach(prod => {
+        if(prod.type === "variant") {
+          prod.variants.forEach((variant, idx) => {
+            const input = document.getElementById(`new-stock-${prod.id}-${idx}`);
+            if(input) {
+              const newStock = parseInt(input.value) || variant.stock;
+              variant.stock = newStock;
+            }
+          });
+        } else {
+          const input = document.getElementById(`new-stock-${prod.id}`);
+          if(input) {
+            prod.stock = parseInt(input.value) || prod.stock;
+          }
+        }
+      });
+      alert("Stocurile au fost actualizate.");
+      renderProducts();
+      renderAdminProducts();
+    }
+    
+    function renderAdminProducts() {
+      const container = document.getElementById('admin-products-container');
+      container.innerHTML = "";
+      const filter = document.getElementById('admin-filter').value.toLowerCase();
+      products.forEach(prod => {
+        if(prod.name.toLowerCase().includes(filter)) {
+          let stockHtml = "";
+          if(prod.type === "variant") {
+            prod.variants.forEach((v, idx) => {
+              stockHtml += `<div style="margin-bottom: 5px;">
+                <strong>${v.weight}g:</strong> ${v.stock} buc
+                <br><input type="number" id="new-stock-${prod.id}-${idx}" placeholder="Nou stoc" style="width:70px; margin-top:3px;">
+              </div>`;
+            });
+          } else {
+            stockHtml = `<strong>Stoc:</strong> ${prod.stock} buc<br>
+              <input type="number" id="new-stock-${prod.id}" placeholder="Nou stoc" style="width:70px; margin-top:3px;">`;
+          }
+          const prodHTML = `
+            <div class="mb-2 p-2" style="border:1px solid #ccc; border-radius:5px;">
+              <strong>${prod.name}</strong><br>
+              ${stockHtml}
+            </div>`;
+          container.innerHTML += prodHTML;
+        }
+      });
+    }
+    
+    function renderAdminOrders() {
+      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      const container = document.getElementById('admin-orders-container');
+      if(orders.length === 0) {
+        container.innerHTML = "<p>Nu există comenzi.</p>";
+        return;
+      }
+      let html = `<table class="table">
+                    <thead>
+                      <tr>
+                        <th>ID Comandă</th>
+                        <th>Client</th>
+                        <th>Detalii Produse</th>
+                        <th>Total Final</th>
+                        <th>Acțiuni</th>
+                      </tr>
+                    </thead>
+                    <tbody>`;
+      orders.forEach((order, idx) => {
+        let details = "";
+        order.items.forEach(item => {
+          const prod = products.find(p => p.id === item.id);
+          if(prod.type === "variant")
+            details += "Produs ID: " + item.id + " - " + item.units + " unități, variantă: " +
+                       prod.variants[item.variantIndex].weight + "g<br>";
+          else
+            details += "Produs ID: " + item.id + " - " + item.units + " unități<br>";
+        });
+        html += `<tr>
+                   <td>${order.id}</td>
+                   <td>${order.customer.name}<br>${order.customer.contact}</td>
+                   <td>${details}</td>
+                   <td>${order.finalTotal} Lei</td>
+                   <td>
+                     <button class="btn btn-success btn-sm" onclick="finishOrder(${idx})">Terminată</button>
+                     <button class="btn btn-info btn-sm" onclick="printInvoice(${idx})">Tipărește Factura</button>
+                   </td>
+                 </tr>`;
+      });
+      html += `</tbody></table>`;
+      container.innerHTML = html;
+    }
+    
+    function finishOrder(index) {
+      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      if(index >= 0 && index < orders.length) {
+        orders.splice(index, 1);
+        localStorage.setItem("globalOrders", JSON.stringify(orders));
+        alert("Comanda a fost finalizată.");
+        renderAdminOrders();
+      }
+    }
+    
+    function printInvoice(index) {
+      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      if(orders.length <= index) return;
+      const order = orders[index];
+      let invoiceWindow = window.open("", "PrintInvoice", "width=800,height=600");
+      let htmlContent = `
+        <html>
+        <head>
+          <title>Factura - Comanda ${order.id}</title>
+          <style>
+            body { font-family: "Times New Roman", Times, serif; padding: 20px; text-align: center; }
+            h2, p, table { margin: 0 0 10px; padding: 0; text-align: center; }
+            table { width: 100%; border-collapse: collapse; }
+            table, th, td { border: 1px solid #000; }
+            th, td { padding: 5px; text-align: center; }
+          </style>
+        </head>
+        <body>
+          <h2>Factura - Comanda ${order.id}</h2>
+          <p><strong>Client:</strong> ${order.customer.name}</p>
+          <p><strong>Contact:</strong> ${order.customer.contact}</p>
+          <p><strong>Total Inițial:</strong> ${order.orderTotal} Lei</p>`;
+      if(order.discountPercent > 0) {
+        htmlContent += `<p><strong>Cod Reducere:</strong> ${order.discountCode} (${order.discountPercent}%)</p>
+                        <p><strong>Valoare Reducere:</strong> ${order.discountAmount} Lei</p>`;
+      }
+      htmlContent += `<p><strong>Total Final:</strong> ${order.finalTotal} Lei</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Produs</th>
+                <th>Unități</th>
+                <th>Cost</th>
+              </tr>
+            </thead>
+            <tbody>`;
+      order.items.forEach(item => {
+        const prod = products.find(p => p.id === item.id);
+        let info = prod.name;
+        if(prod.type === "variant")
+          info += ` (${prod.variants[item.variantIndex].weight}g)`;
+        htmlContent += `<tr>
+                          <td>${info}</td>
+                          <td>${item.units}</td>
+                          <td>${item.cost.toFixed(2)} Lei</td>
+                        </tr>`;
+      });
+      htmlContent += `</tbody></table>
+          </body>
+          </html>`;
+      invoiceWindow.document.write(htmlContent);
+      invoiceWindow.document.close();
+      invoiceWindow.focus();
+      invoiceWindow.print();
+    }
+    
+    // Slider pe pagina de start
+    function renderSlider() {
+      const sliderTrack = document.getElementById("slider-track");
+      if(!sliderTrack) return;
+      sliderTrack.innerHTML = "";
+      products.slice(0, 5).forEach(prod => {
+        const img = document.createElement("img");
+        img.src = prod.image;
+        img.alt = prod.name;
+        sliderTrack.appendChild(img);
+      });
+    }
+    
+    document.addEventListener("DOMContentLoaded", function() {
+      renderProducts();
+      renderSlider();
+    });
+    
+    // Pentru produsele variant, adaugă slider în modal pentru imagini (ambalaje)
+    // Dacă variantul are proprietatea "image", se folosește, altfel se folosește imaginea principală a produsului.
+    function renderVariantSlider(prod) {
+      return `
+        <div class="mb-3">
+          <label>Ambalaje disponibile:</label>
+          <div id="variantSlider-${prod.id}" class="variant-slider-container">
+            <div class="variant-slider-track">
+              ${prod.variants.map(v => `<img src="${v.image ? v.image : prod.image}" alt="${v.weight}g">`).join("")}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    
+    // Modificare în viewProduct: pentru produsele de tip variant, includem și slider-ul de imagini
+    function viewProduct(id) {
+      const prod = products.find(p => p.id === id);
+      if(!prod) return;
+      const container = document.getElementById('produs-container');
+      let labelsHtml = "";
+      if(prod.labels && prod.labels.length)
+        labelsHtml = prod.labels.map(l => `<span class="badge bg-info text-dark me-1">${l}</span>`).join("");
+      
+      let detailsHtml = "";
+      if(prod.type === "variant") {
+        let variantOptions = prod.variants.map((v, idx) =>
+          `<option value="${idx}">${v.weight}g - ${v.price.toFixed(2)} Lei (Stoc: ${v.stock} buc)</option>`
+        ).join("");
+        detailsHtml = `
+          <div class="mb-3 modal-details">
+            <label>Selectează varianta:</label>
+            <select id="variant-${prod.id}" class="form-control quantity-select">
+              ${variantOptions}
+            </select>
+          </div>
+          ${renderVariantSlider(prod)}
+          <div class="mb-3 modal-details">
+            <label>Număr de unități:</label>
+            <input type="number" id="unit-${prod.id}" class="unit-input" value="1" min="1">
+          </div>`;
+      } else {
+        detailsHtml = `
+          <div class="modal-details">
+            <p><strong>Material:</strong> ${prod.material}</p>
+            <p><strong>Dimensiuni:</strong> ${prod.dimensions}</p>
+            <p><strong>Greutate:</strong> ${prod.weight}</p>
+            <p><strong>Preț per unitate:</strong> ${prod.price.toFixed(2)} Lei</p>
+            <p><strong>Stoc:</strong> ${prod.stock} buc</p>
+          </div>
+          <div class="mb-3">
+            <label>Număr de unități:</label>
+            <input type="number" id="unit-${prod.id}" class="unit-input" value="1" min="1">
+          </div>`;
+      }
+      let stockText = "";
+      if(prod.type === "variant")
+        stockText = prod.variants.map(v => v.weight + "g: " + v.stock + " buc").join(" / ");
+      else
+        stockText = prod.stock + " buc";
+      
+      container.innerHTML = `
+        <div class="row">
+          <div class="col-md-6">
+            <img src="${prod.image}" alt="${prod.name}" class="img-fluid">
+          </div>
+          <div class="col-md-6 modal-details">
+            <h2>${prod.name}</h2>
+            <p>${prod.description}</p>
+            ${labelsHtml ? `<p>${labelsHtml}</p>` : ""}
+            <p><strong>Stoc disponibil:</strong> ${stockText}</p>
+            ${detailsHtml}
+            <button class="btn btn-danger add-cart-btn" onclick="addToCart(${prod.id}, 'detail')">Adaugă în Coș</button>
+          </div>
+        </div>`;
+      navigateTo('produs');
+    }
+    
+    // Plasarea comenzii, actualizarea coșului, admin, etc. (codul rămâne similar)
+    function addToCart(id, source = 'list') {
+      const prod = products.find(p => p.id === id);
+      let units, variantIndex = null;
+      if(prod.type === "variant") {
+        variantIndex = (source === 'list') ? 0 : parseInt(document.getElementById(`variant-${id}`).value);
+        units = (source === 'list') ? 1 : parseInt(document.getElementById(`unit-${id}`).value) || 1;
+        let selectedVariant = prod.variants[variantIndex];
+        if(selectedVariant.stock < units) {
+          alert("Nu există suficient stoc pentru această variantă!");
+          return;
+        }
+        selectedVariant.stock -= units;
+      } else {
+        units = (source === 'list') ? 1 : parseInt(document.getElementById(`unit-${id}`).value) || 1;
+        if(prod.stock < units) {
+          alert("Nu există suficient stoc!");
+          return;
+        }
+        prod.stock -= units;
+      }
+      if(prod.type === "variant") {
+        updateVariantStockDisplay(prod);
+      } else {
+        if(document.getElementById(`stock-${id}`))
+          document.getElementById(`stock-${id}`).textContent = prod.stock + " buc";
+        if(document.getElementById(`detail-stock-${id}`))
+          document.getElementById(`detail-stock-${id}`).textContent = prod.stock + " buc";
+      }
+      let index = cart.findIndex(item => item.id === id && (prod.type === "variant" ? item.variantIndex === variantIndex : true));
+      let price = prod.type === "variant" ? prod.variants[variantIndex].price : prod.price;
+      if(index > -1) {
+        cart[index].units += units;
+        cart[index].cost += price * units;
+      } else {
+        cart.push({
+          id: id,
+          variantIndex: prod.type === "variant" ? variantIndex : null,
+          units: units,
+          cost: price * units
+        });
+      }
+      updateCartCount();
+      alert(`Produsul "${prod.name}" a fost adăugat în coș.`);
+    }
+    
+    function updateCartCount() {
+      let totalItems = cart.reduce((sum, item) => sum + item.units, 0);
+      document.getElementById('cart-count').textContent = totalItems;
+      renderCart();
+      updateFinalTotal();
+    }
+    
+    function renderCart() {
+      const container = document.getElementById('cart-container');
+      if(cart.length === 0) {
+        container.innerHTML = "<p>Coșul este gol.</p>";
+        document.getElementById('order-form').style.display = "none";
+        return;
+      }
+      let html = `<table class="table">
+                    <thead>
+                      <tr>
+                        <th>Produs</th>
+                        <th>Unități</th>
+                        <th>Cost</th>
+                        <th>Acțiune</th>
+                      </tr>
+                    </thead>
+                    <tbody>`;
+      let totalCost = 0;
+      cart.forEach((item, index) => {
+        const prod = products.find(p => p.id === item.id);
+        totalCost += item.cost;
+        let prodInfo = prod.name;
+        if(prod.type === "variant")
+          prodInfo += ` (${prod.variants[item.variantIndex].weight}g)`;
+        html += `<tr>
+                   <td>${prodInfo}</td>
+                   <td>${item.units}</td>
+                   <td>${item.cost.toFixed(2)} Lei</td>
+                   <td><button class="btn btn-warning btn-sm" onclick="removeFromCart(${index})">Șterge</button></td>
+                 </tr>`;
+      });
+      html += `<tr>
+                 <td colspan="2" class="text-end"><strong>Total Inițial:</strong></td>
+                 <td colspan="2"><strong>${totalCost.toFixed(2)} Lei</strong></td>
+               </tr>`;
+      html += `</tbody></table>`;
+      container.innerHTML = html;
+      document.getElementById('order-form').style.display = "block";
+    }
+    
+    function removeFromCart(index) {
+      const removed = cart.splice(index, 1)[0];
+      const prod = products.find(p => p.id === removed.id);
+      if(prod.type === "variant") {
+        prod.variants[removed.variantIndex].stock += removed.units;
+        updateVariantStockDisplay(prod);
+      } else {
+        prod.stock += removed.units;
+        if(document.getElementById(`stock-${prod.id}`))
+          document.getElementById(`stock-${prod.id}`).textContent = prod.stock + " buc";
+        if(document.getElementById(`detail-stock-${prod.id}`))
+          document.getElementById(`detail-stock-${prod.id}`).textContent = prod.stock + " buc";
+      }
+      updateCartCount();
+    }
+    
+    function clearCart() {
+      cart.forEach(item => {
+        const prod = products.find(p => p.id === item.id);
+        if(prod.type === "variant") {
+          prod.variants[item.variantIndex].stock += item.units;
+          updateVariantStockDisplay(prod);
+        } else {
+          prod.stock += item.units;
+        }
+      });
+      cart = [];
+      updateCartCount();
+      renderProducts();
+    }
+    
+    function updateFinalTotal() {
+      let orderTotal = cart.reduce((sum, item) => sum + item.cost, 0);
+      let discountCode = document.getElementById("discount-code").value.trim();
+      let discountPercent = 0;
+      if(discountCode === "DISC10") discountPercent = 10;
+      else if(discountCode === "DISC20") discountPercent = 20;
+      let discountAmount = orderTotal * (discountPercent / 100);
+      let finalTotal = orderTotal - discountAmount;
+      document.getElementById("final-total-display").innerText = "Total Final: " + finalTotal.toFixed(2) + " Lei";
+    }
+    
+    document.getElementById("discount-code").addEventListener("input", updateFinalTotal);
+    
+    function placeOrder() {
+      const name = document.getElementById('customer-name').value.trim();
+      const contact = document.getElementById('customer-contact').value.trim();
+      if(name === "" || contact === "") {
+        alert("Completează datele de contact!");
+        return;
+      }
+      if(cart.length === 0) {
+        alert("Coșul este gol!");
+        return;
+      }
+      let orderTotal = cart.reduce((sum, item) => sum + item.cost, 0);
+      let discountCode = document.getElementById("discount-code").value.trim();
+      let discountPercent = 0;
+      if(discountCode === "DISC10") discountPercent = 10;
+      else if(discountCode === "DISC20") discountPercent = 20;
+      let discountAmount = orderTotal * (discountPercent / 100);
+      let finalTotal = orderTotal - discountAmount;
+      
+      let order = {
+        id: Date.now(),
+        customer: { name, contact },
+        items: [...cart],
+        orderTotal: orderTotal.toFixed(2),
+        discountCode: discountCode,
+        discountPercent: discountPercent,
+        discountAmount: discountAmount.toFixed(2),
+        finalTotal: finalTotal.toFixed(2)
+      };
+      
+      let orderSummary = "ID Comandă: " + order.id + "\n";
+      orderSummary += "Client: " + order.customer.name + "\n";
+      orderSummary += "Contact: " + order.customer.contact + "\n\n";
+      orderSummary += "Detalii Produse:\n";
+      order.items.forEach(item => {
+        const prod = products.find(p => p.id === item.id);
+        if(prod.type === "variant") {
+          orderSummary += "Produs ID: " + item.id + " - " + item.units + " unități, variantă: " + prod.variants[item.variantIndex].weight + "g\n";
+        } else {
+          orderSummary += "Produs ID: " + item.id + " - " + item.units + " unități\n";
+        }
+      });
+      orderSummary += "\nTotal Inițial: " + order.orderTotal + " Lei\n";
+      if(discountPercent > 0) {
+        orderSummary += "Cod Reducere: " + order.discountCode + " (" + discountPercent + "%)\n";
+        orderSummary += "Valoare Reducere: " + order.discountAmount + " Lei\n";
+      }
+      orderSummary += "Total Final: " + order.finalTotal + " Lei\n";
+      
+      document.getElementById("orderDetailsInput").value = orderSummary;
+      document.getElementById("notifyForm").submit();
+      alert("Comanda a fost plasată. Mulțumim, " + name + "!");
+      
+      let ordersLocal = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      ordersLocal.push(order);
+      localStorage.setItem("globalOrders", JSON.stringify(ordersLocal));
+      
+      renderOrderDetails(order);
+      cart = [];
+      updateCartCount();
+      document.getElementById('customer-name').value = "";
+      document.getElementById('customer-contact').value = "";
+      document.getElementById('discount-code').value = "";
+      updateFinalTotal();
+      renderProducts();
+      navigateTo('order-details');
+    }
+    
+    function renderOrderDetails(order) {
+      const container = document.getElementById('order-details-container');
+      let html = `<p><strong>Client:</strong> ${order.customer.name}</p>
+                  <p><strong>Contact:</strong> ${order.customer.contact}</p>
+                  <p><strong>Total Inițial:</strong> ${order.orderTotal} Lei</p>`;
+      if(order.discountPercent > 0) {
+        html += `<p><strong>Cod Reducere:</strong> ${order.discountCode} (${order.discountPercent}%)</p>
+                 <p><strong>Valoare Reducere:</strong> ${order.discountAmount} Lei</p>`;
+      }
+      html += `<p><strong>Total Final:</strong> ${order.finalTotal} Lei</p>
+               <table class="table">
+                 <thead>
+                   <tr>
+                     <th>Produs</th>
+                     <th>Unități</th>
+                     <th>Cost</th>
+                   </tr>
+                 </thead>
+                 <tbody>`;
+      order.items.forEach(item => {
+        const prod = products.find(p => p.id === item.id);
+        let info = prod.name;
+        if(prod.type === "variant")
+          info += ` (${prod.variants[item.variantIndex].weight}g)`;
+        html += `<tr>
+                   <td>${info}</td>
+                   <td>${item.units}</td>
+                   <td>${item.cost.toFixed(2)} Lei</td>
+                 </tr>`;
+      });
+      html += `</tbody></table>`;
+      container.innerHTML = html;
+    }
+    
+    // Slider pentru pagina de start
+    function renderSlider() {
+      const sliderTrack = document.getElementById("slider-track");
+      if(!sliderTrack) return;
+      sliderTrack.innerHTML = "";
+      products.slice(0,5).forEach(prod => {
         const img = document.createElement("img");
         img.src = prod.image;
         img.alt = prod.name;
