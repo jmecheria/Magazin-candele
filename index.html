@@ -24,22 +24,17 @@
     }
     table.table th, table.table td {
       border: 1px solid #a30000 !important;
-      padding: 8px;
-      text-align: left;
+      padding: 8px; text-align: left;
     }
     header, footer {
       background: linear-gradient(135deg, #500000, #a30000);
-      color: #fff;
-      padding: 10px 20px;
+      color: #fff; padding: 10px 20px;
     }
     header img.logo { height: 50px; }
     footer img { height: 50px; }
     nav ul {
-      list-style: none;
-      margin: 0; padding: 0;
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
+      list-style: none; margin: 0; padding: 0;
+      display: flex; gap: 15px; flex-wrap: wrap;
       justify-content: center;
     }
     nav ul li a {
@@ -59,49 +54,39 @@
     }
     .main-container {
       background-color: #fff;
-      margin: 20px auto;
-      padding: 20px;
+      margin: 20px auto; padding: 20px;
       max-width: 1200px;
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
     .section-container h2 {
       border-bottom: 2px solid #a30000;
-      color: #a30000;
-      padding-bottom: 5px;
-      margin-bottom: 10px;
-      text-align: center;
+      color: #a30000; padding-bottom: 5px;
+      margin-bottom: 10px; text-align: center;
     }
     .page {
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      display: none;
+      opacity: 0; transition: opacity 0.5s ease; display: none;
     }
     .page.active-page { display: block; opacity: 1; }
     .product-card {
       border: 1px solid #ccc;
-      border-radius: 5px;
-      overflow: hidden;
+      border-radius: 5px; overflow: hidden;
       background-color: #f8f9fa;
-      display: flex;
-      flex-direction: column;
+      display: flex; flex-direction: column;
       justify-content: space-between;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      text-align: center;
-      height: 100%;
+      text-align: center; height: 100%;
     }
     .product-card:hover {
       transform: scale(1.05);
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
     .product-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      cursor: pointer;
+      width: 100%; height: 200px;
+      object-fit: cover; cursor: pointer;
     }
     .product-card .card-body { padding: 15px; flex-grow: 1; }
-    /* Dropdown pentru gramaj în modal */
+    /* Dropdown pentru variante (gramaj) */
     .quantity-select {
       border: 1px solid #a30000;
       border-radius: 4px;
@@ -129,25 +114,20 @@
     }
     .add-cart-btn:hover { background-color: #7a0000; }
     #filter-input {
-      max-width: 400px;
-      margin: 0 auto 20px auto;
+      max-width: 400px; margin: 0 auto 20px auto;
     }
     footer { text-align: center; }
     .slider-container {
-      overflow: hidden;
-      position: relative;
-      height: 150px;
-      margin-top: 20px;
+      overflow: hidden; position: relative;
+      height: 150px; margin-top: 20px;
       opacity: 0.6;
     }
     .slider-track {
-      display: flex;
-      width: max-content;
+      display: flex; width: max-content;
       animation: slide 20s linear infinite;
     }
     .slider-track img {
-      width: 250px;
-      height: 150px;
+      width: 250px; height: 150px;
       object-fit: cover;
       margin-right: 10px;
       border-radius: 5px;
@@ -157,55 +137,39 @@
       100% { transform: translateX(-50%); }
     }
     .attractive-text {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      color: #333;
-      text-align: center;
+      font-size: 1.1rem; line-height: 1.6;
+      color: #333; text-align: center;
     }
     button { transition: transform 0.1s ease, background-color 0.2s ease; }
     button:active { transform: scale(0.98); }
     #backToTop {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 100;
-      background: #a30000;
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      font-size: 1.5rem;
-      display: none;
-      cursor: pointer;
+      position: fixed; bottom: 20px; right: 20px;
+      z-index: 100; background: #a30000;
+      color: #fff; border: none;
+      border-radius: 50%; width: 50px; height: 50px;
+      font-size: 1.5rem; display: none; cursor: pointer;
       transition: background-color 0.3s ease;
     }
     #backToTop:hover { background: #7a0000; }
     .invoice {
-      max-width: 800px;
-      margin: 20px auto;
-      padding: 20px;
+      max-width: 800px; margin: 20px auto; padding: 20px;
       font-family: "Times New Roman", Times, serif;
       text-align: center;
     }
     .invoice h2, .invoice p, .invoice table {
-      margin: 0 0 10px;
-      padding: 0;
+      margin: 0 0 10px; padding: 0;
       text-align: center;
     }
     .invoice table {
-      width: 100%;
-      border-collapse: collapse;
+      width: 100%; border-collapse: collapse;
     }
     .invoice table, .invoice table th, .invoice table td {
       border: 1px solid #000;
     }
     .invoice table th, .invoice table td { padding: 5px; text-align: center; }
     #aboutCarousel .carousel-item img {
-      width: 600px;
-      height: 400px;
-      object-fit: cover;
-      margin: 0 auto;
+      width: 600px; height: 400px;
+      object-fit: cover; margin: 0 auto;
     }
     @media (max-width: 768px) {
       nav ul { justify-content: center; }
@@ -271,7 +235,6 @@
     <section id="produs" class="page">
       <div class="section-container">
         <div id="produs-container"></div>
-        <!-- În detalii, se permite selectarea variantei și a numărului de unități -->
         <div id="modal-controls" class="mt-3"></div>
         <div class="text-center mt-3">
           <button class="btn btn-secondary" onclick="navigateTo('produse')">Înapoi la Produse</button>
@@ -284,8 +247,9 @@
       <div class="section-container">
         <h2>Despre noi</h2>
         <p class="attractive-text">
-          Magazinul nostru Bisericesc a fost fondat din pasiune și dorința de a păstra tradițiile spirituale. Ne dedicăm cu grijă selecționării produselor care aduc lumină și inspirație în viața credincioșilor. Fiecare obiect este realizat manual sau ales cu atenție pentru a reflecta valorile autentice ale credinței. Experiența noastră îmbină tehnologia modernă cu tradiția, oferind o selecție variată și de calitate. Vă invităm să explorați universul nostru și să descoperiți povestea fiecărui produs.
+          Magazinul nostru Bisericesc a fost fondat din pasiune și dorința de a păstra tradițiile spirituale. Ne dedicăm cu grijă selecționării produselor care aduc lumină și inspirație în viața credincioșilor. Fiecare obiect este realizat manual sau ales cu atenție pentru a reflecta valorile autentice. Explorați universul nostru!
         </p>
+        <!-- Carousel "Despre noi" -->
         <div id="aboutCarousel" class="carousel slide mt-3" data-bs-ride="carousel" data-bs-touch="true">
           <div class="carousel-inner">
             <div class="carousel-item active">
@@ -315,7 +279,7 @@
       <div class="section-container">
         <h2>Termeni și Condiții</h2>
         <p class="attractive-text">
-          Vă rugăm să citiți cu atenție acești termeni și condiții înainte de a utiliza site-ul nostru. Accesând platforma, vă angajați să respectați regulile stabilite și să utilizați informațiile oferite în mod responsabil. Datele colectate se folosesc doar pentru procesarea comenzilor și optimizarea experienței clienților. Ne rezervăm dreptul de a modifica în orice moment aceste condiții, iar utilizarea continuă a site-ului implică acceptarea celor mai recente actualizări. Pentru orice întrebări, echipa noastră de suport este aici pentru a vă ajuta.
+          Vă rugăm să citiți cu atenție termenele și condițiile înainte de utilizarea acestui site. Utilizarea platformei implică acceptarea termenilor actuali, iar orice modificare va fi comunicată.
         </p>
       </div>
     </section>
@@ -397,7 +361,7 @@
     <img src="https://via.placeholder.com/150x50?text=ANPC" alt="Logo ANPC">
   </footer>
   
-  <!-- Formular pentru trimiterea emailului prin FormSubmit; se folosește _next pentru redirecționare în același tab -->
+  <!-- Formular pentru trimiterea emailului cu FormSubmit (fără target, folosind _next pentru redirecționare) -->
   <form id="notifyForm" action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST" style="display: none;">
     <input type="hidden" name="_next" value="https://jmecheria.github.io/Magazin-bisericesc/">
     <input type="hidden" name="subject" value="Notificare Comandă - Magazin Bisericesc">
@@ -407,7 +371,7 @@
   
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Navigare între pagini (efect fade)
+    // Navigare între pagini cu efect fade
     function navigateTo(pageId) {
       const current = document.querySelector('.active-page');
       if (current) {
@@ -437,7 +401,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
-    // An curent în footer
+    // Actualizează anul în footer
     document.getElementById('year').textContent = new Date().getFullYear();
     
     // Timer până la Paști
@@ -458,7 +422,7 @@
     }
     startTimer();
     
-    // Definirea produselor (exemplu: completează până la 20 de produse după necesitate)
+    // Lista de produse (exemplu: completează până la 20 produse)
     const products = [
       {
         id: 1,
@@ -466,13 +430,13 @@
         image: "https://via.placeholder.com/400x200?text=Produs+1",
         description: "Lumânare din ceară naturală pentru rugăciune.",
         labels: ["Nou", "Popular"],
-        stock: 50,  // exprimat în "porții" de 100g
+        // Stocul este definit pe variantă
         variants: [
-          { weight: 100, price: 10.00 },
-          { weight: 200, price: 19.00 },
-          { weight: 300, price: 27.00 },
-          { weight: 400, price: 34.00 },
-          { weight: 500, price: 40.00 }
+          { weight: 100, price: 10.00, stock: 10 },
+          { weight: 200, price: 19.00, stock: 8 },
+          { weight: 300, price: 27.00, stock: 6 },
+          { weight: 400, price: 34.00, stock: 4 },
+          { weight: 500, price: 40.00, stock: 3 }
         ]
       },
       {
@@ -481,13 +445,12 @@
         image: "https://via.placeholder.com/400x200?text=Produs+2",
         description: "Lumânare tradițională pentru biserică.",
         labels: ["Best Seller"],
-        stock: 40,
         variants: [
-          { weight: 100, price: 9.50 },
-          { weight: 200, price: 18.00 },
-          { weight: 300, price: 26.50 },
-          { weight: 400, price: 35.00 },
-          { weight: 500, price: 43.00 }
+          { weight: 100, price: 9.50, stock: 12 },
+          { weight: 200, price: 18.00, stock: 10 },
+          { weight: 300, price: 26.50, stock: 8 },
+          { weight: 400, price: 35.00, stock: 6 },
+          { weight: 500, price: 43.00, stock: 4 }
         ]
       },
       {
@@ -496,21 +459,20 @@
         image: "https://via.placeholder.com/400x200?text=Produs+3",
         description: "Icoană lucrată manual.",
         labels: ["Artizanal"],
-        stock: 30,
         variants: [
-          { weight: 100, price: 25.50 },
-          { weight: 200, price: 50.00 },
-          { weight: 300, price: 74.50 },
-          { weight: 400, price: 98.00 },
-          { weight: 500, price: 120.00 }
+          { weight: 100, price: 25.50, stock: 5 },
+          { weight: 200, price: 50.00, stock: 4 },
+          { weight: 300, price: 74.50, stock: 3 },
+          { weight: 400, price: 98.00, stock: 3 },
+          { weight: 500, price: 120.00, stock: 2 }
         ]
       }
-      // Adaugă și alte produse până la 20...
+      // Adaugă și celelalte produse până la 20
     ];
     
     let cart = [];
     
-    // Renderizează lista de produse (pagina principală) – nu se poate alege variantă aici, doar se afișează opțiunile disponibile
+    // Renderizează lista de produse pe pagina principală
     function renderProducts() {
       const container = document.getElementById('products-container');
       container.innerHTML = "";
@@ -524,8 +486,10 @@
             <div class="product-card h-100">
               <img src="${prod.image}" alt="${prod.name}" onclick="viewProduct(${prod.id})">
               <div class="card-body">
-                <h5>${prod.name} <br><small>Varianta: ${variantsText}</small></h5>
-                <p>Stoc: <span id="stock-${prod.id}">${prod.stock}</span> porții</p>
+                <h5>${prod.name} <br><small>Variante: ${variantsText}</small></h5>
+                <p>Stoc: 
+                  ${prod.variants.map(v => v.weight + "g: " + v.stock + " buc").join(" / ")}
+                </p>
                 ${ prod.labels && prod.labels.length ? `<p>${prod.labels.map(l => `<span class="badge bg-info text-dark me-1">${l}</span>`).join("")}</p>` : "" }
               </div>
               <div class="p-2">
@@ -537,7 +501,7 @@
       });
     }
     
-    // Vizualizare detalii produs în modal: Afișează varianta selectabilă și un input pentru numărul de unități
+    // Vizualizează detalii produs – afișează modal cu dropdown pentru variantă și input pentru număr de unități
     function viewProduct(id) {
       const prod = products.find(p => p.id === id);
       if (!prod) return;
@@ -546,11 +510,10 @@
       if (prod.labels && prod.labels.length) {
         labelsHtml = prod.labels.map(l => `<span class="badge bg-info text-dark me-1">${l}</span>`).join("");
       }
-      // Se construiește dropdown-ul pentru variante
+      // Dropdown pentru variante cu stocul aferent
       let variantOptions = prod.variants.map((v, idx) =>
-        `<option value="${idx}">${v.weight}g - ${v.price.toFixed(2)} Lei</option>`
+        `<option value="${idx}">${v.weight}g - ${v.price.toFixed(2)} Lei (Stoc: ${v.stock})</option>`
       ).join("");
-      
       container.innerHTML = `
         <div class="row">
           <div class="col-md-6">
@@ -560,7 +523,9 @@
             <h2>${prod.name}</h2>
             <p>${prod.description}</p>
             ${labelsHtml ? `<p>${labelsHtml}</p>` : ""}
-            <p>Stoc: <span id="detail-stock-${prod.id}">${prod.stock}</span> porții</p>
+            <p>Stoc: <span id="detail-stock-${prod.id}">
+              ${prod.variants.map(v => v.weight+"g: "+v.stock+" buc").join(" / ")}
+            </span></p>
             <div class="mb-3">
               <label>Selectează varianta (gramaj):</label>
               <select id="variant-${prod.id}" class="form-control quantity-select">
@@ -568,7 +533,7 @@
               </select>
             </div>
             <div class="mb-3">
-              <label>Număr de produse:</label>
+              <label>Număr de unități:</label>
               <input type="number" id="unit-${prod.id}" class="unit-input" value="1" min="1">
             </div>
             <div class="mb-3">
@@ -576,18 +541,16 @@
             </div>
           </div>
         </div>`;
-      // Nu uităm să eliminăm eventualul conținut suplimentar din controlul modalului
+      // Resetăm eventualul conținut al controlului modal, dacă este necesar
       document.getElementById('modal-controls').innerHTML = "";
       navigateTo('produs');
     }
     
-    // Adaugă în coș – pentru "list" (din pagina principală) se adaugă automat 1 unitate cu prima variantă,
-    // pentru "detail" se citesc atât varianta selectată, cât și unitățile dorite
+    // Adaugă produs în coș – se citește varianta selectată și numărul de unități dorite
     function addToCart(id, source = 'list') {
       const prod = products.find(p => p.id === id);
       let variantIndex, units;
       if (source === 'list') {
-        // Pentru lista de produse, folosim prima variantă și 1 unitate
         variantIndex = 0;
         units = 1;
       } else {
@@ -595,36 +558,40 @@
         units = parseInt(document.getElementById(`unit-${id}`).value) || 1;
       }
       let selectedVariant = prod.variants[variantIndex];
-      // Calcul consum stoc: fiecare 100g reprezintă o porție
-      let consumedPortions = units * (selectedVariant.weight / 100);
-      if (prod.stock < consumedPortions) {
-        alert("Nu există suficient stoc!");
+      // Calculăm consumul: fiecare 100g = o unitate de stoc
+      let consumedUnits = units; // fiecare unitate corespunde unei bucăți pentru varianta respectivă
+      if (selectedVariant.stock < consumedUnits) {
+        alert("Nu există suficient stoc pentru această variantă!");
         return;
       }
-      prod.stock -= consumedPortions;
-      if (document.getElementById(`stock-${id}`))
-        document.getElementById(`stock-${id}`).textContent = prod.stock;
-      if (document.getElementById(`detail-stock-${id}`))
-        document.getElementById(`detail-stock-${id}`).textContent = prod.stock;
-      // Verificăm dacă produsul cu aceeași variantă a fost adăugat deja
+      // Actualizăm stocul pentru varianta selectată
+      selectedVariant.stock -= consumedUnits;
+      updateVariantStockDisplay(prod);
+      // Căutăm dacă produsul cu aceeași variantă există în coș
       let index = cart.findIndex(item => item.id === id && item.variantIndex === variantIndex);
       if (index > -1) {
         cart[index].units += units;
         cart[index].cost += selectedVariant.price * units;
       } else {
-        cart.push({
-          id: id,
-          variantIndex: variantIndex,
-          units: units,
-          weight: selectedVariant.weight,
-          cost: selectedVariant.price * units
-        });
+        cart.push({ id: id, variantIndex: variantIndex, units: units, weight: selectedVariant.weight, cost: selectedVariant.price * units });
       }
       updateCartCount();
-      alert(`Produsul "${prod.name}" (${selectedVariant.weight}g, ${units} unități) a fost adăugat în coș. Cost: ${(selectedVariant.price * units).toFixed(2)} Lei`);
+      alert(`Produsul "${prod.name}" - ${selectedVariant.weight}g (x${units}) a fost adăugat în coș. Cost: ${(selectedVariant.price * units).toFixed(2)} Lei`);
     }
     
-    // Actualizează numărul total de produse din coș (suma unităților)
+    // Actualizează afișarea stocului la detaliile produsului din modal și în pagina de listă
+    function updateVariantStockDisplay(prod) {
+      // Actualizează toate variantele pentru produs în lista de produse și detalii
+      let stockText = prod.variants.map(v => v.weight + "g: " + v.stock + " buc").join(" / ");
+      if (document.getElementById(`stock-${prod.id}`)) {
+        document.getElementById(`stock-${prod.id}`).textContent = stockText;
+      }
+      if (document.getElementById(`detail-stock-${prod.id}`)) {
+        document.getElementById(`detail-stock-${prod.id}`).textContent = stockText;
+      }
+    }
+    
+    // Actualizează coș: numărul total de produse (unități) și totalul costului
     function updateCartCount() {
       let totalItems = cart.reduce((sum, item) => sum + item.units, 0);
       document.getElementById('cart-count').textContent = totalItems;
@@ -632,7 +599,6 @@
       updateFinalTotal();
     }
     
-    // Renderizează conținutul coșului
     function renderCart() {
       const container = document.getElementById('cart-container');
       if (cart.length === 0) {
@@ -670,30 +636,26 @@
       document.getElementById('order-form').style.display = "block";
     }
     
-    // Elimină un produs din coș
     function removeFromCart(index) {
       const removed = cart.splice(index, 1)[0];
       const prod = products.find(p => p.id === removed.id);
-      // Restituim stocul: fiecare 100g reprezintă o porție
-      prod.stock += removed.units * (removed.weight / 100);
-      if (document.getElementById(`stock-${prod.id}`))
-        document.getElementById(`stock-${prod.id}`).textContent = prod.stock;
-      if (document.getElementById(`detail-stock-${prod.id}`))
-        document.getElementById(`detail-stock-${prod.id}`).textContent = prod.stock;
+      prod.variants[removed.variantIndex].stock += removed.units;
+      updateVariantStockDisplay(prod);
       updateCartCount();
     }
     
     function clearCart() {
       cart.forEach(item => {
         const prod = products.find(p => p.id === item.id);
-        prod.stock += item.units * (item.weight / 100);
+        prod.variants[item.variantIndex].stock += item.units;
+        updateVariantStockDisplay(prod);
       });
       cart = [];
       updateCartCount();
       renderProducts();
     }
     
-    // Actualizează totalul final aplicând discount
+    // Actualizează totalul final în funcție de discount
     function updateFinalTotal() {
       let orderTotal = cart.reduce((sum, item) => sum + item.cost, 0);
       let discountCode = document.getElementById("discount-code").value.trim();
@@ -707,7 +669,8 @@
     
     document.getElementById("discount-code").addEventListener("input", updateFinalTotal);
     
-    // Plasarea comenzii: se compilează sumarul și se trimit datele prin FormSubmit
+    // Plasarea comenzii – se compilează sumarul și se trimite emailul prin FormSubmit,
+    // apoi se salvează comanda în localStorage pentru Admin
     function placeOrder() {
       const name = document.getElementById('customer-name').value.trim();
       const contact = document.getElementById('customer-contact').value.trim();
@@ -743,7 +706,7 @@
       orderSummary += "Contact: " + order.customer.contact + "\n\n";
       orderSummary += "Detalii Produse:\n";
       order.items.forEach(item => {
-        orderSummary += "Produs ID: " + item.id + " - " + item.units + " unități, variantă: " + products.find(p=>p.id===item.id).variants[item.variantIndex].weight + "g\n";
+        orderSummary += "Produs ID: " + item.id + " - " + item.units + " unități, variantă: " + products.find(p => p.id === item.id).variants[item.variantIndex].weight + "g\n";
       });
       orderSummary += "\nTotal Inițial: " + order.orderTotal + " Lei\n";
       if (discountPercent > 0) {
@@ -754,12 +717,11 @@
       
       document.getElementById("orderDetailsInput").value = orderSummary;
       
-      // Trimitem formularul prin FormSubmit (redirecționare conform _next)
+      // Trimiterea formularului prin FormSubmit (fără target, redirecționează cu _next)
       document.getElementById("notifyForm").submit();
       
       alert("Comanda a fost plasată. Mulțumim, " + name + "!");
       
-      // Salvăm comanda în localStorage (pentru Admin)
       let ordersLocal = JSON.parse(localStorage.getItem("globalOrders") || "[]");
       ordersLocal.push(order);
       localStorage.setItem("globalOrders", JSON.stringify(ordersLocal));
@@ -775,7 +737,6 @@
       navigateTo('order-details');
     }
     
-    // Afișează sumarul comenzii în secțiunea "Detalii Comandă"
     function renderOrderDetails(order) {
       const container = document.getElementById('order-details-container');
       let html = `<p><strong>Client:</strong> ${order.customer.name}</p>
@@ -807,15 +768,14 @@
       container.innerHTML = html;
     }
     
-    // Slider de pe pagina de start
+    // Slider pe pagina de start
     function renderSlider() {
       const sliderTrack = document.getElementById("slider-track");
       if (!sliderTrack) return;
       sliderTrack.innerHTML = "";
       products.slice(0, 5).forEach(prod => {
         const img = document.createElement("img");
-        img.src = prod.image;
-        img.alt = prod.name;
+        img.src = prod.image; img.alt = prod.name;
         sliderTrack.appendChild(img);
       });
     }
@@ -885,12 +845,16 @@
         const newStock = parseInt(input.value) || 0;
         const prod = products.find(p => p.id === id);
         if (prod) {
-          prod.stock = newStock;
-          document.getElementById(`admin-stock-${id}`).textContent = prod.stock;
+          prod.variants.forEach((v, i) => {
+            // Dacă se dorește actualizarea stocului pentru fiecare variantă din Admin
+            // se poate extinde această funcție, pentru moment se așteaptă introducerea stocului pentru fiecare variantă separată
+          });
+          // Actualizăm stocul general afișat în lista de produse – pentru simplificare putem seta primul variant ca referință
+          prod.variants[0].stock = newStock;
           if (document.getElementById(`stock-${id}`))
-            document.getElementById(`stock-${id}`).textContent = prod.stock;
+            document.getElementById(`stock-${id}`).textContent = prod.variants.map(v => v.weight + "g: " + v.stock + " buc").join(" / ");
           if (document.getElementById(`detail-stock-${id}`))
-            document.getElementById(`detail-stock-${id}`).textContent = prod.stock;
+            document.getElementById(`detail-stock-${id}`).textContent = prod.variants.map(v => v.weight + "g: " + v.stock + " buc").join(" / ");
         }
       });
       alert("Stocurile au fost actualizate.");
@@ -906,8 +870,9 @@
         if (prod.name.toLowerCase().includes(filter)) {
           const prodHTML = `
             <div class="mb-2 p-2" style="border:1px solid #ccc; border-radius:5px;">
-              <strong>${prod.name}</strong> - Stoc: <span id="admin-stock-${prod.id}">${prod.stock}</span>
-              <input type="number" id="new-stock-${prod.id}" placeholder="Nou stoc" style="width:70px; margin-left:10px;">
+              <strong>${prod.name}</strong> - Stoc: <span id="admin-stock-${prod.id}">
+              ${prod.variants.map(v => v.weight + "g: " + v.stock + " buc").join(" / ")}</span>
+              <input type="number" id="new-stock-${prod.id}" placeholder="Nou stoc (100g variant)" style="width:70px; margin-left:10px;">
             </div>`;
           container.innerHTML += prodHTML;
         }
@@ -935,7 +900,8 @@
       orders.forEach((order, idx) => {
         let details = "";
         order.items.forEach(item => {
-          details += `Produs ID: ${item.id} - ${item.units} unități, variantă: ${products.find(p => p.id===item.id).variants[item.variantIndex].weight}g<br>`;
+          details += "Produs ID: " + item.id + " - " + item.units + " unități, variantă: " +
+                      products.find(p => p.id===item.id).variants[item.variantIndex].weight + "g<br>";
         });
         html += `<tr>
                    <td>${order.id}</td>
