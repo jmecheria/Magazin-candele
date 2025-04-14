@@ -35,28 +35,39 @@
     header img.logo, footer img { height: 50px; }
     nav ul {
       list-style: none;
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       display: flex;
       gap: 15px;
       flex-wrap: wrap;
       justify-content: center;
     }
     nav ul li a {
-      color: #fff; font-weight: bold;
-      text-decoration: none; cursor: pointer;
+      color: #fff;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
     }
     .cart-icon {
-      position: relative; display: inline-block; cursor: pointer;
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
     }
     .cart-icon img { height: 24px; }
     .cart-icon .badge {
-      position: absolute; top: -5px; right: -10px;
-      background: yellow; color: #000;
-      border-radius: 50%; padding: 2px 6px; font-size: 0.8rem;
+      position: absolute;
+      top: -5px;
+      right: -10px;
+      background: yellow;
+      color: #000;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 0.8rem;
     }
     .main-container {
       background-color: #fff;
-      margin: 20px auto; padding: 20px;
+      margin: 20px auto;
+      padding: 20px;
       max-width: 1200px;
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -74,7 +85,7 @@
       display: none;
     }
     .page.active-page { display: block; opacity: 1; }
-    /* Card de produs: se vor afișa doar imaginea, numele și prețul (sau intervalul de preț) */
+    /* Carduri pentru produse – în listă afișăm doar imaginea, numele și prețul/intervalul de preț */
     .product-card {
       border: 1px solid #ccc;
       border-radius: 5px;
@@ -98,12 +109,9 @@
       cursor: pointer;
     }
     .product-card .card-body { padding: 15px; }
-    /* Pentru produse de tip variant, afișăm prețul de la ... până la ... */
     .price-range { font-weight: bold; color: #a30000; }
-    /* Modalul de detalii: stilizare pentru elementele din modal */
-    .modal-details {
-      text-align: left;
-    }
+    /* Modalul de detalii: afișează toate informațiile produsului */
+    .modal-details { text-align: left; }
     .quantity-select, .unit-input {
       border: 1px solid #a30000;
       border-radius: 4px;
@@ -195,7 +203,7 @@
       border: 1px solid #000;
     }
     .invoice table th, .invoice table td { padding: 5px; text-align: center; }
-    /* Pentru slider în "Despre noi" */
+    /* Dimensiuni fixe pentru imaginile din carousel "Despre noi" */
     #aboutCarousel .carousel-item img {
       width: 600px;
       height: 400px;
@@ -253,7 +261,7 @@
       </div>
     </section>
     
-    <!-- Pagina Produse -->
+    <!-- Pagina Produse: Afișează doar imaginea, numele și prețul (sau intervalul de preț) -->
     <section id="produse" class="page">
       <div class="section-container">
         <h2>Produsele noastre</h2>
@@ -266,7 +274,6 @@
     <section id="produs" class="page">
       <div class="section-container">
         <div id="produs-container"></div>
-        <!-- Aici se vor afișa detaliile complete ale produsului -->
         <div id="modal-controls" class="mt-3"></div>
         <div class="text-center mt-3">
           <button class="btn btn-secondary" onclick="navigateTo('produse')">Înapoi la Produse</button>
@@ -279,9 +286,9 @@
       <div class="section-container">
         <h2>Despre noi</h2>
         <p class="attractive-text">
-          Magazinul Bisericesc se remarcă prin pasiunea pentru tradiție și spiritualitate. Fondat pentru a oferi obiecte de cult de calitate, colaborăm cu meșteri locali ce își pun inima în fiecare lucrare. Fiecare produs este selectat cu atenție, iar în oferta noastră vei găsi atât obiecte artizanale, cât și accesorii moderne, pentru a îmbogăți experiența ta spirituală. Ne dedicăm cu tărie păstrării valorilor autentice și oferim informații complete pentru fiecare produs.
+          Magazinul Bisericesc se remarcă prin pasiunea pentru tradiție și spiritualitate. Fondat pentru a oferi obiecte de cult de cea mai înaltă calitate, colaborăm cu meșteri locali care își pun inima în fiecare lucrare. Fiecare produs este ales cu grijă, iar oferta noastră reunește atât obiecte artizanale cât și accesorii moderne, pentru a îmbogăți experiența ta spirituală. Ne mândrim cu transparența informațiilor tehnice oferite despre fiecare produs.
         </p>
-        <!-- Slider la "Despre noi" -->
+        <!-- Slider: asigurăm aceeași dimensiune pentru toate imaginile -->
         <div id="aboutCarousel" class="carousel slide mt-3" data-bs-ride="carousel" data-bs-touch="true">
           <div class="carousel-inner">
             <div class="carousel-item active">
@@ -311,12 +318,12 @@
       <div class="section-container">
         <h2>Termeni și Condiții</h2>
         <p class="attractive-text">
-          Accesând acest site, sunteți de acord cu toți termenii și condițiile de utilizare. Informațiile furnizate sunt menite pentru a asigura o experiență transparentă și sigură. Magazinul își rezervă dreptul de a modifica periodic condițiile, iar continuarea utilizării platformei implică acceptarea acestor modificări. Toate tranzacțiile sunt efectuate cu respectarea normelor de protecție a datelor, iar orice solicitare de suport va fi tratată cu maximă seriozitate.
+          Accesând acest site, sunteți de acord cu toți termenii și condițiile de utilizare. Informațiile furnizate sunt menite să asigure o experiență transparentă și sigură, iar continuarea utilizării platformei implică acceptarea acestor condiții. Magazinul își rezervă dreptul de a modifica periodic aceste condiții, iar clienții sunt responsabili pentru verificarea actualizărilor. Datele personale sunt protejate conform normelor în vigoare, iar orice solicitare de suport este tratată cu seriozitate.
         </p>
       </div>
     </section>
     
-    <!-- Pagina Calendar -->
+    <!-- Pagina Calendar (30 de zile) -->
     <section id="calendar" class="page">
       <div class="section-container">
         <h2>Calendar Creștin Ortodox – Aprilie</h2>
@@ -328,7 +335,6 @@
             </tr>
           </thead>
           <tbody>
-            <!-- 30 de rânduri pentru luna aprilie -->
             <tr><td>1</td><td>Sărbătoarea 1</td></tr>
             <tr><td>2</td><td>Sărbătoarea 2</td></tr>
             <tr><td>3</td><td>Sărbătoarea 3</td></tr>
@@ -421,7 +427,7 @@
     <img src="https://via.placeholder.com/150x50?text=ANPC" alt="Logo ANPC">
   </footer>
   
-  <!-- Formular pentru trimiterea emailului prin FormSubmit; se folosește _next pentru redirecționare în același tab -->
+  <!-- Formular pentru trimiterea emailului prin FormSubmit -->
   <form id="notifyForm" action="https://formsubmit.co/irimia.teodor.17@gmail.com" method="POST" style="display: none;">
     <input type="hidden" name="_next" value="https://jmecheria.github.io/Magazin-bisericesc/">
     <input type="hidden" name="subject" value="Notificare Comandă - Magazin Bisericesc">
@@ -436,7 +442,7 @@
     // Navigare între pagini (efect fade)
     function navigateTo(pageId) {
       const current = document.querySelector('.active-page');
-      if (current) {
+      if(current) {
         current.style.opacity = 0;
         setTimeout(() => {
           current.classList.remove('active-page');
@@ -484,14 +490,14 @@
     }
     startTimer();
     
-    // Exemplu de produse: se pot extinde până la 20 produse
+    // Lista de produse (extinde până la 20 după necesitate)
     const products = [
       {
         id: 1,
         type: "variant", // produs cu variante (gramaj)
         name: "Lumânare Roșie",
         image: "https://via.placeholder.com/400x200?text=Produs+1",
-        description: "Lumânare din ceară naturală, realizată artizanal, perfectă pentru momente de rugăciune.",
+        description: "Lumânare din ceară naturală, realizată artizanal, ideală pentru rugăciune.",
         labels: ["Nou", "Popular"],
         variants: [
           { weight: 100, price: 10.00, stock: 10 },
@@ -506,9 +512,9 @@
         type: "standard", // produs standard
         name: "Cruce Sculptată Manual",
         image: "https://via.placeholder.com/400x200?text=Produs+2",
-        description: "Cruce din lemn masiv, realizată manual, cu detalii fine și design tradițional.",
+        description: "Cruce din lemn masiv, realizată manual, cu detalii fine.",
         material: "Lemn de stejar",
-        dimensions: "20x10x2 cm",
+        dimensions: "20 x 10 x 2 cm",
         weight: "150g",
         price: 120.00,
         stock: 15,
@@ -529,12 +535,12 @@
           { weight: 500, price: 120.00, stock: 2 }
         ]
       }
-      // Extinde cu restul produselor până la 20...
+      // Adaugă produsele până la 20...
     ];
     
     let cart = [];
     
-    // Renderizează lista de produse în pagina "Produse"
+    // Renderizează produsele în pagina "Produse": afișează doar imaginea, numele și prețul (sau intervalul)
     function renderProducts() {
       const container = document.getElementById('products-container');
       container.innerHTML = "";
@@ -543,7 +549,6 @@
         if(prod.name.toLowerCase().includes(filterValue)) {
           let infoText = "";
           if(prod.type === "variant") {
-            // Calculăm prețul minim și maxim din variante
             const prices = prod.variants.map(v => v.price);
             const minPrice = Math.min(...prices).toFixed(2);
             const maxPrice = Math.max(...prices).toFixed(2);
@@ -572,12 +577,11 @@
       if(!prod) return;
       const container = document.getElementById('produs-container');
       let labelsHtml = "";
-      if(prod.labels && prod.labels.length) {
+      if(prod.labels && prod.labels.length)
         labelsHtml = prod.labels.map(l => `<span class="badge bg-info text-dark me-1">${l}</span>`).join("");
-      }
+      
       let detailsHtml = "";
       if(prod.type === "variant") {
-        // Pentru produsele de tip variant: dropdown pentru selectarea variantei și input pentru unități
         let variantOptions = prod.variants.map((v, idx) =>
           `<option value="${idx}">${v.weight}g - ${v.price.toFixed(2)} Lei (Stoc: ${v.stock} buc)</option>`
         ).join("");
@@ -593,13 +597,12 @@
             <input type="number" id="unit-${prod.id}" class="unit-input" value="1" min="1">
           </div>`;
       } else {
-        // Pentru produsele standard: afișăm detaliile complete
         detailsHtml = `
           <div class="modal-details">
             <p><strong>Material:</strong> ${prod.material}</p>
             <p><strong>Dimensiuni:</strong> ${prod.dimensions}</p>
             <p><strong>Greutate:</strong> ${prod.weight}</p>
-            <p><strong>Preț:</strong> ${prod.price.toFixed(2)} Lei per unitate</p>
+            <p><strong>Preț per unitate:</strong> ${prod.price.toFixed(2)} Lei</p>
             <p><strong>Stoc:</strong> ${prod.stock} buc</p>
           </div>
           <div class="mb-3">
@@ -607,13 +610,12 @@
             <input type="number" id="unit-${prod.id}" class="unit-input" value="1" min="1">
           </div>`;
       }
-      // Pentru afișarea stocului, afișăm toate variantele în cazul produselor de tip variant sau stocul simplu pentru standard
       let stockText = "";
-      if(prod.type === "variant") {
+      if(prod.type === "variant")
         stockText = prod.variants.map(v => v.weight + "g: " + v.stock + " buc").join(" / ");
-      } else {
+      else
         stockText = prod.stock + " buc";
-      }
+      
       container.innerHTML = `
         <div class="row">
           <div class="col-md-6">
@@ -661,7 +663,7 @@
         if(document.getElementById(`detail-stock-${id}`))
           document.getElementById(`detail-stock-${id}`).textContent = prod.stock + " buc";
       }
-      // Adaugă în coș
+      // Adaugă produsul în coș
       let index = cart.findIndex(item => item.id === id && (prod.type === "variant" ? item.variantIndex === variantIndex : true));
       let price = prod.type === "variant" ? prod.variants[variantIndex].price : prod.price;
       if(index > -1) {
@@ -679,7 +681,7 @@
       alert(`Produsul "${prod.name}" a fost adăugat în coș.`);
     }
     
-    // Actualizează numărul total de produse din coș și costul
+    // Actualizează numărul total de produse și costul din coș
     function updateCartCount() {
       let totalItems = cart.reduce((sum, item) => sum + item.units, 0);
       document.getElementById('cart-count').textContent = totalItems;
@@ -709,9 +711,8 @@
         const prod = products.find(p => p.id === item.id);
         totalCost += item.cost;
         let prodInfo = prod.name;
-        if(prod.type === "variant") {
+        if(prod.type === "variant")
           prodInfo += ` (${prod.variants[item.variantIndex].weight}g)`;
-        }
         html += `<tr>
                    <td>${prodInfo}</td>
                    <td>${item.units}</td>
@@ -768,7 +769,7 @@
         document.getElementById(`detail-stock-${prod.id}`).textContent = stockText;
     }
     
-    // Actualizează totalul final cu discount
+    // Actualizează totalul final aplicând discount-ul
     function updateFinalTotal() {
       let orderTotal = cart.reduce((sum, item) => sum + item.cost, 0);
       let discountCode = document.getElementById("discount-code").value.trim();
@@ -782,8 +783,7 @@
     
     document.getElementById("discount-code").addEventListener("input", updateFinalTotal);
     
-    // Plasarea comenzii: se compilează sumarul și se trimite emailul prin FormSubmit,
-    // ulterior comanda este salvată în localStorage pentru secțiunea Admin.
+    // Plasează comanda: se compilează sumarul și se trimite prin FormSubmit, apoi se salvează comanda în localStorage
     function placeOrder() {
       const name = document.getElementById('customer-name').value.trim();
       const contact = document.getElementById('customer-contact').value.trim();
@@ -852,7 +852,7 @@
       navigateTo('order-details');
     }
     
-    // Afișează sumarul comenzii în secțiunea "Detalii Comandă"
+    // Afișează sumarul comenzii în pagina "Detalii Comandă"
     function renderOrderDetails(order) {
       const container = document.getElementById('order-details-container');
       let html = `<p><strong>Client:</strong> ${order.customer.name}</p>
@@ -893,7 +893,7 @@
       const sliderTrack = document.getElementById("slider-track");
       if(!sliderTrack) return;
       sliderTrack.innerHTML = "";
-      products.slice(0, 5).forEach(prod => {
+      products.slice(0,5).forEach(prod => {
         const img = document.createElement("img");
         img.src = prod.image;
         img.alt = prod.name;
@@ -906,7 +906,7 @@
       renderSlider();
     });
     
-    // Secțiunea Admin
+    // Secțiunea Admin: afișează, pentru fiecare produs, stocurile separate
     let adminLogged = false;
     function loadAdmin() {
       const adminDiv = document.getElementById('admin-content');
@@ -959,30 +959,23 @@
       loadAdmin();
     }
     
+    // Actualizează stocurile: pentru fiecare produs, adminul poate actualiza separat stocul fiecărei variante (sau stocul produselor standard)
     function updateAllStocks() {
-      // Pentru fiecare produs, adminul poate introduce un stoc nou pentru fiecare variantă (la produsele variant)
-      // Pentru produsele standard, se actualizează stocul direct.
-      const inputs = document.querySelectorAll("[id^='new-stock-']");
-      inputs.forEach(input => {
-        const id = parseInt(input.id.replace("new-stock-", ""));
-        const newStock = parseInt(input.value) || 0;
-        const prod = products.find(p => p.id === id);
-        if(prod) {
-          if(prod.type === "variant") {
-            // Aici actualizăm stocul pentru fiecare variantă separat în cadrul dashboard-ului
-            // Pentru simplitate, presupunem că adminul actualizează stocul pentru prima variantă.
-            prod.variants[0].stock = newStock;
-          } else {
-            prod.stock = newStock;
+      // Pentru fiecare produs
+      products.forEach(prod => {
+        if(prod.type === "variant") {
+          prod.variants.forEach((variant, index) => {
+            const input = document.getElementById(`new-stock-${prod.id}-${index}`);
+            if(input) {
+              const newStock = parseInt(input.value) || variant.stock;
+              variant.stock = newStock;
+            }
+          });
+        } else {
+          const input = document.getElementById(`new-stock-${prod.id}`);
+          if(input) {
+            prod.stock = parseInt(input.value) || prod.stock;
           }
-          if(document.getElementById(`stock-${id}`))
-            document.getElementById(`stock-${id}`).textContent = prod.type === "variant" ?
-              prod.variants.map(v => v.weight + "g: " + v.stock + " buc").join(" / ") :
-              (prod.stock + " buc");
-          if(document.getElementById(`detail-stock-${id}`))
-            document.getElementById(`detail-stock-${id}`).textContent = prod.type === "variant" ?
-              prod.variants.map(v => v.weight + "g: " + v.stock + " buc").join(" / ") :
-              (prod.stock + " buc");
         }
       });
       alert("Stocurile au fost actualizate.");
@@ -996,17 +989,22 @@
       const filter = document.getElementById('admin-filter').value.toLowerCase();
       products.forEach(prod => {
         if(prod.name.toLowerCase().includes(filter)) {
-          let stockText = "";
+          let stockHtml = "";
           if(prod.type === "variant") {
-            stockText = prod.variants.map(v => v.weight + "g: " + v.stock + " buc").join(" / ");
+            prod.variants.forEach((v, index) => {
+              stockHtml += `<div style="margin-bottom: 5px;">
+                <strong>${v.weight}g:</strong> ${v.stock} buc
+                <br><input type="number" id="new-stock-${prod.id}-${index}" placeholder="Nou stoc" style="width:70px; margin-top:3px;">
+              </div>`;
+            });
           } else {
-            stockText = prod.stock + " buc";
+            stockHtml = `<strong>Stoc:</strong> ${prod.stock} buc<br>
+              <input type="number" id="new-stock-${prod.id}" placeholder="Nou stoc" style="width:70px; margin-top:3px;">`;
           }
           const prodHTML = `
             <div class="mb-2 p-2" style="border:1px solid #ccc; border-radius:5px;">
-              <strong>${prod.name}</strong> - Stoc: <span id="admin-stock-${prod.id}">${stockText}</span>
-              <br>
-              <input type="number" id="new-stock-${prod.id}" placeholder="Nou stoc" style="width:70px; margin-top:5px;">
+              <strong>${prod.name}</strong><br>
+              ${stockHtml}
             </div>`;
           container.innerHTML += prodHTML;
         }
@@ -1035,12 +1033,10 @@
         let details = "";
         order.items.forEach(item => {
           const prod = products.find(p => p.id === item.id);
-          if(prod.type === "variant") {
-            details += "Produs ID: " + item.id + " - " + item.units + " unități, variantă: " +
-                       prod.variants[item.variantIndex].weight + "g<br>";
-          } else {
+          if(prod.type === "variant")
+            details += "Produs ID: " + item.id + " - " + item.units + " unități, variantă: " + prod.variants[item.variantIndex].weight + "g<br>";
+          else
             details += "Produs ID: " + item.id + " - " + item.units + " unități<br>";
-          }
         });
         html += `<tr>
                    <td>${order.id}</td>
@@ -1105,12 +1101,11 @@
             <tbody>`;
       order.items.forEach(item => {
         const prod = products.find(p => p.id === item.id);
-        let prodInfo = prod.name;
-        if(prod.type === "variant") {
-          prodInfo += ` (${prod.variants[item.variantIndex].weight}g)`;
-        }
+        let info = prod.name;
+        if(prod.type === "variant")
+          info += ` (${prod.variants[item.variantIndex].weight}g)`;
         htmlContent += `<tr>
-                          <td>${prodInfo}</td>
+                          <td>${info}</td>
                           <td>${item.units}</td>
                           <td>${item.cost.toFixed(2)} Lei</td>
                         </tr>`;
