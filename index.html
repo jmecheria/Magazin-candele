@@ -35,7 +35,7 @@
     header img.logo, footer img { height: 50px; }
     nav ul {
       list-style: none;
-      margin: 0;
+      margin: 0; 
       padding: 0;
       display: flex;
       gap: 15px;
@@ -79,10 +79,10 @@
       margin-bottom: 10px;
       text-align: center;
     }
-    /* Paginile vor fi gestionate prin display, clasa "active-page" face pagina vizibilă */
+    /* Paginile vor fi gestionate prin display; clasa active-page indică pagina vizibilă */
     .page { display: none; }
     .page.active-page { display: block; }
-    /* Carduri de produs: pentru listare se afișează doar imaginea, numele și prețul/intervalul de preț */
+    /* Carduri de produs: în pagina "Produse" se afișează doar imaginea, numele și prețul (sau intervalul de preț) */
     .product-card {
       border: 1px solid #ccc;
       border-radius: 5px;
@@ -107,7 +107,7 @@
     }
     .product-card .card-body { padding: 15px; }
     .price-range { font-weight: bold; color: #a30000; }
-    /* Stilul modalului de detalii */
+    /* Modalul de detalii produs: afișează toate informațiile despre produs */
     .modal-details { text-align: left; }
     .quantity-select, .unit-input {
       border: 1px solid #a30000;
@@ -197,7 +197,7 @@
       border: 1px solid #000;
     }
     .invoice table th, .invoice table td { padding: 5px; text-align: center; }
-    /* Carousel "Despre noi" – imagini la dimensiuni fixe */
+    /* Carousel "Despre noi" */
     #aboutCarousel .carousel-item img {
       width: 600px;
       height: 400px;
@@ -209,7 +209,7 @@
       .main-container { margin: 10px; padding: 15px; }
       .product-card img { height: 150px; }
     }
-    /* Slider pentru imagini de ambalaje (pentru produsele variant în modal) */
+    /* Slider pentru imagini de ambalaje (pentru produsele variant din modal) */
     .variant-slider-container {
       overflow: hidden;
       position: relative;
@@ -275,7 +275,7 @@
       </div>
     </section>
 
-    <!-- Pagina Produse: Afișează doar imaginea, numele și prețul/intervalul de preț -->
+    <!-- Pagina Produse: Listare produse (afișează doar imaginea, numele și prețul) -->
     <section id="produse" class="page">
       <div class="section-container">
         <h2>Produsele noastre</h2>
@@ -349,61 +349,132 @@
             </tr>
           </thead>
           <tbody>
-            <!-- Aici am introdus exemplul de calendar cu câteva formate: -->
+            <!-- Exemplu de rânduri: 
+                 - Sfinții români (cu albastru),
+                 - Sărbătorile mari și duminicile (cu roșu),
+                 - Restul sfinților (text implicit negru) -->
             <tr>
               <td>1</td>
-              <td><span style="color: blue;">M Sf. Cuv. Maria Egipteanca; Sf. Cuv. Macarie Mărt.; Sf. Mc. Gherontie; Sf. Varsanufie de la Optina (Post)</span></td>
+              <td>M <span style="color: blue;">Sf. Cuv. Maria Egipteanca; Sf. Cuv. Macarie Mărt.; Sf. Mc. Gherontie; Sf. Varsanufie de la Optina (Post)</span></td>
             </tr>
             <tr>
               <td>2</td>
-              <td><span style="color: blue;">M Sf. Cuv. Tit, făcătorul de minuni; Sf. Mc. Amfian și Edesie (Denia Canonului cel Mare) (Post)</span></td>
+              <td>M <span style="color: blue;">Sf. Cuv. Tit, făcătorul de minuni; Sf. Mc. Amfian și Edesie (Denia Canonului cel Mare) (Post)</span></td>
             </tr>
             <tr>
               <td>3</td>
-              <td><span style="color: blue;">J Sf. Cuv. Nichita Mărt. și Ilirie (Dezlegare la ulei și vin)</span></td>
+              <td>J <span style="color: blue;">Sf. Cuv. Nichita Mărt. și Ilirie (Dezlegare la ulei și vin)</span></td>
             </tr>
             <tr>
               <td>4</td>
-              <td><span style="color: blue;">V Sf. Cuv. Iosif Imnograful, Gheorghe din Maleon și Zosima (Denia Acatistului Bunei Vestiri) (Post)</span></td>
+              <td>V <span style="color: blue;">Sf. Cuv. Iosif Imnograful, Gheorghe din Maleon și Zosima (Denia Acatistului Bunei Vestiri) (Post)</span></td>
             </tr>
             <tr>
               <td>5</td>
-              <td><span style="color: blue;">S Sf. Mc. Victorin și cei împreună cu el; Sf. Mc. Teodul și Agatopod (Sâmbăta a V-a din Post - Pomenirea morților) (Dezlegare la ulei și vin)</span></td>
+              <td>S <span style="color: blue;">Sf. Mc. Victorin și cei împreună cu el; Sf. Mc. Teodul și Agatopod (Sâmbăta a V-a din Post – Pomenirea morților) (Dezlegare la ulei și vin)</span></td>
             </tr>
             <tr>
               <td>6</td>
-              <td>
-                <span style="color: red;">D † Sf. Sfințit Mc. Irineu, ep. de Sirmium; Sf. Ier. Eutihie, patr. Constantinopolului; Sf. Cuv. Grigorie Sinaitul și Platonida (Dezlegare la ulei și vin)
-Duminica a V-a din Post (a Sf. Cuv. Maria Egipteanca; Prevestirea Patimilor; Cererea fiilor lui Zevedeu; Pocăința femeii păcătoase); Ap. Evrei IX, 11-14; Galateni III, 23-29; Ev. Marcu X, 32-45; Luca VII, 36-50; glas 8, voscr. 8</span>
-              </td>
+              <td>D <span style="color: red;">† Sf. Sfințit Mc. Irineu, ep. de Sirmium; Sf. Ier. Eutihie, patr. Constantinopolului; Sf. Cuv. Grigorie Sinaitul și Platonida (Dezlegare la ulei și vin)
+              Duminica a V-a din Post (a Sf. Cuv. Maria Egipteanca; Prevestirea Patimilor; Cererea fiilor lui Zevedeu; Pocăința femeii păcătoase); Ap. Evrei IX, 11-14; Galateni III, 23-29; Ev. Marcu X, 32-45; Luca VII, 36-50; glas 8, voscr. 8</span></td>
             </tr>
-            <!-- Restul rândurilor pot fi adăugate similar; pentru exemplu, următoarele rânduri vor fi afișate simplu -->
-            <tr><td>7</td><td><span style="color: blue;">L Sf. Mc. Caliopie; Sf. Ier. Gheorghe Mărt., ep. Mitilenei (Post)</span></td></tr>
-            <tr><td>8</td><td><span style="color: blue;">M Sf. Ap. Irodion, Agav, Ruf, Flegon, Asincrit și Ermis; Sf. Ier. Celestin, ep. Romei (Post)</span></td></tr>
-            <tr><td>9</td><td><span style="color: blue;">M Sf. Mc. Eupsihie din Cezareea Capadociei; Sf. Cuv. Vadim (Post)</span></td></tr>
-            <tr><td>10</td><td><span style="color: blue;">J Sf. Mc. Terentie, Pompei, African, Maxim și Dima (Post)</span></td></tr>
-            <tr><td>11</td><td><span style="color: red;">V † Sf. Ier. Calinic de la Cernica, ep. Râmnicului; Sf. Sfințit Mc. Antipa, ep. Pergamului Asiei (Dezlegare la ulei și vin)</span></td></tr>
-            <!-- Se continuă similar până la rândul 30; aici se pot adăuga restul rândurilor cu formatarea dorită -->
-            <tr><td>12</td><td><span style="color: red;">S † Sf. Mc. Sava de la Buzău; Sf. Ier. Vasile Mărt., ep. Pariei (Sâmbăta lui Lazăr - Pomenirea morților) (Dezlegare la ulei și vin)</span></td></tr>
-            <tr><td>13</td><td><span style="color: red;">D (Denia Sf. și Marii Luni) (Dezlegare la pește)
-(†) Intrarea Domnului în Ierusalim (Duminica a VI-a din Post - a Floriilor); Ap. Filipeni IV, 4-9; Ev. Ioan XII, 1-18</span></td></tr>
-            <tr><td>14</td><td><span style="color: blue;">L Sf. și Marea Luni; † Sf. Ier. Pahomie de la Gledin, ep. Romanului; Sf. Ier. Martin Mărt., ep. Romei; Sf. Mc. Tomaida (Denia Sf. și Marii Marți) (Numai seara, pâine și apă)</span></td></tr>
-            <tr><td>15</td><td><span style="color: blue;">M Sf. și Marea Marți; Sf. Ap. Aristarh, Pud și Trofim; Sf. Mc. Crescent (Denia Sf. și Marii Miercuri) (Numai seara, pâine și apă)</span></td></tr>
-            <tr><td>16</td><td><span style="color: blue;">M Sf. și Marea Miercuri; Sf. Mc. fecioare Agapia, Irina și Hionia (Denia Sf. și Marii Joi) (Numai seara, pâine și apă)</span></td></tr>
-            <tr><td>17</td><td><span style="color: red;">J Sf. și Marea Joi; Sf. Sfințit Mc. Simeon, ep. Persiei (Pomenirea morților - Denia celor 12 Evanghelii, a Sf. și Marii Vineri) (Dezlegare la ulei și vin)</span></td></tr>
-            <tr><td>18</td><td><span style="color: red;">V Sf. și Marea Vineri - Scoaterea Sf. Aer; Sf. Cuv. Ioan, ucenicul Sf. Grigorie Decapolitul (Denia Prohodului Domnului, a Sf. și Marii Sâmbete) (Zi aliturgică) (Post negru)</span></td></tr>
-            <tr><td>19</td><td><span style="color: blue;">S Sf. și Marea Sâmbătă; Sf. Cuv. Ioan de la Lavra Veche; Sf. Sfințit Mc. Pafnutie (Dezlegare la ulei și vin)</span></td></tr>
-            <tr><td>20</td><td><span style="color: red;">D (†) Învierea Domnului (Sfintele Paști); Ap. Fapte I, 1-8; Ev. Ioan I, 1-17</span></td></tr>
-            <tr><td>21</td><td><span style="color: red;">L (†) A doua zi de Paști (Mărturia lui Ioan Botezătorul); † Cinstirea Sf. Ic. a M. D. „Axion Estin” de la M. Protaton - Athos; Sf. Sfințit Mc. Ianuarie, ep. de Benevent; Sf. Mc. Teodor din Perga; Sf. Mc. Alexandra, împ.</span></td></tr>
-            <tr><td>22</td><td><span style="color: red;">M (†) A treia zi de Paști (Drumul spre Emaus); Sf. Ier. Teodor Sicheotul, ep. Anastasiopolei</span></td></tr>
-            <tr><td>23</td><td><span style="color: red;">M (†) Sf. M. Mc. Gheorghe, Purtătorul de biruință; Sf. Mc. Valerie (Harți)</span></td></tr>
-            <tr><td>24</td><td><span style="color: red;">J (†) Sf. Ier. Mărt. Ilie Iorest, Sava Brancovici și Simion Ștefan, mitr. Transilvaniei; Sf. Ier. Iosif Mărt. din Maramureș; Sf. Mc. Pasicrat și Valentin; Sf. Cuv. Elisabeta</span></td></tr>
-            <tr><td>25</td><td><span style="color: red;">V (†) Izvorul Tămăduirii; (†) Cinstirea Sf. Ic. a M. D. „Siriaca” de la M. Ghighiu; Sf. Ap. și Ev. Marcu; (†) Sf. Cuv. Vasile de la Poiana Mărului (Harți)</span></td></tr>
-            <tr><td>26</td><td><span style="color: blue;">S Sf. Sfințit Mc. Vasilevs, ep. Amasiei; Sf. Cuv. Glafira; (†) Sf. Mc. Chiril, Chindeu și Tasie din Axiopolis (Cernavodă)</span></td></tr>
-            <tr><td>27</td><td><span style="color: red;">D Sf. Sfințit Mc. Simeon, ruda Domnului, ep. Ierusalimului. Duminica a II-a după Paști (a Sf. Ap. Toma); Ap. Fapte V, 12-20; Ev. Ioan XX, 19-31; glas 1, voscr. 1</span></td></tr>
-            <tr><td>28</td><td><span style="color: blue;">L Sf. Ap. Iason și Sosipatru; Sf. Mc. Maxim, Cvintilian și Dadas din Ozovia</span></td></tr>
-            <tr><td>29</td><td><span style="color: blue;">M Sf. 9 Mc. din Cizic; Sf. Cuv. Memnon, făcătorul de minuni</span></td></tr>
-            <tr><td>30</td><td><span style="color: blue;">M Sf. Ap. Iacob al lui Zevedeu, fratele Sf. Ap. și Ev. Ioan; Sf. Ier. Donat, ep. Evriei (Dezlegare la pește)</span></td></tr>
+            <tr>
+              <td>7</td>
+              <td>L <span style="color: black;">Sf. Mc. Caliopie; Sf. Ier. Gheorghe Mărt., ep. Mitilenei (Post)</span></td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>M <span style="color: black;">Sf. Ap. Irodion, Agav, Ruf, Flegon, Asincrit și Ermis; Sf. Ier. Celestin, ep. Romei (Post)</span></td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>M <span style="color: black;">Sf. Mc. Eupsihie din Cezareea Capadociei; Sf. Cuv. Vadim (Post)</span></td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>J <span style="color: black;">Sf. Mc. Terentie, Pompei, African, Maxim și Dima (Post)</span></td>
+            </tr>
+            <tr>
+              <td>11</td>
+              <td>V <span style="color: red;">† Sf. Ier. Calinic de la Cernica, ep. Râmnicului; Sf. Sfințit Mc. Antipa, ep. Pergamului Asiei (Dezlegare la ulei și vin)</span></td>
+            </tr>
+            <tr>
+              <td>12</td>
+              <td>S <span style="color: red;">† Sf. Mc. Sava de la Buzău; Sf. Ier. Vasile Mărt., ep. Pariei (Sâmbăta lui Lazăr – Pomenirea morților) (Dezlegare la ulei și vin)</span></td>
+            </tr>
+            <tr>
+              <td>13</td>
+              <td>D <span style="color: red;">(Denia Sf. și Marii Luni) (Dezlegare la pește)
+              (†) Intrarea Domnului în Ierusalim (Duminica a VI-a din Post – a Floriilor); Ap. Filipeni IV, 4-9; Ev. Ioan XII, 1-18</span></td>
+            </tr>
+            <tr>
+              <td>14</td>
+              <td>L <span style="color: blue;">Sf. și Marea Luni; † Sf. Ier. Pahomie de la Gledin, ep. Romanului; Sf. Ier. Martin Mărt., ep. Romei; Sf. Mc. Tomaida (Denia Sf. și Marii Marți) (Numai seara, pâine și apă)</span></td>
+            </tr>
+            <tr>
+              <td>15</td>
+              <td>M <span style="color: blue;">Sf. și Marea Marți; Sf. Ap. Aristarh, Pud și Trofim; Sf. Mc. Crescent (Denia Sf. și Marii Miercuri) (Numai seara, pâine și apă)</span></td>
+            </tr>
+            <tr>
+              <td>16</td>
+              <td>M <span style="color: blue;">Sf. și Marea Miercuri; Sf. Mc. Fecioare Agapia, Irina și Hionia (Denia Sf. și Marii Joi) (Numai seara, pâine și apă)</span></td>
+            </tr>
+            <tr>
+              <td>17</td>
+              <td>J <span style="color: red;">Sf. și Marea Joi; Sf. Sfințit Mc. Simeon, ep. Persiei (Pomenirea morților – Denia celor 12 Evanghelii, a Sf. și Marii Vineri) (Dezlegare la ulei și vin)</span></td>
+            </tr>
+            <tr>
+              <td>18</td>
+              <td>V <span style="color: red;">Sf. și Marea Vineri – Scoaterea Sf. Aer; Sf. Cuv. Ioan, ucenicul Sf. Grigorie Decapolitul (Denia Prohodului Domnului, a Sf. și Marii Sâmbete) (Zi aliturgică) (Post negru)</span></td>
+            </tr>
+            <tr>
+              <td>19</td>
+              <td>S <span style="color: black;">Sf. și Marea Sâmbătă; Sf. Cuv. Ioan de la Lavra Veche; Sf. Sfințit Mc. Pafnutie (Dezlegare la ulei și vin)</span></td>
+            </tr>
+            <tr>
+              <td>20</td>
+              <td>D <span style="color: red;">† Învierea Domnului (Sfintele Paști); Ap. Fapte I, 1-8; Ev. Ioan I, 1-17</span></td>
+            </tr>
+            <tr>
+              <td>21</td>
+              <td>L <span style="color: red;">† A doua zi de Paști (Mărturia lui Ioan Botezătorul); † Cinstirea Sf. Ic. a M. D. „Axion Estin” de la M. Protaton – Athos; Sf. Sfințit Mc. Ianuarie, ep. de Benevent; Sf. Mc. Teodor din Perga; Sf. Mc. Alexandra, împ.</span></td>
+            </tr>
+            <tr>
+              <td>22</td>
+              <td>M <span style="color: red;">† A treia zi de Paști (Drumul spre Emaus); Sf. Ier. Teodor Sicheotul, ep. Anastasiopolei</span></td>
+            </tr>
+            <tr>
+              <td>23</td>
+              <td>M <span style="color: red;">† Sf. M. Mc. Gheorghe, Purtătorul de biruință; Sf. Mc. Valerie (Harți)</span></td>
+            </tr>
+            <tr>
+              <td>24</td>
+              <td>J <span style="color: red;">† Sf. Ier. Mărt. Ilie Iorest, Sava Brancovici și Simion Ștefan, mitr. Transilvaniei; Sf. Ier. Iosif Mărt. din Maramureș; Sf. Mc. Pasicrat și Valentin; Sf. Cuv. Elisabeta</span></td>
+            </tr>
+            <tr>
+              <td>25</td>
+              <td>V <span style="color: red;">† Izvorul Tămăduirii; † Cinstirea Sf. Ic. a M. D. „Siriaca” de la M. Ghighiu; Sf. Ap. și Ev. Marcu; † Sf. Cuv. Vasile de la Poiana Mărului (Harți)</span></td>
+            </tr>
+            <tr>
+              <td>26</td>
+              <td>S <span style="color: black;">Sf. Sfințit Mc. Vasilevs, ep. Amasiei; Sf. Cuv. Glafira; † Sf. Mc. Chiril, Chindeu și Tasie din Axiopolis (Cernavodă)</span></td>
+            </tr>
+            <tr>
+              <td>27</td>
+              <td>D <span style="color: red;">Sf. Sfințit Mc. Simeon, ruda Domnului, ep. Ierusalimului. Duminica a II-a după Paști (a Sf. Ap. Toma); Ap. Fapte V, 12-20; Ev. Ioan XX, 19-31; glas 1, voscr. 1</span></td>
+            </tr>
+            <tr>
+              <td>28</td>
+              <td>L <span style="color: black;">Sf. Ap. Iason și Sosipatru; Sf. Mc. Maxim, Cvintilian și Dadas din Ozovia</span></td>
+            </tr>
+            <tr>
+              <td>29</td>
+              <td>M <span style="color: black;">Sf. 9 Mc. din Cizic; Sf. Cuv. Memnon, făcătorul de minuni</span></td>
+            </tr>
+            <tr>
+              <td>30</td>
+              <td>M <span style="color: black;">Sf. Ap. Iacob al lui Zevedeu, fratele Sf. Ap. și Ev. Ioan; Sf. Ier. Donat, ep. Evriei (Dezlegare la pește)</span></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -520,7 +591,7 @@ Duminica a V-a din Post (a Sf. Cuv. Maria Egipteanca; Prevestirea Patimilor; Cer
     }
     startTimer();
 
-    // Lista de produse (folosind lista furnizată de tine)
+    // Lista de produse (folosind lista primită)
     const products = [
       { id: 1, name: "Candelă mare TIP IV", price: 19.99, image: "1.jpg", description: "Lumânare din ceară naturală cu o lungă durata de viață. 7 zile", stock: 50, labels: ["Popular"] },
       { id: 2, name: "Candelă mare TIP III", price: 12.99, image: "2.jpg", description: "Lumânare din ceară naturală cu o lungă durata de viață. 100h", stock: 40, labels: ["Recomandat"] },
@@ -537,7 +608,7 @@ Duminica a V-a din Post (a Sf. Cuv. Maria Egipteanca; Prevestirea Patimilor; Cer
       { id: 13, name: "Icoană TIP II", price: 22.99, image: "13.jpg", description: "Icoană pentru rugăciuni. A5", stock: 30, labels: ["Recomandat"] },
       { id: 14, name: "Icoană TIP III", price: 19.99, image: "14.jpg", description: "Icoană pentru rugăciuni. 24*10", stock: 45, labels: ["Special"] },
       { id: 15, name: "Icoană TIP IV", price: 139.99, image: "15.jpg", description: "Icoană pentru rugăciuni. A4", stock: 20, labels: ["Limited Edition"] },
-      { id: 16, name: "Cruciuliță", price: 12.99, image: "16.jpg", description: "Un simbol protector al credinței, dar și a persoanei ce o poartă. 5*3cm", stock: 100, labels: ["Special"] },
+      { id: 16, name: "Cruciuliță", price: 12.99, image: "16.jpg", description: "Un simbol protector al credinței, dar și al persoanei ce o poartă. 5*3cm", stock: 100, labels: ["Special"] },
       { id: 17, name: "Cruce binecuvântare", price: 149.99, image: "17.jpg", description: "Realizată pentru slujbe. 30*13cm", stock: 25, labels: ["Limited Edition"] },
       { id: 18, name: "Mir de oașă", price: 9.99, image: "18.jpg", description: "Un lucru mic pentru o familie mare.", stock: 30, labels: ["Pentru zile negre"] },
       { id: 19, name: "Pomelnice anuale", price: 99.99, image: "19.jpg", description: "Pentru a vă aminti de cei dragi vouă.", stock: 15, labels: ["Special"] },
@@ -546,7 +617,7 @@ Duminica a V-a din Post (a Sf. Cuv. Maria Egipteanca; Prevestirea Patimilor; Cer
 
     let cart = [];
 
-    // Listare produse (pagina "Produse"): se afișează doar imaginea, numele și prețul/intervalul
+    // Funcția pentru listarea produselor pe pagina "Produse"
     function renderProducts() {
       const container = document.getElementById('products-container');
       container.innerHTML = "";
@@ -554,7 +625,6 @@ Duminica a V-a din Post (a Sf. Cuv. Maria Egipteanca; Prevestirea Patimilor; Cer
       products.forEach(prod => {
         if(prod.name.toLowerCase().includes(filterValue)) {
           let infoText = `<span class="price-range">${prod.price.toFixed(2)} Lei</span>`;
-          // Dacă aveai variante de gramaj, aici se poate calcula intervalul de preț, însă lista ta este pentru produse standard
           const col = document.createElement('div');
           col.className = "col-md-4 mb-4";
           col.innerHTML = `
@@ -570,7 +640,7 @@ Duminica a V-a din Post (a Sf. Cuv. Maria Egipteanca; Prevestirea Patimilor; Cer
       });
     }
 
-    // Deschide modalul de detalii al produsului
+    // Funcția pentru afișarea detaliilor unui produs (pagina "produs")
     function viewProduct(id) {
       const prod = products.find(p => p.id === id);
       if(!prod) return;
@@ -578,12 +648,10 @@ Duminica a V-a din Post (a Sf. Cuv. Maria Egipteanca; Prevestirea Patimilor; Cer
       let labelsHtml = "";
       if(prod.labels && prod.labels.length)
         labelsHtml = prod.labels.map(l => `<span class="badge bg-info text-dark me-1">${l}</span>`).join("");
-      let detailsHtml = "";
-      // Pentru aceste produse standard, vom păstra detaliile despre material, etc. – dacă ai și alte detalii, le poți adăuga
-      detailsHtml = `
+      // Aici poți extinde detaliile despre produs (material, dimensiuni etc.) dacă le ai
+      let detailsHtml = `
         <div class="modal-details">
           <p><strong>Descriere:</strong> ${prod.description}</p>
-          <!-- Dacă ai detalii suplimentare (material, dimensiuni etc.), le poți adăuga aici -->
         </div>
         <div class="mb-3">
           <label>Număr de unități:</label>
@@ -607,7 +675,7 @@ Duminica a V-a din Post (a Sf. Cuv. Maria Egipteanca; Prevestirea Patimilor; Cer
       navigateTo('produs');
     }
 
-    // Adaugă produsul în coș
+    // Funcția pentru adăugarea unui produs în coș
     function addToCart(id) {
       const prod = products.find(p => p.id === id);
       let units = parseInt(document.getElementById(`unit-${id}`).value) || 1;
@@ -737,7 +805,7 @@ Duminica a V-a din Post (a Sf. Cuv. Maria Egipteanca; Prevestirea Patimilor; Cer
       orderSummary += "Detalii Produse:\n";
       order.items.forEach(item => {
         const prod = products.find(p => p.id === item.id);
-        orderSummary += "Produs ID: " + item.id + " - " + item.units + " unități\n";
+        orderSummary += "Produs: " + prod.name + " - " + item.units + " unități\n";
       });
       orderSummary += "\nTotal Inițial: " + order.orderTotal + " Lei\n";
       if(discountPercent > 0) {
@@ -801,7 +869,7 @@ Duminica a V-a din Post (a Sf. Cuv. Maria Egipteanca; Prevestirea Patimilor; Cer
       const sliderTrack = document.getElementById("slider-track");
       if(!sliderTrack) return;
       sliderTrack.innerHTML = "";
-      products.slice(0,5).forEach(prod => {
+      products.slice(0, 5).forEach(prod => {
         const img = document.createElement("img");
         img.src = prod.image;
         img.alt = prod.name;
@@ -867,7 +935,239 @@ Duminica a V-a din Post (a Sf. Cuv. Maria Egipteanca; Prevestirea Patimilor; Cer
       loadAdmin();
     }
 
-    // Actualizează stocurile în Admin (pentru fiecare produs, actualizează stocul produselor standard sau al variantelor)
+    function updateAllStocks() {
+      products.forEach(prod => {
+        if(prod.type === "variant") {
+          // Pentru produsele variant se actualizează stocul pentru fiecare variantă
+          prod.variants.forEach((variant, idx) => {
+            const input = document.getElementById(`new-stock-${prod.id}-${idx}`);
+            if(input) {
+              const newStock = parseInt(input.value) || variant.stock;
+              variant.stock = newStock;
+            }
+          });
+        } else {
+          const input = document.getElementById(`new-stock-${prod.id}`);
+          if(input) {
+            prod.stock = parseInt(input.value) || prod.stock;
+          }
+        }
+      });
+      alert("Stocurile au fost actualizate.");
+      renderProducts();
+      renderAdminProducts();
+    }
+
+    function renderAdminProducts() {
+      const container = document.getElementById('admin-products-container');
+      container.innerHTML = "";
+      const filter = document.getElementById('admin-filter').value.toLowerCase();
+      products.forEach(prod => {
+        if(prod.name.toLowerCase().includes(filter)) {
+          let stockHtml = "";
+          if(prod.type === "variant") {
+            prod.variants.forEach((v, idx) => {
+              stockHtml += `<div style="margin-bottom: 5px;">
+                <strong>${v.weight}g:</strong> ${v.stock} buc
+                <br><input type="number" id="new-stock-${prod.id}-${idx}" placeholder="Nou stoc" style="width:70px; margin-top:3px;">
+              </div>`;
+            });
+          } else {
+            stockHtml = `<strong>Stoc:</strong> ${prod.stock} buc<br>
+              <input type="number" id="new-stock-${prod.id}" placeholder="Nou stoc" style="width:70px; margin-top:3px;">`;
+          }
+          const prodHTML = `
+            <div class="mb-2 p-2" style="border:1px solid #ccc; border-radius:5px;">
+              <strong>${prod.name}</strong><br>
+              ${stockHtml}
+            </div>`;
+          container.innerHTML += prodHTML;
+        }
+      });
+    }
+
+    function renderAdminOrders() {
+      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      const container = document.getElementById('admin-orders-container');
+      if(orders.length === 0) {
+        container.innerHTML = "<p>Nu există comenzi.</p>";
+        return;
+      }
+      let html = `<table class="table">
+                    <thead>
+                      <tr>
+                        <th>ID Comandă</th>
+                        <th>Client</th>
+                        <th>Detalii Produse</th>
+                        <th>Total Final</th>
+                        <th>Acțiuni</th>
+                      </tr>
+                    </thead>
+                    <tbody>`;
+      orders.forEach((order, idx) => {
+        let details = "";
+        order.items.forEach(item => {
+          const prod = products.find(p => p.id === item.id);
+          details += "Produs: " + prod.name + " - " + item.units + " unități<br>";
+        });
+        html += `<tr>
+                   <td>${order.id}</td>
+                   <td>${order.customer.name}<br>${order.customer.contact}</td>
+                   <td>${details}</td>
+                   <td>${order.finalTotal} Lei</td>
+                   <td>
+                     <button class="btn btn-success btn-sm" onclick="finishOrder(${idx})">Terminată</button>
+                     <button class="btn btn-info btn-sm" onclick="printInvoice(${idx})">Tipărește Factura</button>
+                   </td>
+                 </tr>`;
+      });
+      html += `</tbody></table>`;
+      container.innerHTML = html;
+    }
+
+    function finishOrder(index) {
+      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      if(index >= 0 && index < orders.length) {
+        orders.splice(index, 1);
+        localStorage.setItem("globalOrders", JSON.stringify(orders));
+        alert("Comanda a fost finalizată.");
+        renderAdminOrders();
+      }
+    }
+
+    function printInvoice(index) {
+      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      if(orders.length <= index) return;
+      const order = orders[index];
+      let invoiceWindow = window.open("", "PrintInvoice", "width=800,height=600");
+      let htmlContent = `
+        <html>
+        <head>
+          <title>Factura - Comanda ${order.id}</title>
+          <style>
+            body { font-family: "Times New Roman", Times, serif; padding: 20px; text-align: center; }
+            h2, p, table { margin: 0 0 10px; padding: 0; text-align: center; }
+            table { width: 100%; border-collapse: collapse; }
+            table, th, td { border: 1px solid #000; }
+            th, td { padding: 5px; text-align: center; }
+          </style>
+        </head>
+        <body>
+          <h2>Factura - Comanda ${order.id}</h2>
+          <p><strong>Client:</strong> ${order.customer.name}</p>
+          <p><strong>Contact:</strong> ${order.customer.contact}</p>
+          <p><strong>Total Inițial:</strong> ${order.orderTotal} Lei</p>`;
+      if(order.discountPercent > 0) {
+        htmlContent += `<p><strong>Cod Reducere:</strong> ${order.discountCode} (${order.discountPercent}%)</p>
+                        <p><strong>Valoare Reducere:</strong> ${order.discountAmount} Lei</p>`;
+      }
+      htmlContent += `<p><strong>Total Final:</strong> ${order.finalTotal} Lei</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Produs</th>
+                <th>Unități</th>
+                <th>Cost</th>
+              </tr>
+            </thead>
+            <tbody>`;
+      order.items.forEach(item => {
+        const prod = products.find(p => p.id === item.id);
+        htmlContent += `<tr>
+                          <td>${prod.name}</td>
+                          <td>${item.units}</td>
+                          <td>${item.cost.toFixed(2)} Lei</td>
+                        </tr>`;
+      });
+      htmlContent += `</tbody></table>
+          </body>
+          </html>`;
+      invoiceWindow.document.write(htmlContent);
+      invoiceWindow.document.close();
+      invoiceWindow.focus();
+      invoiceWindow.print();
+    }
+
+    // Slider pentru pagina de start
+    function renderSlider() {
+      const sliderTrack = document.getElementById("slider-track");
+      if(!sliderTrack) return;
+      sliderTrack.innerHTML = "";
+      products.slice(0, 5).forEach(prod => {
+        const img = document.createElement("img");
+        img.src = prod.image;
+        img.alt = prod.name;
+        sliderTrack.appendChild(img);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      renderProducts();
+      renderSlider();
+    });
+
+    /* Secțiunea Calendar – cu formatare: sfinții români (albastru), restul sfinților (negru), sărbătorile mari și duminicile (roșu) */
+    // Aici folosim rânduri statice conform exemplului primit:
+    // Note: Poți extinde cu toate cele 30 de rânduri, după cum ai nevoie.
+    // Pentru exemplu, am inclus 20 de rânduri.
+    // Dacă textul conține "†" sau "D" indicând sărbătoare mare sau duminică, se aplică roșu.
+    // Dacă textul conține "Sf." și are indicatorul "Romani" în descriere, se va afișa în albastru, altfel în negru.
+    // (Ajustează inline style-ul după preferințe.)
+    // În secțiunea Calendar se află deja tabelul cu rânduri.
+
+    /* Secțiunea Admin */
+    let adminLogged = false;
+    function loadAdmin() {
+      const adminDiv = document.getElementById('admin-content');
+      if(!adminLogged) {
+        adminDiv.innerHTML = `
+          <div class="section-container text-start">
+            <h2>Login Admin</h2>
+            <div class="mb-3">
+              <label>Utilizator:</label>
+              <input type="text" id="admin-user" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label>Parolă:</label>
+              <input type="password" id="admin-pass" class="form-control">
+            </div>
+            <button class="btn btn-primary" onclick="adminLogin()">Login</button>
+          </div>`;
+      } else {
+        adminDiv.innerHTML = `
+          <div class="section-container">
+            <h2>Dashboard Admin</h2>
+            <div class="mb-3">
+              <button class="btn btn-secondary" onclick="updateAllStocks()">Actualizează stocurile</button>
+            </div>
+            <h5>Filtrare Produse</h5>
+            <input type="text" id="admin-filter" class="form-control mb-3" placeholder="Caută produs în admin..." onkeyup="renderAdminProducts()">
+            <div id="admin-products-container" class="mb-4"></div>
+            <h5>Comenzi Plasate</h5>
+            <div id="admin-orders-container"></div>
+            <button class="btn btn-secondary mt-3" onclick="adminLogout()">Logout</button>
+          </div>`;
+        renderAdminProducts();
+        renderAdminOrders();
+      }
+    }
+
+    function adminLogin() {
+      const user = document.getElementById('admin-user').value.trim();
+      const pass = document.getElementById('admin-pass').value.trim();
+      if(user === "admin" && pass === "parola123") {
+        adminLogged = true;
+        loadAdmin();
+      } else {
+        alert("Autentificare eșuată!");
+      }
+    }
+
+    function adminLogout() {
+      adminLogged = false;
+      loadAdmin();
+    }
+
     function updateAllStocks() {
       products.forEach(prod => {
         if(prod.type === "variant") {
@@ -940,7 +1240,7 @@ Duminica a V-a din Post (a Sf. Cuv. Maria Egipteanca; Prevestirea Patimilor; Cer
         let details = "";
         order.items.forEach(item => {
           const prod = products.find(p => p.id === item.id);
-          details += "Produs ID: " + item.id + " - " + item.units + " unități<br>";
+          details += "Produs: " + prod.name + " - " + item.units + " unități<br>";
         });
         html += `<tr>
                    <td>${order.id}</td>
