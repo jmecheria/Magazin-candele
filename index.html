@@ -6,7 +6,7 @@
   <title>Magazin Bisericesc</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icons (opțional, pentru icoane) -->
+  <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     html { scroll-behavior: smooth; }
@@ -42,7 +42,7 @@
       top: 0;
       z-index: 50;
     }
-    header img.logo, footer img { height: 50px; }
+    header img.logo { height: 50px; }
     nav ul {
       list-style: none;
       margin: 0;
@@ -76,7 +76,7 @@
     }
     .main-container {
       background-color: #fff;
-      margin: 80px auto 20px; /* Ajustat pentru header sticky */
+      margin: 80px auto 20px;
       padding: 20px;
       max-width: 1200px;
       border-radius: 8px;
@@ -101,10 +101,9 @@
       margin-bottom: 10px;
       color: #a30000;
     }
-    /* Toate paginile sunt ascunse inițial; clasa "active-page" le afișează */
     .page { display: none; }
     .page.active-page { display: block; }
-    /* Stil produs (listare) */
+
     .product-card {
       border: 1px solid #ccc;
       border-radius: 5px;
@@ -129,7 +128,7 @@
     }
     .product-card .card-body { padding: 15px; }
     .price-range { font-weight: bold; color: #a30000; }
-    /* Stil modal produs: detalii atractive */
+
     .modal-details { text-align: left; }
     .quantity-controls {
       display: flex;
@@ -169,8 +168,7 @@
     }
     .add-cart-btn:hover { background-color: #7a0000; }
     #filter-input { max-width: 400px; margin: 0 auto 20px; }
-    footer { text-align: center; margin-top: 20px; }
-    /* Slider pagina de start */
+
     .slider-container {
       overflow: hidden;
       position: relative;
@@ -218,53 +216,7 @@
       transition: background-color 0.3s ease;
     }
     #backToTop:hover { background: #7a0000; }
-    .invoice {
-      max-width: 800px;
-      margin: 20px auto;
-      padding: 20px;
-      font-family: "Times New Roman", Times, serif;
-      background-color: #fff;
-      border: 1px solid #000;
-    }
-    .invoice-header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .invoice-header img {
-      height: 70px;
-      margin-bottom: 10px;
-    }
-    .invoice-details {
-      margin-bottom: 20px;
-    }
-    .invoice-details p {
-      margin: 0 0 5px;
-    }
-    .invoice table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-    }
-    .invoice table, .invoice table th, .invoice table td {
-      border: 1px solid #000;
-    }
-    .invoice table th, .invoice table td {
-      padding: 8px;
-      text-align: center;
-    }
-    /* Carousel "Despre noi" */
-    #aboutCarousel .carousel-item img {
-      width: 600px;
-      height: 400px;
-      object-fit: cover;
-      margin: 0 auto;
-    }
-    @media (max-width: 768px) {
-      nav ul { justify-content: center; }
-      .main-container { margin: 10px; padding: 15px; }
-      .product-card img { height: 150px; }
-    }
-    /* Stil pentru blocul „Detalii firmă” */
+
     .company-details-card {
       background-color: #f5f5f5;
       border: 1px solid #ddd;
@@ -297,7 +249,8 @@
       font-style: normal;
       color: #333;
     }
-    /* Buton returnare & modal detalii firmă */
+
+    /* Buton returnare */
     .btn-return {
       background-color: #a30000;
       color: #fff;
@@ -309,6 +262,7 @@
     .btn-return:hover {
       background-color: #7a0000;
     }
+
     /* Floating WhatsApp button */
     .btn-whatsapp {
       position: fixed;
@@ -330,27 +284,45 @@
     .btn-whatsapp:hover {
       transform: scale(1.1);
     }
-    /* Floater „Detalii firmă” dinamic */
-    .floating-info {
-      position: fixed;
-      bottom: 150px;
-      right: 20px;
-      background-color: #a30000;
+
+    /* Footer styling */
+    footer {
+      padding: 20px;
+      background: linear-gradient(135deg, #500000, #a30000);
       color: #fff;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-      cursor: pointer;
-      z-index: 200;
-      transition: transform 0.2s ease;
     }
-    .floating-info:hover {
-      transform: scale(1.1);
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .footer-left, .footer-center, .footer-right {
+      flex: 1 1 300px;
+      margin: 10px;
+    }
+    .footer-left p, .footer-left small {
+      margin: 0;
+    }
+    .footer-center a {
+      color: #fff;
+      text-decoration: underline;
+    }
+    .footer-right img {
+      height: 40px;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+    @media (max-width: 768px) {
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      .footer-right {
+        margin-top: 15px;
+      }
     }
   </style>
 </head>
@@ -360,6 +332,10 @@
     <div class="d-flex align-items-center">
       <img src="logo.jpg" alt="Logo" class="logo me-2">
       <span class="fs-4">Magazin Bisericesc</span>
+      <!-- Buton Info lângă numele firmei -->
+      <button class="btn btn-link text-white ms-2 p-0" onclick="showCompanyInfo()" title="Detalii firmă">
+        <i class="bi bi-info-circle" style="font-size: 1.5rem;"></i>
+      </button>
     </div>
     <nav>
       <ul>
@@ -397,9 +373,9 @@
           </div>
           <!-- Buton retur dinamic -->
           <div class="mt-4">
-            <a href="#formular-retragere" class="btn btn-return">
+            <button class="btn btn-return" onclick="showReturnForm()">
               <i class="bi bi-arrow-counterclockwise"></i> Retur 14 zile
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -485,9 +461,7 @@
             <li class="list-group-item"><strong>Înregistrare R.C.:</strong> J40/1234/2020</li>
             <li class="list-group-item"><strong>C.U.I. (cod fiscal):</strong> RO12345678</li>
             <li class="list-group-item"><strong>Telefon:</strong> 0123.456.789</li>
-            <li class="list-group-item"><strong>Fax:</strong> — (nu există)</li>
             <li class="list-group-item"><strong>Email:</strong> <a href="mailto:contact@magazinbisericesc.ro">contact@magazinbisericesc.ro</a></li>
-            <li class="list-group-item"><strong>Autoritate autorizare:</strong> Nu se aplică – Comerț cu amănuntul</li>
           </ul>
 
           <!-- 2. Informații despre site și contractul electronic -->
@@ -533,22 +507,8 @@
             </li>
           </ul>
 
-          <!-- 4. Drept de retragere (14 zile) -->
-          <h5>4. Drept de retragere</h5>
-          <ul class="list-group list-group-flush mb-3">
-            <li class="list-group-item">
-              Conform <em>OG 130/2000</em> și <em>OUG 34/2014</em>, clientul are dreptul de a se retrage din contract în termen de 14 zile calendaristice de la data primirii produsului, fără a oferi un motiv.
-            </li>
-            <li class="list-group-item">
-              Pentru a exercita dreptul de retragere, clientul va transmite vânzătorului, într-un format clar (email la <a href="mailto:contact@magazinbisericesc.ro">contact@magazinbisericesc.ro</a> sau scrisoare recomandată), Formularele de retragere incluse pe site (disponibile la: <a href="#formular-retragere">Formular Retragere</a>).
-            </li>
-            <li class="list-group-item">
-              <strong>Costuri retur:</strong> Costul transportului de retur este suportat de client, iar produsul trebuie returnat în aceeași stare și în ambalajul original.
-            </li>
-          </ul>
-
-          <!-- 5. Garanție și service post-vânzare -->
-          <h5>5. Garanție și service</h5>
+          <!-- 4. Garanție și service post-vânzare -->
+          <h5>4. Garanție și service</h5>
           <ul class="list-group list-group-flush mb-3">
             <li class="list-group-item">
               Toate produsele comercializate beneficiază de garanție de 24 luni de la data achiziției, conform <em>OG 21/1992</em> și <em>Legea 449/2003</em>.
@@ -558,22 +518,23 @@
             </li>
           </ul>
 
-          <!-- 6. Protecția datelor cu caracter personal (GDPR) -->
-          <h5>6. Protecția datelor (GDPR)</h5>
+          <!-- 5. Protecția datelor cu caracter personal (GDPR) -->
+          <h5>5. Protecția datelor (GDPR)</h5>
           <ul class="list-group list-group-flush mb-3">
             <li class="list-group-item">
               Prelucrăm datele tale personale (nume, email, telefon, adresă de livrare) exclusiv pentru procesarea comenzilor, facturare și comunicare cu tine.
             </li>
             <li class="list-group-item">
-              Datele rămân stocate în conformitate cu Politica GDPR, disponibilă la: <a href="#politica-gdpr">Politica GDPR</a>.
+              Datele rămân stocate în conformitate cu Politica GDPR, disponibilă la: 
+              <a href="https://gdpr.privacy.gov.ro/" target="_blank" class="text-decoration-underline">gdpr.privacy.gov.ro</a>.
             </li>
             <li class="list-group-item">
               Ai dreptul să soliciți accesul, rectificarea, ștergerea sau restricționarea prelucrării datelor tale, printr-un email la <a href="mailto:gdpr@magazinbisericesc.ro">gdpr@magazinbisericesc.ro</a>.
             </li>
           </ul>
 
-          <!-- 7. Soluționare litigii -->
-          <h5>7. Soluționare litigii</h5>
+          <!-- 6. Soluționare litigii -->
+          <h5>6. Soluționare litigii</h5>
           <ul class="list-group list-group-flush mb-3">
             <li class="list-group-item">
               <strong>SAL (Soluționare Alternativă a Litigiilor):</strong> Poți solicita medierea divergențelor în legătură cu comanda la ANPC (str. Atena No. 2–4, București) sau la Centrul de Soluționare Alternativă a Litigiilor de Consum (CSALOC).
@@ -582,29 +543,6 @@
               <strong>SOL (Soluționare Online a Litigiilor):</strong> Depune cerere la platforma ODR a Comisiei Europene: <a href="https://ec.europa.eu/consumers/odr/" target="_blank">https://ec.europa.eu/consumers/odr/</a>.
             </li>
           </ul>
-
-          <!-- Formular retragere (opțional) -->
-          <h5 id="formular-retragere">Formular de retragere (model)</h5>
-          <p>Pentru exercitarea dreptului de retragere, completează datele de mai jos și trimite-le la <a href="mailto:contact@magazinbisericesc.ro">contact@magazinbisericesc.ro</a>: </p>
-          <textarea class="form-control mb-3" rows="5" readonly>
-FORMULAR DE RETRAGERE DIN CONTRACT
-
-Către: SC Magazin Bisericesc SRL  
-Adresa: Strada Exemplu nr. 1, București, România  
-Email: contact@magazinbisericesc.ro  
-
-Subsemnatul (Nume și prenume): ________________________________  
-Număr comandă / Cod comandă: ________________________________  
-Data primirii produsului: ________________________________  
-
-Declar că mă retrag din contract-ul încheiat la distanță și solicit returnarea sumei plătite.  
-Data: ______ / ______ / ______  
-Semnătura: ___________________________
-          </textarea>
-
-          <!-- Link către Politica GDPR (opțional, poate fi un alt fișier) -->
-          <h5 id="politica-gdpr">Politica de Confidențialitate (GDPR)</h5>
-          <p>Click <a href="politica-gdpr.html" target="_blank">aici</a> pentru detaliile complete privind prelucrarea datelor.</p>
         </div>
       </div>
     </section>
@@ -681,11 +619,6 @@ Semnătura: ___________________________
     <i class="bi bi-whatsapp"></i>
   </a>
 
-  <!-- Floating Info button (deschide modal cu detalii firmă) -->
-  <div class="floating-info" title="Detalii firmă" onclick="showCompanyInfo()">
-    <i class="bi bi-info-circle"></i>
-  </div>
-
   <!-- Modal pentru Detalii Firmă -->
   <div class="modal fade" id="companyInfoModal" tabindex="-1" aria-labelledby="companyInfoLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -713,21 +646,67 @@ Semnătura: ___________________________
     </div>
   </div>
 
+  <!-- Modal pentru Formular Retragere -->
+  <div class="modal fade" id="returnFormModal" tabindex="-1" aria-labelledby="returnFormLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title" id="returnFormLabel"><i class="bi bi-arrow-counterclockwise me-2"></i>Formular Retragere</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="return-form">
+            <div class="mb-3">
+              <label for="ret-name" class="form-label"><strong>Nume și prenume:</strong></label>
+              <input type="text" id="ret-name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="ret-email" class="form-label"><strong>Email:</strong></label>
+              <input type="email" id="ret-email" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="ret-phone" class="form-label"><strong>Telefon:</strong></label>
+              <input type="text" id="ret-phone" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="ret-code" class="form-label"><strong>Număr comandă / Cod comandă:</strong></label>
+              <input type="text" id="ret-code" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="ret-date" class="form-label"><strong>Data primirii produsului:</strong></label>
+              <input type="date" id="ret-date" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="ret-reason" class="form-label"><strong>Motiv retragere (opțional):</strong></label>
+              <textarea id="ret-reason" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-danger">Trimite Cererea de Retragere</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer>
-    <div class="d-flex justify-content-between align-items-center flex-wrap">
-      <div>
-        &copy; <span id="year"></span> Magazin Bisericesc. Toate drepturile rezervate.<br>
-        <small>Vânzător: SC Magazin Bisericesc SRL, Strada Exemplu nr. 1, București<br>
-        Tel: 0123.456.789 | Email: contact@magazinbisericesc.ro</small>
+    <div class="footer-content">
+      <div class="footer-left">
+        <p><strong>SC Magazin Bisericesc SRL</strong></p>
+        <small>
+          Sediu social: Strada Exemplu nr. 1, București<br>
+          CUI: RO12345678 | J40/1234/2020<br>
+          Tel: 0123.456.789 | Email: <a href="mailto:contact@magazinbisericesc.ro" class="text-white">contact@magazinbisericesc.ro</a>
+        </small>
       </div>
-      <div>
-        <!-- Pictograme SAL & SOL -->
-        <img src="sal-icon.png" alt="SAL" title="Soluționare Alternativă a Litigiilor" class="me-2" height="40">
-        <img src="sol-icon.png" alt="SOL" title="Soluționare Online a Litigiilor" height="40">
+      <div class="footer-center">
+        <p>© <span id="year"></span> Magazin Bisericesc. Toate drepturile rezervate.</p>
+        <p><a href="https://gdpr.privacy.gov.ro/" target="_blank">Politica de confidențialitate (GDPR)</a></p>
       </div>
-      <div>
-        <img src="anpc.jpg" alt="Logo ANPC" height="50">
+      <div class="footer-right">
+        <p>Livrare: 1–3 zile lucrătoare</p>
+        <p>Returnare: 14 zile (cost suportat de client)</p>
       </div>
     </div>
   </footer>
@@ -743,7 +722,6 @@ Semnătura: ___________________________
   <!-- Bootstrap JS și script -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    /* Funcție de navigare: ascunde toate paginile și afișează pagina selectată */
     function navigateTo(pageId) {
       document.querySelectorAll('.page').forEach(function(page) {
         page.style.display = "none";
@@ -759,7 +737,6 @@ Semnătura: ___________________________
       if (pageId === 'home') { renderSlider(); }
     }
 
-    // Buton Back to Top
     window.onscroll = function() {
       const btn = document.getElementById("backToTop");
       btn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "block" : "none";
@@ -768,10 +745,8 @@ Semnătura: ___________________________
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Setează anul în footer
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Timer până la Paști
     function startTimer() {
       const easterDate = new Date("2025-04-20T00:00:00").getTime();
       const timerElem = document.getElementById("timer");
@@ -789,7 +764,63 @@ Semnătura: ___________________________
     }
     startTimer();
 
-    // Generează un cod alfanumeric unic de 8 caractere pentru comandă
+    function showCompanyInfo() {
+      const modal = new bootstrap.Modal(document.getElementById('companyInfoModal'));
+      modal.show();
+    }
+    function showReturnForm() {
+      const modal = new bootstrap.Modal(document.getElementById('returnFormModal'));
+      modal.show();
+    }
+
+    // Cod pentru trimiterea formularului de retragere
+    document.getElementById('return-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('ret-name').value.trim();
+      const email = document.getElementById('ret-email').value.trim();
+      const phone = document.getElementById('ret-phone').value.trim();
+      const code = document.getElementById('ret-code').value.trim();
+      const date = document.getElementById('ret-date').value;
+      const reason = document.getElementById('ret-reason').value.trim() || "N/A";
+      if (!name || !email || !phone || !code || !date) {
+        alert("Completează toate câmpurile obligatorii!");
+        return;
+      }
+      // Construim textul de email pentru formularul de retragere
+      const details = 
+        `Formular Retragere\n\n` +
+        `Nume și prenume: ${name}\n` +
+        `Email: ${email}\n` +
+        `Telefon: ${phone}\n` +
+        `Număr/Cod comandă: ${code}\n` +
+        `Data primirii produsului: ${date}\n` +
+        `Motiv (opțional): ${reason}\n\n` +
+        `Doresc să mă retrag din contract și solicit returnarea sumei plătite.`;
+      // Redirecționăm la FormSubmit pentru a trimite email
+      const tempForm = document.createElement('form');
+      tempForm.method = "POST";
+      tempForm.action = "https://formsubmit.co/irimia.teodor.17@gmail.com";
+      tempForm.style.display = "none";
+      const subj = document.createElement('input');
+      subj.name = "subject";
+      subj.value = "Cerere Retragere - Magazin Bisericesc";
+      const body = document.createElement('textarea');
+      body.name = "message";
+      body.value = details;
+      const noCaptcha = document.createElement('input');
+      noCaptcha.name = "_captcha";
+      noCaptcha.value = "false";
+      tempForm.appendChild(subj);
+      tempForm.appendChild(body);
+      tempForm.appendChild(noCaptcha);
+      document.body.appendChild(tempForm);
+      tempForm.submit();
+      document.body.removeChild(tempForm);
+      alert("Cererea de retragere a fost trimisă. Vei primi confirmare pe email.");
+      bootstrap.Modal.getInstance(document.getElementById('returnFormModal')).hide();
+      document.getElementById('return-form').reset();
+    });
+
     function generateOrderCode() {
       const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
       let code = "";
@@ -798,13 +829,10 @@ Semnătura: ___________________________
       }
       return code;
     }
-
-    // Funcție pentru a calcula prețul final (TVA 19% + adaos diferențiat per produs)
     function retailPrice(netPrice, markupPercent) {
       return parseFloat((netPrice * (1 + markupPercent / 100) * 1.19).toFixed(2));
     }
 
-    // Lista de produse (netPrice = preț fără TVA și fără adaos; markupPercent = procent adaos specific)
     const products = [
       { id: 1, name: "Candelă mare TIP IV", netPrice: 19.99, markupPercent: 30, image: "1.jpg", description: "Lumânare din ceară naturală cu durată de 7 zile.", stock: 50, labels: ["Popular"], features: ["TVA: 19%", "Adaos comercial: 30%", "Material: Ceară 100% naturală", "Durată: aprox. 7 zile", "Greutate: 500g"] },
       { id: 2, name: "Candelă mare TIP III", netPrice: 12.99, markupPercent: 25, image: "2.jpg", description: "Lumânare din ceară naturală cu durată de 100h.", stock: 40, labels: ["Recomandat"], features: ["TVA: 19%", "Adaos comercial: 25%", "Material: Ceară 100% naturală", "Durată: aprox. 100h", "Greutate: 400g"] },
@@ -828,24 +856,19 @@ Semnătura: ___________________________
       { id: 20, name: "Biblia", netPrice: 149.99, markupPercent: 20, image: "20.jpg", description: "Biblia (format 21×15 cm).", stock: 40, labels: ["Recomandat"], features: ["TVA: 19%", "Adaos comercial: 20%", "Format: 21×15 cm", "Număr pagini: 1200", "Tip copertă: Hardcover"] }
     ];
 
-    // Preluăm coșul din localStorage (dacă există)
     let cart = JSON.parse(localStorage.getItem('cartStorage') || '[]');
     updateCartCount();
 
-    // Preluăm comenzile din localStorage
     function getOrders() {
       return JSON.parse(localStorage.getItem("globalOrders") || "[]");
     }
     function saveOrders(orders) {
       localStorage.setItem("globalOrders", JSON.stringify(orders));
     }
-
-    // Salvează coșul în localStorage
     function saveCart() {
       localStorage.setItem('cartStorage', JSON.stringify(cart));
     }
 
-    // Listarea produselor pe pagina "Produse"
     function renderProducts() {
       const container = document.getElementById('products-container');
       container.innerHTML = "";
@@ -876,7 +899,6 @@ Semnătura: ___________________________
       });
     }
 
-    // Adaugă rapid produs în coș (din lista de produse)
     function quickAddToCart(id) {
       const prod = products.find(p => p.id === id);
       if (!prod) return;
@@ -898,7 +920,6 @@ Semnătura: ___________________________
       alert(`Produsul "${prod.name}" a fost adăugat în coș.`);
     }
 
-    // Afișarea detaliilor produsului (pagina "produs")
     function viewProduct(id) {
       const prod = products.find(p => p.id === id);
       if (!prod) return;
@@ -964,7 +985,6 @@ Semnătura: ___________________________
       navigateTo('produs');
     }
 
-    // Schimbă cantitatea din detaliile produsului
     function changeQuantity(action, id) {
       const input = document.getElementById(`unit-${id}`);
       let current = parseInt(input.value) || 1;
@@ -975,7 +995,6 @@ Semnătura: ___________________________
       }
     }
 
-    // Adaugă produsul în coș (din pagina detaliu)
     function addToCart(id) {
       const prod = products.find(p => p.id === id);
       let units = parseInt(document.getElementById(`unit-${id}`).value) || 1;
@@ -1047,7 +1066,6 @@ Semnătura: ___________________________
       document.getElementById('order-form').style.display = "block";
     }
 
-    // Actualizează cantitatea în coș
     function updateCartQuantity(index, action) {
       const item = cart[index];
       const prod = products.find(p => p.id === item.id);
@@ -1117,7 +1135,6 @@ Semnătura: ___________________________
       let finalTotal = orderTotal - discountAmount;
       let code = generateOrderCode();
 
-      // Creăm comanda, incluzând codul unic
       let order = {
         id: Date.now(),
         code: code,
@@ -1131,13 +1148,12 @@ Semnătura: ___________________________
         dateTime: ""
       };
 
-      // Construim sumarul comenzii pentru email (FormSubmit)
       let orderSummary = `Cod Comandă: ${order.code}\n`;
       orderSummary += `Client: ${order.customer.name}\nContact: ${order.customer.contact}\n\n`;
-      orderSummary += `Detalii Produse:\n`;
       order.items.forEach(item => {
         const prod = products.find(p => p.id === item.id);
-        orderSummary += `- ${prod.name}: ${item.units} buc x ${retailPrice(prod.netPrice, prod.markupPercent).toFixed(2)} Lei = ${(retailPrice(prod.netPrice, prod.markupPercent) * item.units).toFixed(2)} Lei\n`;
+        let unitPrice = retailPrice(prod.netPrice, prod.markupPercent);
+        orderSummary += `- ${prod.name}: ${item.units} buc x ${unitPrice.toFixed(2)} Lei = ${(unitPrice * item.units).toFixed(2)} Lei\n`;
       });
       orderSummary += `\nTotal Inițial: ${order.orderTotal} Lei\n`;
       if (discountPercent > 0) {
@@ -1165,12 +1181,10 @@ Semnătura: ___________________________
       navigateTo('home');
     }
 
-    // Slider pentru pagina de start
     function renderSlider() {
       const sliderTrack = document.getElementById("slider-track");
       if (!sliderTrack) return;
       sliderTrack.innerHTML = "";
-      // Dublăm imaginile pentru looping mai fluid
       const imgs = products.slice(0, 5).map(prod => prod.image);
       const combined = imgs.concat(imgs);
       combined.forEach(src => {
@@ -1375,11 +1389,18 @@ Semnătura: ___________________________
       let invoiceWindow = window.open("", "InvoiceWindow", "width=800,height=600");
       let itemsRows = order.items.map(item => {
         const prod = products.find(p => p.id === item.id);
-        let unitPrice = retailPrice(prod.netPrice, prod.markupPercent);
+        let unitPrice = parseFloat((prod.netPrice * (1 + prod.markupPercent / 100) * 1.19).toFixed(2));
+        let vat = parseFloat((prod.netPrice * (1 + prod.markupPercent / 100) * 0.19).toFixed(2));
+        let markupAmount = parseFloat((prod.netPrice * (prod.markupPercent / 100)).toFixed(2));
         return `<tr>
                   <td>${prod.name}</td>
                   <td>${item.units}</td>
-                  <td>${(unitPrice * item.units).toFixed(2)} Lei</td>
+                  <td>
+                    <div>Preț net: ${prod.netPrice.toFixed(2)} Lei</div>
+                    <div>Adaos (${prod.markupPercent}%): ${markupAmount.toFixed(2)} Lei</div>
+                    <div>TVA (19%): ${vat.toFixed(2)} Lei</div>
+                    <div><strong>Subtotal:</strong> ${(unitPrice * item.units).toFixed(2)} Lei</div>
+                  </td>
                 </tr>`;
       }).join("");
       let htmlContent = `
@@ -1392,10 +1413,10 @@ Semnătura: ___________________________
             .invoice-header { text-align: center; margin-bottom: 20px; }
             .invoice-header img { height: 70px; margin-bottom: 10px; }
             .invoice-details { margin-bottom: 20px; text-align: left; }
-            .invoice-details p { margin: 0 0	5px; }
+            .invoice-details p { margin: 0 0 5px; }
             table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
             table, th, td { border: 1px solid #000; }
-            th, td {	padding: 8px; text-align: center; }
+            th, td { padding: 8px; text-align: left; vertical-align: top; }
             .text-end { text-align: right; }
             .text-start { text-align: left; }
           </style>
@@ -1420,7 +1441,7 @@ Semnătura: ___________________________
                 <tr>
                   <th>Produs</th>
                   <th>Unități</th>
-                  <th>Cost</th>
+                  <th>Detalii Preț</th>
                 </tr>
               </thead>
               <tbody>
@@ -1435,7 +1456,7 @@ Semnătura: ___________________________
             <div class="text-start">
               <p><strong>Termeni de plată:</strong> Transfer bancar sau card online</p>
               <p><strong>Termeni de livrare:</strong> 1–3 zile lucrătoare prin curier</p>
-              <p><strong>Politica de returnare:</strong> Returnare în 14 zile (cost suportat de client)</p>
+              <p><strong>Politica de returnare:</strong> Retur în 14 zile (cost suportat de client)</p>
               <p><strong>Garanție:</strong> 24 luni de la data achiziției</p>
             </div>
           </div>
@@ -1447,7 +1468,6 @@ Semnătura: ___________________________
       invoiceWindow.print();
     }
 
-    // Exportă comenzile stocate în localStorage drept fișier JSON
     function exportOrders() {
       const orders = getOrders();
       if (orders.length === 0) {
@@ -1463,7 +1483,6 @@ Semnătura: ___________________________
       URL.revokeObjectURL(url);
     }
 
-    // Importă un fișier JSON cu comenzi și le adaugă la cele existente
     function importOrders(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -1473,7 +1492,6 @@ Semnătura: ___________________________
           const imported = JSON.parse(e.target.result);
           if (!Array.isArray(imported)) throw "Structură invalidă";
           let existing = getOrders();
-          // Evită duplicate: dacă același ID există, nu-l adăugăm din nou
           imported.forEach(ord => {
             if (!existing.some(eo => eo.id === ord.id)) {
               existing.push(ord);
@@ -1487,14 +1505,7 @@ Semnătura: ___________________________
         }
       };
       reader.readAsText(file);
-      // Resetăm inputul, astfel încât același fișier poate fi încărcat din nou dacă e nevoie
       event.target.value = "";
-    }
-
-    // Afișează modalul cu detalii firmă
-    function showCompanyInfo() {
-      const modal = new bootstrap.Modal(document.getElementById('companyInfoModal'));
-      modal.show();
     }
   </script>
 </body>
