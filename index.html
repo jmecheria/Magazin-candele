@@ -6,7 +6,7 @@
   <title>Magazin Bisericesc</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- În continuare, se pot adăuga icoane BootstrapIcons (opțional) -->
+  <!-- Bootstrap Icons (opțional, pentru icoane) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     html { scroll-behavior: smooth; }
@@ -249,24 +249,40 @@
       .main-container { margin: 10px; padding: 15px; }
       .product-card img { height: 150px; }
     }
-    /* Slider variante produse (dacă se folosește) */
-    .variant-slider-container {
-      overflow: hidden;
-      position: relative;
-      height: 100px;
-      margin-top: 10px;
+    /* Stil pentru blocul „Detalii firmă” */
+    .company-details-card {
+      background-color: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 15px;
+      margin-bottom: 20px;
+      font-style: italic;
+      color: #333;
     }
-    .variant-slider-track {
+    .company-details-card h5 {
+      margin-bottom: 10px;
+      color: #a30000;
+      font-weight: bold;
+      font-style: normal;  /* păstrăm titlul în font normal */
+    }
+    .company-details-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .company-details-list li {
+      margin-bottom: 8px;
       display: flex;
-      width: max-content;
-      animation: slide 10s linear infinite;
+      align-items: center;
     }
-    .variant-slider-track img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      margin-right: 5px;
-      border-radius: 5px;
+    .company-details-list li i {
+      color: #a30000;
+      margin-right: 8px;
+      font-size: 1.1rem;
+    }
+    .company-details-list li strong {
+      font-style: normal;
+      color: #333;
     }
   </style>
 </head>
@@ -340,7 +356,10 @@
       <div class="section-container">
         <h2>Despre noi</h2>
         <p class="attractive-text">
-          Magazinul Bisericesc se remarcă prin pasiunea pentru tradiție și credință. Fondat pentru a oferi obiecte de cult de cea mai înaltă calitate, colaborăm cu meșteri locali dedicați care își pun inima în fiecare lucrare. Oferta noastră reunește atât obiecte artizanale, cât și accesorii moderne, toate selectate cu atenție pentru a oferi o experiență autentică. Ne mândrim cu transparența informațiilor tehnice despre fiecare produs, pentru ca tu să te simți în siguranță în alegerea ta.
+          Magazinul Bisericesc se remarcă prin pasiunea pentru tradiție și credință. 
+          Fondat pentru a oferi obiecte de cult de cea mai înaltă calitate, colaborăm cu meșteri locali dedicați care își pun inima în fiecare lucrare. 
+          Oferta noastră reunește atât obiecte artizanale, cât și accesorii moderne, toate selectate cu atenție pentru a oferi o experiență autentică. 
+          Ne mândrim cu transparența informațiilor tehnice despre fiecare produs, pentru ca tu să te simți în siguranță în alegerea ta.
         </p>
         <!-- Carousel "Despre noi" -->
         <div id="aboutCarousel" class="carousel slide mt-3" data-bs-ride="carousel" data-bs-touch="true">
@@ -390,7 +409,7 @@
           <li class="list-group-item"><strong>Politica de returnare:</strong> Returnare în 14 zile de la primire, fără penalități; costul transportului retur este suportat de client.</li>
           <li class="list-group-item"><strong>Garanție:</strong> 24 luni de la data achiziției, valabilă pe teritoriul României.</li>
           <li class="list-group-item"><strong>Salvarea și protecția datelor:</strong> Datele tale personale sunt prelucrate conform <a href="#">Politicii GDPR</a> și nu sunt cessionate către terți.</li>
-          <li class="list-group-item"><strong>Soluționare alternativă a litigiilor (SAL):</strong> Poți solicita medierea divergențelor la ANPC sau la Centrul de Soluționare Alternativă a Litigiilor de Consum – adresă oficială într-un colț de pagină.</li>
+          <li class="list-group-item"><strong>Soluționare alternativă a litigiilor (SAL):</strong> Poți solicita medierea divergențelor la ANPC sau la Centrul de Soluționare Alternativă a Litigiilor de Consum – vezi pictograma SAL/SOL din footer.</li>
           <li class="list-group-item"><strong>Soluționare online a litigiilor (SOL):</strong> Poți depune o cerere la platforma ODR a Comisiei Europene: <a href="https://ec.europa.eu/consumers/odr/" target="_blank">https://ec.europa.eu/consumers/odr/</a>.</li>
         </ul>
       </div>
@@ -450,7 +469,7 @@
           </div>
           <div id="final-total-display" class="mb-3"></div>
           <button class="btn btn-success" onclick="placeOrder()">Plasează Comanda</button>
-          <p class="text-muted small mt-2">Factura nu se generează automat. Administratorul o va genera și seta data comenzii.</p>
+          <p class="text-muted small mt-2">Factura va fi generată de administrator, care va introduce data și ora comenzii.</p>
         </div>
       </div>
     </section>
@@ -543,12 +562,22 @@
     }
     startTimer();
 
+    // Generează un cod alfanumeric unic de 8 caractere pentru comandă
+    function generateOrderCode() {
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      let code = "";
+      for (let i = 0; i < 8; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return code;
+    }
+
     // Funcție pentru a calcula prețul final (TVA 19% + adaos 30%)
     function retailPrice(netPrice) {
       return parseFloat((netPrice * 1.30 * 1.19).toFixed(2));
     }
 
-    // Lista de produse conform specificațiilor primite (netPrice = preț de achiziție fără TVA și adaos)
+    // Lista de produse (netPrice = preț de achiziție fără TVA și adaos)
     const products = [
       { id: 1, name: "Candelă mare TIP IV", netPrice: 19.99, image: "1.jpg", description: "Lumânare din ceară naturală cu durată de 7 zile.", stock: 50, labels: ["Popular"], features: ["TVA: 19%", "Adaos comercial: 30%", "Material: Ceară 100% naturală", "Durată: aprox. 7 zile", "Greutate: 500g"] },
       { id: 2, name: "Candelă mare TIP III", netPrice: 12.99, image: "2.jpg", description: "Lumânare din ceară naturală cu durată de 100h.", stock: 40, labels: ["Recomandat"], features: ["TVA: 19%", "Adaos comercial: 30%", "Material: Ceară 100% naturală", "Durată: aprox. 100h", "Greutate: 400g"] },
@@ -667,18 +696,35 @@
               <i class="bi bi-cart-plus"></i> Adaugă în Coș
             </button>
             <hr class="my-4">
-            <h5>Detalii (conform ANPC)</h5>
-            <ul class="list-group mb-3">
-              ${featuresList}
-            </ul>
-            <h5>Informații suplimentare</h5>
-            <ul class="list-group list-group-flush mb-3">
-              <li class="list-group-item"><strong>Vânzător:</strong> SC Magazin Bisericesc SRL</li>
-              <li class="list-group-item"><strong>Contact:</strong> 0123.456.789 / contact@magazinbisericesc.ro</li>
-              <li class="list-group-item"><strong>Garanție:</strong> 24 luni de la data achiziției</li>
-              <li class="list-group-item"><strong>Politica de returnare:</strong> Returnare în 14 zile (cost suportat de client)</li>
-              <li class="list-group-item"><strong>Termeni &amp; Condiții:</strong> <a href="#termeni">Detalii complete</a></li>
-            </ul>
+
+            <!-- Bloc „Detalii firmă” stilizat -->
+            <div class="company-details-card">
+              <h5>Informații firmă</h5>
+              <ul class="company-details-list">
+                <li>
+                  <i class="bi bi-building"></i>
+                  <strong>Vânzător:</strong> SC Magazin Bisericesc SRL
+                </li>
+                <li>
+                  <i class="bi bi-telephone"></i>
+                  <strong>Contact:</strong> 0123.456.789 / contact@magazinbisericesc.ro
+                </li>
+                <li>
+                  <i class="bi bi-shield-check"></i>
+                  <strong>Garanție:</strong> 24 luni de la data achiziției
+                </li>
+                <li>
+                  <i class="bi bi-arrow-repeat"></i>
+                  <strong>Returnare:</strong> 14 zile (cost suportat de client)
+                </li>
+                <li>
+                  <i class="bi bi-file-earmark-text"></i>
+                  <strong>Termeni &amp; Condiții:</strong> <a href="#termeni">Detalii complete</a>
+                </li>
+              </ul>
+            </div>
+            <!-- Sfârșit bloc stilizat detalii firmă -->
+
           </div>
         </div>`;
       navigateTo('produs');
@@ -835,10 +881,12 @@
       else if (discountCode === "DISC20") discountPercent = 20;
       let discountAmount = orderTotal * (discountPercent / 100);
       let finalTotal = orderTotal - discountAmount;
+      let code = generateOrderCode();
 
-      // Creăm comanda fără câmpul dateTime (va fi setat manual de admin)
+      // Creăm comanda, incluzând codul unic
       let order = {
         id: Date.now(),
+        code: code,                       // cod unic
         customer: { name, contact },
         items: [...cart],
         orderTotal: orderTotal.toFixed(2),
@@ -849,8 +897,9 @@
         dateTime: ""   // rămâne gol: va fi completat de admin
       };
 
-      // Construim sumarul comenzii pentru email
-      let orderSummary = `Client: ${order.customer.name}\nContact: ${order.customer.contact}\n\n`;
+      // Construim sumarul comenzii pentru email (FormSubmit)
+      let orderSummary = `Cod Comandă: ${order.code}\n`;
+      orderSummary += `Client: ${order.customer.name}\nContact: ${order.customer.contact}\n\n`;
       orderSummary += `Detalii Produse:\n`;
       order.items.forEach(item => {
         const prod = products.find(p => p.id === item.id);
@@ -865,7 +914,7 @@
 
       document.getElementById("orderDetailsInput").value = orderSummary;
       document.getElementById("notifyForm").submit();
-      alert("Comanda a fost trimisă. Administratorul o va procesa și va genera factura.");
+      alert(`Comanda a fost trimisă cu codul ${order.code}. Administratorul va procesa comanda și va genera factura.`);
 
       let ordersLocal = JSON.parse(localStorage.getItem("globalOrders") || "[]");
       ordersLocal.push(order);
@@ -932,11 +981,20 @@
             <h5>Filtrare Produse</h5>
             <input type="text" id="admin-filter" class="form-control mb-3" placeholder="Caută produs în admin..." onkeyup="renderAdminProducts()">
             <div id="admin-products-container" class="mb-4"></div>
+
+            <h5>Caută Comandă după Cod</h5>
+            <div class="input-group mb-3">
+              <input type="text" id="admin-search-code" class="form-control" placeholder="Introduceți Cod comanda">
+              <button class="btn btn-primary" onclick="filterOrdersByCode()">Caută</button>
+              <button class="btn btn-outline-secondary" onclick="renderAdminOrders()">Afișează Toate</button>
+            </div>
+
             <h5>Comenzi Plasate</h5>
             <table class="table">
               <thead>
                 <tr>
                   <th>ID</th>
+                  <th>Cod</th>
                   <th>Client</th>
                   <th>Contact</th>
                   <th>Total Final</th>
@@ -1002,34 +1060,44 @@
       });
     }
 
-    function renderAdminOrders() {
-      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+    function renderAdminOrders(filteredOrders) {
+      let orders = filteredOrders || JSON.parse(localStorage.getItem("globalOrders") || "[]");
       const tbody = document.getElementById('admin-orders-container');
       tbody.innerHTML = "";
       if (orders.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6"><p>Nu există comenzi.</p></td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7"><p>Nu există comenzi.</p></td></tr>`;
         return;
       }
       orders.forEach((order, idx) => {
-        let dateDisplay = order.dateTime ? order.dateTime : `<input type="text" id="order-date-${order.id}" placeholder="DD-MM-YYYY HH:mm" style="width:140px;">`;
+        let dateDisplay = order.dateTime 
+          ? `<span>${order.dateTime}</span>` 
+          : `<input type="text" id="order-date-${order.id}" placeholder="DD-MM-YYYY HH:mm" style="width:140px;">`;
         let setDateBtn = order.dateTime
           ? ``
-          : `<button class="btn btn-sm btn-info" onclick="setOrderDate(${idx}, ${order.id})">Salvează</button>`;
+          : `<button class="btn btn-sm btn-info ms-1" onclick="setOrderDate(${idx}, ${order.id})">Salvează</button>`;
         let row = `
           <tr>
             <td>${order.id}</td>
+            <td>${order.code}</td>
             <td>${order.customer.name}</td>
             <td>${order.customer.contact}</td>
             <td>${order.finalTotal} Lei</td>
             <td>${dateDisplay}</td>
             <td>
               ${setDateBtn}
-              <button class="btn btn-success btn-sm" onclick="finishOrder(${idx})">Terminată</button>
-              <button class="btn btn-secondary btn-sm" onclick="genInvoice(${idx})">Generează Factură</button>
+              <button class="btn btn-success btn-sm ms-1" onclick="finishOrder(${idx})">Terminată</button>
+              <button class="btn btn-secondary btn-sm ms-1" onclick="genInvoice(${idx})">Generează Factură</button>
             </td>
           </tr>`;
         tbody.innerHTML += row;
       });
+    }
+
+    function filterOrdersByCode() {
+      const codeInput = document.getElementById("admin-search-code").value.trim().toUpperCase();
+      const orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      const filtered = orders.filter(o => o.code === codeInput);
+      renderAdminOrders(filtered);
     }
 
     function setOrderDate(index, orderId) {
