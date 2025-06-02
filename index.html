@@ -10,6 +10,10 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     html { scroll-behavior: smooth; }
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: #333;
+    }
     /* Stilizare generală */
     .section-container {
       border: 1px solid #a30000;
@@ -84,6 +88,18 @@
       padding-bottom: 5px;
       margin-bottom: 10px;
       text-align: center;
+    }
+    .page h2 {
+      margin-bottom: 20px;
+    }
+    .list-group-item {
+      font-size: 0.95rem;
+      padding: 12px 15px;
+    }
+    h5 {
+      margin-top: 25px;
+      margin-bottom: 10px;
+      color: #a30000;
     }
     /* Toate paginile sunt ascunse inițial; clasa "active-page" le afișează */
     .page { display: none; }
@@ -181,7 +197,6 @@
     .attractive-text {
       font-size: 1.1rem;
       line-height: 1.6;
-      color: #333;
       text-align: center;
     }
     button { transition: transform 0.1s ease, background-color 0.2s ease; }
@@ -261,9 +276,7 @@
     }
     .company-details-card h5 {
       margin-bottom: 10px;
-      color: #a30000;
-      font-weight: bold;
-      font-style: normal;  /* păstrăm titlul în font normal */
+      font-style: normal;
     }
     .company-details-list {
       list-style: none;
@@ -283,6 +296,61 @@
     .company-details-list li strong {
       font-style: normal;
       color: #333;
+    }
+    /* Buton returnare & modal detalii firmă */
+    .btn-return {
+      background-color: #a30000;
+      color: #fff;
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-weight: bold;
+      transition: background-color 0.2s ease;
+    }
+    .btn-return:hover {
+      background-color: #7a0000;
+    }
+    /* Floating WhatsApp button */
+    .btn-whatsapp {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background-color: #25D366;
+      color: #fff;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      z-index: 200;
+      transition: transform 0.2s ease;
+    }
+    .btn-whatsapp:hover {
+      transform: scale(1.1);
+    }
+    /* Floater „Detalii firmă” dinamic */
+    .floating-info {
+      position: fixed;
+      bottom: 150px;
+      right: 20px;
+      background-color: #a30000;
+      color: #fff;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      cursor: pointer;
+      z-index: 200;
+      transition: transform 0.2s ease;
+    }
+    .floating-info:hover {
+      transform: scale(1.1);
     }
   </style>
 </head>
@@ -326,6 +394,12 @@
           <button class="btn btn-dark mb-3" onclick="navigateTo('produse')">Vezi produsele</button>
           <div class="slider-container">
             <div class="slider-track" id="slider-track"></div>
+          </div>
+          <!-- Buton retur dinamic -->
+          <div class="mt-4">
+            <a href="#formular-retragere" class="btn btn-return">
+              <i class="bi bi-arrow-counterclockwise"></i> Retur 14 zile
+            </a>
           </div>
         </div>
       </div>
@@ -402,16 +476,136 @@
     <section id="termeni" class="page">
       <div class="section-container">
         <h2>Termeni și Condiții</h2>
-        <ul class="list-group list-group-flush text-start">
-          <li class="list-group-item"><strong>Denumire produs și preț:</strong> Fiecare produs are prețul final afișat, cu TVA (19%) și adaos comercial (specific fiecărui produs) incluse. Prețul afișat este cel de vânzare final.</li>
-          <li class="list-group-item"><strong>Modalități de plată:</strong> Ramburs, card (Visa, MasterCard, Maestro), transfer bancar.</li>
-          <li class="list-group-item"><strong>Livrare:</strong> 1–3 zile lucrătoare prin curier, cost variabil în funcție de zonă.</li>
-          <li class="list-group-item"><strong>Politica de returnare:</strong> Returnare în 14 zile de la primire, fără penalități; costul transportului retur este suportat de client.</li>
-          <li class="list-group-item"><strong>Garanție:</strong> 24 luni de la data achiziției, valabilă pe teritoriul României.</li>
-          <li class="list-group-item"><strong>Salvarea și protecția datelor:</strong> Datele personale sunt prelucrate conform <a href="#">Politicii GDPR</a> și nu sunt cessionate terților.</li>
-          <li class="list-group-item"><strong>Soluționare alternativă a litigiilor (SAL):</strong> Poți solicita medierea divergențelor la ANPC sau Centrul de Soluționare Alternativă a Litigiilor de Consum – vezi pictograma SAL/SOL din footer.</li>
-          <li class="list-group-item"><strong>Soluționare online a litigiilor (SOL):</strong> Depune cerere la platforma ODR a Comisiei Europene: <a href="https://ec.europa.eu/consumers/odr/" target="_blank">https://ec.europa.eu/consumers/odr/</a>.</li>
-        </ul>
+        <div class="text-start">
+          <!-- 1. Date de identificare ale vânzătorului -->
+          <h5>1. Date de identificare furnizor</h5>
+          <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item"><strong>Furnizor (vânzător):</strong> SC Magazin Bisericesc SRL</li>
+            <li class="list-group-item"><strong>Adresă sediu social:</strong> Strada Exemplu nr. 1, București, România</li>
+            <li class="list-group-item"><strong>Înregistrare R.C.:</strong> J40/1234/2020</li>
+            <li class="list-group-item"><strong>C.U.I. (cod fiscal):</strong> RO12345678</li>
+            <li class="list-group-item"><strong>Telefon:</strong> 0123.456.789</li>
+            <li class="list-group-item"><strong>Fax:</strong> — (nu există)</li>
+            <li class="list-group-item"><strong>Email:</strong> <a href="mailto:contact@magazinbisericesc.ro">contact@magazinbisericesc.ro</a></li>
+            <li class="list-group-item"><strong>Autoritate autorizare:</strong> Nu se aplică – Comerț cu amănuntul</li>
+          </ul>
+
+          <!-- 2. Informații despre site și contractul electronic -->
+          <h5>2. Informații generale și contract electronic</h5>
+          <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item">
+              <strong>Obiectul contractului:</strong> Vânzarea de produse online prin intermediul prezentului site.
+            </li>
+            <li class="list-group-item">
+              <strong>Etapele tehnice pentru încheierea contractului:</strong>
+              <ol>
+                <li>Selectarea produselor → apăsarea butonului „Adaugă în Coș”.</li>
+                <li>Verificarea conținutului Coșului → apăsarea butonului „Plasează Comanda”.</li>
+                <li>Completarea datelor de contact (nume, email/telefon) → apăsarea butonului „Trimite Comanda”.</li>
+                <li>Confirmarea comenzii prin redirecționarea către FormSubmit → email de notificare.</li>
+              </ol>
+            </li>
+            <li class="list-group-item">
+              <strong>Limba contractului:</strong> română.
+            </li>
+            <li class="list-group-item">
+              <strong>Stocare contract:</strong> Toate informațiile despre comanda plasată (data plasării, produsele, prețul, codul comenzii) se păstrează în browser (localStorage) și pot fi exportate/importate manual de către administrator.
+            </li>
+            <li class="list-group-item">
+              <strong>Corectarea erorilor:</strong> Înainte de a apăsa „Plasează Comanda”, clientul poate corecta oricând datele din Coș. După trimiterea email-ului, modificările se fac doar prin anularea comenzii și refacerea ei.
+            </li>
+          </ul>
+
+          <!-- 3. Informații referitoare la produse și tarife -->
+          <h5>3. Descriere produse și prețuri</h5>
+          <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item">
+              <strong>Descriere produs:</strong> Fiecare produs are o fișă dedicată în site, cu imagine, denumire, caracteristici (TVA, adaos, material, greutate, dimensiuni etc.).
+            </li>
+            <li class="list-group-item">
+              <strong>Preț:</strong> Prețul final afișat pe site include TVA (19%) și adaos comercial diferit pentru fiecare produs (procent specificat în detaliile produsului).
+            </li>
+            <li class="list-group-item">
+              <strong>Modalități de plată:</strong> Plata ramburs – numerar la livrare; card (Visa, MasterCard, Maestro); transfer bancar.
+            </li>
+            <li class="list-group-item">
+              <strong>Cost livrare:</strong> 1–3 zile lucrătoare prin curier. Costul livrării variază în funcție de localitate și este afișat înainte de finalizarea comenzii.
+            </li>
+          </ul>
+
+          <!-- 4. Drept de retragere (14 zile) -->
+          <h5>4. Drept de retragere</h5>
+          <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item">
+              Conform <em>OG 130/2000</em> și <em>OUG 34/2014</em>, clientul are dreptul de a se retrage din contract în termen de 14 zile calendaristice de la data primirii produsului, fără a oferi un motiv.
+            </li>
+            <li class="list-group-item">
+              Pentru a exercita dreptul de retragere, clientul va transmite vânzătorului, într-un format clar (email la <a href="mailto:contact@magazinbisericesc.ro">contact@magazinbisericesc.ro</a> sau scrisoare recomandată), Formularele de retragere incluse pe site (disponibile la: <a href="#formular-retragere">Formular Retragere</a>).
+            </li>
+            <li class="list-group-item">
+              <strong>Costuri retur:</strong> Costul transportului de retur este suportat de client, iar produsul trebuie returnat în aceeași stare și în ambalajul original.
+            </li>
+          </ul>
+
+          <!-- 5. Garanție și service post-vânzare -->
+          <h5>5. Garanție și service</h5>
+          <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item">
+              Toate produsele comercializate beneficiază de garanție de 24 luni de la data achiziției, conform <em>OG 21/1992</em> și <em>Legea 449/2003</em>.
+            </li>
+            <li class="list-group-item">
+              Pentru deschiderea unui dosar de garanție, clientul va trimite un email la <a href="mailto:service@magazinbisericesc.ro">service@magazinbisericesc.ro</a> sau va suna la 0123.456.789, cu datele comenzii și descrierea defectului.
+            </li>
+          </ul>
+
+          <!-- 6. Protecția datelor cu caracter personal (GDPR) -->
+          <h5>6. Protecția datelor (GDPR)</h5>
+          <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item">
+              Prelucrăm datele tale personale (nume, email, telefon, adresă de livrare) exclusiv pentru procesarea comenzilor, facturare și comunicare cu tine.
+            </li>
+            <li class="list-group-item">
+              Datele rămân stocate în conformitate cu Politica GDPR, disponibilă la: <a href="#politica-gdpr">Politica GDPR</a>.
+            </li>
+            <li class="list-group-item">
+              Ai dreptul să soliciți accesul, rectificarea, ștergerea sau restricționarea prelucrării datelor tale, printr-un email la <a href="mailto:gdpr@magazinbisericesc.ro">gdpr@magazinbisericesc.ro</a>.
+            </li>
+          </ul>
+
+          <!-- 7. Soluționare litigii -->
+          <h5>7. Soluționare litigii</h5>
+          <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item">
+              <strong>SAL (Soluționare Alternativă a Litigiilor):</strong> Poți solicita medierea divergențelor în legătură cu comanda la ANPC (str. Atena No. 2–4, București) sau la Centrul de Soluționare Alternativă a Litigiilor de Consum (CSALOC).
+            </li>
+            <li class="list-group-item">
+              <strong>SOL (Soluționare Online a Litigiilor):</strong> Depune cerere la platforma ODR a Comisiei Europene: <a href="https://ec.europa.eu/consumers/odr/" target="_blank">https://ec.europa.eu/consumers/odr/</a>.
+            </li>
+          </ul>
+
+          <!-- Formular retragere (opțional) -->
+          <h5 id="formular-retragere">Formular de retragere (model)</h5>
+          <p>Pentru exercitarea dreptului de retragere, completează datele de mai jos și trimite-le la <a href="mailto:contact@magazinbisericesc.ro">contact@magazinbisericesc.ro</a>: </p>
+          <textarea class="form-control mb-3" rows="5" readonly>
+FORMULAR DE RETRAGERE DIN CONTRACT
+
+Către: SC Magazin Bisericesc SRL  
+Adresa: Strada Exemplu nr. 1, București, România  
+Email: contact@magazinbisericesc.ro  
+
+Subsemnatul (Nume și prenume): ________________________________  
+Număr comandă / Cod comandă: ________________________________  
+Data primirii produsului: ________________________________  
+
+Declar că mă retrag din contract-ul încheiat la distanță și solicit returnarea sumei plătite.  
+Data: ______ / ______ / ______  
+Semnătura: ___________________________
+          </textarea>
+
+          <!-- Link către Politica GDPR (opțional, poate fi un alt fișier) -->
+          <h5 id="politica-gdpr">Politica de Confidențialitate (GDPR)</h5>
+          <p>Click <a href="politica-gdpr.html" target="_blank">aici</a> pentru detaliile complete privind prelucrarea datelor.</p>
+        </div>
       </div>
     </section>
 
@@ -427,10 +621,6 @@
             </tr>
           </thead>
           <tbody>
-            <!-- Exemplu de formatare: 
-                 - Sfinții români: text în albastru;
-                 - Sărbătorile mari și duminicile: text în roșu;
-                 - Restul: text implicit (negru) -->
             <tr>
               <td>1</td>
               <td>M <span style="color: black;">Sf. Cuv. Maria Egipteanca; Sf. Cuv. Macarie Mărt.; Sf. Mc. Gherontie; Sf. Varsanufie de la Optina (Post)</span></td>
@@ -486,6 +676,43 @@
   <!-- Buton Back to Top -->
   <button id="backToTop" onclick="scrollToTop()">&#8679;</button>
 
+  <!-- Floating WhatsApp button -->
+  <a href="https://wa.me/+40712345678" target="_blank" class="btn-whatsapp" title="Contact WhatsApp">
+    <i class="bi bi-whatsapp"></i>
+  </a>
+
+  <!-- Floating Info button (deschide modal cu detalii firmă) -->
+  <div class="floating-info" title="Detalii firmă" onclick="showCompanyInfo()">
+    <i class="bi bi-info-circle"></i>
+  </div>
+
+  <!-- Modal pentru Detalii Firmă -->
+  <div class="modal fade" id="companyInfoModal" tabindex="-1" aria-labelledby="companyInfoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title" id="companyInfoLabel"><i class="bi bi-building me-2"></i>Detalii Companie</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-start">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Furnizor:</strong> SC Magazin Bisericesc SRL</li>
+            <li class="list-group-item"><strong>Adresă sediu social:</strong> Strada Exemplu nr. 1, București, România</li>
+            <li class="list-group-item"><strong>Înregistrare R.C.:</strong> J40/1234/2020</li>
+            <li class="list-group-item"><strong>C.U.I.:</strong> RO12345678</li>
+            <li class="list-group-item"><strong>Telefon:</strong> 0123.456.789</li>
+            <li class="list-group-item"><strong>Email:</strong> <a href="mailto:contact@magazinbisericesc.ro">contact@magazinbisericesc.ro</a></li>
+            <li class="list-group-item"><strong>Garanție:</strong> 24 luni de la data achiziției</li>
+            <li class="list-group-item"><strong>Returnare:</strong> 14 zile (cost suportat de client)</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Închide</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer>
     <div class="d-flex justify-content-between align-items-center flex-wrap">
@@ -513,7 +740,7 @@
     <input type="hidden" name="_captcha" value="false">
   </form>
 
-  <!-- Bootstrap JS -->
+  <!-- Bootstrap JS și script -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     /* Funcție de navigare: ascunde toate paginile și afișează pagina selectată */
@@ -893,7 +1120,7 @@
       // Creăm comanda, incluzând codul unic
       let order = {
         id: Date.now(),
-        code: code,                       // cod unic
+        code: code,
         customer: { name, contact },
         items: [...cart],
         orderTotal: orderTotal.toFixed(2),
@@ -901,7 +1128,7 @@
         discountPercent: discountPercent,
         discountAmount: discountAmount.toFixed(2),
         finalTotal: finalTotal.toFixed(2),
-        dateTime: ""   // rămâne gol: va fi completat de admin
+        dateTime: ""
       };
 
       // Construim sumarul comenzii pentru email (FormSubmit)
@@ -1165,10 +1392,10 @@
             .invoice-header { text-align: center; margin-bottom: 20px; }
             .invoice-header img { height: 70px; margin-bottom: 10px; }
             .invoice-details { margin-bottom: 20px; text-align: left; }
-            .invoice-details p { margin: 0 0 5px; }
+            .invoice-details p { margin: 0 0	5px; }
             table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
             table, th, td { border: 1px solid #000; }
-            th, td { padding: 8px; text-align: center; }
+            th, td {	padding: 8px; text-align: center; }
             .text-end { text-align: right; }
             .text-start { text-align: left; }
           </style>
@@ -1262,6 +1489,12 @@
       reader.readAsText(file);
       // Resetăm inputul, astfel încât același fișier poate fi încărcat din nou dacă e nevoie
       event.target.value = "";
+    }
+
+    // Afișează modalul cu detalii firmă
+    function showCompanyInfo() {
+      const modal = new bootstrap.Modal(document.getElementById('companyInfoModal'));
+      modal.show();
     }
   </script>
 </body>
