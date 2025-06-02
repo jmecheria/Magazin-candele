@@ -6,6 +6,8 @@
   <title>Magazin Bisericesc</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- În continuare, se pot adăuga icoane BootstrapIcons (opțional) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     html { scroll-behavior: smooth; }
     /* Stilizare generală */
@@ -70,7 +72,7 @@
     }
     .main-container {
       background-color: #fff;
-      margin: 80px auto 20px; /* Ajustat pentru header stick */
+      margin: 80px auto 20px; /* Ajustat pentru header sticky */
       padding: 20px;
       max-width: 1200px;
       border-radius: 8px;
@@ -381,15 +383,15 @@
     <section id="termeni" class="page">
       <div class="section-container">
         <h2>Termeni și Condiții</h2>
-        <p class="attractive-text">
-          Accesând acest site, sunteți de acord cu toți termenii și condițiile de utilizare. 
-          <br>Informații esențiale pentru fiecare produs: 
-        </p>
         <ul class="list-group list-group-flush text-start">
-          <li class="list-group-item"><strong>Termeni de livrare:</strong> 1–3 zile lucrătoare prin curier. Cost variază în funcție de zonă.</li>
-          <li class="list-group-item"><strong>Modalități de plată:</strong> Ramburs, card (Visa, MasterCard), transfer bancar.</li>
-          <li class="list-group-item"><strong>Politica de returnare:</strong> Returnare în 14 zile de la primire (costul transportului retur suportat de client).</li>
-          <li class="list-group-item"><strong>Garanție:</strong> 24 luni de la data achiziției.</li>
+          <li class="list-group-item"><strong>Denumire produs și preț:</strong> Fiecare produs are afișat prețul final, cu TVA (19%) și adaos comercial (30%) incluse. Prețul afișat este cel de vânzare final.</li>
+          <li class="list-group-item"><strong>Modalități de plată:</strong> Ramburs, card (Visa, MasterCard, Maestro), transfer bancar.</li>
+          <li class="list-group-item"><strong>Livrare:</strong> 1–3 zile lucrătoare prin curier, cost variabil în funcție de zonă.</li>
+          <li class="list-group-item"><strong>Politica de returnare:</strong> Returnare în 14 zile de la primire, fără penalități; costul transportului retur este suportat de client.</li>
+          <li class="list-group-item"><strong>Garanție:</strong> 24 luni de la data achiziției, valabilă pe teritoriul României.</li>
+          <li class="list-group-item"><strong>Salvarea și protecția datelor:</strong> Datele tale personale sunt prelucrate conform <a href="#">Politicii GDPR</a> și nu sunt cessionate către terți.</li>
+          <li class="list-group-item"><strong>Soluționare alternativă a litigiilor (SAL):</strong> Poți solicita medierea divergențelor la ANPC sau la Centrul de Soluționare Alternativă a Litigiilor de Consum – adresă oficială într-un colț de pagină.</li>
+          <li class="list-group-item"><strong>Soluționare online a litigiilor (SOL):</strong> Poți depune o cerere la platforma ODR a Comisiei Europene: <a href="https://ec.europa.eu/consumers/odr/" target="_blank">https://ec.europa.eu/consumers/odr/</a>.</li>
         </ul>
       </div>
     </section>
@@ -447,18 +449,8 @@
             <input type="text" id="discount-code" class="form-control" placeholder="Ex: DISC10">
           </div>
           <div id="final-total-display" class="mb-3"></div>
-          <button class="btn btn-success" onclick="placeOrder()">Finalizează Comanda</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Pagina Detalii Factură -->
-    <section id="order-details" class="page">
-      <div class="section-container">
-        <h2>Detalii Factură</h2>
-        <div id="order-details-container"></div>
-        <div class="text-center mt-3">
-          <button class="btn btn-secondary" onclick="navigateTo('home')">Înapoi Acasă</button>
+          <button class="btn btn-success" onclick="placeOrder()">Plasează Comanda</button>
+          <p class="text-muted small mt-2">Factura nu se generează automat. Administratorul o va genera și seta data comenzii.</p>
         </div>
       </div>
     </section>
@@ -558,26 +550,26 @@
 
     // Lista de produse conform specificațiilor primite (netPrice = preț de achiziție fără TVA și adaos)
     const products = [
-      { id: 1, name: "Candelă mare TIP IV", netPrice: 19.99, image: "1.jpg", description: "Lumânare din ceară naturală cu durată de 7 zile.", stock: 50, labels: ["Popular"], features: ["Material: Ceară 100% naturală", "Durată: aprox. 7 zile", "Greutate: 500g"] },
-      { id: 2, name: "Candelă mare TIP III", netPrice: 12.99, image: "2.jpg", description: "Lumânare din ceară naturală cu durată de 100h.", stock: 40, labels: ["Recomandat"], features: ["Material: Ceară 100% naturală", "Durată: aprox. 100h", "Greutate: 400g"] },
-      { id: 3, name: "Candelă mare TIP II", netPrice: 9.99, image: "3.jpg", description: "Lumânare din ceară naturală cu durată de 60h.", stock: 30, labels: ["Best Seller"], features: ["Material: Ceară 100% naturală", "Durată: aprox. 60h", "Greutate: 300g"] },
-      { id: 4, name: "Candelă mare TIP I", netPrice: 6.99, image: "4.jpg", description: "Lumânare din ceară naturală cu durată de 16h.", stock: 60, labels: ["Pentru zile negre"], features: ["Material: Ceară 100% naturală", "Durată: aprox. 16h", "Greutate: 200g"] },
-      { id: 5, name: "Tămâie de Oașă", netPrice: 63.99, image: "5.jpg", description: "Tămâie de înaltă calitate. 200g.", stock: 80, labels: ["Bună pentru uz zilnic"], features: ["Origine: Oaș", "Gramaj: 200g", "Utilizare: Aromaterapie și ritualuri"] },
-      { id: 6, name: "Tămâie de Vatopedu", netPrice: 68.99, image: "6.jpg", description: "Tămâie de înaltă calitate. 200g.", stock: 70, labels: ["Premium"], features: ["Origine: Vatopedu", "Gramaj: 200g", "Utilizare: Aromaterapie și ritualuri"] },
-      { id: 7, name: "Tămâie de Pângărați", netPrice: 23.99, image: "7.jpg", description: "Tămâie de înaltă calitate. 50g.", stock: 35, labels: ["Cantitate mai mică"], features: ["Origine: Pângărați", "Gramaj: 50g", "Utilizare: Aromaterapie și ritualuri"] },
-      { id: 8, name: "Acatiste și Viețile sfinților", netPrice: 9.99, image: "8.jpg", description: "Acatiste & Vieți ale sfinților (format 11×16 cm).", stock: 45, labels: ["Nou"], features: ["Format: 11×16 cm", "Număr pagini: 320", "Tip copertă: Broșată"] },
-      { id: 9, name: "Psaltire", netPrice: 29.99, image: "9.jpg", description: "Psaltire (format 14.5×20 cm).", stock: 55, labels: ["Recomandat"], features: ["Format: 14.5×20 cm", "Număr pagini: 560", "Tip copertă: Hardcover"] },
-      { id: 10, name: "Ceaslov", netPrice: 44.99, image: "10.jpg", description: "Ceaslov (format A4).", stock: 50, labels: ["Recomandat"], features: ["Format: A4", "Număr pagini: 800", "Tip copertă: Hardcover"] },
-      { id: 11, name: "Lumânare Înviere", netPrice: 44.99, image: "11.jpg", description: "Lumânare modernă pentru Înviere.", stock: 60, labels: ["Nou"], features: ["Design: Modern", "Înălțime: 50 cm", "Gramaj: 1 kg"] },
-      { id: 12, name: "Icoană TIP I", netPrice: 25.99, image: "12.jpg", description: "Icoană pentru rugăciuni (format A4).", stock: 40, labels: ["Pentru zile negre"], features: ["Format: A4", "Material: Lemn cu ramă", "Țară origine: România"] },
-      { id: 13, name: "Icoană TIP II", netPrice: 22.99, image: "13.jpg", description: "Icoană pentru rugăciuni (format A5).", stock: 30, labels: ["Recomandat"], features: ["Format: A5", "Material: Lemn cu ramă", "Țară origine: România"] },
-      { id: 14, name: "Icoană TIP III", netPrice: 19.99, image: "14.jpg", description: "Icoană pentru rugăciuni (24×10 cm).", stock: 45, labels: ["Special"], features: ["Dimensiuni: 24×10 cm", "Material: Lemn cu ramă", "Țară origine: România"] },
-      { id: 15, name: "Icoană TIP IV", netPrice: 139.99, image: "15.jpg", description: "Icoană pentru rugăciuni (format A4).", stock: 20, labels: ["Limited Edition"], features: ["Format: A4", "Material: Lemn cu ramă aurită", "Țară origine: Grecia"] },
-      { id: 16, name: "Cruciuliță", netPrice: 12.99, image: "16.jpg", description: "Cruciuliță protector (dimensiuni 5×3 cm).", stock: 100, labels: ["Special"], features: ["Dimensiuni: 5×3 cm", "Material: Argint 925", "Țară origine: Polonia"] },
-      { id: 17, name: "Cruce Binecuvântare", netPrice: 149.99, image: "17.jpg", description: "Cruce pentru slujbe (30×13 cm).", stock: 25, labels: ["Limited Edition"], features: ["Dimensiuni: 30×13 cm", "Material: Argint placat cu aur", "Țară origine: Grecia"] },
-      { id: 18, name: "Mir de Oașă", netPrice: 9.99, image: "18.jpg", description: "Mir de familie (30 ml).", stock: 30, labels: ["Pentru zile negre"], features: ["Volum: 30 ml", "Ingrediente: Ulei de măsline, mirodenii", "Origine: Oaș"] },
-      { id: 19, name: "Pomelnice Anuale", netPrice: 99.99, image: "19.jpg", description: "Pomelnice personalizabile 20×15 cm.", stock: 15, labels: ["Special"], features: ["Tip: Albume personalizabile", "Gramaj: 300g pagină", "Format: 20×15 cm"] },
-      { id: 20, name: "Biblia", netPrice: 149.99, image: "20.jpg", description: "Biblia (format 21×15 cm).", stock: 40, labels: ["Recomandat"], features: ["Format: 21×15 cm", "Număr pagini: 1200", "Tip copertă: Hardcover"] }
+      { id: 1, name: "Candelă mare TIP IV", netPrice: 19.99, image: "1.jpg", description: "Lumânare din ceară naturală cu durată de 7 zile.", stock: 50, labels: ["Popular"], features: ["TVA: 19%", "Adaos comercial: 30%", "Material: Ceară 100% naturală", "Durată: aprox. 7 zile", "Greutate: 500g"] },
+      { id: 2, name: "Candelă mare TIP III", netPrice: 12.99, image: "2.jpg", description: "Lumânare din ceară naturală cu durată de 100h.", stock: 40, labels: ["Recomandat"], features: ["TVA: 19%", "Adaos comercial: 30%", "Material: Ceară 100% naturală", "Durată: aprox. 100h", "Greutate: 400g"] },
+      { id: 3, name: "Candelă mare TIP II", netPrice: 9.99, image: "3.jpg", description: "Lumânare din ceară naturală cu durată de 60h.", stock: 30, labels: ["Best Seller"], features: ["TVA: 19%", "Adaos comercial: 30%", "Material: Ceară 100% naturală", "Durată: aprox. 60h", "Greutate: 300g"] },
+      { id: 4, name: "Candelă mare TIP I", netPrice: 6.99, image: "4.jpg", description: "Lumânare din ceară naturală cu durată de 16h.", stock: 60, labels: ["Pentru zile negre"], features: ["TVA: 19%", "Adaos comercial: 30%", "Material: Ceară 100% naturală", "Durată: aprox. 16h", "Greutate: 200g"] },
+      { id: 5, name: "Tămâie de Oașă", netPrice: 63.99, image: "5.jpg", description: "Tămâie de înaltă calitate. 200g.", stock: 80, labels: ["Bună pentru uz zilnic"], features: ["TVA: 19%", "Adaos comercial: 30%", "Origine: Oaș", "Gramaj: 200g", "Utilizare: Aromaterapie și ritualuri"] },
+      { id: 6, name: "Tămâie de Vatopedu", netPrice: 68.99, image: "6.jpg", description: "Tămâie de înaltă calitate. 200g.", stock: 70, labels: ["Premium"], features: ["TVA: 19%", "Adaos comercial: 30%", "Origine: Vatopedu", "Gramaj: 200g", "Utilizare: Aromaterapie și ritualuri"] },
+      { id: 7, name: "Tămâie de Pângărați", netPrice: 23.99, image: "7.jpg", description: "Tămâie de înaltă calitate. 50g.", stock: 35, labels: ["Cantitate mai mică"], features: ["TVA: 19%", "Adaos comercial: 30%", "Origine: Pângărați", "Gramaj: 50g", "Utilizare: Aromaterapie și ritualuri"] },
+      { id: 8, name: "Acatiste și Viețile sfinților", netPrice: 9.99, image: "8.jpg", description: "Acatiste & Vieți ale sfinților (format 11×16 cm).", stock: 45, labels: ["Nou"], features: ["TVA: 19%", "Adaos comercial: 30%", "Format: 11×16 cm", "Număr pagini: 320", "Tip copertă: Broșată"] },
+      { id: 9, name: "Psaltire", netPrice: 29.99, image: "9.jpg", description: "Psaltire (format 14.5×20 cm).", stock: 55, labels: ["Recomandat"], features: ["TVA: 19%", "Adaos comercial: 30%", "Format: 14.5×20 cm", "Număr pagini: 560", "Tip copertă: Hardcover"] },
+      { id: 10, name: "Ceaslov", netPrice: 44.99, image: "10.jpg", description: "Ceaslov (format A4).", stock: 50, labels: ["Recomandat"], features: ["TVA: 19%", "Adaos comercial: 30%", "Format: A4", "Număr pagini: 800", "Tip copertă: Hardcover"] },
+      { id: 11, name: "Lumânare Înviere", netPrice: 44.99, image: "11.jpg", description: "Lumânare modernă pentru slujba de Înviere.", stock: 60, labels: ["Nou"], features: ["TVA: 19%", "Adaos comercial: 30%", "Design: Modern", "Înălțime: 50 cm", "Gramaj: 1 kg"] },
+      { id: 12, name: "Icoană TIP I", netPrice: 25.99, image: "12.jpg", description: "Icoană pentru rugăciuni (format A4).", stock: 40, labels: ["Pentru zile negre"], features: ["TVA: 19%", "Adaos comercial: 30%", "Format: A4", "Material: Lemn cu ramă", "Țară origine: România"] },
+      { id: 13, name: "Icoană TIP II", netPrice: 22.99, image: "13.jpg", description: "Icoană pentru rugăciuni (format A5).", stock: 30, labels: ["Recomandat"], features: ["TVA: 19%", "Adaos comercial: 30%", "Format: A5", "Material: Lemn cu ramă", "Țară origine: România"] },
+      { id: 14, name: "Icoană TIP III", netPrice: 19.99, image: "14.jpg", description: "Icoană pentru rugăciuni (24×10 cm).", stock: 45, labels: ["Special"], features: ["TVA: 19%", "Adaos comercial: 30%", "Dimensiuni: 24×10 cm", "Material: Lemn cu ramă", "Țară origine: România"] },
+      { id: 15, name: "Icoană TIP IV", netPrice: 139.99, image: "15.jpg", description: "Icoană pentru rugăciuni (format A4).", stock: 20, labels: ["Limited Edition"], features: ["TVA: 19%", "Adaos comercial: 30%", "Format: A4", "Material: Lemn cu ramă aurită", "Țară origine: Grecia"] },
+      { id: 16, name: "Cruciuliță", netPrice: 12.99, image: "16.jpg", description: "Cruciuliță protector (dimensiuni 5×3 cm).", stock: 100, labels: ["Special"], features: ["TVA: 19%", "Adaos comercial: 30%", "Dimensiuni: 5×3 cm", "Material: Argint 925", "Țară origine: Polonia"] },
+      { id: 17, name: "Cruce Binecuvântare", netPrice: 149.99, image: "17.jpg", description: "Cruce pentru slujbe (30×13 cm).", stock: 25, labels: ["Limited Edition"], features: ["TVA: 19%", "Adaos comercial: 30%", "Dimensiuni: 30×13 cm", "Material: Argint placat cu aur", "Țară origine: Grecia"] },
+      { id: 18, name: "Mir de Oașă", netPrice: 9.99, image: "18.jpg", description: "Mir de familie (30 ml).", stock: 30, labels: ["Pentru zile negre"], features: ["TVA: 19%", "Adaos comercial: 30%", "Volum: 30 ml", "Ingrediente: Ulei de măsline, mirodenii", "Origine: Oaș"] },
+      { id: 19, name: "Pomelnice Anuale", netPrice: 99.99, image: "19.jpg", description: "Pomelnice personalizabile 20×15 cm.", stock: 15, labels: ["Special"], features: ["TVA: 19%", "Adaos comercial: 30%", "Tip: Albume personalizabile", "Gramaj: 300g pagină", "Format: 20×15 cm"] },
+      { id: 20, name: "Biblia", netPrice: 149.99, image: "20.jpg", description: "Biblia (format 21×15 cm).", stock: 40, labels: ["Recomandat"], features: ["TVA: 19%", "Adaos comercial: 30%", "Format: 21×15 cm", "Număr pagini: 1200", "Tip copertă: Hardcover"] }
     ];
 
     // Preluăm coșul din localStorage (dacă există)
@@ -605,7 +597,7 @@
               <img src="${prod.image}" class="card-img-top" alt="${prod.name}" onclick="viewProduct(${prod.id})">
               <div class="card-body">
                 <h5 class="card-title">${prod.name}</h5>
-                <p class="price-range">${prețFinal.toFixed(2)} Lei <small>(TVA+Adaos incl.)</small></p>
+                <p class="price-range">${prețFinal.toFixed(2)} Lei <small>(TVA &amp; adaos incl.)</small></p>
                 <div class="d-flex justify-content-between">
                   <button class="btn btn-sm btn-success" onclick="quickAddToCart(${prod.id}); event.stopPropagation();">
                     <i class="bi bi-cart-plus"></i> Adaugă
@@ -668,14 +660,14 @@
           </div>
           <div class="col-md-6 modal-details">
             <h2>${prod.name} ${labelsHtml}</h2>
-            <p><strong>Preț:</strong> <span class="text-danger">${prețFinal.toFixed(2)} Lei</span> <small>(TVA+Adaos incl.)</small></p>
+            <p><strong>Preț:</strong> <span class="text-danger">${prețFinal.toFixed(2)} Lei</span> <small>(TVA &amp; adaos incl.)</small></p>
             <p><strong>Stoc:</strong> ${stockText}</p>
             ${detailsHtml}
             <button class="btn btn-danger add-cart-btn" onclick="addToCart(${prod.id})">
               <i class="bi bi-cart-plus"></i> Adaugă în Coș
             </button>
             <hr class="my-4">
-            <h5>Caracteristici esențiale</h5>
+            <h5>Detalii (conform ANPC)</h5>
             <ul class="list-group mb-3">
               ${featuresList}
             </ul>
@@ -843,8 +835,8 @@
       else if (discountCode === "DISC20") discountPercent = 20;
       let discountAmount = orderTotal * (discountPercent / 100);
       let finalTotal = orderTotal - discountAmount;
-      let dateTime = new Date().toLocaleString("ro-RO", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
 
+      // Creăm comanda fără câmpul dateTime (va fi setat manual de admin)
       let order = {
         id: Date.now(),
         customer: { name, contact },
@@ -854,12 +846,11 @@
         discountPercent: discountPercent,
         discountAmount: discountAmount.toFixed(2),
         finalTotal: finalTotal.toFixed(2),
-        dateTime: dateTime
+        dateTime: ""   // rămâne gol: va fi completat de admin
       };
 
-      let orderSummary = `Factura Nr. ${order.id}\nData și ora: ${order.dateTime}\n\n`;
-      orderSummary += `Vânzător: SC Magazin Bisericesc SRL\nAdresă: Strada Exemplu nr. 1, București\nTel: 0123.456.789\nEmail: contact@magazinbisericesc.ro\n\n`;
-      orderSummary += `Client: ${order.customer.name}\nContact: ${order.customer.contact}\n\n`;
+      // Construim sumarul comenzii pentru email
+      let orderSummary = `Client: ${order.customer.name}\nContact: ${order.customer.contact}\n\n`;
       orderSummary += `Detalii Produse:\n`;
       order.items.forEach(item => {
         const prod = products.find(p => p.id === item.id);
@@ -874,13 +865,12 @@
 
       document.getElementById("orderDetailsInput").value = orderSummary;
       document.getElementById("notifyForm").submit();
-      alert("Comanda a fost plasată. Mulțumim, " + name + "!");
+      alert("Comanda a fost trimisă. Administratorul o va procesa și va genera factura.");
 
       let ordersLocal = JSON.parse(localStorage.getItem("globalOrders") || "[]");
       ordersLocal.push(order);
       localStorage.setItem("globalOrders", JSON.stringify(ordersLocal));
 
-      renderInvoice(order);
       cart = [];
       saveCart();
       updateCartCount();
@@ -889,60 +879,7 @@
       document.getElementById('discount-code').value = "";
       updateFinalTotal();
       renderProducts();
-      navigateTo('order-details');
-    }
-
-    function renderInvoice(order) {
-      const container = document.getElementById('order-details-container');
-      let itemsRows = order.items.map(item => {
-        const prod = products.find(p => p.id === item.id);
-        let unitPrice = retailPrice(prod.netPrice);
-        return `<tr>
-                  <td>${prod.name}</td>
-                  <td>${item.units}</td>
-                  <td>${(unitPrice * item.units).toFixed(2)} Lei</td>
-                </tr>`;
-      }).join("");
-      let html = `
-        <div class="invoice">
-          <div class="invoice-header">
-            <img src="logo.jpg" alt="Logo Magazin Bisericesc">
-            <h2>Factura Nr. ${order.id}</h2>
-            <p>Data și ora: ${order.dateTime}</p>
-          </div>
-          <div class="invoice-details text-start">
-            <p><strong>Vânzător:</strong> SC Magazin Bisericesc SRL</p>
-            <p><strong>Adresă:</strong> Strada Exemplu nr. 1, București</p>
-            <p><strong>Tel/Email:</strong> 0123.456.789 / contact@magazinbisericesc.ro</p>
-            <hr>
-            <p><strong>Client:</strong> ${order.customer.name}</p>
-            <p><strong>Contact:</strong> ${order.customer.contact}</p>
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Produs</th>
-                <th>Unități</th>
-                <th>Cost</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${itemsRows}
-            </tbody>
-          </table>
-          <div class="text-end mb-3">
-            <p><strong>Total Inițial:</strong> ${order.orderTotal} Lei</p>
-            ${order.discountPercent > 0 ? `<p><strong>Reducere (${order.discountCode}):</strong> -${order.discountAmount} Lei</p>` : ""}
-            <p><strong>Total de plată:</strong> ${order.finalTotal} Lei</p>
-          </div>
-          <div class="text-start">
-            <p><strong>Termeni de plată:</strong> Transfer bancar sau card online</p>
-            <p><strong>Termeni de livrare:</strong> 1–3 zile lucrătoare prin curier</p>
-            <p><strong>Politica de returnare:</strong> Returnare în 14 zile (cost suportat de client)</p>
-            <p><strong>Garanție:</strong> 24 luni de la data achiziției</p>
-          </div>
-        </div>`;
-      container.innerHTML = html;
+      navigateTo('home');
     }
 
     // Slider pentru pagina de start
@@ -990,17 +927,26 @@
           <div class="section-container">
             <h2>Dashboard Admin</h2>
             <div class="mb-3">
-              <button class="btn btn-secondary" onclick="updateAllStocks()">Actualizează stocurile</button>
+              <button class="btn btn-secondary" onclick="updateAllStocks()">Actualizează Stocurile</button>
             </div>
             <h5>Filtrare Produse</h5>
             <input type="text" id="admin-filter" class="form-control mb-3" placeholder="Caută produs în admin..." onkeyup="renderAdminProducts()">
             <div id="admin-products-container" class="mb-4"></div>
-            <h5>Setează data comenzii (format: DD-MM-YYYY HH:mm)</h5>
-            <input type="text" id="admin-order-date" class="form-control mb-3" placeholder="Ex: 02-06-2025 14:30">
-            <button class="btn btn-info mb-4" onclick="overrideOrderDate()">Salvează Data</button>
             <h5>Comenzi Plasate</h5>
-            <div id="admin-orders-container"></div>
-            <button class="btn btn-secondary mt-3" onclick="adminLogout()">Logout</button>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Client</th>
+                  <th>Contact</th>
+                  <th>Total Final</th>
+                  <th>Data (setată de admin)</th>
+                  <th>Acțiuni</th>
+                </tr>
+              </thead>
+              <tbody id="admin-orders-container"></tbody>
+            </table>
+            <button class="btn btn-secondary" onclick="adminLogout()">Logout</button>
           </div>`;
         renderAdminProducts();
         renderAdminOrders();
@@ -1045,7 +991,7 @@
       products.forEach(prod => {
         if (prod.name.toLowerCase().includes(filter)) {
           let stockHtml = `<strong>Stoc actual:</strong> ${prod.stock} buc<br>
-                           <input type="number" id="new-stock-${prod.id}" placeholder="Nou stoc" style="width:70px; margin-top:3px;">`;
+                           <input type="number" id="new-stock-${prod.id}" placeholder="Nou stoc" style="width:80px; margin-top:3px;">`;
           const prodHTML = `
             <div class="mb-2 p-2" style="border:1px solid #ccc; border-radius:5px;">
               <strong>${prod.name}</strong><br>
@@ -1056,57 +1002,48 @@
       });
     }
 
-    function overrideOrderDate() {
-      const customDate = document.getElementById('admin-order-date').value.trim();
-      if (!customDate) {
-        alert("Introdu o dată validă!");
-        return;
-      }
-      // Verific dacă există comenzi neprocesate și îi suprascriu data cellei mai recente
-      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
-      if (orders.length === 0) {
-        alert("Nu există comenzi în așteptare!");
-        return;
-      }
-      // Ultima comandă
-      orders[orders.length - 1].dateTime = customDate;
-      localStorage.setItem("globalOrders", JSON.stringify(orders));
-      alert(`Data comenzii a fost suprascrisă cu: ${customDate}`);
-      renderAdminOrders();
-    }
-
     function renderAdminOrders() {
       let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
-      const container = document.getElementById('admin-orders-container');
+      const tbody = document.getElementById('admin-orders-container');
+      tbody.innerHTML = "";
       if (orders.length === 0) {
-        container.innerHTML = "<p>Nu există comenzi.</p>";
+        tbody.innerHTML = `<tr><td colspan="6"><p>Nu există comenzi.</p></td></tr>`;
         return;
       }
-      let html = `<table class="table">
-                    <thead>
-                      <tr>
-                        <th>ID Comandă</th>
-                        <th>Client</th>
-                        <th>Data și ora</th>
-                        <th>Total Final</th>
-                        <th>Acțiuni</th>
-                      </tr>
-                    </thead>
-                    <tbody>`;
       orders.forEach((order, idx) => {
-        html += `<tr>
-                   <td>${order.id}</td>
-                   <td>${order.customer.name}<br>${order.customer.contact}</td>
-                   <td>${order.dateTime}</td>
-                   <td>${order.finalTotal} Lei</td>
-                   <td>
-                     <button class="btn btn-success btn-sm" onclick="finishOrder(${idx})">Terminată</button>
-                     <button class="btn btn-info btn-sm" onclick="printInvoice(${idx})">Tipărește Factura</button>
-                   </td>
-                 </tr>`;
+        let dateDisplay = order.dateTime ? order.dateTime : `<input type="text" id="order-date-${order.id}" placeholder="DD-MM-YYYY HH:mm" style="width:140px;">`;
+        let setDateBtn = order.dateTime
+          ? ``
+          : `<button class="btn btn-sm btn-info" onclick="setOrderDate(${idx}, ${order.id})">Salvează</button>`;
+        let row = `
+          <tr>
+            <td>${order.id}</td>
+            <td>${order.customer.name}</td>
+            <td>${order.customer.contact}</td>
+            <td>${order.finalTotal} Lei</td>
+            <td>${dateDisplay}</td>
+            <td>
+              ${setDateBtn}
+              <button class="btn btn-success btn-sm" onclick="finishOrder(${idx})">Terminată</button>
+              <button class="btn btn-secondary btn-sm" onclick="genInvoice(${idx})">Generează Factură</button>
+            </td>
+          </tr>`;
+        tbody.innerHTML += row;
       });
-      html += `</tbody></table>`;
-      container.innerHTML = html;
+    }
+
+    function setOrderDate(index, orderId) {
+      const input = document.getElementById(`order-date-${orderId}`);
+      const customDate = input.value.trim();
+      if (!customDate) {
+        alert("Introdu o dată valabilă (format: DD-MM-YYYY HH:mm)");
+        return;
+      }
+      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      orders[index].dateTime = customDate;
+      localStorage.setItem("globalOrders", JSON.stringify(orders));
+      alert(`Data comenzii #${orders[index].id} a fost setată la: ${customDate}`);
+      renderAdminOrders();
     }
 
     function finishOrder(index) {
@@ -1114,16 +1051,20 @@
       if (index >= 0 && index < orders.length) {
         orders.splice(index, 1);
         localStorage.setItem("globalOrders", JSON.stringify(orders));
-        alert("Comanda a fost finalizată.");
+        alert("Comanda a fost marcată ca finalizată.");
         renderAdminOrders();
       }
     }
 
-    function printInvoice(index) {
+    function genInvoice(index) {
       let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
       if (orders.length <= index) return;
       const order = orders[index];
-      let invoiceWindow = window.open("", "PrintInvoice", "width=800,height=600");
+      if (!order.dateTime) {
+        alert("Trebuie să setezi mai întâi data comenzii!");
+        return;
+      }
+      let invoiceWindow = window.open("", "InvoiceWindow", "width=800,height=600");
       let itemsRows = order.items.map(item => {
         const prod = products.find(p => p.id === item.id);
         let unitPrice = retailPrice(prod.netPrice);
@@ -1196,11 +1137,6 @@
       invoiceWindow.document.close();
       invoiceWindow.focus();
       invoiceWindow.print();
-    }
-
-    // Funcție pentru a calcula prețul final (TVA 19% + adaos 30%)
-    function retailPrice(netPrice) {
-      return parseFloat((netPrice * 1.30 * 1.19).toFixed(2));
     }
   </script>
 </body>
