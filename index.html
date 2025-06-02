@@ -403,14 +403,14 @@
       <div class="section-container">
         <h2>Termeni și Condiții</h2>
         <ul class="list-group list-group-flush text-start">
-          <li class="list-group-item"><strong>Denumire produs și preț:</strong> Fiecare produs are afișat prețul final, cu TVA (19%) și adaos comercial (30%) incluse. Prețul afișat este cel de vânzare final.</li>
+          <li class="list-group-item"><strong>Denumire produs și preț:</strong> Fiecare produs are prețul final afișat, cu TVA (19%) și adaos comercial (specific fiecărui produs) incluse. Prețul afișat este cel de vânzare final.</li>
           <li class="list-group-item"><strong>Modalități de plată:</strong> Ramburs, card (Visa, MasterCard, Maestro), transfer bancar.</li>
           <li class="list-group-item"><strong>Livrare:</strong> 1–3 zile lucrătoare prin curier, cost variabil în funcție de zonă.</li>
           <li class="list-group-item"><strong>Politica de returnare:</strong> Returnare în 14 zile de la primire, fără penalități; costul transportului retur este suportat de client.</li>
           <li class="list-group-item"><strong>Garanție:</strong> 24 luni de la data achiziției, valabilă pe teritoriul României.</li>
-          <li class="list-group-item"><strong>Salvarea și protecția datelor:</strong> Datele tale personale sunt prelucrate conform <a href="#">Politicii GDPR</a> și nu sunt cessionate către terți.</li>
-          <li class="list-group-item"><strong>Soluționare alternativă a litigiilor (SAL):</strong> Poți solicita medierea divergențelor la ANPC sau la Centrul de Soluționare Alternativă a Litigiilor de Consum – vezi pictograma SAL/SOL din footer.</li>
-          <li class="list-group-item"><strong>Soluționare online a litigiilor (SOL):</strong> Poți depune o cerere la platforma ODR a Comisiei Europene: <a href="https://ec.europa.eu/consumers/odr/" target="_blank">https://ec.europa.eu/consumers/odr/</a>.</li>
+          <li class="list-group-item"><strong>Salvarea și protecția datelor:</strong> Datele personale sunt prelucrate conform <a href="#">Politicii GDPR</a> și nu sunt cessionate terților.</li>
+          <li class="list-group-item"><strong>Soluționare alternativă a litigiilor (SAL):</strong> Poți solicita medierea divergențelor la ANPC sau Centrul de Soluționare Alternativă a Litigiilor de Consum – vezi pictograma SAL/SOL din footer.</li>
+          <li class="list-group-item"><strong>Soluționare online a litigiilor (SOL):</strong> Depune cerere la platforma ODR a Comisiei Europene: <a href="https://ec.europa.eu/consumers/odr/" target="_blank">https://ec.europa.eu/consumers/odr/</a>.</li>
         </ul>
       </div>
     </section>
@@ -572,38 +572,46 @@
       return code;
     }
 
-    // Funcție pentru a calcula prețul final (TVA 19% + adaos 30%)
-    function retailPrice(netPrice) {
-      return parseFloat((netPrice * 1.30 * 1.19).toFixed(2));
+    // Funcție pentru a calcula prețul final (TVA 19% + adaos diferențiat per produs)
+    function retailPrice(netPrice, markupPercent) {
+      return parseFloat((netPrice * (1 + markupPercent / 100) * 1.19).toFixed(2));
     }
 
-    // Lista de produse (netPrice = preț de achiziție fără TVA și adaos)
+    // Lista de produse (netPrice = preț fără TVA și fără adaos; markupPercent = procent adaos specific)
     const products = [
-      { id: 1, name: "Candelă mare TIP IV", netPrice: 19.99, image: "1.jpg", description: "Lumânare din ceară naturală cu durată de 7 zile.", stock: 50, labels: ["Popular"], features: ["TVA: 19%", "Adaos comercial: 30%", "Material: Ceară 100% naturală", "Durată: aprox. 7 zile", "Greutate: 500g"] },
-      { id: 2, name: "Candelă mare TIP III", netPrice: 12.99, image: "2.jpg", description: "Lumânare din ceară naturală cu durată de 100h.", stock: 40, labels: ["Recomandat"], features: ["TVA: 19%", "Adaos comercial: 30%", "Material: Ceară 100% naturală", "Durată: aprox. 100h", "Greutate: 400g"] },
-      { id: 3, name: "Candelă mare TIP II", netPrice: 9.99, image: "3.jpg", description: "Lumânare din ceară naturală cu durată de 60h.", stock: 30, labels: ["Best Seller"], features: ["TVA: 19%", "Adaos comercial: 30%", "Material: Ceară 100% naturală", "Durată: aprox. 60h", "Greutate: 300g"] },
-      { id: 4, name: "Candelă mare TIP I", netPrice: 6.99, image: "4.jpg", description: "Lumânare din ceară naturală cu durată de 16h.", stock: 60, labels: ["Pentru zile negre"], features: ["TVA: 19%", "Adaos comercial: 30%", "Material: Ceară 100% naturală", "Durată: aprox. 16h", "Greutate: 200g"] },
-      { id: 5, name: "Tămâie de Oașă", netPrice: 63.99, image: "5.jpg", description: "Tămâie de înaltă calitate. 200g.", stock: 80, labels: ["Bună pentru uz zilnic"], features: ["TVA: 19%", "Adaos comercial: 30%", "Origine: Oaș", "Gramaj: 200g", "Utilizare: Aromaterapie și ritualuri"] },
-      { id: 6, name: "Tămâie de Vatopedu", netPrice: 68.99, image: "6.jpg", description: "Tămâie de înaltă calitate. 200g.", stock: 70, labels: ["Premium"], features: ["TVA: 19%", "Adaos comercial: 30%", "Origine: Vatopedu", "Gramaj: 200g", "Utilizare: Aromaterapie și ritualuri"] },
-      { id: 7, name: "Tămâie de Pângărați", netPrice: 23.99, image: "7.jpg", description: "Tămâie de înaltă calitate. 50g.", stock: 35, labels: ["Cantitate mai mică"], features: ["TVA: 19%", "Adaos comercial: 30%", "Origine: Pângărați", "Gramaj: 50g", "Utilizare: Aromaterapie și ritualuri"] },
-      { id: 8, name: "Acatiste și Viețile sfinților", netPrice: 9.99, image: "8.jpg", description: "Acatiste & Vieți ale sfinților (format 11×16 cm).", stock: 45, labels: ["Nou"], features: ["TVA: 19%", "Adaos comercial: 30%", "Format: 11×16 cm", "Număr pagini: 320", "Tip copertă: Broșată"] },
-      { id: 9, name: "Psaltire", netPrice: 29.99, image: "9.jpg", description: "Psaltire (format 14.5×20 cm).", stock: 55, labels: ["Recomandat"], features: ["TVA: 19%", "Adaos comercial: 30%", "Format: 14.5×20 cm", "Număr pagini: 560", "Tip copertă: Hardcover"] },
-      { id: 10, name: "Ceaslov", netPrice: 44.99, image: "10.jpg", description: "Ceaslov (format A4).", stock: 50, labels: ["Recomandat"], features: ["TVA: 19%", "Adaos comercial: 30%", "Format: A4", "Număr pagini: 800", "Tip copertă: Hardcover"] },
-      { id: 11, name: "Lumânare Înviere", netPrice: 44.99, image: "11.jpg", description: "Lumânare modernă pentru slujba de Înviere.", stock: 60, labels: ["Nou"], features: ["TVA: 19%", "Adaos comercial: 30%", "Design: Modern", "Înălțime: 50 cm", "Gramaj: 1 kg"] },
-      { id: 12, name: "Icoană TIP I", netPrice: 25.99, image: "12.jpg", description: "Icoană pentru rugăciuni (format A4).", stock: 40, labels: ["Pentru zile negre"], features: ["TVA: 19%", "Adaos comercial: 30%", "Format: A4", "Material: Lemn cu ramă", "Țară origine: România"] },
-      { id: 13, name: "Icoană TIP II", netPrice: 22.99, image: "13.jpg", description: "Icoană pentru rugăciuni (format A5).", stock: 30, labels: ["Recomandat"], features: ["TVA: 19%", "Adaos comercial: 30%", "Format: A5", "Material: Lemn cu ramă", "Țară origine: România"] },
-      { id: 14, name: "Icoană TIP III", netPrice: 19.99, image: "14.jpg", description: "Icoană pentru rugăciuni (24×10 cm).", stock: 45, labels: ["Special"], features: ["TVA: 19%", "Adaos comercial: 30%", "Dimensiuni: 24×10 cm", "Material: Lemn cu ramă", "Țară origine: România"] },
-      { id: 15, name: "Icoană TIP IV", netPrice: 139.99, image: "15.jpg", description: "Icoană pentru rugăciuni (format A4).", stock: 20, labels: ["Limited Edition"], features: ["TVA: 19%", "Adaos comercial: 30%", "Format: A4", "Material: Lemn cu ramă aurită", "Țară origine: Grecia"] },
-      { id: 16, name: "Cruciuliță", netPrice: 12.99, image: "16.jpg", description: "Cruciuliță protector (dimensiuni 5×3 cm).", stock: 100, labels: ["Special"], features: ["TVA: 19%", "Adaos comercial: 30%", "Dimensiuni: 5×3 cm", "Material: Argint 925", "Țară origine: Polonia"] },
-      { id: 17, name: "Cruce Binecuvântare", netPrice: 149.99, image: "17.jpg", description: "Cruce pentru slujbe (30×13 cm).", stock: 25, labels: ["Limited Edition"], features: ["TVA: 19%", "Adaos comercial: 30%", "Dimensiuni: 30×13 cm", "Material: Argint placat cu aur", "Țară origine: Grecia"] },
-      { id: 18, name: "Mir de Oașă", netPrice: 9.99, image: "18.jpg", description: "Mir de familie (30 ml).", stock: 30, labels: ["Pentru zile negre"], features: ["TVA: 19%", "Adaos comercial: 30%", "Volum: 30 ml", "Ingrediente: Ulei de măsline, mirodenii", "Origine: Oaș"] },
-      { id: 19, name: "Pomelnice Anuale", netPrice: 99.99, image: "19.jpg", description: "Pomelnice personalizabile 20×15 cm.", stock: 15, labels: ["Special"], features: ["TVA: 19%", "Adaos comercial: 30%", "Tip: Albume personalizabile", "Gramaj: 300g pagină", "Format: 20×15 cm"] },
-      { id: 20, name: "Biblia", netPrice: 149.99, image: "20.jpg", description: "Biblia (format 21×15 cm).", stock: 40, labels: ["Recomandat"], features: ["TVA: 19%", "Adaos comercial: 30%", "Format: 21×15 cm", "Număr pagini: 1200", "Tip copertă: Hardcover"] }
+      { id: 1, name: "Candelă mare TIP IV", netPrice: 19.99, markupPercent: 30, image: "1.jpg", description: "Lumânare din ceară naturală cu durată de 7 zile.", stock: 50, labels: ["Popular"], features: ["TVA: 19%", "Adaos comercial: 30%", "Material: Ceară 100% naturală", "Durată: aprox. 7 zile", "Greutate: 500g"] },
+      { id: 2, name: "Candelă mare TIP III", netPrice: 12.99, markupPercent: 25, image: "2.jpg", description: "Lumânare din ceară naturală cu durată de 100h.", stock: 40, labels: ["Recomandat"], features: ["TVA: 19%", "Adaos comercial: 25%", "Material: Ceară 100% naturală", "Durată: aprox. 100h", "Greutate: 400g"] },
+      { id: 3, name: "Candelă mare TIP II", netPrice: 9.99, markupPercent: 20, image: "3.jpg", description: "Lumânare din ceară naturală cu durată de 60h.", stock: 30, labels: ["Best Seller"], features: ["TVA: 19%", "Adaos comercial: 20%", "Material: Ceară 100% naturală", "Durată: aprox. 60h", "Greutate: 300g"] },
+      { id: 4, name: "Candelă mare TIP I", netPrice: 6.99, markupPercent: 15, image: "4.jpg", description: "Lumânare din ceară naturală cu durată de 16h.", stock: 60, labels: ["Pentru zile negre"], features: ["TVA: 19%", "Adaos comercial: 15%", "Material: Ceară 100% naturală", "Durată: aprox. 16h", "Greutate: 200g"] },
+      { id: 5, name: "Tămâie de Oașă", netPrice: 63.99, markupPercent: 40, image: "5.jpg", description: "Tămâie de înaltă calitate. 200g.", stock: 80, labels: ["Bună pentru uz zilnic"], features: ["TVA: 19%", "Adaos comercial: 40%", "Origine: Oaș", "Gramaj: 200g", "Utilizare: Aromaterapie și ritualuri"] },
+      { id: 6, name: "Tămâie de Vatopedu", netPrice: 68.99, markupPercent: 45, image: "6.jpg", description: "Tămâie de înaltă calitate. 200g.", stock: 70, labels: ["Premium"], features: ["TVA: 19%", "Adaos comercial: 45%", "Origine: Vatopedu", "Gramaj: 200g", "Utilizare: Aromaterapie și ritualuri"] },
+      { id: 7, name: "Tămâie de Pângărați", netPrice: 23.99, markupPercent: 25, image: "7.jpg", description: "Tămâie de înaltă calitate. 50g.", stock: 35, labels: ["Cantitate mai mică"], features: ["TVA: 19%", "Adaos comercial: 25%", "Origine: Pângărați", "Gramaj: 50g", "Utilizare: Aromaterapie și ritualuri"] },
+      { id: 8, name: "Acatiste și Viețile sfinților", netPrice: 9.99, markupPercent: 20, image: "8.jpg", description: "Acatiste & Vieți ale sfinților (format 11×16 cm).", stock: 45, labels: ["Nou"], features: ["TVA: 19%", "Adaos comercial: 20%", "Format: 11×16 cm", "Număr pagini: 320", "Tip copertă: Broșată"] },
+      { id: 9, name: "Psaltire", netPrice: 29.99, markupPercent: 35, image: "9.jpg", description: "Psaltire (format 14.5×20 cm).", stock: 55, labels: ["Recomandat"], features: ["TVA: 19%", "Adaos comercial: 35%", "Format: 14.5×20 cm", "Număr pagini: 560", "Tip copertă: Hardcover"] },
+      { id: 10, name: "Ceaslov", netPrice: 44.99, markupPercent: 30, image: "10.jpg", description: "Ceaslov (format A4).", stock: 50, labels: ["Recomandat"], features: ["TVA: 19%", "Adaos comercial: 30%", "Format: A4", "Număr pagini: 800", "Tip copertă: Hardcover"] },
+      { id: 11, name: "Lumânare Înviere", netPrice: 44.99, markupPercent: 25, image: "11.jpg", description: "Lumânare modernă pentru slujba de Înviere.", stock: 60, labels: ["Nou"], features: ["TVA: 19%", "Adaos comercial: 25%", "Design: Modern", "Înălțime: 50 cm", "Gramaj: 1 kg"] },
+      { id: 12, name: "Icoană TIP I", netPrice: 25.99, markupPercent: 20, image: "12.jpg", description: "Icoană pentru rugăciuni (format A4).", stock: 40, labels: ["Pentru zile negre"], features: ["TVA: 19%", "Adaos comercial: 20%", "Format: A4", "Material: Lemn cu ramă", "Țară origine: România"] },
+      { id: 13, name: "Icoană TIP II", netPrice: 22.99, markupPercent: 18, image: "13.jpg", description: "Icoană pentru rugăciuni (format A5).", stock: 30, labels: ["Recomandat"], features: ["TVA: 19%", "Adaos comercial: 18%", "Format: A5", "Material: Lemn cu ramă", "Țară origine: România"] },
+      { id: 14, name: "Icoană TIP III", netPrice: 19.99, markupPercent: 15, image: "14.jpg", description: "Icoană pentru rugăciuni (24×10 cm).", stock: 45, labels: ["Special"], features: ["TVA: 19%", "Adaos comercial: 15%", "Dimensiuni: 24×10 cm", "Material: Lemn cu ramă", "Țară origine: România"] },
+      { id: 15, name: "Icoană TIP IV", netPrice: 139.99, markupPercent: 25, image: "15.jpg", description: "Icoană pentru rugăciuni (format A4).", stock: 20, labels: ["Limited Edition"], features: ["TVA: 19%", "Adaos comercial: 25%", "Format: A4", "Material: Lemn cu ramă aurită", "Țară origine: Grecia"] },
+      { id: 16, name: "Cruciuliță", netPrice: 12.99, markupPercent: 15, image: "16.jpg", description: "Cruciuliță protector (dimensiuni 5×3 cm).", stock: 100, labels: ["Special"], features: ["TVA: 19%", "Adaos comercial: 15%", "Dimensiuni: 5×3 cm", "Material: Argint 925", "Țară origine: Polonia"] },
+      { id: 17, name: "Cruce Binecuvântare", netPrice: 149.99, markupPercent: 20, image: "17.jpg", description: "Cruce pentru slujbe (30×13 cm).", stock: 25, labels: ["Limited Edition"], features: ["TVA: 19%", "Adaos comercial: 20%", "Dimensiuni: 30×13 cm", "Material: Argint placat cu aur", "Țară origine: Grecia"] },
+      { id: 18, name: "Mir de Oașă", netPrice: 9.99, markupPercent: 18, image: "18.jpg", description: "Mir de familie (30 ml).", stock: 30, labels: ["Pentru zile negre"], features: ["TVA: 19%", "Adaos comercial: 18%", "Volum: 30 ml", "Ingrediente: Ulei de măsline, mirodenii", "Origine: Oaș"] },
+      { id: 19, name: "Pomelnice Anuale", netPrice: 99.99, markupPercent: 22, image: "19.jpg", description: "Pomelnice personalizabile 20×15 cm.", stock: 15, labels: ["Special"], features: ["TVA: 19%", "Adaos comercial: 22%", "Tip: Albume personalizabile", "Gramaj: 300g pagină", "Format: 20×15 cm"] },
+      { id: 20, name: "Biblia", netPrice: 149.99, markupPercent: 20, image: "20.jpg", description: "Biblia (format 21×15 cm).", stock: 40, labels: ["Recomandat"], features: ["TVA: 19%", "Adaos comercial: 20%", "Format: 21×15 cm", "Număr pagini: 1200", "Tip copertă: Hardcover"] }
     ];
 
     // Preluăm coșul din localStorage (dacă există)
     let cart = JSON.parse(localStorage.getItem('cartStorage') || '[]');
     updateCartCount();
+
+    // Preluăm comenzile din localStorage
+    function getOrders() {
+      return JSON.parse(localStorage.getItem("globalOrders") || "[]");
+    }
+    function saveOrders(orders) {
+      localStorage.setItem("globalOrders", JSON.stringify(orders));
+    }
 
     // Salvează coșul în localStorage
     function saveCart() {
@@ -617,8 +625,7 @@
       const filterValue = document.getElementById('filter-input').value.toLowerCase();
       products.forEach(prod => {
         if (prod.name.toLowerCase().includes(filterValue)) {
-          // Calculează prețul final (TVA+ADAOS)
-          let prețFinal = retailPrice(prod.netPrice);
+          let prețFinal = retailPrice(prod.netPrice, prod.markupPercent);
           const col = document.createElement('div');
           col.className = "col-12 col-sm-6 col-md-4 mb-4";
           col.innerHTML = `
@@ -651,7 +658,7 @@
         return;
       }
       prod.stock -= 1;
-      let prețFinal = retailPrice(prod.netPrice);
+      let prețFinal = retailPrice(prod.netPrice, prod.markupPercent);
       let index = cart.findIndex(item => item.id === id);
       if (index > -1) {
         cart[index].units += 1;
@@ -674,7 +681,7 @@
         labelsHtml = prod.labels.map(l => `<span class="badge bg-info text-dark me-1">${l}</span>`).join("");
       }
       let featuresList = prod.features.map(f => `<li class="list-group-item">${f}</li>`).join("");
-      let prețFinal = retailPrice(prod.netPrice);
+      let prețFinal = retailPrice(prod.netPrice, prod.markupPercent);
       let detailsHtml = `
         <div class="quantity-controls mb-3">
           <button class="btn btn-sm btn-outline-danger" onclick="changeQuantity('dec', ${prod.id})">-</button>
@@ -750,7 +757,7 @@
         return;
       }
       prod.stock -= units;
-      let prețFinal = retailPrice(prod.netPrice);
+      let prețFinal = retailPrice(prod.netPrice, prod.markupPercent);
       let index = cart.findIndex(item => item.id === id);
       if (index > -1) {
         cart[index].units += units;
@@ -824,7 +831,7 @@
         item.units -= 1;
         prod.stock += 1;
       }
-      let prețFinal = retailPrice(prod.netPrice);
+      let prețFinal = retailPrice(prod.netPrice, prod.markupPercent);
       item.cost = prețFinal * item.units;
       saveCart();
       updateCartCount();
@@ -903,7 +910,7 @@
       orderSummary += `Detalii Produse:\n`;
       order.items.forEach(item => {
         const prod = products.find(p => p.id === item.id);
-        orderSummary += `- ${prod.name}: ${item.units} buc x ${retailPrice(prod.netPrice).toFixed(2)} Lei = ${(retailPrice(prod.netPrice) * item.units).toFixed(2)} Lei\n`;
+        orderSummary += `- ${prod.name}: ${item.units} buc x ${retailPrice(prod.netPrice, prod.markupPercent).toFixed(2)} Lei = ${(retailPrice(prod.netPrice, prod.markupPercent) * item.units).toFixed(2)} Lei\n`;
       });
       orderSummary += `\nTotal Inițial: ${order.orderTotal} Lei\n`;
       if (discountPercent > 0) {
@@ -916,9 +923,9 @@
       document.getElementById("notifyForm").submit();
       alert(`Comanda a fost trimisă cu codul ${order.code}. Administratorul va procesa comanda și va genera factura.`);
 
-      let ordersLocal = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      let ordersLocal = getOrders();
       ordersLocal.push(order);
-      localStorage.setItem("globalOrders", JSON.stringify(ordersLocal));
+      saveOrders(ordersLocal);
 
       cart = [];
       saveCart();
@@ -1004,6 +1011,12 @@
               </thead>
               <tbody id="admin-orders-container"></tbody>
             </table>
+
+            <h5>Export / Import Comenzi</h5>
+            <button class="btn btn-outline-success mb-2" onclick="exportOrders()">Exportă Comenzile</button>
+            <input type="file" id="import-file" accept=".json" class="form-control mb-3" onchange="importOrders(event)">
+            <button class="btn btn-outline-primary mb-4" onclick="renderAdminOrders()">Reîncarcă Comenzile</button>
+
             <button class="btn btn-secondary" onclick="adminLogout()">Logout</button>
           </div>`;
         renderAdminProducts();
@@ -1061,7 +1074,7 @@
     }
 
     function renderAdminOrders(filteredOrders) {
-      let orders = filteredOrders || JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      let orders = filteredOrders || getOrders();
       const tbody = document.getElementById('admin-orders-container');
       tbody.innerHTML = "";
       if (orders.length === 0) {
@@ -1095,7 +1108,7 @@
 
     function filterOrdersByCode() {
       const codeInput = document.getElementById("admin-search-code").value.trim().toUpperCase();
-      const orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      const orders = getOrders();
       const filtered = orders.filter(o => o.code === codeInput);
       renderAdminOrders(filtered);
     }
@@ -1107,25 +1120,25 @@
         alert("Introdu o dată valabilă (format: DD-MM-YYYY HH:mm)");
         return;
       }
-      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      let orders = getOrders();
       orders[index].dateTime = customDate;
-      localStorage.setItem("globalOrders", JSON.stringify(orders));
+      saveOrders(orders);
       alert(`Data comenzii #${orders[index].id} a fost setată la: ${customDate}`);
       renderAdminOrders();
     }
 
     function finishOrder(index) {
-      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      let orders = getOrders();
       if (index >= 0 && index < orders.length) {
         orders.splice(index, 1);
-        localStorage.setItem("globalOrders", JSON.stringify(orders));
+        saveOrders(orders);
         alert("Comanda a fost marcată ca finalizată.");
         renderAdminOrders();
       }
     }
 
     function genInvoice(index) {
-      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      let orders = getOrders();
       if (orders.length <= index) return;
       const order = orders[index];
       if (!order.dateTime) {
@@ -1135,7 +1148,7 @@
       let invoiceWindow = window.open("", "InvoiceWindow", "width=800,height=600");
       let itemsRows = order.items.map(item => {
         const prod = products.find(p => p.id === item.id);
-        let unitPrice = retailPrice(prod.netPrice);
+        let unitPrice = retailPrice(prod.netPrice, prod.markupPercent);
         return `<tr>
                   <td>${prod.name}</td>
                   <td>${item.units}</td>
@@ -1205,6 +1218,50 @@
       invoiceWindow.document.close();
       invoiceWindow.focus();
       invoiceWindow.print();
+    }
+
+    // Exportă comenzile stocate în localStorage drept fișier JSON
+    function exportOrders() {
+      const orders = getOrders();
+      if (orders.length === 0) {
+        alert("Nu există comenzi de exportat.");
+        return;
+      }
+      const blob = new Blob([JSON.stringify(orders, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "comenzi.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // Importă un fișier JSON cu comenzi și le adaugă la cele existente
+    function importOrders(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (!Array.isArray(imported)) throw "Structură invalidă";
+          let existing = getOrders();
+          // Evită duplicate: dacă același ID există, nu-l adăugăm din nou
+          imported.forEach(ord => {
+            if (!existing.some(eo => eo.id === ord.id)) {
+              existing.push(ord);
+            }
+          });
+          saveOrders(existing);
+          alert("Comenzile au fost importate cu succes.");
+          renderAdminOrders();
+        } catch {
+          alert("Fișier invalid. Asigură-te că este un JSON corect de comenzi.");
+        }
+      };
+      reader.readAsText(file);
+      // Resetăm inputul, astfel încât același fișier poate fi încărcat din nou dacă e nevoie
+      event.target.value = "";
     }
   </script>
 </body>
