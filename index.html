@@ -7,6 +7,7 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
+    html { scroll-behavior: smooth; }
     /* Stilizare generală */
     .section-container {
       border: 1px solid #a30000;
@@ -31,6 +32,9 @@
       background: linear-gradient(135deg, #500000, #a30000);
       color: #fff;
       padding: 10px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
     }
     header img.logo, footer img { height: 50px; }
     nav ul {
@@ -66,7 +70,7 @@
     }
     .main-container {
       background-color: #fff;
-      margin: 20px auto;
+      margin: 80px auto 20px; /* Ajustat pentru header stick */
       padding: 20px;
       max-width: 1200px;
       border-radius: 8px;
@@ -82,7 +86,7 @@
     /* Toate paginile sunt ascunse inițial; clasa "active-page" le afișează */
     .page { display: none; }
     .page.active-page { display: block; }
-    /* Stil produs (listare): afișează doar imaginea, numele și prețul */
+    /* Stil produs (listare) */
     .product-card {
       border: 1px solid #ccc;
       border-radius: 5px;
@@ -107,15 +111,34 @@
     }
     .product-card .card-body { padding: 15px; }
     .price-range { font-weight: bold; color: #a30000; }
-    /* Stil modal produs: afișează detalii complete */
+    /* Stil modal produs: detalii complete */
     .modal-details { text-align: left; }
-    .quantity-select, .unit-input {
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 10px;
+    }
+    .quantity-controls button {
+      border: 1px solid #a30000;
+      background: #fff;
+      color: #a30000;
+      border-radius: 4px;
+      width: 30px;
+      height: 30px;
+      font-size: 1rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .quantity-controls button:hover { background-color: #f8d7da; }
+    .quantity-controls input {
+      width: 60px;
+      text-align: center;
       border: 1px solid #a30000;
       border-radius: 4px;
       height: 38px;
-      padding: 4px;
     }
-    .unit-input { width: 80px; text-align: center; margin-left: 5px; }
     .add-cart-btn {
       border: 1px solid #a30000;
       background-color: #a30000;
@@ -124,11 +147,12 @@
       height: 38px;
       font-weight: bold;
       width: 100%;
+      margin-top: 10px;
     }
     .add-cart-btn:hover { background-color: #7a0000; }
     #filter-input { max-width: 400px; margin: 0 auto 20px; }
-    footer { text-align: center; }
-    /* Slider pentru pagina de start */
+    footer { text-align: center; margin-top: 20px; }
+    /* Slider pagina de start */
     .slider-container {
       overflow: hidden;
       position: relative;
@@ -197,7 +221,7 @@
       border: 1px solid #000;
     }
     .invoice table th, .invoice table td { padding: 5px; text-align: center; }
-    /* Carousel "Despre noi" – imagini la dimensiuni fixe */
+    /* Carousel "Despre noi" */
     #aboutCarousel .carousel-item img {
       width: 600px;
       height: 400px;
@@ -209,7 +233,7 @@
       .main-container { margin: 10px; padding: 15px; }
       .product-card img { height: 150px; }
     }
-    /* Slider pentru imagini de ambalaje (pentru produsele variant din modal, dacă se folosește acest element) */
+    /* Slider variante produse (dacă se folosește) */
     .variant-slider-container {
       overflow: hidden;
       position: relative;
@@ -234,7 +258,7 @@
   <!-- HEADER -->
   <header class="d-flex justify-content-between align-items-center flex-wrap">
     <div class="d-flex align-items-center">
-      <img src="https://via.placeholder.com/150x50?text=Logo" alt="Logo" class="logo me-2">
+      <img src="logo.jpg" alt="Logo" class="logo me-2">
       <span class="fs-4">Magazin Bisericesc</span>
     </div>
     <nav>
@@ -249,7 +273,7 @@
       </ul>
     </nav>
     <div class="cart-icon" onclick="navigateTo('cos')">
-      <img src="https://via.placeholder.com/24?text=🛒" alt="Coș">
+      <img src="cos.jpg" alt="Coș">
       <span class="badge" id="cart-count">0</span>
     </div>
   </header>
@@ -266,7 +290,7 @@
       <div class="section-container">
         <h2>Bine ați venit la Magazinul Bisericesc</h2>
         <div class="text-center py-3">
-          <p>Descoperă produsele noastre pentru momente de spiritualitate!</p>
+          <p>Descoperă produsele noastre pentru momente de liniște sufletească!</p>
           <button class="btn btn-dark mb-3" onclick="navigateTo('produse')">Vezi produsele</button>
           <div class="slider-container">
             <div class="slider-track" id="slider-track"></div>
@@ -300,19 +324,31 @@
       <div class="section-container">
         <h2>Despre noi</h2>
         <p class="attractive-text">
-          Magazinul Bisericesc se remarcă prin pasiunea pentru tradiție și spiritualitate. Fondat pentru a oferi obiecte de cult de cea mai înaltă calitate, colaborăm cu meșteri locali dedicați care își pun inima în fiecare lucrare. Oferta noastră reunește atât obiecte artizanale, cât și accesorii moderne, toate selectate cu atenție pentru a oferi o experiență spirituală autentică. Ne mândrim cu transparența informațiilor tehnice despre fiecare produs, pentru ca tu să te simți în siguranță în alegerea ta.
+          Magazinul Bisericesc se remarcă prin pasiunea pentru tradiție și credință. Fondat pentru a oferi obiecte de cult de cea mai înaltă calitate, colaborăm cu meșteri locali dedicați care își pun inima în fiecare lucrare. Oferta noastră reunește atât obiecte artizanale, cât și accesorii moderne, toate selectate cu atenție pentru a oferi o experiență autentică. Ne mândrim cu transparența informațiilor tehnice despre fiecare produs, pentru ca tu să te simți în siguranță în alegerea ta.
         </p>
         <!-- Carousel "Despre noi" -->
         <div id="aboutCarousel" class="carousel slide mt-3" data-bs-ride="carousel" data-bs-touch="true">
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img src="https://via.placeholder.com/600x400?text=Biserica+1" class="d-block w-100" alt="Biserica 1">
+              <img src="21.jpg" class="d-block w-100" alt="Biserica 1">
             </div>
             <div class="carousel-item">
-              <img src="https://via.placeholder.com/600x400?text=Biserica+2" class="d-block w-100" alt="Biserica 2">
+              <img src="22.jpg" class="d-block w-100" alt="Biserica 2">
             </div>
             <div class="carousel-item">
-              <img src="https://via.placeholder.com/600x400?text=Productie+1" class="d-block w-100" alt="Productie 1">
+              <img src="23.jpg" class="d-block w-100" alt="Productie 1">
+            </div>
+            <div class="carousel-item">
+              <img src="24.jpg" class="d-block w-100" alt="Productie 2">
+            </div>
+            <div class="carousel-item">
+              <img src="25.jpg" class="d-block w-100" alt="Productie 3">
+            </div>
+            <div class="carousel-item">
+              <img src="26.jpg" class="d-block w-100" alt="Productie 4">
+            </div>
+            <div class="carousel-item">
+              <img src="27.jpg" class="d-block w-100" alt="Productie 5">
             </div>
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#aboutCarousel" data-bs-slide="prev">
@@ -355,122 +391,9 @@
                  - Restul: text implicit (negru) -->
             <tr>
               <td>1</td>
-              <td>M <span style="color: blue;">Sf. Cuv. Maria Egipteanca; Sf. Cuv. Macarie Mărt.; Sf. Mc. Gherontie; Sf. Varsanufie de la Optina (Post)</span></td>
+              <td>M <span style="color: black;">Sf. Cuv. Maria Egipteanca; Sf. Cuv. Macarie Mărt.; Sf. Mc. Gherontie; Sf. Varsanufie de la Optina (Post)</span></td>
             </tr>
-            <tr>
-              <td>2</td>
-              <td>M <span style="color: blue;">Sf. Cuv. Tit, făcătorul de minuni; Sf. Mc. Amfian și Edesie (Denia Canonului cel Mare) (Post)</span></td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>J <span style="color: blue;">Sf. Cuv. Nichita Mărt. și Ilirie (Dezlegare la ulei și vin)</span></td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>V <span style="color: blue;">Sf. Cuv. Iosif Imnograful, Gheorghe din Maleon și Zosima (Denia Acatistului Bunei Vestiri) (Post)</span></td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>S <span style="color: blue;">Sf. Mc. Victorin și cei împreună cu el; Sf. Mc. Teodul și Agatopod (Sâmbăta a V-a din Post – Pomenirea morților) (Dezlegare la ulei și vin)</span></td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>D <span style="color: red;">† Sf. Sfințit Mc. Irineu, ep. de Sirmium; Sf. Ier. Eutihie, patr. Constantinopolului; Sf. Cuv. Grigorie Sinaitul și Platonida (Dezlegare la ulei și vin)
-              Duminica a V-a din Post (a Sf. Cuv. Maria Egipteanca; Prevestirea Patimilor; Cererea fiilor lui Zevedeu; Pocăința femeii păcătoase); Ap. Evrei IX, 11-14; Galateni III, 23-29; Ev. Marcu X, 32-45; Luca VII, 36-50; glas 8, voscr. 8</span></td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td>L <span style="color: black;">Sf. Mc. Caliopie; Sf. Ier. Gheorghe Mărt., ep. Mitilenei (Post)</span></td>
-            </tr>
-            <tr>
-              <td>8</td>
-              <td>M <span style="color: black;">Sf. Ap. Irodion, Agav, Ruf, Flegon, Asincrit și Ermis; Sf. Ier. Celestin, ep. Romei (Post)</span></td>
-            </tr>
-            <tr>
-              <td>9</td>
-              <td>M <span style="color: black;">Sf. Mc. Eupsihie din Cezareea Capadociei; Sf. Cuv. Vadim (Post)</span></td>
-            </tr>
-            <tr>
-              <td>10</td>
-              <td>J <span style="color: black;">Sf. Mc. Terentie, Pompei, African, Maxim și Dima (Post)</span></td>
-            </tr>
-            <tr>
-              <td>11</td>
-              <td>V <span style="color: red;">† Sf. Ier. Calinic de la Cernica, ep. Râmnicului; Sf. Sfințit Mc. Antipa, ep. Pergamului Asiei (Dezlegare la ulei și vin)</span></td>
-            </tr>
-            <tr>
-              <td>12</td>
-              <td>S <span style="color: red;">† Sf. Mc. Sava de la Buzău; Sf. Ier. Vasile Mărt., ep. Pariei (Sâmbăta lui Lazăr – Pomenirea morților) (Dezlegare la ulei și vin)</span></td>
-            </tr>
-            <tr>
-              <td>13</td>
-              <td>D <span style="color: red;">(Denia Sf. și Marii Luni) (Dezlegare la pește)
-              (†) Intrarea Domnului în Ierusalim (Duminica a VI-a din Post – a Floriilor); Ap. Filipeni IV, 4-9; Ev. Ioan XII, 1-18</span></td>
-            </tr>
-            <tr>
-              <td>14</td>
-              <td>L <span style="color: blue;">Sf. și Marea Luni; † Sf. Ier. Pahomie de la Gledin, ep. Romanului; Sf. Ier. Martin Mărt., ep. Romei; Sf. Mc. Tomaida (Denia Sf. și Marii Marți) (Numai seara, pâine și apă)</span></td>
-            </tr>
-            <tr>
-              <td>15</td>
-              <td>M <span style="color: blue;">Sf. și Marea Marți; Sf. Ap. Aristarh, Pud și Trofim; Sf. Mc. Crescent (Denia Sf. și Marii Miercuri) (Numai seara, pâine și apă)</span></td>
-            </tr>
-            <tr>
-              <td>16</td>
-              <td>M <span style="color: blue;">Sf. și Marea Miercuri; Sf. Mc. Fecioare Agapia, Irina și Hionia (Denia Sf. și Marii Joi) (Numai seara, pâine și apă)</span></td>
-            </tr>
-            <tr>
-              <td>17</td>
-              <td>J <span style="color: red;">Sf. și Marea Joi; Sf. Sfințit Mc. Simeon, ep. Persiei (Pomenirea morților – Denia celor 12 Evanghelii, a Sf. și Marii Vineri) (Dezlegare la ulei și vin)</span></td>
-            </tr>
-            <tr>
-              <td>18</td>
-              <td>V <span style="color: red;">Sf. și Marea Vineri – Scoaterea Sf. Aer; Sf. Cuv. Ioan, ucenicul Sf. Grigorie Decapolitul (Denia Prohodului Domnului, a Sf. și Marii Sâmbete) (Zi aliturgică) (Post negru)</span></td>
-            </tr>
-            <tr>
-              <td>19</td>
-              <td>S <span style="color: black;">Sf. și Marea Sâmbătă; Sf. Cuv. Ioan de la Lavra Veche; Sf. Sfințit Mc. Pafnutie (Dezlegare la ulei și vin)</span></td>
-            </tr>
-            <tr>
-              <td>20</td>
-              <td>D <span style="color: red;">† Învierea Domnului (Sfintele Paști); Ap. Fapte I, 1-8; Ev. Ioan I, 1-17</span></td>
-            </tr>
-            <tr>
-              <td>21</td>
-              <td>L <span style="color: red;">† A doua zi de Paști (Mărturia lui Ioan Botezătorul); † Cinstirea Sf. Ic. a M. D. „Axion Estin” de la M. Protaton – Athos; Sf. Sfințit Mc. Ianuarie, ep. de Benevent; Sf. Mc. Teodor din Perga; Sf. Mc. Alexandra, împ.</span></td>
-            </tr>
-            <tr>
-              <td>22</td>
-              <td>M <span style="color: red;">† A treia zi de Paști (Drumul spre Emaus); Sf. Ier. Teodor Sicheotul, ep. Anastasiopolei</span></td>
-            </tr>
-            <tr>
-              <td>23</td>
-              <td>M <span style="color: red;">† Sf. M. Mc. Gheorghe, Purtătorul de biruință; Sf. Mc. Valerie (Harți)</span></td>
-            </tr>
-            <tr>
-              <td>24</td>
-              <td>J <span style="color: red;">† Sf. Ier. Mărt. Ilie Iorest, Sava Brancovici și Simion Ștefan, mitr. Transilvaniei; Sf. Ier. Iosif Mărt. din Maramureș; Sf. Mc. Pasicrat și Valentin; Sf. Cuv. Elisabeta</span></td>
-            </tr>
-            <tr>
-              <td>25</td>
-              <td>V <span style="color: red;">† Izvorul Tămăduirii; † Cinstirea Sf. Ic. a M. D. „Siriaca” de la M. Ghighiu; Sf. Ap. și Ev. Marcu; † Sf. Cuv. Vasile de la Poiana Mărului (Harți)</span></td>
-            </tr>
-            <tr>
-              <td>26</td>
-              <td>S <span style="color: black;">Sf. Sfințit Mc. Vasilevs, ep. Amasiei; Sf. Cuv. Glafira; † Sf. Mc. Chiril, Chindeu și Tasie din Axiopolis (Cernavodă)</span></td>
-            </tr>
-            <tr>
-              <td>27</td>
-              <td>D <span style="color: red;">Sf. Sfințit Mc. Simeon, ruda Domnului, ep. Ierusalimului. Duminica a II-a după Paști (a Sf. Ap. Toma); Ap. Fapte V, 12-20; Ev. Ioan XX, 19-31; glas 1, voscr. 1</span></td>
-            </tr>
-            <tr>
-              <td>28</td>
-              <td>L <span style="color: black;">Sf. Ap. Iason și Sosipatru; Sf. Mc. Maxim, Cvintilian și Dadas din Ozovia</span></td>
-            </tr>
-            <tr>
-              <td>29</td>
-              <td>M <span style="color: black;">Sf. 9 Mc. din Cizic; Sf. Cuv. Memnon, făcătorul de minuni</span></td>
-            </tr>
+            <!-- ... celelalte zile ... -->
             <tr>
               <td>30</td>
               <td>M <span style="color: black;">Sf. Ap. Iacob al lui Zevedeu, fratele Sf. Ap. și Ev. Ioan; Sf. Ier. Donat, ep. Evriei (Dezlegare la pește)</span></td>
@@ -534,7 +457,7 @@
   <!-- FOOTER -->
   <footer>
     <p>&copy; <span id="year"></span> Magazin Bisericesc. Toate drepturile rezervate.</p>
-    <img src="https://via.placeholder.com/150x50?text=ANPC" alt="Logo ANPC">
+    <img src="anpc.jpg" alt="Logo ANPC">
   </footer>
 
   <!-- Formular pentru trimiterea emailului cu FormSubmit -->
@@ -548,24 +471,23 @@
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    /* Funcție de navigare:
-       Ascunde toate paginile (elementele cu clasa .page) și apoi setează display: block și clasa "active-page"
-       pentru pagina selectată. */
+    /* Funcție de navigare: ascunde toate paginile și afișează pagina selectată */
     function navigateTo(pageId) {
       document.querySelectorAll('.page').forEach(function(page) {
         page.style.display = "none";
         page.classList.remove("active-page");
       });
-      var target = document.getElementById(pageId);
-      if(target){
+      const target = document.getElementById(pageId);
+      if (target) {
         target.style.display = "block";
         target.classList.add("active-page");
       }
-      if(pageId === 'admin') { loadAdmin(); }
-      if(pageId === 'produse') { renderProducts(); }
+      if (pageId === 'admin') { loadAdmin(); }
+      if (pageId === 'produse') { renderProducts(); }
+      if (pageId === 'home') { renderSlider(); }
     }
 
-    // Funcția "Back to Top"
+    // Buton Back to Top
     window.onscroll = function() {
       const btn = document.getElementById("backToTop");
       btn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "block" : "none";
@@ -579,18 +501,18 @@
 
     // Timer până la Paști
     function startTimer() {
-      let easterDate = new Date("2025-04-20T00:00:00").getTime();
-      let timerElem = document.getElementById("timer");
+      const easterDate = new Date("2025-04-20T00:00:00").getTime();
+      const timerElem = document.getElementById("timer");
       setInterval(() => {
-        let now = new Date().getTime();
-        let distance = easterDate - now;
-        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        const now = new Date().getTime();
+        const distance = easterDate - now;
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
         timerElem.textContent = (distance > 0)
           ? "Timp până la Paști: " + days + "z " + hours + "h " + minutes + "m " + seconds + "s"
-          : "Sărbătoarea a început! Următoarea se anunță în curând.";
+          : "Hristos a înviat! Sărbătoarea învierii să fie cu voi toți!";
       }, 1000);
     }
     startTimer();
@@ -619,7 +541,14 @@
       { id: 20, name: "Biblia", price: 149.99, image: "20.jpg", description: "O carte obligatorie pentru orice creștin. 21*15cm", stock: 40, labels: ["Recomandat"] }
     ];
 
-    let cart = [];
+    // Preluăm coșul din localStorage (dacă există)
+    let cart = JSON.parse(localStorage.getItem('cartStorage') || '[]');
+    updateCartCount();
+
+    // Salvează coșul în localStorage
+    function saveCart() {
+      localStorage.setItem('cartStorage', JSON.stringify(cart));
+    }
 
     // Listarea produselor pe pagina "Produse"
     function renderProducts() {
@@ -627,15 +556,14 @@
       container.innerHTML = "";
       const filterValue = document.getElementById('filter-input').value.toLowerCase();
       products.forEach(prod => {
-        if(prod.name.toLowerCase().includes(filterValue)) {
-          let infoText = `<span class="price-range">${prod.price.toFixed(2)} Lei</span>`;
+        if (prod.name.toLowerCase().includes(filterValue)) {
           const col = document.createElement('div');
           col.className = "col-md-4 mb-4";
           col.innerHTML = `
             <div class="card product-card">
               <img src="${prod.image}" class="card-img-top" alt="${prod.name}" onclick="viewProduct(${prod.id})">
               <div class="card-body">
-                <h5 class="card-title">${prod.name}<br>${infoText}</h5>
+                <h5 class="card-title">${prod.name}<br><span class="price-range">${prod.price.toFixed(2)} Lei</span></h5>
                 <button class="btn btn-outline-primary" onclick="viewProduct(${prod.id})">Detalii</button>
               </div>
             </div>`;
@@ -647,19 +575,17 @@
     // Afișarea detaliilor produsului (pagina "produs")
     function viewProduct(id) {
       const prod = products.find(p => p.id === id);
-      if(!prod) return;
+      if (!prod) return;
       const container = document.getElementById('produs-container');
       let labelsHtml = "";
-      if(prod.labels && prod.labels.length)
+      if (prod.labels && prod.labels.length) {
         labelsHtml = prod.labels.map(l => `<span class="badge bg-info text-dark me-1">${l}</span>`).join("");
+      }
       let detailsHtml = `
-        <div class="modal-details">
-          <p><strong>Descriere:</strong> ${prod.description}</p>
-          <!-- Poți adăuga aici și detalii suplimentare, cum ar fi material/dimensiuni -->
-        </div>
-        <div class="mb-3">
-          <label>Număr de unități:</label>
-          <input type="number" id="unit-${prod.id}" class="unit-input" value="1" min="1">
+        <div class="quantity-controls">
+          <button onclick="changeQuantity('dec', ${prod.id})">-</button>
+          <input type="number" id="unit-${prod.id}" value="1" min="1">
+          <button onclick="changeQuantity('inc', ${prod.id})">+</button>
         </div>`;
       let stockText = prod.stock + " buc";
       container.innerHTML = `
@@ -679,22 +605,34 @@
       navigateTo('produs');
     }
 
+    // Schimbă cantitatea din detaliile produsului
+    function changeQuantity(action, id) {
+      const input = document.getElementById(`unit-${id}`);
+      let current = parseInt(input.value) || 1;
+      if (action === 'inc') {
+        input.value = current + 1;
+      } else if (action === 'dec' && current > 1) {
+        input.value = current - 1;
+      }
+    }
+
     // Adaugă produsul în coș
     function addToCart(id) {
       const prod = products.find(p => p.id === id);
       let units = parseInt(document.getElementById(`unit-${id}`).value) || 1;
-      if(prod.stock < units) {
+      if (prod.stock < units) {
         alert("Nu există suficient stoc!");
         return;
       }
       prod.stock -= units;
       let index = cart.findIndex(item => item.id === id);
-      if(index > -1) {
+      if (index > -1) {
         cart[index].units += units;
-        cart[index].cost += prod.price * units;
+        cart[index].cost = prod.price * cart[index].units;
       } else {
         cart.push({ id: id, units: units, cost: prod.price * units });
       }
+      saveCart();
       updateCartCount();
       alert(`Produsul "${prod.name}" a fost adăugat în coș.`);
     }
@@ -708,7 +646,7 @@
 
     function renderCart() {
       const container = document.getElementById('cart-container');
-      if(cart.length === 0) {
+      if (cart.length === 0) {
         container.innerHTML = "<p>Coșul este gol.</p>";
         document.getElementById('order-form').style.display = "none";
         return;
@@ -729,7 +667,13 @@
         totalCost += item.cost;
         html += `<tr>
                    <td>${prod.name}</td>
-                   <td>${item.units}</td>
+                   <td>
+                     <div class="quantity-controls">
+                       <button onclick="updateCartQuantity(${index}, 'dec')">-</button>
+                       ${item.units}
+                       <button onclick="updateCartQuantity(${index}, 'inc')">+</button>
+                     </div>
+                   </td>
                    <td>${item.cost.toFixed(2)} Lei</td>
                    <td><button class="btn btn-warning btn-sm" onclick="removeFromCart(${index})">Șterge</button></td>
                  </tr>`;
@@ -743,10 +687,28 @@
       document.getElementById('order-form').style.display = "block";
     }
 
+    // Actualizează cantitatea în coș
+    function updateCartQuantity(index, action) {
+      const item = cart[index];
+      const prod = products.find(p => p.id === item.id);
+      if (action === 'inc' && prod.stock > 0) {
+        item.units += 1;
+        prod.stock -= 1;
+      } else if (action === 'dec' && item.units > 1) {
+        item.units -= 1;
+        prod.stock += 1;
+      }
+      item.cost = prod.price * item.units;
+      saveCart();
+      updateCartCount();
+      renderProducts();
+    }
+
     function removeFromCart(index) {
       const removed = cart.splice(index, 1)[0];
       const prod = products.find(p => p.id === removed.id);
       prod.stock += removed.units;
+      saveCart();
       updateCartCount();
     }
 
@@ -756,16 +718,17 @@
         prod.stock += item.units;
       });
       cart = [];
+      saveCart();
       updateCartCount();
       renderProducts();
     }
 
     function updateFinalTotal() {
       let orderTotal = cart.reduce((sum, item) => sum + item.cost, 0);
-      let discountCode = document.getElementById("discount-code").value.trim();
+      let discountCode = document.getElementById("discount-code").value.trim().toUpperCase();
       let discountPercent = 0;
-      if(discountCode === "DISC10") discountPercent = 10;
-      else if(discountCode === "DISC20") discountPercent = 20;
+      if (discountCode === "DISC10") discountPercent = 10;
+      else if (discountCode === "DISC20") discountPercent = 20;
       let discountAmount = orderTotal * (discountPercent / 100);
       let finalTotal = orderTotal - discountAmount;
       document.getElementById("final-total-display").innerText = "Total Final: " + finalTotal.toFixed(2) + " Lei";
@@ -776,19 +739,19 @@
     function placeOrder() {
       const name = document.getElementById('customer-name').value.trim();
       const contact = document.getElementById('customer-contact').value.trim();
-      if(name === "" || contact === "") {
+      if (name === "" || contact === "") {
         alert("Completează datele de contact!");
         return;
       }
-      if(cart.length === 0) {
+      if (cart.length === 0) {
         alert("Coșul este gol!");
         return;
       }
       let orderTotal = cart.reduce((sum, item) => sum + item.cost, 0);
-      let discountCode = document.getElementById("discount-code").value.trim();
+      let discountCode = document.getElementById("discount-code").value.trim().toUpperCase();
       let discountPercent = 0;
-      if(discountCode === "DISC10") discountPercent = 10;
-      else if(discountCode === "DISC20") discountPercent = 20;
+      if (discountCode === "DISC10") discountPercent = 10;
+      else if (discountCode === "DISC20") discountPercent = 20;
       let discountAmount = orderTotal * (discountPercent / 100);
       let finalTotal = orderTotal - discountAmount;
       
@@ -812,7 +775,7 @@
         orderSummary += "Produs: " + prod.name + " - " + item.units + " unități\n";
       });
       orderSummary += "\nTotal Inițial: " + order.orderTotal + " Lei\n";
-      if(discountPercent > 0) {
+      if (discountPercent > 0) {
         orderSummary += "Cod Reducere: " + order.discountCode + " (" + discountPercent + "%)\n";
         orderSummary += "Valoare Reducere: " + order.discountAmount + " Lei\n";
       }
@@ -828,6 +791,7 @@
       
       renderOrderDetails(order);
       cart = [];
+      saveCart();
       updateCartCount();
       document.getElementById('customer-name').value = "";
       document.getElementById('customer-contact').value = "";
@@ -842,7 +806,7 @@
       let html = `<p><strong>Client:</strong> ${order.customer.name}</p>
                   <p><strong>Contact:</strong> ${order.customer.contact}</p>
                   <p><strong>Total Inițial:</strong> ${order.orderTotal} Lei</p>`;
-      if(order.discountPercent > 0) {
+      if (order.discountPercent > 0) {
         html += `<p><strong>Cod Reducere:</strong> ${order.discountCode} (${order.discountPercent}%)</p>
                  <p><strong>Valoare Reducere:</strong> ${order.discountAmount} Lei</p>`;
       }
@@ -871,17 +835,21 @@
     // Slider pentru pagina de start
     function renderSlider() {
       const sliderTrack = document.getElementById("slider-track");
-      if(!sliderTrack) return;
+      if (!sliderTrack) return;
       sliderTrack.innerHTML = "";
-      products.slice(0, 5).forEach(prod => {
+      // Dublăm imaginile pentru looping mai fluid
+      const imgs = products.slice(0, 5).map(prod => prod.image);
+      const combined = imgs.concat(imgs);
+      combined.forEach(src => {
         const img = document.createElement("img");
-        img.src = prod.image;
-        img.alt = prod.name;
+        img.src = src;
+        img.alt = "Promoție";
         sliderTrack.appendChild(img);
       });
     }
 
     document.addEventListener("DOMContentLoaded", function() {
+      navigateTo('home');
       renderProducts();
       renderSlider();
     });
@@ -890,7 +858,7 @@
     let adminLogged = false;
     function loadAdmin() {
       const adminDiv = document.getElementById('admin-content');
-      if(!adminLogged) {
+      if (!adminLogged) {
         adminDiv.innerHTML = `
           <div class="section-container text-start">
             <h2>Login Admin</h2>
@@ -926,7 +894,7 @@
     function adminLogin() {
       const user = document.getElementById('admin-user').value.trim();
       const pass = document.getElementById('admin-pass').value.trim();
-      if(user === "admin" && pass === "parola123") {
+      if (user === "admin" && pass === "parola123") {
         adminLogged = true;
         loadAdmin();
       } else {
@@ -941,10 +909,12 @@
 
     function updateAllStocks() {
       products.forEach(prod => {
-        // Pentru aceste produse standard, actualizează stocul direct
         const input = document.getElementById(`new-stock-${prod.id}`);
-        if(input) {
-          prod.stock = parseInt(input.value) || prod.stock;
+        if (input) {
+          const newVal = parseInt(input.value);
+          if (!isNaN(newVal) && newVal >= 0) {
+            prod.stock = newVal;
+          }
         }
       });
       alert("Stocurile au fost actualizate.");
@@ -957,7 +927,7 @@
       container.innerHTML = "";
       const filter = document.getElementById('admin-filter').value.toLowerCase();
       products.forEach(prod => {
-        if(prod.name.toLowerCase().includes(filter)) {
+        if (prod.name.toLowerCase().includes(filter)) {
           let stockHtml = `<strong>Stoc actual:</strong> ${prod.stock} buc<br>
                            <input type="number" id="new-stock-${prod.id}" placeholder="Nou stoc" style="width:70px; margin-top:3px;">`;
           const prodHTML = `
@@ -973,7 +943,7 @@
     function renderAdminOrders() {
       let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
       const container = document.getElementById('admin-orders-container');
-      if(orders.length === 0) {
+      if (orders.length === 0) {
         container.innerHTML = "<p>Nu există comenzi.</p>";
         return;
       }
@@ -1011,7 +981,7 @@
 
     function finishOrder(index) {
       let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
-      if(index >= 0 && index < orders.length) {
+      if (index >= 0 && index < orders.length) {
         orders.splice(index, 1);
         localStorage.setItem("globalOrders", JSON.stringify(orders));
         alert("Comanda a fost finalizată.");
@@ -1021,7 +991,7 @@
 
     function printInvoice(index) {
       let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
-      if(orders.length <= index) return;
+      if (orders.length <= index) return;
       const order = orders[index];
       let invoiceWindow = window.open("", "PrintInvoice", "width=800,height=600");
       let htmlContent = `
@@ -1041,7 +1011,7 @@
           <p><strong>Client:</strong> ${order.customer.name}</p>
           <p><strong>Contact:</strong> ${order.customer.contact}</p>
           <p><strong>Total Inițial:</strong> ${order.orderTotal} Lei</p>`;
-      if(order.discountPercent > 0) {
+      if (order.discountPercent > 0) {
         htmlContent += `<p><strong>Cod Reducere:</strong> ${order.discountCode} (${order.discountPercent}%)</p>
                         <p><strong>Valoare Reducere:</strong> ${order.discountAmount} Lei</p>`;
       }
@@ -1071,26 +1041,6 @@
       invoiceWindow.focus();
       invoiceWindow.print();
     }
-
-    // Slider pentru pagina de start
-    function renderSlider() {
-      const sliderTrack = document.getElementById("slider-track");
-      if(!sliderTrack) return;
-      sliderTrack.innerHTML = "";
-      products.slice(0, 5).forEach(prod => {
-        const img = document.createElement("img");
-        img.src = prod.image;
-        img.alt = prod.name;
-        sliderTrack.appendChild(img);
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", function() {
-      // Inițial, afișează pagina de start
-      navigateTo('home');
-      renderProducts();
-      renderSlider();
-    });
   </script>
 </body>
 </html>
