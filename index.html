@@ -111,7 +111,7 @@
     }
     .product-card .card-body { padding: 15px; }
     .price-range { font-weight: bold; color: #a30000; }
-    /* Stil modal produs: detalii complete */
+    /* Stil modal produs: detalii atractive */
     .modal-details { text-align: left; }
     .quantity-controls {
       display: flex;
@@ -280,7 +280,7 @@
         <li><a onclick="navigateTo('home')">Acasă</a></li>
         <li><a onclick="navigateTo('produse')">Produse</a></li>
         <li><a onclick="navigateTo('despre')">Despre noi</a></li>
-        <li><a onclick="navigateTo('termeni')">Termeni & Condiții</a></li>
+        <li><a onclick="navigateTo('termeni')">Termeni &amp; Condiții</a></li>
         <li><a onclick="navigateTo('calendar')">Calendar</a></li>
         <li><a onclick="navigateTo('admin')">Admin</a></li>
         <li><a onclick="navigateTo('cos')">Coș</a></li>
@@ -382,13 +382,15 @@
       <div class="section-container">
         <h2>Termeni și Condiții</h2>
         <p class="attractive-text">
-          Accesând acest site, sunteți de acord cu toți termenii și condițiile de utilizare. Informațiile furnizate sunt destinate să asigure o experiență transparentă și sigură. Magazinul își rezervă dreptul de a modifica periodic aceste condiții, iar continuarea utilizării platformei implică acceptarea modificărilor. Datele personale sunt protejate conform normelor în vigoare, iar orice solicitare de suport este tratată cu maximă seriozitate.
+          Accesând acest site, sunteți de acord cu toți termenii și condițiile de utilizare. 
+          <br>Informații esențiale pentru fiecare produs: 
         </p>
-        <p class="text-start mt-3">
-          <strong>Politica de livrare:</strong> Livrare prin curier în 1–3 zile lucrătoare. Costul livrării variază în funcție de zonă.  
-          <strong>Modalități de plată:</strong> Ramburs, card (Visa, MasterCard), transfer bancar.  
-          <strong>Politica de returnare:</strong> Returnare în 14 zile de la primire fără penalități (costul returului este suportat de client).  
-        </p>
+        <ul class="list-group list-group-flush text-start">
+          <li class="list-group-item"><strong>Termeni de livrare:</strong> 1–3 zile lucrătoare prin curier. Cost variază în funcție de zonă.</li>
+          <li class="list-group-item"><strong>Modalități de plată:</strong> Ramburs, card (Visa, MasterCard), transfer bancar.</li>
+          <li class="list-group-item"><strong>Politica de returnare:</strong> Returnare în 14 zile de la primire (costul transportului retur suportat de client).</li>
+          <li class="list-group-item"><strong>Garanție:</strong> 24 luni de la data achiziției.</li>
+        </ul>
       </div>
     </section>
 
@@ -450,7 +452,7 @@
       </div>
     </section>
 
-    <!-- Pagina Detalii Comandă -->
+    <!-- Pagina Detalii Factură -->
     <section id="order-details" class="page">
       <div class="section-container">
         <h2>Detalii Factură</h2>
@@ -483,11 +485,11 @@
       </div>
       <div>
         <!-- Pictograme SAL & SOL -->
-        <img src="sal-icon.png" alt="SAL" title="Soluționare Alternativă a Litigiilor" class="me-2">
-        <img src="sol-icon.png" alt="SOL" title="Soluționare Online a Litigiilor">
+        <img src="sal-icon.png" alt="SAL" title="Soluționare Alternativă a Litigiilor" class="me-2" height="40">
+        <img src="sol-icon.png" alt="SOL" title="Soluționare Online a Litigiilor" height="40">
       </div>
       <div>
-        <img src="anpc.jpg" alt="Logo ANPC">
+        <img src="anpc.jpg" alt="Logo ANPC" height="50">
       </div>
     </div>
   </footer>
@@ -549,28 +551,33 @@
     }
     startTimer();
 
-    // Lista de produse conform specificațiilor primite
+    // Funcție pentru a calcula prețul final (TVA 19% + adaos 30%)
+    function retailPrice(netPrice) {
+      return parseFloat((netPrice * 1.30 * 1.19).toFixed(2));
+    }
+
+    // Lista de produse conform specificațiilor primite (netPrice = preț de achiziție fără TVA și adaos)
     const products = [
-      { id: 1, name: "Candelă mare TIP IV", price: 19.99, image: "1.jpg", description: "Lumânare din ceară naturală cu o lungă durata de viață. 7 zile", stock: 50, labels: ["Popular"], features: ["Material: Ceară 100% naturală", "Durată aprox.: 7 zile", "Greutate: 500g"] },
-      { id: 2, name: "Candelă mare TIP III", price: 12.99, image: "2.jpg", description: "Lumânare din ceară naturală cu o lungă durata de viață. 100h", stock: 40, labels: ["Recomandat"], features: ["Material: Ceară 100% naturală", "Durată aprox.: 100h", "Greutate: 400g"] },
-      { id: 3, name: "Candelă mare TIP II", price: 9.99, image: "3.jpg", description: "Lumânare din ceară naturală cu o lungă durata de viață. 60h", stock: 30, labels: ["Best Seller"], features: ["Material: Ceară 100% naturală", "Durată aprox.: 60h", "Greutate: 300g"] },
-      { id: 4, name: "Candelă mare TIP I", price: 6.99, image: "4.jpg", description: "Lumânare din ceară naturală cu o lungă durata de viață. 16h", stock: 60, labels: ["Pentru zile negre"], features: ["Material: Ceară 100% naturală", "Durată aprox.: 16h", "Greutate: 200g"] },
-      { id: 5, name: "Tămâie de Oașă", price: 63.99, image: "5.jpg", description: "Tămâie de înaltă calitate. 200g", stock: 80, labels: ["Bună pentru uz zilnic"], features: ["Origine: Oaș", "Gramaj: 200g", "Utilizare: Aromaterapie și ritualuri"] },
-      { id: 6, name: "Tămâie de Vatopedu", price: 68.99, image: "6.jpg", description: "Tămâie de înaltă calitate. 200g", stock: 70, labels: ["Premium"], features: ["Origine: Vatopedu", "Gramaj: 200g", "Utilizare: Aromaterapie și ritualuri"] },
-      { id: 7, name: "Tămâie de Pângărați", price: 23.99, image: "7.jpg", description: "Tămâie de înaltă calitate. 50g", stock: 35, labels: ["Cantitate mai mică"], features: ["Origine: Pângărați", "Gramaj: 50g", "Utilizare: Aromaterapie și ritualuri"] },
-      { id: 8, name: "Acatiste și Viețile sfinților", price: 9.99, image: "8.jpg", description: "La nevoi și necazuri cel mai bun ajutor. În diferite formate; cel mai des întâlnit este cel de 11*16", stock: 45, labels: ["Nou"], features: ["Format: 11×16 cm", "Număr pagini: 320", "Tip copertă: Broșată"] },
-      { id: 9, name: "Psaltire", price: 29.99, image: "9.jpg", description: "Unul dintre cele mai importante lucruri care trebuie să fie în casă. 14.5*20cm", stock: 55, labels: ["Recomandat"], features: ["Format: 14.5×20 cm", "Număr pagini: 560", "Tip copertă: Hardcover"] },
-      { id: 10, name: "Ceaslov", price: 44.99, image: "10.jpg", description: "Un ajutor important la rugăciunea casei. A4", stock: 50, labels: ["Recomandat"], features: ["Format: A4", "Număr pagini: 800", "Tip copertă: Hardcover"] },
-      { id: 11, name: "Lumânare Înviere", price: 44.99, image: "11.jpg", description: "Lumânare cu design modern pentru realizarea slujbei de înviere.", stock: 60, labels: ["Nou"], features: ["Design: Modern", "Înălțime: 50 cm", "Gramaj: 1 kg"] },
-      { id: 12, name: "Icoană TIP I", price: 25.99, image: "12.jpg", description: "Icoană pentru rugăciuni. A4", stock: 40, labels: ["Pentru zile negre"], features: ["Format: A4", "Material: Lemn cu ramă", "Țară origine: România"] },
-      { id: 13, name: "Icoană TIP II", price: 22.99, image: "13.jpg", description: "Icoană pentru rugăciuni. A5", stock: 30, labels: ["Recomandat"], features: ["Format: A5", "Material: Lemn cu ramă", "Țară origine: România"] },
-      { id: 14, name: "Icoană TIP III", price: 19.99, image: "14.jpg", description: "Icoană pentru rugăciuni. 24*10", stock: 45, labels: ["Special"], features: ["Dimensiuni: 24×10 cm", "Material: Lemn cu ramă", "Țară origine: România"] },
-      { id: 15, name: "Icoană TIP IV", price: 139.99, image: "15.jpg", description: "Icoană pentru rugăciuni. A4", stock: 20, labels: ["Limited Edition"], features: ["Format: A4", "Material: Lemn cu ramă aurită", "Țară origine: Grecia"] },
-      { id: 16, name: "Cruciuliță", price: 12.99, image: "16.jpg", description: "Un simbol protector al credinței, dar și al persoanei ce o poartă. 5*3cm", stock: 100, labels: ["Special"], features: ["Dimensiuni: 5×3 cm", "Material: Argint 925", "Țară origine: Polonia"] },
-      { id: 17, name: "Cruce binecuvântare", price: 149.99, image: "17.jpg", description: "Realizată pentru slujbe. 30*13cm", stock: 25, labels: ["Limited Edition"], features: ["Dimensiuni: 30×13 cm", "Material: Argint placat cu aur", "Țară origine: Grecia"] },
-      { id: 18, name: "Mir de oașă", price: 9.99, image: "18.jpg", description: "Un lucru mic pentru o familie mare.", stock: 30, labels: ["Pentru zile negre"], features: ["Volum: 30 ml", "Ingrediente: Ulei de măsline, mirodenii", "Origine: Oaș"] },
-      { id: 19, name: "Pomelnice anuale", price: 99.99, image: "19.jpg", description: "Pentru a vă aminti de cei dragi vouă.", stock: 15, labels: ["Special"], features: ["Tip: Albume personalizabile", "Gramaj: 300g pagină", "Format: 20×15 cm"] },
-      { id: 20, name: "Biblia", price: 149.99, image: "20.jpg", description: "O carte obligatorie pentru orice creștin. 21*15cm", stock: 40, labels: ["Recomandat"], features: ["Format: 21×15 cm", "Număr pagini: 1200", "Tip copertă: Hardcover"] }
+      { id: 1, name: "Candelă mare TIP IV", netPrice: 19.99, image: "1.jpg", description: "Lumânare din ceară naturală cu durată de 7 zile.", stock: 50, labels: ["Popular"], features: ["Material: Ceară 100% naturală", "Durată: aprox. 7 zile", "Greutate: 500g"] },
+      { id: 2, name: "Candelă mare TIP III", netPrice: 12.99, image: "2.jpg", description: "Lumânare din ceară naturală cu durată de 100h.", stock: 40, labels: ["Recomandat"], features: ["Material: Ceară 100% naturală", "Durată: aprox. 100h", "Greutate: 400g"] },
+      { id: 3, name: "Candelă mare TIP II", netPrice: 9.99, image: "3.jpg", description: "Lumânare din ceară naturală cu durată de 60h.", stock: 30, labels: ["Best Seller"], features: ["Material: Ceară 100% naturală", "Durată: aprox. 60h", "Greutate: 300g"] },
+      { id: 4, name: "Candelă mare TIP I", netPrice: 6.99, image: "4.jpg", description: "Lumânare din ceară naturală cu durată de 16h.", stock: 60, labels: ["Pentru zile negre"], features: ["Material: Ceară 100% naturală", "Durată: aprox. 16h", "Greutate: 200g"] },
+      { id: 5, name: "Tămâie de Oașă", netPrice: 63.99, image: "5.jpg", description: "Tămâie de înaltă calitate. 200g.", stock: 80, labels: ["Bună pentru uz zilnic"], features: ["Origine: Oaș", "Gramaj: 200g", "Utilizare: Aromaterapie și ritualuri"] },
+      { id: 6, name: "Tămâie de Vatopedu", netPrice: 68.99, image: "6.jpg", description: "Tămâie de înaltă calitate. 200g.", stock: 70, labels: ["Premium"], features: ["Origine: Vatopedu", "Gramaj: 200g", "Utilizare: Aromaterapie și ritualuri"] },
+      { id: 7, name: "Tămâie de Pângărați", netPrice: 23.99, image: "7.jpg", description: "Tămâie de înaltă calitate. 50g.", stock: 35, labels: ["Cantitate mai mică"], features: ["Origine: Pângărați", "Gramaj: 50g", "Utilizare: Aromaterapie și ritualuri"] },
+      { id: 8, name: "Acatiste și Viețile sfinților", netPrice: 9.99, image: "8.jpg", description: "Acatiste & Vieți ale sfinților (format 11×16 cm).", stock: 45, labels: ["Nou"], features: ["Format: 11×16 cm", "Număr pagini: 320", "Tip copertă: Broșată"] },
+      { id: 9, name: "Psaltire", netPrice: 29.99, image: "9.jpg", description: "Psaltire (format 14.5×20 cm).", stock: 55, labels: ["Recomandat"], features: ["Format: 14.5×20 cm", "Număr pagini: 560", "Tip copertă: Hardcover"] },
+      { id: 10, name: "Ceaslov", netPrice: 44.99, image: "10.jpg", description: "Ceaslov (format A4).", stock: 50, labels: ["Recomandat"], features: ["Format: A4", "Număr pagini: 800", "Tip copertă: Hardcover"] },
+      { id: 11, name: "Lumânare Înviere", netPrice: 44.99, image: "11.jpg", description: "Lumânare modernă pentru Înviere.", stock: 60, labels: ["Nou"], features: ["Design: Modern", "Înălțime: 50 cm", "Gramaj: 1 kg"] },
+      { id: 12, name: "Icoană TIP I", netPrice: 25.99, image: "12.jpg", description: "Icoană pentru rugăciuni (format A4).", stock: 40, labels: ["Pentru zile negre"], features: ["Format: A4", "Material: Lemn cu ramă", "Țară origine: România"] },
+      { id: 13, name: "Icoană TIP II", netPrice: 22.99, image: "13.jpg", description: "Icoană pentru rugăciuni (format A5).", stock: 30, labels: ["Recomandat"], features: ["Format: A5", "Material: Lemn cu ramă", "Țară origine: România"] },
+      { id: 14, name: "Icoană TIP III", netPrice: 19.99, image: "14.jpg", description: "Icoană pentru rugăciuni (24×10 cm).", stock: 45, labels: ["Special"], features: ["Dimensiuni: 24×10 cm", "Material: Lemn cu ramă", "Țară origine: România"] },
+      { id: 15, name: "Icoană TIP IV", netPrice: 139.99, image: "15.jpg", description: "Icoană pentru rugăciuni (format A4).", stock: 20, labels: ["Limited Edition"], features: ["Format: A4", "Material: Lemn cu ramă aurită", "Țară origine: Grecia"] },
+      { id: 16, name: "Cruciuliță", netPrice: 12.99, image: "16.jpg", description: "Cruciuliță protector (dimensiuni 5×3 cm).", stock: 100, labels: ["Special"], features: ["Dimensiuni: 5×3 cm", "Material: Argint 925", "Țară origine: Polonia"] },
+      { id: 17, name: "Cruce Binecuvântare", netPrice: 149.99, image: "17.jpg", description: "Cruce pentru slujbe (30×13 cm).", stock: 25, labels: ["Limited Edition"], features: ["Dimensiuni: 30×13 cm", "Material: Argint placat cu aur", "Țară origine: Grecia"] },
+      { id: 18, name: "Mir de Oașă", netPrice: 9.99, image: "18.jpg", description: "Mir de familie (30 ml).", stock: 30, labels: ["Pentru zile negre"], features: ["Volum: 30 ml", "Ingrediente: Ulei de măsline, mirodenii", "Origine: Oaș"] },
+      { id: 19, name: "Pomelnice Anuale", netPrice: 99.99, image: "19.jpg", description: "Pomelnice personalizabile 20×15 cm.", stock: 15, labels: ["Special"], features: ["Tip: Albume personalizabile", "Gramaj: 300g pagină", "Format: 20×15 cm"] },
+      { id: 20, name: "Biblia", netPrice: 149.99, image: "20.jpg", description: "Biblia (format 21×15 cm).", stock: 40, labels: ["Recomandat"], features: ["Format: 21×15 cm", "Număr pagini: 1200", "Tip copertă: Hardcover"] }
     ];
 
     // Preluăm coșul din localStorage (dacă există)
@@ -589,17 +596,23 @@
       const filterValue = document.getElementById('filter-input').value.toLowerCase();
       products.forEach(prod => {
         if (prod.name.toLowerCase().includes(filterValue)) {
+          // Calculează prețul final (TVA+ADAOS)
+          let prețFinal = retailPrice(prod.netPrice);
           const col = document.createElement('div');
           col.className = "col-12 col-sm-6 col-md-4 mb-4";
           col.innerHTML = `
-            <div class="card product-card">
+            <div class="card product-card shadow-sm">
               <img src="${prod.image}" class="card-img-top" alt="${prod.name}" onclick="viewProduct(${prod.id})">
               <div class="card-body">
                 <h5 class="card-title">${prod.name}</h5>
-                <p class="price-range">${prod.price.toFixed(2)} Lei <small>(+ 30% adaos)</small></p>
+                <p class="price-range">${prețFinal.toFixed(2)} Lei <small>(TVA+Adaos incl.)</small></p>
                 <div class="d-flex justify-content-between">
-                  <button class="btn btn-sm btn-success" onclick="quickAddToCart(${prod.id}); event.stopPropagation();">Adaugă în Coș</button>
-                  <button class="btn btn-sm btn-outline-primary" onclick="viewProduct(${prod.id}); event.stopPropagation();">Detalii</button>
+                  <button class="btn btn-sm btn-success" onclick="quickAddToCart(${prod.id}); event.stopPropagation();">
+                    <i class="bi bi-cart-plus"></i> Adaugă
+                  </button>
+                  <button class="btn btn-sm btn-outline-primary" onclick="viewProduct(${prod.id}); event.stopPropagation();">
+                    Detalii
+                  </button>
                 </div>
               </div>
             </div>`;
@@ -617,12 +630,13 @@
         return;
       }
       prod.stock -= 1;
+      let prețFinal = retailPrice(prod.netPrice);
       let index = cart.findIndex(item => item.id === id);
       if (index > -1) {
         cart[index].units += 1;
-        cart[index].cost = prod.price * cart[index].units;
+        cart[index].cost = prețFinal * cart[index].units;
       } else {
-        cart.push({ id: id, units: 1, cost: prod.price });
+        cart.push({ id: id, units: 1, cost: prețFinal });
       }
       saveCart();
       updateCartCount();
@@ -638,43 +652,41 @@
       if (prod.labels && prod.labels.length) {
         labelsHtml = prod.labels.map(l => `<span class="badge bg-info text-dark me-1">${l}</span>`).join("");
       }
-      let featuresRows = prod.features.map(f => `<tr><td>${f}</td></tr>`).join("");
+      let featuresList = prod.features.map(f => `<li class="list-group-item">${f}</li>`).join("");
+      let prețFinal = retailPrice(prod.netPrice);
       let detailsHtml = `
-        <div class="quantity-controls">
-          <button onclick="changeQuantity('dec', ${prod.id})">-</button>
-          <input type="number" id="unit-${prod.id}" value="1" min="1">
-          <button onclick="changeQuantity('inc', ${prod.id})">+</button>
+        <div class="quantity-controls mb-3">
+          <button class="btn btn-sm btn-outline-danger" onclick="changeQuantity('dec', ${prod.id})">-</button>
+          <input type="number" id="unit-${prod.id}" value="1" min="1" class="form-control d-inline-block text-center" style="width:60px;">
+          <button class="btn btn-sm btn-outline-success" onclick="changeQuantity('inc', ${prod.id})">+</button>
         </div>`;
       let stockText = prod.stock + " buc";
       container.innerHTML = `
-        <div class="row">
+        <div class="row gx-4">
           <div class="col-md-6 mb-3">
             <img src="${prod.image}" alt="${prod.name}" class="img-fluid border rounded">
           </div>
           <div class="col-md-6 modal-details">
-            <h2>${prod.name}</h2>
-            ${labelsHtml ? `<p>${labelsHtml}</p>` : ""}
-            <p>${prod.description}</p>
-            <p><strong>Preț (TVA inclus):</strong> ${prod.price.toFixed(2)} Lei</p>
-            <p><strong>Adaos comercial:</strong> 30% din prețul de achiziție</p>
-            <p><strong>Stoc disponibil:</strong> ${stockText}</p>
+            <h2>${prod.name} ${labelsHtml}</h2>
+            <p><strong>Preț:</strong> <span class="text-danger">${prețFinal.toFixed(2)} Lei</span> <small>(TVA+Adaos incl.)</small></p>
+            <p><strong>Stoc:</strong> ${stockText}</p>
             ${detailsHtml}
-            <button class="btn btn-danger add-cart-btn" onclick="addToCart(${prod.id})">Adaugă în Coș</button>
-            <hr>
-            <h5>Detalii tehnice (conform ANPC):</h5>
-            <table class="table table-sm">
-              <thead>
-                <tr><th>Caracteristică</th></tr>
-              </thead>
-              <tbody>
-                ${featuresRows}
-              </tbody>
-            </table>
-            <p><strong>Vânzător:</strong> SC Magazin Bisericesc SRL, Strada Exemplu nr. 1, București</p>
-            <p><strong>Contact vânzător:</strong> Tel: 0123.456.789 | Email: contact@magazinbisericesc.ro</p>
-            <p><strong>Termeni &amp; Condiții:</strong> <a href="#termeni">Vezi pagina Termeni &amp; Condiții</a></p>
-            <p><strong>Politica de returnare:</strong> Returnare în 14 zile (cost transport suportat de client)</p>
-            <p><strong>Garanție:</strong> 24 luni de la data cumpărării</p>
+            <button class="btn btn-danger add-cart-btn" onclick="addToCart(${prod.id})">
+              <i class="bi bi-cart-plus"></i> Adaugă în Coș
+            </button>
+            <hr class="my-4">
+            <h5>Caracteristici esențiale</h5>
+            <ul class="list-group mb-3">
+              ${featuresList}
+            </ul>
+            <h5>Informații suplimentare</h5>
+            <ul class="list-group list-group-flush mb-3">
+              <li class="list-group-item"><strong>Vânzător:</strong> SC Magazin Bisericesc SRL</li>
+              <li class="list-group-item"><strong>Contact:</strong> 0123.456.789 / contact@magazinbisericesc.ro</li>
+              <li class="list-group-item"><strong>Garanție:</strong> 24 luni de la data achiziției</li>
+              <li class="list-group-item"><strong>Politica de returnare:</strong> Returnare în 14 zile (cost suportat de client)</li>
+              <li class="list-group-item"><strong>Termeni &amp; Condiții:</strong> <a href="#termeni">Detalii complete</a></li>
+            </ul>
           </div>
         </div>`;
       navigateTo('produs');
@@ -700,12 +712,13 @@
         return;
       }
       prod.stock -= units;
+      let prețFinal = retailPrice(prod.netPrice);
       let index = cart.findIndex(item => item.id === id);
       if (index > -1) {
         cart[index].units += units;
-        cart[index].cost = prod.price * cart[index].units;
+        cart[index].cost = prețFinal * cart[index].units;
       } else {
-        cart.push({ id: id, units: units, cost: prod.price * units });
+        cart.push({ id: id, units: units, cost: prețFinal * units });
       }
       saveCart();
       updateCartCount();
@@ -744,9 +757,9 @@
                    <td>${prod.name}</td>
                    <td>
                      <div class="quantity-controls">
-                       <button onclick="updateCartQuantity(${index}, 'dec')">-</button>
-                       ${item.units}
-                       <button onclick="updateCartQuantity(${index}, 'inc')">+</button>
+                       <button class="btn btn-sm btn-outline-danger" onclick="updateCartQuantity(${index}, 'dec')">-</button>
+                       <span class="mx-1">${item.units}</span>
+                       <button class="btn btn-sm btn-outline-success" onclick="updateCartQuantity(${index}, 'inc')">+</button>
                      </div>
                    </td>
                    <td>${item.cost.toFixed(2)} Lei</td>
@@ -773,7 +786,8 @@
         item.units -= 1;
         prod.stock += 1;
       }
-      item.cost = prod.price * item.units;
+      let prețFinal = retailPrice(prod.netPrice);
+      item.cost = prețFinal * item.units;
       saveCart();
       updateCartCount();
       renderProducts();
@@ -829,7 +843,8 @@
       else if (discountCode === "DISC20") discountPercent = 20;
       let discountAmount = orderTotal * (discountPercent / 100);
       let finalTotal = orderTotal - discountAmount;
-      
+      let dateTime = new Date().toLocaleString("ro-RO", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+
       let order = {
         id: Date.now(),
         customer: { name, contact },
@@ -839,38 +854,32 @@
         discountPercent: discountPercent,
         discountAmount: discountAmount.toFixed(2),
         finalTotal: finalTotal.toFixed(2),
-        date: new Date().toLocaleDateString("ro-RO")
+        dateTime: dateTime
       };
-      
-      let orderSummary = `Factura Nr. ${order.id}\nData: ${order.date}\n\n`;
-      orderSummary += `Vânzător: SC Magazin Bisericesc SRL\n`;
-      orderSummary += `Adresă: Strada Exemplu nr. 1, București\n`;
-      orderSummary += `Client: ${order.customer.name}\n`;
-      orderSummary += `Contact: ${order.customer.contact}\n\n`;
+
+      let orderSummary = `Factura Nr. ${order.id}\nData și ora: ${order.dateTime}\n\n`;
+      orderSummary += `Vânzător: SC Magazin Bisericesc SRL\nAdresă: Strada Exemplu nr. 1, București\nTel: 0123.456.789\nEmail: contact@magazinbisericesc.ro\n\n`;
+      orderSummary += `Client: ${order.customer.name}\nContact: ${order.customer.contact}\n\n`;
       orderSummary += `Detalii Produse:\n`;
       order.items.forEach(item => {
         const prod = products.find(p => p.id === item.id);
-        orderSummary += `- ${prod.name}: ${item.units} buc x ${prod.price.toFixed(2)} Lei = ${(prod.price * item.units).toFixed(2)} Lei\n`;
+        orderSummary += `- ${prod.name}: ${item.units} buc x ${retailPrice(prod.netPrice).toFixed(2)} Lei = ${(retailPrice(prod.netPrice) * item.units).toFixed(2)} Lei\n`;
       });
       orderSummary += `\nTotal Inițial: ${order.orderTotal} Lei\n`;
       if (discountPercent > 0) {
-        orderSummary += `Cod Reducere: ${order.discountCode} (${order.discountPercent}%)\n`;
-        orderSummary += `Valoare Reducere: ${order.discountAmount} Lei\n`;
+        orderSummary += `Cod Reducere: ${order.discountCode} (${order.discountPercent}%)\nValoare Reducere: ${order.discountAmount} Lei\n`;
       }
-      orderSummary += `Total Final: ${order.finalTotal} Lei\n`;
-      orderSummary += `\nTermeni de plată: Transfer bancar sau card online\n`;
-      orderSummary += `Termeni de livrare: 1–3 zile lucrătoare prin curier\n`;
-      orderSummary += `Politica de returnare: Returnare în 14 zile (cost suportat de client)\n`;
-      orderSummary += `Garanție: 24 luni de la data achiziției\n`;
-      
+      orderSummary += `Total Final: ${order.finalTotal} Lei\n\n`;
+      orderSummary += `Termeni de plată: Transfer bancar sau card online\nTermeni de livrare: 1–3 zile lucrătoare prin curier\nPolitica de returnare: Returnare în 14 zile (cost suportat de client)\nGaranție: 24 luni de la data achiziției\n`;
+
       document.getElementById("orderDetailsInput").value = orderSummary;
       document.getElementById("notifyForm").submit();
       alert("Comanda a fost plasată. Mulțumim, " + name + "!");
-      
+
       let ordersLocal = JSON.parse(localStorage.getItem("globalOrders") || "[]");
       ordersLocal.push(order);
       localStorage.setItem("globalOrders", JSON.stringify(ordersLocal));
-      
+
       renderInvoice(order);
       cart = [];
       saveCart();
@@ -887,10 +896,11 @@
       const container = document.getElementById('order-details-container');
       let itemsRows = order.items.map(item => {
         const prod = products.find(p => p.id === item.id);
+        let unitPrice = retailPrice(prod.netPrice);
         return `<tr>
                   <td>${prod.name}</td>
                   <td>${item.units}</td>
-                  <td>${(prod.price * item.units).toFixed(2)} Lei</td>
+                  <td>${(unitPrice * item.units).toFixed(2)} Lei</td>
                 </tr>`;
       }).join("");
       let html = `
@@ -898,7 +908,7 @@
           <div class="invoice-header">
             <img src="logo.jpg" alt="Logo Magazin Bisericesc">
             <h2>Factura Nr. ${order.id}</h2>
-            <p>Data: ${order.date}</p>
+            <p>Data și ora: ${order.dateTime}</p>
           </div>
           <div class="invoice-details text-start">
             <p><strong>Vânzător:</strong> SC Magazin Bisericesc SRL</p>
@@ -985,6 +995,9 @@
             <h5>Filtrare Produse</h5>
             <input type="text" id="admin-filter" class="form-control mb-3" placeholder="Caută produs în admin..." onkeyup="renderAdminProducts()">
             <div id="admin-products-container" class="mb-4"></div>
+            <h5>Setează data comenzii (format: DD-MM-YYYY HH:mm)</h5>
+            <input type="text" id="admin-order-date" class="form-control mb-3" placeholder="Ex: 02-06-2025 14:30">
+            <button class="btn btn-info mb-4" onclick="overrideOrderDate()">Salvează Data</button>
             <h5>Comenzi Plasate</h5>
             <div id="admin-orders-container"></div>
             <button class="btn btn-secondary mt-3" onclick="adminLogout()">Logout</button>
@@ -1043,6 +1056,25 @@
       });
     }
 
+    function overrideOrderDate() {
+      const customDate = document.getElementById('admin-order-date').value.trim();
+      if (!customDate) {
+        alert("Introdu o dată validă!");
+        return;
+      }
+      // Verific dacă există comenzi neprocesate și îi suprascriu data cellei mai recente
+      let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
+      if (orders.length === 0) {
+        alert("Nu există comenzi în așteptare!");
+        return;
+      }
+      // Ultima comandă
+      orders[orders.length - 1].dateTime = customDate;
+      localStorage.setItem("globalOrders", JSON.stringify(orders));
+      alert(`Data comenzii a fost suprascrisă cu: ${customDate}`);
+      renderAdminOrders();
+    }
+
     function renderAdminOrders() {
       let orders = JSON.parse(localStorage.getItem("globalOrders") || "[]");
       const container = document.getElementById('admin-orders-container');
@@ -1055,22 +1087,17 @@
                       <tr>
                         <th>ID Comandă</th>
                         <th>Client</th>
-                        <th>Detalii Produse</th>
+                        <th>Data și ora</th>
                         <th>Total Final</th>
                         <th>Acțiuni</th>
                       </tr>
                     </thead>
                     <tbody>`;
       orders.forEach((order, idx) => {
-        let details = "";
-        order.items.forEach(item => {
-          const prod = products.find(p => p.id === item.id);
-          details += "Produs: " + prod.name + " - " + item.units + " unități<br>";
-        });
         html += `<tr>
                    <td>${order.id}</td>
                    <td>${order.customer.name}<br>${order.customer.contact}</td>
-                   <td>${details}</td>
+                   <td>${order.dateTime}</td>
                    <td>${order.finalTotal} Lei</td>
                    <td>
                      <button class="btn btn-success btn-sm" onclick="finishOrder(${idx})">Terminată</button>
@@ -1099,10 +1126,11 @@
       let invoiceWindow = window.open("", "PrintInvoice", "width=800,height=600");
       let itemsRows = order.items.map(item => {
         const prod = products.find(p => p.id === item.id);
+        let unitPrice = retailPrice(prod.netPrice);
         return `<tr>
                   <td>${prod.name}</td>
                   <td>${item.units}</td>
-                  <td>${(prod.price * item.units).toFixed(2)} Lei</td>
+                  <td>${(unitPrice * item.units).toFixed(2)} Lei</td>
                 </tr>`;
       }).join("");
       let htmlContent = `
@@ -1128,7 +1156,7 @@
             <div class="invoice-header">
               <img src="logo.jpg" alt="Logo Magazin Bisericesc">
               <h2>Factura Nr. ${order.id}</h2>
-              <p>Data: ${order.date}</p>
+              <p>Data și ora: ${order.dateTime}</p>
             </div>
             <div class="invoice-details">
               <p><strong>Vânzător:</strong> SC Magazin Bisericesc SRL</p>
@@ -1168,6 +1196,11 @@
       invoiceWindow.document.close();
       invoiceWindow.focus();
       invoiceWindow.print();
+    }
+
+    // Funcție pentru a calcula prețul final (TVA 19% + adaos 30%)
+    function retailPrice(netPrice) {
+      return parseFloat((netPrice * 1.30 * 1.19).toFixed(2));
     }
   </script>
 </body>
