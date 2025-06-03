@@ -1672,4 +1672,351 @@
       let itemsRows = order.items
         .map((item) => {
           const prod = products.find((p) => p.id === item.productId);
-          const netPrice = extractNetPrice(p
+          const netPrice = extractNetPrice(prod.finalPrice, prod.markupPercent);
+          const { markupAmount, vat, final: unitPrice } = calculatePriceDetails(netPrice, prod.markupPercent);
+          return `<tr>
+                    <td>${prod.name}</td>
+                    <td>${item.units}</td>
+                    <td>
+                      <div>Preț net: ${netPrice.toFixed(2)} Lei</div>
+                      <div>Adaos: ${markupAmount.toFixed(2)} Lei</div>
+                      <div>TVA: ${vat.toFixed(2)} Lei</div>
+                      <div><strong>Subtotal:</strong> ${(unitPrice * item.units).toFixed(2)} Lei</div>
+                    </td>
+                  </tr>`;
+        })
+        .join("");
+
+      let htmlContent = `
+        <html>
+        <head>
+          <title>Factura - Comanda ${order.id}</title>
+          <style>
+            body { font-family: "Times New Roman", Times, serif; padding: 20px; background-color: #fff; }
+            .invoice { max-width: 800px; margin: 0 auto; padding: 20px; border: 1px solid #000; }
+            .invoice-header { text-align: center; margin-bottom: 20px; }
+            .invoice-header img { height: 70px; margin-bottom: 10px; }
+            .invoice-details { margin-bottom: 20px; text-align: left; }
+            .invoice-details p { margin: 0 0 5px; }
+            table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+            table, th, td { border: 1px solid #000; }
+            th, td { padding: 8px; text-align: left; vertical-align: top; }
+            .text-end { text-align: right; }
+            .text-start { text-align: left; }
+          </style>
+        </head>
+        <body>
+          <div class="invoice">
+            <div class="invoice-header">
+              <img src="logo.jpg" alt="Logo Magazin Bisericesc">
+              <h2>Factura Nr. ${order.id}</h2>
+              <p>Data și ora: ${order.dateTime}</p>
+            </div>
+            <div class="invoice-details">
+              <p><strong>Vânzător:</strong> SC Magazin Bisericesc SRL</p>
+              <p><strong>Adresă:</strong> Strada Exemplu nr. 1, București</p>
+              <p><strong>Tel/Email:</strong> 0123.456.789 / contact@magazinbisericesc.ro</p>
+              <hr>
+              <p><strong>Client:</strong> ${order.customer.name}</p>
+              <p><strong>Contact:</strong> ${order.customer.contact}</p>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Produs</th>
+                  <th>Unități</th>
+                  <th>Detalii Preț</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${itemsRows}
+              </tbody>
+            </table>
+            <div class="text-end mb-3">
+              <p><strong>Total Inițial:</strong> ${order.orderTotal} Lei</p>
+              ${order.discountPercent > 0 ? `<p><strong>Reducere (${order.discountCode}):</strong> -${order.discountAmount} Lei</p>` : ""}
+              <p><strong>Total de plată:</strong> ${order.finalTotal} Lei</p>
+            </div>
+            <div class="text-start">
+              <p><strong>Termeni de plată:</strong> Transfer bancar sau card online</p>
+              <p><strong>Termeni de livrare:</strong> 1–3 zile lucrătoare prin curier</p>
+              <p><strong>Politica de returnare:</strong> Retur în 14 zile (cost suportat de client)</p>
+              <p><strong>Garanție:</strong> 24 luni de la data achiziției</p>
+            </div>
+          </div>
+        </body>
+        </html>`;
+      let invoiceWindow = window.open("", `_blank`);
+      invoiceWindow.document.write(htmlContent);
+      invoiceWindow.document.close();
+      invoiceWindow.focus();
+      invoiceWindow.print();
+    }
+
+    // =======================================
+    // 14) GESTIONARE RETURURI – FIRESTORE
+    // =======================================
+    async function fetchReturns() {
+      const snapshot = await db.collection("returns").orderBy("receivedDate").get();
+      returns = [];
+      snapshot.forEach((doc) => {
+        returns.push({ id: doc.id, ...doc.data() });
+      });
+      renderAdminReturns();
+    }
+    function renderAdminReturns() {
+      const tbody = document.getElementById("admin-returns-container");
+      tbody.innerHTML = "";
+      if (returns.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8"><p>Nu există cereri de retur.</p></td></tr>`;
+        return;
+      }
+      returns.forEach((ret, idx) => {
+        let statusBadge = ret.processed
+          ? `<span class="badge bg-success">Procesat</span>`
+          : `<span class="badge bg-warning text-dark">Neprocesat</span>`;
+        let processBtn = ret.processed
+          ? ``
+          : `<button class="btn btn-sm btn-success ms-1" onclick="processReturn('${ret.id}')">Marchează procesat</button>`;
+        let row = `
+          <tr>
+            <td>${ret.id}</td>
+            <td>${ret.clientName}</td>
+            <td>${ret.contact}</td>
+            <td>${ret.orderCode}</td>
+            <td>${ret.receivedDate}</td>
+            <td>${ret.reason}</td>
+            <td>${statusBadge}</td>
+            <td>${processBtn}</td>
+          </tr>`;
+        tbody.innerHTML += row;
+      });
+    }
+    async function processReturn(returnDocId) {
+      try {
+        await db.collection("returns").doc(returnDocId).update({ processed: true });
+        await fetchReturns();
+        alert("Cererea de retur a fost procesată.");
+      } catch (err) {
+        console.error(err);
+        alert("Eroare la procesarea returului.");
+      }
+    }
+    document.getElementById("return-form").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const name = document.getElementById("ret-name").value.trim();
+      const email = document.getElementById("ret-email").value.trim();
+      const phone = document.getElementById("ret-phone").value.trim();
+      const orderCode = document.getElementById("ret-code").value.trim();
+      const receivedDate = document.getElementById("ret-date").value;
+      const reason = document.getElementById("ret-reason").value.trim() || "N/A";
+      if (!name || !email || !phone || !orderCode || !receivedDate) {
+        alert("Completează toate câmpurile obligatorii!");
+        return;
+      }
+      const retRequest = {
+        clientName: name,
+        contact: email + " / " + phone,
+        orderCode: orderCode,
+        receivedDate: receivedDate,
+        reason: reason,
+        processed: false
+      };
+      try {
+        await db.collection("returns").add(retRequest);
+        alert("Cererea de retur a fost înregistrată. Veți fi contactat pentru detalii.");
+        bootstrap.Modal.getInstance(document.getElementById("returnFormModal")).hide();
+        document.getElementById("return-form").reset();
+      } catch (err) {
+        console.error(err);
+        alert("Eroare la înregistrarea returului.");
+      }
+    });
+
+    // ======================================
+    // 15) ADMIN – LOAD / RENDER + LOGIN/LOGOUT
+    // ======================================
+    function loadAdmin() {
+      const adminDiv = document.getElementById("admin-content");
+      if (!adminLogged) {
+        adminDiv.innerHTML = `
+          <div class="section-container text-start">
+            <h2>Login Admin</h2>
+            <div class="mb-3">
+              <label>Utilizator:</label>
+              <input type="text" id="admin-user" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label>Parolă:</label>
+              <input type="password" id="admin-pass" class="form-control">
+            </div>
+            <button class="btn btn-primary" onclick="adminLogin()">Login</button>
+          </div>`;
+      } else {
+        fetchOrders();
+        fetchReturns();
+        adminDiv.innerHTML = `
+          <div class="section-container text-start">
+            <h2>Dashboard Admin</h2>
+            <div class="mb-3">
+              <button class="btn btn-secondary" onclick="updateAllStocks()">Actualizează Stocurile</button>
+            </div>
+            <h5>Filtrare Produse</h5>
+            <input type="text" id="admin-filter" class="form-control mb-3" placeholder="Caută produs în admin..." onkeyup="renderAdminProducts()">
+            <div id="admin-products-container" class="mb-4"></div>
+
+            <h5>Caută Comandă după Cod</h5>
+            <div class="input-group mb-3">
+              <input type="text" id="admin-search-code" class="form-control" placeholder="Introduceți Cod comanda">
+              <button class="btn btn-primary" onclick="filterOrdersByCode()">Caută</button>
+              <button class="btn btn-outline-secondary" onclick="renderAdminOrders()">Afișează Toate</button>
+            </div>
+
+            <h5>Comenzi Plasate</h5>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Cod</th>
+                  <th>Client</th>
+                  <th>Contact</th>
+                  <th>Total Final</th>
+                  <th>Data (setată de admin)</th>
+                  <th>Acțiuni</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="admin-orders-container"></tbody>
+            </table>
+
+            <h5>Solicitări Retur</h5>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Client</th>
+                  <th>Contact</th>
+                  <th>Cod Comandă</th>
+                  <th>Data primire produs</th>
+                  <th>Motiv</th>
+                  <th>Status</th>
+                  <th>Acțiuni</th>
+                </tr>
+              </thead>
+              <tbody id="admin-returns-container"></tbody>
+            </table>
+
+            <button class="btn btn-secondary" onclick="adminLogout()">Logout</button>
+          </div>`;
+      }
+    }
+
+    function adminLogin() {
+      const user = document.getElementById("admin-user").value.trim();
+      const pass = document.getElementById("admin-pass").value.trim();
+      if (user === "admin" && pass === "parola123") {
+        adminLogged = true;
+        loadAdmin();
+      } else {
+        alert("Autentificare eșuată!");
+      }
+    }
+
+    function adminLogout() {
+      adminLogged = false;
+      loadAdmin();
+    }
+
+    // ======================================
+    // 16) ACTUALIZEAZĂ STOCURILE DIN ADMIN
+    // ======================================
+    function updateAllStocks() {
+      products.forEach((prod) => {
+        const input = document.getElementById(`new-stock-${prod.id}`);
+        if (input) {
+          const newVal = parseInt(input.value);
+          if (!isNaN(newVal) && newVal >= 0) {
+            prod.stock = newVal;
+            db.collection("products").doc(prod.id).update({ stock: newVal });
+          }
+        }
+      });
+      alert("Stocurile au fost actualizate în Firestore.");
+      renderProducts();
+      renderAdminProducts();
+    }
+
+    // ======================================
+    // 17) RENDER PRODUSE ÎN ADMIN
+    // ======================================
+    function renderAdminProducts() {
+      const container = document.getElementById("admin-products-container");
+      container.innerHTML = "";
+      const filter = document.getElementById("admin-filter").value.toLowerCase();
+      products.forEach((prod) => {
+        if (prod.name.toLowerCase().includes(filter)) {
+          let stockHtml = `<strong>Stoc actual:</strong> ${prod.stock} buc<br>
+                           <input type="number" id="new-stock-${prod.id}" placeholder="Nou stoc" style="width:80px; margin-top:3px;">`;
+          const prodHTML = `
+            <div class="mb-2 p-2" style="border:1px solid #ccc; border-radius:5px;">
+              <strong>${prod.name}</strong><br>
+              ${stockHtml}
+            </div>`;
+          container.innerHTML += prodHTML;
+        }
+      });
+    }
+
+    // ====================================
+    // 18) FUNCTII NAVIGARE, BACK-TO-TOP etc.
+    // ====================================
+    function navigateTo(pageId) {
+      document.querySelectorAll(".page").forEach(function (page) {
+        page.classList.remove("active-page");
+      });
+      const target = document.getElementById(pageId);
+      if (target) {
+        target.classList.add("active-page");
+      }
+      if (pageId === "admin") loadAdmin();
+      if (pageId === "produse") renderProducts();
+      if (pageId === "home") renderSlider();
+    }
+
+    window.onscroll = function () {
+      const btn = document.getElementById("backToTop");
+      btn.style.display =
+        document.body.scrollTop > 200 || document.documentElement.scrollTop > 200
+          ? "block"
+          : "none";
+    };
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // Setează anul în footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Modal show
+    function showCompanyInfo() {
+      const modal = new bootstrap.Modal(document.getElementById("companyInfoModal"));
+      modal.show();
+    }
+    function showReturnForm() {
+      const modal = new bootstrap.Modal(document.getElementById("returnFormModal"));
+      modal.show();
+    }
+
+    // ====================================
+    // 19) ÎNCĂRCARE INIȚIALĂ A DATELOR
+    // ====================================
+    document.addEventListener("DOMContentLoaded", function () {
+      ensureProductsExist()
+        .then(() => fetchProducts())
+        .catch((err) => console.error(err));
+      startTimer();
+      updateCartCount();
+    });
+  </script>
+</body>
+</html>
